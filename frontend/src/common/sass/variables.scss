@@ -1,0 +1,165 @@
+/* Primary Palette */
+$color-primary: #48c1a6;
+$color-primary-d15: #50b19c;
+$color-primary-l20: #b1f0e2;
+$color-primary-l80: #dfefd4;
+$color-cosmic-latte: #d8f7f0;
+
+$color-primary-disabled: #a2dfd1;
+$color-primary-snuff: #d9f2ec;
+
+$color-white: #ffffff;
+$color-ghost-white: #f6f8fe;
+$color-albe-white: #cdf4da;
+$color-egg-white: #ffeebf;
+$color-white-smoke: #f8f8f8;
+$color-white-ice: #f3fdfb;
+$color-white-half-spanish: #feefe1;
+
+$color-purple: #7d67de;
+
+$color-black: #002420;
+$color-black-l20: #4d4d4d;
+$color-black-l80: #d2d2d2;
+
+$color-black-d15: #{mix(#002420, #000, 85%)};
+$color-black-l80: #{mix(#002420, #fff, 20%)};
+$color-black-l95: #{mix(#002420, #fff, 5%)};
+
+$color-yellow-pipi: #fef7d1;
+$color-yellow-linen: #ffefe2;
+$color-yellow-corn: #e47c02;
+$color-yellow-l198: #c67b22;
+$color-yellow-l90: #9c5a09;
+
+$color-gunmetal: #2e2d4a;
+$color-gunmetal-d20: #24243b;
+$color-anti-flash-white: #f2f3f3;
+$color-night-rider: #2d2d2d;
+
+/* Secondary Palette */
+$color-red: #ba4b4b;
+$color-red-l20: #dc574b;
+
+$color-forbidden-fruit: #fc7c7c;
+
+$color-red-d15: #{mix(#cc3427, #000, 85%)};
+$color-red-l80: #{mix(#cc3427, #fff, 20%)};
+$color-red-l95: #{mix(#cc3427, #fff, 5%)};
+
+$color-grey: #737878;
+$color-grey-l20: #9da0a0;
+$color-grey-l80: #d5d7d7;
+$color-grey-l30: #2bc9a6;
+$color-grey-l95: #f8f8f8;
+$color-grey-athens: #dddfdf;
+
+$color-blue-noti: #1155cc;
+$color-black-noti: #000000;
+
+$color-green-mineral: #33504d;
+$color-approx-snow: #fbfbfb;
+$color-dim-gray: #707070;
+$color-cool-gray: #9a9b9b;
+$color-gray-x11: #b9bcbc;
+$color-mint-cream: #f2f5f4;
+$color-gainsboro: #dcdcdc;
+$color-alice-blue: #e2f0ff;
+$color-pattens-blue: #d9ebfa;
+$color-pale-blue: #deebf9;
+$color-sienna: #4c6562;
+$color-voracious-white: #fee9ec;
+$color-yellow: #f9cc59;
+$color-approx-whisper: #eaebeb;
+$color-blue: #9cb7fe;
+$color-blue-l80: #{mix(#9cb7fe, #fff, 20%)};
+$color-blue-provence: #8b9c9a;
+$color-blue-news: #5393d0;
+$color-blue-progress: #26a0da;
+$color-jade: #7f918f;
+$color-zircon: #e5e8e8;
+$color-bg-noti: #d7eded;
+$color-whitesmoke: #f5f5f5;
+$color-red1: #ff0000;
+$color-black-shadow: #00000029;
+$color-dot-active: #3c98f0;
+$color-blue-subscribe: #6a9fcb;
+
+$color-news-card-1: #fee9ec;
+$color-news-card-2: #f5ebff;
+$color-news-card-3: #e2f0ff;
+
+$color-highlight: #0078d4;
+$color-highlight-d15: #{mix(#0078d4, #000, 85%)};
+$color-highlight-l80: #{mix(#0078d4, #fff, 20%)};
+$color-highlight-l95: #{mix(#0078d4, #fff, 5%)};
+$color-highlight-2: #2c98ff;
+
+$bg-tooltip-yellow: #fff7d1;
+$color-dark-orange: #e47c01;
+
+$drop-shadow: 1px 2px 6px rgba($color-black, 0.2) !default;
+$shadow-alt: 0 10px 16px 0 rgba(0, 0, 0, 0.18);
+$color-box-shadow: rgb(0 0 0 / 16%);
+
+/* Semantic color */
+$success: #1ac94c;
+$success-secondary: #4a9631;
+$info: #5393d0;
+$warning: #f79420;
+$warning-secondary: #f59e0b;
+$danger: #ba4b4b;
+$warning-secondary: #d38529;
+
+/*Background semantic color*/
+$bg-success: #b5f7c5;
+$bg-success-secondary: #dbf0cb;
+$bg-info: #cbedf9;
+$bg-warning: #fee7c5;
+$bg-danger: #ffdedd;
+$bg-monochrome: #9e9e9e;
+$bg-primary: #fbfffe;
+$bg-noti: #eefcf8;
+
+:root {
+  --font-content: "Proxima Nova", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --max-container-width: 1850px;
+  --color-text: #747878;
+  /* Spacing */
+  --sp-1: 2px;
+  --sp-2: 4px;
+  --sp-3: 8px;
+  --sp-4: 12px;
+  --sp-5: 16px;
+  --sp-6: 24px;
+  --sp-7: 32px;
+  --sp-8: 40px;
+  --sp-9: 48px;
+  --sp-10: 64px;
+  --sp-11: 96px;
+  --sp-12: 160px;
+  --swiper-navigation-size: 20px;
+  --color-text: #747878;
+  --width-lg: 300px;
+  --width-xl: 360px;
+  --width-xxl: 400px;
+}
+
+$color-ui-bg: #f3f6f8;
+$color-ui-elements: #d8dee4;
+$color-main: #252b40;
+$color-placeholder: #80838d;
+
+$font-family-1: "Calibre";
+$font-family-2: "Gill Sans";
+$font-family-3: "Helvetica";
+
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+$breakpoint-xxl: 1600px;
+
+$default-size: 28px;
+$label-font-size: calc($default-size / 4);
+$label-font-size-redo: calc($default-size * 4);

@@ -1,0 +1,256 @@
+@import "../../common/sass/variables";
+
+.notification {
+  $root: &;
+
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  position: relative;
+  font-family: $font-family-2;
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px 0px 0px 2px;
+    flex-shrink: 0;
+    margin: 0 15px;
+
+    .fa {
+      color: $color-white;
+      font-size: initial;
+      margin-left: 4px;
+    }
+    &-type {
+      width: 34px;
+    }
+  }
+
+  &__close-icon {
+    padding: 0 var(--sp-2);
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: row;
+    min-height: 100px;
+    width: 100%;
+    border-radius: 0px 2px 2px 0px;
+    img {
+      margin-right: 18px;
+      cursor: pointer;
+    }
+  }
+
+  &__line {
+    border: 0 none;
+    border-right: 1px dashed;
+    background: none;
+    margin: 2px;
+  }
+
+  &__wrapper {
+    padding: 18px 8px 18px 3px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+  }
+
+  &__title {
+    color: $color-black;
+    font-size: var(--sp-6);
+    margin-bottom: 10px;
+  }
+
+  &__content {
+    font-size: 21px;
+    overflow-wrap: anywhere;
+  }
+
+  &__close {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    transition: all 0.2s ease-in-out;
+
+    &:hover,
+    &:focus {
+      transform: scale(1.2);
+    }
+  }
+
+  &__icon {
+    margin: var(--sp-3);
+  }
+
+  &--success {
+    background-color: $bg-success;
+    #{$root}__content {
+      color: $color-black;
+    }
+  }
+
+  &--info {
+    background-color: $bg-info;
+    #{$root}__content {
+      color: $color-black;
+    }
+  }
+
+  &--warning {
+    background-color: $bg-warning;
+    #{$root}__content {
+      color: $color-black;
+    }
+  }
+
+  &--error {
+    background-color: $bg-danger;
+    #{$root}__content {
+      color: $color-black;
+    }
+  }
+
+  &--custom {
+    #{$root}__content {
+      color: $color-black;
+    }
+    display: block;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+
+    &-header {
+      width: 100%;
+      padding: 0 15px;
+      background: $color-black;
+      height: 50px;
+      display: flex;
+      color: $color-white;
+      justify-content: space-between;
+      align-items: center;
+      font-family: $font-family-2;
+    }
+
+    &-close {
+      display: flex;
+      align-items: center;
+
+      svg {
+        margin-left: 20px;
+        fill: $color-white;
+      }
+    }
+
+    &-body {
+      &--show {
+        min-height: 80px;
+        display: block;
+      }
+      &--hide {
+        min-height: 80px;
+        display: none;
+      }
+    }
+
+    &-expand {
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+
+// override toastify basic styles, only use component styling
+.Toastify {
+  &__toast {
+    min-height: 48px !important;
+    padding: 0 !important;
+    &-body {
+      padding: 0 !important;
+    }
+    &-container {
+      min-width: 420px;
+      padding: 0px;
+      width: 100%;
+    }
+
+    &--success {
+      .Toastify__progress-bar {
+        background: $success;
+      }
+    }
+    &--info {
+      .Toastify__progress-bar {
+        background: $info;
+      }
+    }
+    &--warning {
+      .Toastify__progress-bar {
+        background: $warning;
+      }
+    }
+    &--error {
+      .Toastify__progress-bar {
+        background: $danger;
+      }
+    }
+
+    &--custom {
+      .Toastify__progress-bar {
+        display: none;
+      }
+    }
+  }
+}
+
+@keyframes pullIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+}
+
+.pullIn {
+  animation-name: pullIn;
+  animation-timing-function: cubic-bezier(0.17, 0.66, 0.08, 0.95);
+}
+
+@keyframes fadeOutRight {
+  from {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+.fadeOutRight {
+  animation-name: fadeOutRight;
+}
+
+@media only screen and (max-width: 480px) {
+  .Toastify {
+    &__toast {
+      margin-bottom: 5px !important;
+      border-radius: var(--sp-2) !important;
+      &-container {
+        padding: 4px !important;
+        left: auto !important;
+        right: 0 !important;
+        width: 100%;
+        min-width: 100%;
+      }
+    }
+  }
+}

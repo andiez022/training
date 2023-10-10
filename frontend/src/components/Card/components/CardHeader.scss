@@ -1,0 +1,10 @@
+@import '../../../common/sass/variables';
+
+.card-header {
+  padding: var(--sp-6);
+  box-shadow: inset 0px -2px 0px #f0f0f0;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 32px;
+}
