@@ -1,0 +1,28 @@
+@import '../../common/sass/variables.scss';
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100px;
+  width: 100%;
+  position: fixed;
+  z-index: 100;
+  box-shadow: 0px 6px 18px rgb(0 0 0 / 16%);
+  top: 0;
+  background-color: $color-white;
+}
+
+.logo {
+  margin-left: 160px;
+}
+
+.nav-links {
+  margin-right: 160px;
+  display: flex;
+  gap: 45px;
+}
+
+.common-link-style {
+	color: $color-black;
+}

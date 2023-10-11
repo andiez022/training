@@ -1,0 +1,67 @@
+@import "../../common/sass/variables.scss";
+
+.home-container {
+  position: relative;
+}
+
+.image-container {
+  position: relative;
+  width: 100%;
+  z-index: -1; /* Send the image and overlay to the background */
+}
+
+.text-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 1; /* Bring the overlay to the foreground */
+
+  h2 {
+    color: $color-white;
+    font-size: 36px;
+    margin: 0;
+  }
+
+  p {
+    margin-top: 40px;
+    color: #C4F7FF;
+    font-size: 20px;
+  }
+}
+
+.context-container {
+  position: absolute;
+  top: 100%;
+  padding-top: 140px;
+  padding-bottom: 160px;
+  padding-left: 180px;
+  padding-right: 180px;
+}
+
+.announcement-container {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.announcement-title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.more-icon {
+
+}
+
+.announcement-card {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+  gap: 40px;
+}
+
+.highlights-container {
+  margin-top: 140px;
+}

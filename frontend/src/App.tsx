@@ -11,6 +11,8 @@ import PrivateRoute from './components/Route/PrivateRoute';
 import store, { persistor } from './store';
 
 const HomeView = lazy(() => import('./views/home/HomeView'));
+const IntroView = lazy(() => import('./views/intro/IntroView'));
+const AnnView = lazy(() => import('./views/announcement/AnnView'));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -34,6 +36,8 @@ const App: React.FC = () => {
                 <Routes>
                   <Route path="/login" element={<PrivateRoute guards={[unAuthGuard]} element={<div>login</div>} />} />
                   <Route path="/" element={<PrivateRoute guards={[]} element={<HomeView />} />} />
+                  <Route path="/intro" element={<PrivateRoute guards={[]} element={<IntroView />} />} />
+                  <Route path="/announcement" element={<PrivateRoute guards={[]} element={<AnnView />} />} />
                 </Routes>
               </div>
             </BrowserRouter>
