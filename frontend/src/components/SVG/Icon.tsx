@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import * as React from 'react';
 
+import { ReactComponent as ArrowDown } from './icons/arrow-down.svg';
 import { ReactComponent as ArrowDownLong } from './icons/arrow-down-long.svg';
 import { ReactComponent as Check } from './icons/check.svg';
 import { ReactComponent as CheckboxHover } from './icons/checkbox-hover.svg';
@@ -10,6 +11,7 @@ import { ReactComponent as Dashboard } from './icons/dashboard.svg';
 import { ReactComponent as ErrorCircle } from './icons/error-circle.svg';
 import { ReactComponent as ExpandLess } from './icons/expand-less.svg';
 import { ReactComponent as ExpandMore } from './icons/expand-more.svg';
+import { ReactComponent as Magnifier } from './icons/magnifier.svg';
 import { ReactComponent as InfoCircle } from './icons/info-circle.svg';
 import { ReactComponent as Sort } from './icons/sort.svg';
 import { ReactComponent as SuccessCircle } from './icons/success-circle.svg';
@@ -24,6 +26,7 @@ export const ICONS = {
   DASHBOARD: Dashboard,
   CLOSE: Close,
   CHECK: Check,
+  MAGNIFIER: Magnifier,
   ERROR_CIRCLE: ErrorCircle,
   INFO_CIRCLE: InfoCircle,
   SUCCESS_CIRCLE: SuccessCircle,
@@ -33,6 +36,7 @@ export const ICONS = {
   TIMES: Times,
   SORT: Sort,
   ARROW_DOWN_LONG: ArrowDownLong,
+  ARROW_DOWN: ArrowDown,
   CHECKBOX_HOVER: CheckboxHover,
   CHECKBOX_PRESSED: CheckboxPressed,
   RADIO_DEFAULT: RadioDefault,

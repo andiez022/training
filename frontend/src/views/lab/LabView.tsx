@@ -9,9 +9,9 @@ import TextInput from '../../components/TextInput/TextInput';
 
 import Table, { ColumnState } from '../../components/Table/Table';
 
-import './AnnView.scss';
+import './LabView.scss';
 
-const AnnView: React.FC = () => {
+const LabView: React.FC = () => {
   const [selectedItemText, setSelectedItemText] = useState('');
 
   const handleDropdownItemClick = (itemText: string) => {
@@ -60,21 +60,21 @@ const AnnView: React.FC = () => {
   };
 
   return (
-    <div className="ann-view">
+    <div className="lab-view">
       <GuestHeader />
-      <div className="ann-view__top">
-        <div className="ann-view__image">
-          <div className="ann-view__image__overlay" />
-          <img src="/공지사항_bn.png" alt="AnnBG" />
-          <div className="ann-view__image__icon">
-            <img src="icon-공지사항.svg" alt="AnnIcon" />
-            <p>깨바부의 새로운 소식을 전합니다.</p>
+      <div className="lab-view__top">
+        <div className="lab-view__image">
+          <div className="lab-view__image__overlay" />
+          <img src="/리빙랩_bn.png" alt="labBG" />
+          <div className="lab-view__image__icon">
+            <img src="icon-리빙랩.svg" alt="labIcon" />
+            <p>깨끗한 바다 부산을 위해 시민들이 직접 참여 중인 프로젝트를 소개합니다.</p>
           </div>
         </div>
-        <div className="ann-view__content">
-          <div className="ann-view__table-head">
+        <div className="lab-view__content">
+          <div className="lab-view__table-head">
             <p>공지사항</p>
-            <div className="ann-view__drop-down">
+            <div className="lab-view__drop-down">
               <Dropdown
                 elementAction={
                   <Button
@@ -93,7 +93,7 @@ const AnnView: React.FC = () => {
                 <DropdownItem onClick={() => handleDropdownItemClick('제목')}>제목</DropdownItem>
                 <DropdownItem onClick={() => handleDropdownItemClick('작성자')}>작성자</DropdownItem>
               </Dropdown>
-              <div className="ann-view__search-area">
+              <div className="lab-view__search-area">
                 <TextInput dataId="" placeholder="공지사항 검색" />
                 <Button
                   icon={ICONS.MAGNIFIER}
@@ -109,10 +109,10 @@ const AnnView: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="ann-view__table-body">
+          <div className="lab-view__table-body">
             <Table columns={columns} data={data} cellRenderer={cellRenderer} titleElement="" className="table-generic" />
           </div>
-          <div className="ann-view__table-nav">
+          <div className="lab-view__table__nav">
             <p>Nav here</p>
           </div>
         </div>
@@ -121,4 +121,4 @@ const AnnView: React.FC = () => {
   );
 };
 
-export default AnnView;
+export default LabView;

@@ -20,19 +20,19 @@ const GuestHeader = () => {
         <Link to="/announcement" className="common-link-style">
           공지사항
         </Link>
-        <Link to="/contact" className="common-link-style">
+        <Link to="/facility" className="common-link-style">
           시설현황
         </Link>
-        <Link to="/contact" className="common-link-style">
+        <Link to="/content" className="common-link-style">
           콘텐츠
         </Link>
-        <Link to="/contact" className="common-link-style">
+        <Link to="/lab" className="common-link-style">
           리빙랩
         </Link>
-        <Link to="/contact" className="common-link-style">
+        <Link to="/campaign" className="common-link-style">
           캠페인
         </Link>
-        <Link to="/contact" className="common-link-style">
+        <Link to="/board" className="common-link-style">
           자유게시판
         </Link>
       </nav>

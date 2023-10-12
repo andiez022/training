@@ -13,6 +13,11 @@ import store, { persistor } from './store';
 const HomeView = lazy(() => import('./views/home/HomeView'));
 const IntroView = lazy(() => import('./views/intro/IntroView'));
 const AnnView = lazy(() => import('./views/announcement/AnnView'));
+const FacilityView = lazy(() => import('./views/facility/FacilityView'));
+const ContentView = lazy(() => import('./views/contents/ContentView'));
+const LabView = lazy(() => import('./views/lab/LabView'));
+const CampaignView = lazy(() => import('./views/campaign/CampaignView'));
+const BoardView = lazy(() => import('./views/board/BoardView'));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -38,6 +43,11 @@ const App: React.FC = () => {
                   <Route path="/" element={<PrivateRoute guards={[]} element={<HomeView />} />} />
                   <Route path="/intro" element={<PrivateRoute guards={[]} element={<IntroView />} />} />
                   <Route path="/announcement" element={<PrivateRoute guards={[]} element={<AnnView />} />} />
+                  <Route path="/facility" element={<PrivateRoute guards={[]} element={<FacilityView />} />} />
+                  <Route path="/content" element={<PrivateRoute guards={[]} element={<ContentView />} />} />
+                  <Route path="/lab" element={<PrivateRoute guards={[]} element={<LabView />} />} />
+                  <Route path="/campaign" element={<PrivateRoute guards={[]} element={<CampaignView />} />} />
+                  <Route path="/board" element={<PrivateRoute guards={[]} element={<BoardView />} />} />
                 </Routes>
               </div>
             </BrowserRouter>
