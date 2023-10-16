@@ -1,0 +1,70 @@
+.video {
+	display: flex;
+	justify-content: center;
+	gap: 20px;
+
+	&__thumbnail {
+
+	}
+
+	&__info {
+		display: flex;
+		flex-direction: column;
+		width: 600px;
+		text-align: left;
+
+		&__header {
+			display: flex;
+			justify-content: space-between;
+
+			&__title {
+				width: 80%;
+			}
+
+			p {
+				font-size: 14px;
+				color: #555555;
+			}
+
+			h3 {
+				font-size: 16px;
+				font-weight: bold;
+			}
+		}
+
+		&__desc {
+			margin-top: 10px;
+			background-color: #F9F9F9;
+			
+			p {
+				margin: 25px 10px;
+				color: #676767;
+				font-size: 15px;
+			}
+		}
+	}
+}
+
+.pagination {
+	display: flex;
+	justify-content: center;
+	margin-top: 60px;
+	gap: 2px;
+}
+
+.button-nav {
+	border: none;
+		cursor: pointer;
+}
+
+.page-number {
+	display: flex;
+	gap: 2px;
+
+	button {
+		background-color: white;
+		border-color: #CCCCCC;
+		width: 32px;
+	}
+}
+

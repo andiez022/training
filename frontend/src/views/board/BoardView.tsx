@@ -65,15 +65,15 @@ const BoardView: React.FC = () => {
       <div className="board-view__top">
         <div className="board-view__image">
           <div className="board-view__image__overlay" />
-          <img src="/자유게시판_bn.png" alt="boardBG" />
+          <img src="/board_bn.png" alt="boardBG" />
           <div className="board-view__image__icon">
-            <img src="icon-자유게시판.svg" alt="boardIcon" />
+            <img src="icon_board.svg" alt="boardIcon" />
             <p>깨끗한 바다 부산을 위한 시민들의 다양한 의견과 정보를 공유합니다.</p>
           </div>
         </div>
         <div className="board-view__content">
           <div className="lab-view__table-head">
-            <p>공지사항</p>
+            <h2 className="gradual-color-transition">공지사항</h2>
             <div className="lab-view__drop-down">
               <Dropdown
                 elementAction={

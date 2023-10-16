@@ -30,11 +30,13 @@
 
 		&__icon {
 			position: absolute;
-			top: 50%;
+			top: 100%;
 			left: 50%;
 			transform: translate(-50%, -50%);
 			text-align: center;
 			z-index: 2;
+			opacity: 1;
+      animation: slideUp 1s forwards;
 
 			p {
 				font-size: 20px;
@@ -49,21 +51,22 @@
 	&__content {
 		padding-top: 61px;
 		padding-bottom: 120px;
-		padding-left: 180px;
-		padding-right: 180px;
+		padding-left: 300px;
+		padding-right: 300px;
 		display: flex;
 		flex-direction: column;
 	}
 
-	&__table__head {
+	&__grid-head {
 		display: flex;
 		justify-content: space-between;
+		height: 40px;
 	}
 
 	&__drop-down {
 		display: flex;
 		justify-content: space-between;
-		gap: 20px;
+		gap: 10px;
 	}
 
 	&__search-area {

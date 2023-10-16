@@ -1,41 +1,45 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import Icon, { ICONS, IconSize } from '../../components/SVG/Icon';
+
 import './Header.scss';
 
-const GuestHeader = () => {
+interface NavLinkProps {
+  to: string;
+  text: string;
+}
+
+const CustomNavLink: React.FC<NavLinkProps> = ({ to, text }) => {
   return (
-    <header className="app-header">
+    <NavLink to={to} className={(navData) => (navData.isActive ? 'active-link' : 'default-link')}>
+      {text}
+    </NavLink>
+  );
+};
+
+const GuestHeader = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  return (
+    <header className={`app-header ${isMenuOpen ? 'show-menu' : ''}`}>
       <div className="logo">
-        <Link to="/">
-          <img src="logo.svg" alt="Logo" />
-        </Link>
+        <NavLink to="/">
+          <img src="header.svg" alt="Header logo" />
+        </NavLink>
       </div>
-      <nav className="nav-links">
-        <Link to="/" className="common-link-style">
-          홈
-        </Link>
-        <Link to="/intro" className="common-link-style">
-          소개
-        </Link>
-        <Link to="/announcement" className="common-link-style">
-          공지사항
-        </Link>
-        <Link to="/facility" className="common-link-style">
-          시설현황
-        </Link>
-        <Link to="/content" className="common-link-style">
-          콘텐츠
-        </Link>
-        <Link to="/lab" className="common-link-style">
-          리빙랩
-        </Link>
-        <Link to="/campaign" className="common-link-style">
-          캠페인
-        </Link>
-        <Link to="/board" className="common-link-style">
-          자유게시판
-        </Link>
+      <nav className={`nav-links ${isMenuOpen ? 'show-menu' : ''}`}>
+        <CustomNavLink to="/" text="홈" />
+        <CustomNavLink to="/intro" text="소개" />
+        <CustomNavLink to="/announcement" text="공지사항" />
+        <CustomNavLink to="/facility" text="시설현황" />
+        <CustomNavLink to="/content" text="콘텐츠" />
+        <CustomNavLink to="/lab" text="리빙랩" />
+        <CustomNavLink to="/campaign" text="캠페인" />
+        <CustomNavLink to="/board" text="자유게시판" />
       </nav>
+      <div className="menu-icon" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+        <Icon className="icon" component={isMenuOpen ? ICONS.CLOSE : ICONS.EXPAND_MORE} size={IconSize.XL} />
+      </div>
     </header>
   );
 };

@@ -30,7 +30,7 @@ const Home: React.FC = () => {
     <div className="home-container">
       <GuestHeader />
       <div className="image-container">
-        <img src="AdobeStock_93456281.png" alt="Background" />
+        <img src="home_bn1.png" alt="Background" />
         <div className="text-overlay">
           <h2>함께 하자,</h2>
           <h2>깨끗한 바다 부산으로!</h2>
@@ -40,7 +40,7 @@ const Home: React.FC = () => {
       <div className="context-container">
         <div className="announcement-container">
           <div className="announcement-title">
-            <h2>공지사항</h2>
+            <h2 className="gradual-color-transition">공지사항</h2>
             <div className="more-icon">
               <h2>icon here</h2>
             </div>

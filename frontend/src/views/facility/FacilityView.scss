@@ -30,11 +30,13 @@
 
 		&__icon {
 			position: absolute;
-			top: 50%;
+			top: 100%;
 			left: 50%;
 			transform: translate(-50%, -50%);
 			text-align: center;
 			z-index: 2;
+			opacity: 1;
+      animation: slideUp 1s forwards;
 
 			p {
 				font-size: 20px;

@@ -65,15 +65,15 @@ const LabView: React.FC = () => {
       <div className="lab-view__top">
         <div className="lab-view__image">
           <div className="lab-view__image__overlay" />
-          <img src="/리빙랩_bn.png" alt="labBG" />
+          <img src="/lab_bn.png" alt="labBG" />
           <div className="lab-view__image__icon">
-            <img src="icon-리빙랩.svg" alt="labIcon" />
+            <img src="icon_lab.svg" alt="labIcon" />
             <p>깨끗한 바다 부산을 위해 시민들이 직접 참여 중인 프로젝트를 소개합니다.</p>
           </div>
         </div>
         <div className="lab-view__content">
           <div className="lab-view__table-head">
-            <p>공지사항</p>
+            <h2 className="gradual-color-transition">공지사항</h2>
             <div className="lab-view__drop-down">
               <Dropdown
                 elementAction={

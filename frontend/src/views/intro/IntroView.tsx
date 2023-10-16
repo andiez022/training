@@ -18,7 +18,7 @@ const Intro: React.FC = () => {
               }}
             />
             <img
-              src="/그룹 498.svg"
+              src="logo.svg"
               alt="Logo"
               style={{
                 marginBottom: 12.1,
@@ -37,7 +37,7 @@ const Intro: React.FC = () => {
             </p>
           </div>
           <div className="intro-view__image-1">
-            <img src="/그룹 513.svg" alt="Process" />
+            <img src="about_1.svg" alt="Process" />
           </div>
           <div className="intro-view__paragraph-2">
             <p>
@@ -73,7 +73,7 @@ const Intro: React.FC = () => {
             </p>
           </div>
           <div className="intro-view__image-2">
-            <img src="/그룹 526.svg" alt="Cards" />
+            <img src="about_2.svg" alt="Cards" />
           </div>
           <div className="intro-view__paragraph-4">
             <p>아름다운 미래 해양도시 부산을 위하여 시민 여러분들의 많은 관심과 참여를 부탁드립니다. 감사합니다.</p>

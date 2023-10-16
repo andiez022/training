@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import GuestHeader from '../header/GuestHeader';
 
 import Button, { ButtonIconPlacement } from '../../components/Button/Button';
@@ -59,21 +59,28 @@ const AnnView: React.FC = () => {
     return data[dataId];
   };
 
+  useEffect(() => {
+    const icon = document.querySelector('.ann-view__image__icon');
+    if (icon instanceof HTMLElement) {
+      icon.style.animationPlayState = 'running';
+    }
+  }, []);
+
   return (
     <div className="ann-view">
       <GuestHeader />
       <div className="ann-view__top">
         <div className="ann-view__image">
           <div className="ann-view__image__overlay" />
-          <img src="/공지사항_bn.png" alt="AnnBG" />
+          <img src="/announcement_bn.png" alt="AnnBG" />
           <div className="ann-view__image__icon">
-            <img src="icon-공지사항.svg" alt="AnnIcon" />
+            <img src="icon_announcement.svg" alt="AnnIcon" />
             <p>깨바부의 새로운 소식을 전합니다.</p>
           </div>
         </div>
         <div className="ann-view__content">
           <div className="ann-view__table-head">
-            <p>공지사항</p>
+            <h2 className="gradual-color-transition">공지사항</h2>
             <div className="ann-view__drop-down">
               <Dropdown
                 elementAction={
@@ -95,15 +102,7 @@ const AnnView: React.FC = () => {
               </Dropdown>
               <div className="ann-view__search-area">
                 <TextInput dataId="" placeholder="공지사항 검색" />
-                <Button
-                  icon={ICONS.MAGNIFIER}
-                  iconPlacement={ButtonIconPlacement.Left}
-                  iconSize={IconSize.XL}
-                  onClick={() => {
-                    console.log('Clicked!');
-                  }}
-                  className="button--search"
-                >
+                <Button icon={ICONS.MAGNIFIER} iconPlacement={ButtonIconPlacement.Left} iconSize={IconSize.XL} className="button--search">
                   제목
                 </Button>
               </div>
