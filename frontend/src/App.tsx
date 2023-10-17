@@ -10,6 +10,8 @@ import LoadingView from './components/Loading/LoadingModal';
 import PrivateRoute from './components/Route/PrivateRoute';
 import store, { persistor } from './store';
 
+import Footer from './components/Footer/Footer';
+
 const HomeView = lazy(() => import('./views/home/HomeView'));
 const IntroView = lazy(() => import('./views/intro/IntroView'));
 const AnnView = lazy(() => import('./views/announcement/AnnView'));
@@ -49,6 +51,7 @@ const App: React.FC = () => {
                   <Route path="/campaign" element={<PrivateRoute guards={[]} element={<CampaignView />} />} />
                   <Route path="/board" element={<PrivateRoute guards={[]} element={<BoardView />} />} />
                 </Routes>
+                <Footer />
               </div>
             </BrowserRouter>
           </React.Suspense>

@@ -1,67 +1,164 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import GuestHeader from '../header/GuestHeader';
-import CardList from '../../components/Card/CardList';
 import Card from '../../components/Card/Card';
 
 import './HomeView.scss';
+import Icon, { ICONS, IconSize } from '../../components/SVG/Icon';
 
 const Home: React.FC = () => {
+  const banners = [
+    { id: 1, imgSrc: '/home_bn1.png' },
+    { id: 2, imgSrc: '/home_bn2.png' },
+    { id: 3, imgSrc: '/home_bn3.png' },
+  ];
+
+  const [currentBanner, setCurrentBanner] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentBanner((currentBanner + 1) % banners.length);
+    }, 3000);
+
+    return () => clearInterval(timer);
+  }, [currentBanner]);
+
+  const items = [
+    { id: 1, title: '콘텐츠 제목' },
+    { id: 2, title: '콘텐츠 제목 콘텐츠 제목 콘텐츠 제목 콘...' },
+    { id: 3, title: '콘텐츠 제목' },
+    { id: 4, title: '콘텐츠 제목' },
+  ];
+
   const card1Info = {
-    title: 'Card title',
+    title: '공지사항 입니다. 공지사항 입니다. 공지사항 입니...',
     content: 'This is the content of Card 1.',
+    date: '2023-05-05',
   };
 
   const card2Info = {
-    title: 'Card title',
-    content: 'This is the content of Card 2.',
+    title: '공지사항 입니다.',
+    content:
+      '튼튼하며, 천지는 곳이 광야에서 천하를 말이다. 불러 청춘의 바이며, 있는 못할 석가는 끓는 생의 찾아다녀도, 사막이다. 크고 두손을 원대하고, 인간의 봄바람이 ...',
+    date: '2023-05-05',
   };
 
   const card3Info = {
-    title: 'Card title',
+    title: '공지사항 입니다.',
     content: 'This is the content of Card 3.',
+    date: '2023-05-05',
   };
 
   const card4Info = {
-    title: 'Card title',
+    title: '공지사항 입니다.',
     content: 'This is the content of Card 4.',
+    date: '2023-05-05',
   };
 
   return (
     <div className="home-container">
       <GuestHeader />
-      <div className="image-container">
-        <img src="home_bn1.png" alt="Background" />
-        <div className="text-overlay">
-          <h2>함께 하자,</h2>
-          <h2>깨끗한 바다 부산으로!</h2>
-          <p>깨바부는 부산지역 내 테트라포드와 습지 현황에 대한 정보를 제공하고 있습니다.</p>
+      <div className="home-container__top">
+        <div className="banner-container">
+          <img src={banners[currentBanner].imgSrc} alt={`Home banner ${currentBanner + 1}`} />
+          <div className="text-overlay">
+            <h2>함께 하자,</h2>
+            <h2>깨끗한 바다 부산으로!</h2>
+            <p>깨바부는 부산지역 내 테트라포드와 습지 현황에 대한 정보를 제공하고 있습니다.</p>
+          </div>
         </div>
-      </div>
-      <div className="context-container">
-        <div className="announcement-container">
-          <div className="announcement-title">
-            <h2 className="gradual-color-transition">공지사항</h2>
-            <div className="more-icon">
-              <h2>icon here</h2>
+        <div className="context-container">
+          <div className="announcement-container">
+            <div className="announcement-title">
+              <h2 className="gradual-color-transition">공지사항</h2>
+              <button>
+                <Icon component={ICONS.PLUS} size={IconSize.XXL} />
+              </button>
+            </div>
+            <div className="announcement-card">
+              <Card title={card1Info.title} content={card1Info.content} date={card1Info.date} />
+              <Card title={card2Info.title} content={card2Info.content} date={card2Info.date} />
+              <Card title={card3Info.title} content={card3Info.content} date={card3Info.date} />
+              <Card title={card4Info.title} content={card4Info.content} date={card4Info.date} />
             </div>
           </div>
-          <div className="announcement-card">
-            <Card title={card1Info.title}>
-              <CardList>{card1Info.content}</CardList>
-            </Card>
-            <Card title={card2Info.title}>
-              <CardList>{card2Info.content}</CardList>
-            </Card>
-            <Card title={card3Info.title}>
-              <CardList>{card3Info.content}</CardList>
-            </Card>
-            <Card title={card4Info.title}>
-              <CardList>{card4Info.content}</CardList>
-            </Card>
+          <div className="highlights-container">
+            <div className="list-container">
+              <div className="list-header">
+                <h2 className="gradual-color-transition">콘텐츠</h2>
+                <button>
+                  <Icon component={ICONS.PLUS} size={IconSize.XXL} />
+                </button>
+              </div>
+              <ul className="list-body">
+                {items.map((item) => (
+                  <li key={item.id} className="list-item">
+                    <div className="item-title">
+                      <span className="icon-span" />
+                      <span className="title-span">{item.title}</span>
+                    </div>
+                    <Icon component={ICONS.ARROW_RIGHT} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="list-container">
+              <div className="list-header">
+                <h2 className="gradual-color-transition">리빙랩</h2>
+                <button>
+                  <Icon component={ICONS.PLUS} size={IconSize.XXL} />
+                </button>
+              </div>
+              <ul className="list-body">
+                {items.map((item) => (
+                  <li key={item.id} className="list-item">
+                    <div className="item-title">
+                      <span className="icon-span" />
+                      <span className="title-span">{item.title}</span>
+                    </div>
+                    <Icon component={ICONS.ARROW_RIGHT} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="list-container">
+              <div className="list-header">
+                <h2 className="gradual-color-transition">캠페인</h2>
+                <button>
+                  <Icon component={ICONS.PLUS} size={IconSize.XXL} />
+                </button>
+              </div>
+              <ul className="list-body">
+                {items.map((item) => (
+                  <li key={item.id} className="list-item">
+                    <div className="item-title">
+                      <span className="icon-span" />
+                      <span className="title-span">{item.title}</span>
+                    </div>
+                    <Icon component={ICONS.ARROW_RIGHT} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="list-container">
+              <div className="list-header">
+                <h2 className="gradual-color-transition">자유게시판</h2>
+                <button>
+                  <Icon component={ICONS.PLUS} size={IconSize.XXL} />
+                </button>
+              </div>
+              <ul className="list-body">
+                {items.map((item) => (
+                  <li key={item.id} className="list-item">
+                    <div className="item-title">
+                      <span className="icon-span" />
+                      <span className="title-span">{item.title}</span>
+                    </div>
+                    <Icon component={ICONS.ARROW_RIGHT} />
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-        </div>
-        <div className="highlights-container">
-          <CardList>Child</CardList>
         </div>
       </div>
     </div>

@@ -1,12 +1,61 @@
 @import '../../common/sass/variables';
 
 .card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   border: 1px solid #CCCCCC;
-  background: $color-white;
   border-radius: 16px;
   cursor: pointer;
-  // box-shadow: 0px 6px 18px rgb(0 0 0 / 16%);
+  height: 150px;
+  width: 300px;
+  padding: 20px;
+
+  .card-title {
+    font-size: 15px;
+    font-weight: bold;
+    color: #3B4650;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .card-content {
+    font-size: 14px;
+    font-weight: 300;
+    color: #606A74;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 4.2em;
+  }
+
+  .card-date {
+    font-size: 12px;
+    font-weight: 300;
+    color: #3B4650;
+  }
+
+  &:hover {
+    background: linear-gradient(to right, #0066C1 25%, #009FE5);
+    box-shadow: 6px 6px 25px #00000033;
+    transform: translateY(-0.25em);
+    transition: transform 0.3s;
+
+    span {
+      color: white;
+    }
+  }
 }
+
+
+
+
+
 
 .card-list {
   background: $color-white;

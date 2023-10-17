@@ -46,10 +46,15 @@ ul {
 }
 
 .gradual-color-transition {
-  background: linear-gradient(to right, #0066C1 25%, #009FE5);
+  background: linear-gradient(90deg, #0367C2 0%, #009FE5 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
 }
 
 @keyframes slideUp {

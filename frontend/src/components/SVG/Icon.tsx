@@ -3,6 +3,7 @@ import * as React from 'react';
 
 import { ReactComponent as ArrowDown } from './icons/arrow-down.svg';
 import { ReactComponent as ArrowDownLong } from './icons/arrow-down-long.svg';
+import { ReactComponent as ArrowRight } from './icons/arrow-right.svg';
 import { ReactComponent as Backward } from './icons/backward.svg';
 import { ReactComponent as Check } from './icons/check.svg';
 import { ReactComponent as CheckboxHover } from './icons/checkbox-hover.svg';
@@ -15,6 +16,7 @@ import { ReactComponent as ExpandMore } from './icons/expand-more.svg';
 import { ReactComponent as First } from './icons/first.svg';
 import { ReactComponent as Forward } from './icons/forward.svg';
 import { ReactComponent as Magnifier } from './icons/magnifier.svg';
+import { ReactComponent as Plus } from './icons/plus.svg';
 import { ReactComponent as InfoCircle } from './icons/info-circle.svg';
 import { ReactComponent as Last } from './icons/last.svg';
 import { ReactComponent as Sort } from './icons/sort.svg';
@@ -31,6 +33,7 @@ export const ICONS = {
   CLOSE: Close,
   CHECK: Check,
   MAGNIFIER: Magnifier,
+  PLUS: Plus,
   ERROR_CIRCLE: ErrorCircle,
   INFO_CIRCLE: InfoCircle,
   SUCCESS_CIRCLE: SuccessCircle,
@@ -41,6 +44,7 @@ export const ICONS = {
   SORT: Sort,
   ARROW_DOWN_LONG: ArrowDownLong,
   ARROW_DOWN: ArrowDown,
+  ARROW_RIGHT: ArrowRight,
   CHECKBOX_HOVER: CheckboxHover,
   CHECKBOX_PRESSED: CheckboxPressed,
   RADIO_DEFAULT: RadioDefault,

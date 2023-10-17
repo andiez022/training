@@ -1,13 +1,60 @@
 .gallery-container {
-	display: flex;
-	flex-direction: column;
+	.grid-row {
+		margin-top: 40px;
+		display: flex;
+		justify-content: space-between;
+
+		figure {
+			border: 1px solid #CCCCCC;
+			vertical-align: middle;
+
+			&:hover {
+				cursor: pointer;
+				border: 1px solid #0066C1;
+				box-shadow: 6px 6px 25px #00000033;
+				transition: 0.3s ease;
+
+				figcaption {
+					border-top: 1px solid #0066C1;
+					background: linear-gradient(90deg, #0367C2 0%, #009FE5 100%);
+					color: white;
+					transition: 0.3s ease;
+				}
+			}
+		}
+	
+		figure img {
+	
+		}
+	
+		figcaption {
+			border-top: 1px solid #CCCCCC;
+			background-color: #D4E9FC;
+			height: 60px;
+			font-size: 15px;
+			padding: 20px 0;
+		}
+	}
 }
 
-.page {
+.pagination {
 	display: flex;
-	flex-direction: row;
+	justify-content: center;
+	margin-top: 60px;
+	gap: 2px;
 }
 
-.row {
+.button-nav {
+	cursor: pointer;
+}
+
+.page-number {
 	display: flex;
+	gap: 2px;
+
+	button {
+		background-color: white;
+		border: 1px solid #CCCCCC;
+		width: 32px;
+	}
 }

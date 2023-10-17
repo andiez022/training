@@ -59,13 +59,6 @@ const AnnView: React.FC = () => {
     return data[dataId];
   };
 
-  useEffect(() => {
-    const icon = document.querySelector('.ann-view__image__icon');
-    if (icon instanceof HTMLElement) {
-      icon.style.animationPlayState = 'running';
-    }
-  }, []);
-
   return (
     <div className="ann-view">
       <GuestHeader />
@@ -103,7 +96,7 @@ const AnnView: React.FC = () => {
               <div className="ann-view__search-area">
                 <TextInput dataId="" placeholder="공지사항 검색" />
                 <Button icon={ICONS.MAGNIFIER} iconPlacement={ButtonIconPlacement.Left} iconSize={IconSize.XL} className="button--search">
-                  제목
+                  검색
                 </Button>
               </div>
             </div>

@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import GuestHeader from '../header/GuestHeader';
 
 import './FacilityView.scss';
 
 const FacilityView: React.FC = () => {
+  const [area, setSelectedArea] = useState('부산');
+
   return (
     <div className="facility-view">
       <GuestHeader />
@@ -20,12 +22,24 @@ const FacilityView: React.FC = () => {
           <h2 className="gradual-color-transition">시설현황</h2>
           <div className="facility-view__display">
             <div className="facility-view__map-area">
-              <p>Button here</p>
-              <p>Map handling</p>
+              <button>부산 전체보기</button>
+              <img src="/map.svg" alt="map" />
             </div>
-            <div className="facility-view__status">
-              <p>Area-text</p>
-              <p>ScrollingView handling</p>
+            <div className="facility-view__scroll">
+              <span>{area} 수거사각지대</span>
+              <ul className="item-list">
+                <span>현재 사용 가능한 데이터가 없습니다.</span>
+                {/* <li className="item">
+                  <h2>Title 1</h2>
+                  <img src="image1.jpg" alt="1" />
+                  <p>Description 1</p>
+                </li>
+                <li className="item">
+                  <h2>Title 2</h2>
+                  <img src="image2.jpg" alt="2" />
+                  <p>Description 2</p>
+                </li> */}
+              </ul>
             </div>
           </div>
         </div>

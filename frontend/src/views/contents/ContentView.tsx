@@ -23,14 +23,6 @@ const ContentView: React.FC = () => {
           </div>
           <div className="content-view__display">
             <VideoCollection />
-            {/* <div className="content-view__table" />
-            <div className="content-view__nav">
-              <button className="prev-page">Previous</button>
-              <button className="first-page">First</button>
-              <button className="page-number">1</button>
-              <button className="last-page">Last</button>
-              <button className="next-page">Next</button>
-            </div> */}
           </div>
         </div>
       </div>

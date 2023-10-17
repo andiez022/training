@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 import './Footer.scss';
 
@@ -8,7 +8,7 @@ const Footer: React.FC<FooterProps> = () => {
   return (
     <footer className="footer">
       <div className="footer__left">
-        <img src="/그룹 221.svg" alt="footerLogo" />
+        <img src="/footer.svg" alt="footerLogo" />
       </div>
       <div className="footer__right">
         <p>47430 부산광역시 부산진구 엄광로 176 | TEL. 051-890-1754 | FAX. 051-890-1759</p>

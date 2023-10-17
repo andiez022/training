@@ -117,7 +117,6 @@ const VideoCollection: React.FC = () => {
     ];
 
     setVideoData(exampleVideoData);
-    // Example: fetchVideoData().then((data) => setVideoData(data));
   }, []);
 
   const renderVideoItems = (page: number) => {
@@ -143,10 +142,6 @@ const VideoCollection: React.FC = () => {
         </div>
       </div>
     ));
-  };
-
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
   };
 
   const handlePrevPage = () => {
@@ -181,7 +176,7 @@ const VideoCollection: React.FC = () => {
         </button>
         <div className="page-number">
           {Array.from({ length: totalPageCount }, (_, index) => (
-            <button key={index + 1} onClick={() => handlePageChange(index + 1)}>
+            <button key={index + 1} onClick={() => setCurrentPage(index + 1)}>
               {index + 1}
             </button>
           ))}

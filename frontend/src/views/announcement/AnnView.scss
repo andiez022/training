@@ -17,6 +17,7 @@
 		background-position: center;
 		background-repeat: no-repeat;
 		overflow: hidden;
+		height: 300px;
 
 		&__overlay {
 			position: absolute;
@@ -74,7 +75,7 @@
 
 	&__table-body {
 		margin-top: 39px;
-		padding-bottom: 61px;
+		margin-bottom: 61px;
 	}
 }
 
