@@ -1,12 +1,11 @@
 import React from 'react';
-import GuestHeader from '../header/GuestHeader';
+import Header from '../header/Header';
 
 import './IntroView.scss';
 
 const Intro: React.FC = () => {
   return (
     <div className="intro-view">
-      <GuestHeader />
       <div className="intro-view__top">
         <div className="intro-view__content">
           <div className="intro-view__logo">

@@ -1,0 +1,92 @@
+@import '../../common/sass/variables';
+
+.customized-table {
+  tbody {
+    display: block;
+    overflow: auto;
+  }
+
+  thead {
+    tr {
+      background-color: #D4E9FC;
+    }
+  }
+
+	tr {
+		border-bottom: 1px solid #D9D9D9;
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+
+    th {
+			width: 100%;
+			height: 50px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    td {
+			border-left: none;
+			border-right: none;
+			height: 50px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 300;
+    }
+
+    th:first-child,
+    td:first-child {
+      width: 6em;
+		}
+
+		th:nth-child(2),
+		td:nth-child(2) {
+			width: 36em;
+		}
+
+		td:nth-child(2) {
+			text-align: left;
+			padding: 0 10px;
+		}
+
+		th:nth-child(3), td:nth-child(3),
+		th:nth-child(4), td:nth-child(4) {
+			width: 10em;
+		}
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 60px;
+    gap: 2px;
+  
+    .icon-nav {
+      display: flex;
+      gap: 2px;
+  
+      .button-nav {
+        cursor: pointer;
+        border: none;
+      }
+    }
+  
+    .page-number {
+      display: flex;
+      gap: 2px;
+    
+      button {
+        background-color: white;
+        border: 1px solid #CCCCCC;
+        width: 1.75rem;
+        height: 1.75rem;
+      }
+
+      button.clicked {
+        background: linear-gradient(90deg, #0367C2 0%, #009FE5 100%);
+        color: white;
+      }
+    }
+  }
+}

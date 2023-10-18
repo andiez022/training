@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import GuestHeader from '../header/GuestHeader';
+import Header from '../header/Header';
 
 import './FacilityView.scss';
 
@@ -8,7 +8,6 @@ const FacilityView: React.FC = () => {
 
   return (
     <div className="facility-view">
-      <GuestHeader />
       <div className="facility-view__top">
         <div className="facility-view__image">
           <div className="facility-view__image__overlay" />

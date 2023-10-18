@@ -1,36 +1,24 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import classNames from 'classnames';
 import Icon, { ICONS, IconSize } from '../SVG/Icon';
 
-import './ImageGallery.scss';
+import './CustomTable.scss';
 
-const ImageGallery: React.FC = () => {
-  const data = [
-    { id: 1, image: '/logo192.png', description: 'Item 1' },
-    { id: 2, image: '/logo192.png', description: 'Item 2' },
-    { id: 3, image: '/logo192.png', description: 'Item 3' },
-    { id: 4, image: '/logo192.png', description: 'Item 4' },
-    { id: 5, image: '/logo192.png', description: 'Item 5' },
-    { id: 6, image: '/logo192.png', description: 'Item 6' },
-    { id: 7, image: '/logo192.png', description: 'Item 7' },
-    { id: 8, image: '/logo192.png', description: 'Item 8' },
-    { id: 9, image: '/logo192.png', description: 'Item 9' },
-    { id: 10, image: '/logo192.png', description: 'Item 10' },
-    { id: 11, image: '/logo192.png', description: 'Item 11' },
-    { id: 12, image: '/logo192.png', description: 'Item 12' },
-    { id: 13, image: '/logo192.png', description: 'Item 13' },
-  ];
+interface TableProps {
+  data: any[];
+  itemsPerPage: number;
+  columns: { dataId: string; label: string }[];
+  className?: string;
+}
 
-  const itemsPerPage = 12;
-  const itemsPerRow = 4;
-  const rowsPerPage = 3;
-  const totalPageCount = Math.ceil(data.length / itemsPerPage);
-
+const CustomTable: React.FC<TableProps> = ({ data, itemsPerPage, columns, className }) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPageCount = Math.ceil(data.length / itemsPerPage);
 
   const handlePrevPage = () => {
     if (currentPage > 1) {
@@ -52,20 +40,28 @@ const ImageGallery: React.FC = () => {
     setCurrentPage(totalPageCount);
   };
 
+  const tableClasses = classNames('customized-table', className);
+
   return (
-    <div className="gallery-container">
-      {Array.from({ length: rowsPerPage }, (_, rowIndex) => (
-        <div key={rowIndex} className="grid-row">
-          {currentItems.slice(rowIndex * itemsPerRow, (rowIndex + 1) * itemsPerRow).map((item) => (
-            <Link to={`/campaign/${item.id}`} key={item.id}>
-              <figure>
-                <img src={item.image} alt={item.description} />
-                <figcaption>Album name goes here</figcaption>
-              </figure>
-            </Link>
+    <div className={tableClasses}>
+      <table>
+        <thead>
+          <tr>
+            {columns.map((column) => (
+              <th key={column.dataId}>{column.label}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody style={{ maxHeight: '600px' }}>
+          {currentItems.map((item) => (
+            <tr key={item}>
+              {columns.map((column) => (
+                <td key={column.dataId}>{item[column.dataId]}</td>
+              ))}
+            </tr>
           ))}
-        </div>
-      ))}
+        </tbody>
+      </table>
       <div className="pagination">
         {currentPage > 1 && (
           <div className="icon-nav">
@@ -105,4 +101,4 @@ const ImageGallery: React.FC = () => {
   );
 };
 
-export default ImageGallery;
+export default CustomTable;

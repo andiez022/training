@@ -6,19 +6,38 @@
   min-height: 100vh;
 
   &__top {
-    margin-top: 100px;
-    flex: 1;
+    margin-top: 5%;
   }
 
   .banner-container {
     z-index: -1;
+    width: 100%;
+    height: 700px;
+    overflow: hidden;
+
+    .banner-item {
+      position: absolute;
+      opacity: 0;
+      transition: width 0.5s, opacity 3s, transform 3s;
+    }
+
+    .banner-item.active {
+      opacity: 1;
+    }
+
+    .img-item {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+    }
 
     .text-overlay {
       position: absolute;
       left: 50%;
       transform: translate(-50%, -50%);
       text-align: center;
-      z-index: 2;
+      z-index: 1;
       opacity: 1;
       animation: slideUp 1s forwards;
     

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import GuestHeader from '../header/GuestHeader';
+import React, { useState } from 'react';
+import Header from '../header/Header';
 
 import Button, { ButtonIconPlacement } from '../../components/Button/Button';
 import { ICONS, IconSize } from '../../components/SVG/Icon';
@@ -7,7 +7,7 @@ import Dropdown from '../../components/Dropdown/Dropdown';
 import DropdownItem from '../../components/Dropdown/DropdownItem';
 import TextInput from '../../components/TextInput/TextInput';
 
-import Table, { ColumnState } from '../../components/Table/Table';
+import CustomTable from '../../components/Table/CustomTable';
 
 import './AnnView.scss';
 
@@ -18,23 +18,11 @@ const AnnView: React.FC = () => {
     setSelectedItemText(itemText);
   };
 
-  const columns: ColumnState[] = [
-    {
-      label: '번호',
-      dataId: 'id',
-    },
-    {
-      label: '제목',
-      dataId: 'title',
-    },
-    {
-      label: '작성자',
-      dataId: 'author',
-    },
-    {
-      label: '작성일',
-      dataId: 'date',
-    },
+  const columns = [
+    { dataId: 'id', label: '번호' },
+    { dataId: 'title', label: '제목' },
+    { dataId: 'author', label: '작성자' },
+    { dataId: 'date', label: '작성일' },
   ];
 
   const data = [
@@ -46,22 +34,19 @@ const AnnView: React.FC = () => {
       date: '2023-05-05',
     },
     { id: 2, title: 'Short', author: '관리자 1', date: '2023-05-05' },
-    { id: 2, title: 'Short', author: '관리자 1', date: '2023-05-05' },
-    { id: 2, title: 'Short', author: '관리자 1', date: '2023-05-05' },
-    { id: 2, title: 'Short', author: '관리자 1', date: '2023-05-05' },
-    { id: 2, title: 'Short', author: '관리자 1', date: '2023-05-05' },
-    { id: 2, title: 'Short', author: '관리자 1', date: '2023-05-05' },
-    { id: 2, title: 'Short', author: '관리자 1', date: '2023-05-05' },
-    { id: 2, title: 'Short', author: '관리자 1', date: '2023-05-05' },
+    { id: 3, title: 'Short', author: '관리자 1', date: '2023-05-05' },
+    { id: 4, title: 'Short', author: '관리자 1', date: '2023-05-05' },
+    { id: 5, title: 'Short', author: '관리자 1', date: '2023-05-05' },
+    { id: 6, title: 'Short', author: '관리자 1', date: '2023-05-05' },
+    { id: 7, title: 'Short', author: '관리자 1', date: '2023-05-05' },
+    { id: 8, title: 'Short', author: '관리자 1', date: '2023-05-05' },
+    { id: 9, title: 'Short', author: '관리자 1', date: '2023-05-05' },
+    { id: 10, title: 'Short', author: '관리자 1', date: '2023-05-05' },
+    { id: 11, title: 'Short', author: '관리자 1', date: '2023-05-05' },
   ];
-
-  const cellRenderer = ({ data, dataId }: { data: any; dataId: string }) => {
-    return data[dataId];
-  };
 
   return (
     <div className="ann-view">
-      <GuestHeader />
       <div className="ann-view__top">
         <div className="ann-view__image">
           <div className="ann-view__image__overlay" />
@@ -102,10 +87,7 @@ const AnnView: React.FC = () => {
             </div>
           </div>
           <div className="ann-view__table-body">
-            <Table columns={columns} data={data} cellRenderer={cellRenderer} titleElement="" className="table-generic" />
-          </div>
-          <div className="ann-view__table-nav">
-            <p>Nav here</p>
+            <CustomTable data={data} itemsPerPage={10} columns={columns} />
           </div>
         </div>
       </div>

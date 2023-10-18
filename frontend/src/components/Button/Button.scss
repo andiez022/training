@@ -407,7 +407,7 @@
     gap: 10px;
     width: 88px;
     height: 40px;
-    background: #0066C1;
+    background: linear-gradient(90deg, #0367C2 0%, #009FE5 100%);
     border: 1px solid #C0C0C0;
     border-radius: 0px;
     color: #FFFFFF;
@@ -415,10 +415,6 @@
     font-size: 14px;
     font-weight: 300;
     overflow: hidden;
-
-    &:hover {
-      background-color: #0066C1;
-    }
   }
 
   @media only screen and (max-width: $breakpoint-xxl) {

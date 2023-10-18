@@ -17,7 +17,11 @@ const CustomNavLink: React.FC<NavLinkProps> = ({ to, text }) => {
   );
 };
 
-const GuestHeader = () => {
+interface HeaderProps {
+  userRole: string;
+}
+
+const Header: React.FC<HeaderProps> = ({ userRole }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
@@ -44,4 +48,4 @@ const GuestHeader = () => {
   );
 };
 
-export default GuestHeader;
+export default Header;

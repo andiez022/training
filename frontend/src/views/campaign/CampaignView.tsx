@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import GuestHeader from '../header/GuestHeader';
+import Header from '../header/Header';
 
 import Dropdown from '../../components/Dropdown/Dropdown';
 import DropdownItem from '../../components/Dropdown/DropdownItem';
@@ -20,7 +20,6 @@ const CampaignView: React.FC = () => {
 
   return (
     <div className="campaign-view">
-      <GuestHeader />
       <div className="campaign-view__top">
         <div className="campaign-view__image">
           <div className="campaign-view__image__overlay" />

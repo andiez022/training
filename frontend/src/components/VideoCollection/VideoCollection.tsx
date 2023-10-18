@@ -6,6 +6,7 @@ import './VideoCollection.scss';
 
 export interface VideoItem {
   id: number;
+  link: string;
   image: string;
   title: string;
   description: string;
@@ -19,11 +20,11 @@ const VideoCollection: React.FC = () => {
 
   const totalPageCount = Math.ceil(videoData.length / itemsPerPage);
 
-  // Fetch or set your video data in the useEffect hook
   useEffect(() => {
     const exampleVideoData: VideoItem[] = [
       {
         id: 1,
+        link: 'https://www.youtube.com/watch?v=jNQXAC9IVRw',
         image: '/logo192.png',
         title: '전영은 콘텐츠 테스트 전영은 콘텐츠 테스트 전영은 콘텐츠 테스트 전영은 콘텐츠 테스트 전영 츠 테스트 전영ㅇ',
         description: 'acb3213123555dsadsad',
@@ -31,6 +32,7 @@ const VideoCollection: React.FC = () => {
       },
       {
         id: 2,
+        link: 'https://www.youtube.com/watch?v=jNQXAC9IVRw',
         image: '/logo192.png',
         title: 'Video 2',
         description:
@@ -39,6 +41,7 @@ const VideoCollection: React.FC = () => {
       },
       {
         id: 3,
+        link: 'https://www.youtube.com/watch?v=jNQXAC9IVRw',
         image: '/logo192.png',
         title: 'Video 3',
         description: 'acb3213123555dsadsad',
@@ -46,6 +49,7 @@ const VideoCollection: React.FC = () => {
       },
       {
         id: 4,
+        link: 'https://www.youtube.com/watch?v=jNQXAC9IVRw',
         image: '/logo192.png',
         title: 'Video 4',
         description: 'acb3213123555dsadsad',
@@ -53,6 +57,7 @@ const VideoCollection: React.FC = () => {
       },
       {
         id: 5,
+        link: 'https://www.youtube.com/watch?v=jNQXAC9IVRw',
         image: '/logo192.png',
         title: 'Video 5',
         description: 'acb3213123555dsadsad',
@@ -60,6 +65,7 @@ const VideoCollection: React.FC = () => {
       },
       {
         id: 6,
+        link: 'https://www.youtube.com/watch?v=jNQXAC9IVRw',
         image: '/logo192.png',
         title: 'Video 6',
         description: 'acb3213123555dsadsad',
@@ -67,6 +73,7 @@ const VideoCollection: React.FC = () => {
       },
       {
         id: 7,
+        link: 'https://www.youtube.com/watch?v=jNQXAC9IVRw',
         image: '/logo192.png',
         title: 'Video 7',
         description: 'acb3213123555dsadsad',
@@ -74,6 +81,7 @@ const VideoCollection: React.FC = () => {
       },
       {
         id: 8,
+        link: 'https://www.youtube.com/watch?v=jNQXAC9IVRw',
         image: '/logo192.png',
         title: 'Video 8',
         description: 'acb3213123555dsadsad',
@@ -81,6 +89,7 @@ const VideoCollection: React.FC = () => {
       },
       {
         id: 9,
+        link: 'https://www.youtube.com/watch?v=jNQXAC9IVRw',
         image: '/logo192.png',
         title: 'Video 9',
         description: 'acb3213123555dsadsad',
@@ -88,6 +97,7 @@ const VideoCollection: React.FC = () => {
       },
       {
         id: 10,
+        link: 'https://www.youtube.com/watch?v=jNQXAC9IVRw',
         image: '/logo192.png',
         title: 'Video 10',
         description: 'acb3213123555dsadsad',
@@ -95,6 +105,7 @@ const VideoCollection: React.FC = () => {
       },
       {
         id: 11,
+        link: 'https://www.youtube.com/watch?v=jNQXAC9IVRw',
         image: '/logo192.png',
         title: 'Video 11',
         description: 'acb3213123555dsadsad',
@@ -102,6 +113,7 @@ const VideoCollection: React.FC = () => {
       },
       {
         id: 12,
+        link: 'https://www.youtube.com/watch?v=jNQXAC9IVRw',
         image: '/logo192.png',
         title: 'Video 12',
         description: 'acb3213123555dsadsad',
@@ -109,6 +121,7 @@ const VideoCollection: React.FC = () => {
       },
       {
         id: 13,
+        link: 'https://www.youtube.com/watch?v=jNQXAC9IVRw',
         image: '/logo192.png',
         title: 'Video 13',
         description: 'acb3213123555dsadsad',
@@ -127,7 +140,9 @@ const VideoCollection: React.FC = () => {
     return itemsToDisplay.map((video) => (
       <div key={video.id} className="video">
         <div className="video__thumbnail">
-          <img src={video.image} alt="Video Thumbnail" />
+          <a href={video.link}>
+            <img src={video.image} alt="Video Thumbnail" />
+          </a>
         </div>
         <div className="video__info">
           <div className="video__info__header">
@@ -168,25 +183,39 @@ const VideoCollection: React.FC = () => {
     <div>
       <div className="video-collection">{renderVideoItems(currentPage)}</div>
       <div className="pagination">
-        <button className="button-nav" onClick={handleFirstPage}>
-          <Icon className="icon-nav" component={ICONS.FIRST} size={IconSize.XL} />
-        </button>
-        <button className="button-nav" onClick={handlePrevPage}>
-          <Icon className="icon-nav" component={ICONS.BACKWARD} size={IconSize.XL} />
-        </button>
+        {currentPage > 1 && (
+          <div className="icon-nav">
+            <button onClick={handleFirstPage} className="button-nav">
+              <Icon component={ICONS.FIRST} size={IconSize.XL} />
+            </button>
+            <button onClick={handlePrevPage} className="button-nav">
+              <Icon component={ICONS.BACKWARD} size={IconSize.XL} />
+            </button>
+          </div>
+        )}
         <div className="page-number">
           {Array.from({ length: totalPageCount }, (_, index) => (
-            <button key={index + 1} onClick={() => setCurrentPage(index + 1)}>
+            <button
+              key={index}
+              onClick={() => {
+                setCurrentPage(index + 1);
+              }}
+              className={`button ${currentPage === index + 1 ? 'clicked' : ''}`}
+            >
               {index + 1}
             </button>
           ))}
         </div>
-        <button className="button-nav" onClick={handleNextPage}>
-          <Icon className="icon-nav" component={ICONS.FORWARD} size={IconSize.XL} />
-        </button>
-        <button className="button-nav" onClick={handleLastPage}>
-          <Icon className="icon-nav" component={ICONS.LAST} size={IconSize.XL} />
-        </button>
+        {currentPage < totalPageCount && (
+          <div className="icon-nav">
+            <button onClick={handleNextPage} className="button-nav">
+              <Icon component={ICONS.FORWARD} size={IconSize.XL} />
+            </button>
+            <button onClick={handleLastPage} className="button-nav">
+              <Icon component={ICONS.LAST} size={IconSize.XL} />
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

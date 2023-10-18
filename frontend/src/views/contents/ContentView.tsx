@@ -1,5 +1,5 @@
 import React from 'react';
-import GuestHeader from '../header/GuestHeader';
+import Header from '../header/Header';
 import VideoCollection from '../../components/VideoCollection/VideoCollection';
 
 import './ContentView.scss';
@@ -7,7 +7,6 @@ import './ContentView.scss';
 const ContentView: React.FC = () => {
   return (
     <div className="content-view">
-      <GuestHeader />
       <div className="content-view__top">
         <div className="content-view__image">
           <div className="content-view__image__overlay" />
@@ -18,7 +17,7 @@ const ContentView: React.FC = () => {
           </div>
         </div>
         <div className="content-view__content">
-          <div className="content-view__content__title">
+          <div className="content-view__heading">
             <h2 className="gradual-color-transition">콘텐츠</h2>
           </div>
           <div className="content-view__display">

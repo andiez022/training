@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import GuestHeader from '../header/GuestHeader';
+import Header from '../header/Header';
 
 import Button, { ButtonIconPlacement } from '../../components/Button/Button';
 import { ICONS, IconSize } from '../../components/SVG/Icon';
@@ -7,7 +7,7 @@ import Dropdown from '../../components/Dropdown/Dropdown';
 import DropdownItem from '../../components/Dropdown/DropdownItem';
 import TextInput from '../../components/TextInput/TextInput';
 
-import Table, { ColumnState } from '../../components/Table/Table';
+import CustomTable from '../../components/Table/CustomTable';
 
 import './BoardView.scss';
 
@@ -18,23 +18,11 @@ const BoardView: React.FC = () => {
     setSelectedItemText(itemText);
   };
 
-  const columns: ColumnState[] = [
-    {
-      label: '번호',
-      dataId: 'id',
-    },
-    {
-      label: '제목',
-      dataId: 'title',
-    },
-    {
-      label: '작성자',
-      dataId: 'author',
-    },
-    {
-      label: '작성일',
-      dataId: 'date',
-    },
+  const columns = [
+    { dataId: 'id', label: '번호' },
+    { dataId: 'title', label: '제목' },
+    { dataId: 'author', label: '작성자' },
+    { dataId: 'date', label: '작성일' },
   ];
 
   const data = [
@@ -55,13 +43,8 @@ const BoardView: React.FC = () => {
     { id: 2, title: 'Short', author: '관리자 1', date: '2023-05-05' },
   ];
 
-  const cellRenderer = ({ data, dataId }: { data: any; dataId: string }) => {
-    return data[dataId];
-  };
-
   return (
     <div className="board-view">
-      <GuestHeader />
       <div className="board-view__top">
         <div className="board-view__image">
           <div className="board-view__image__overlay" />
@@ -73,7 +56,7 @@ const BoardView: React.FC = () => {
         </div>
         <div className="board-view__content">
           <div className="lab-view__table-head">
-            <h2 className="gradual-color-transition">공지사항</h2>
+            <h2 className="gradual-color-transition">자유게시판</h2>
             <div className="lab-view__drop-down">
               <Dropdown
                 elementAction={
@@ -110,10 +93,7 @@ const BoardView: React.FC = () => {
             </div>
           </div>
           <div className="lab-view__table-body">
-            <Table columns={columns} data={data} cellRenderer={cellRenderer} titleElement="" className="table-generic" />
-          </div>
-          <div className="board-view__table__nav">
-            <p>Nav here</p>
+            <CustomTable columns={columns} data={data} itemsPerPage={10} />
           </div>
         </div>
       </div>

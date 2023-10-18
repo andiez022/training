@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import GuestHeader from '../header/GuestHeader';
+import Header from '../header/Header';
 import Card from '../../components/Card/Card';
 
 import './HomeView.scss';
@@ -17,7 +17,7 @@ const Home: React.FC = () => {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentBanner((currentBanner + 1) % banners.length);
-    }, 3000);
+    }, 5000);
 
     return () => clearInterval(timer);
   }, [currentBanner]);
@@ -56,10 +56,17 @@ const Home: React.FC = () => {
 
   return (
     <div className="home-container">
-      <GuestHeader />
       <div className="home-container__top">
         <div className="banner-container">
-          <img src={banners[currentBanner].imgSrc} alt={`Home banner ${currentBanner + 1}`} />
+          {banners.map((banner, index) => (
+            <div key={banner.id} className={`banner-item ${index === currentBanner ? 'active' : ''}`}>
+              <img
+                src={banner.imgSrc}
+                alt={`Home banner ${banner.id}`}
+                className={`image-item ${index === currentBanner ? 'active' : ''}`}
+              />
+            </div>
+          ))}
           <div className="text-overlay">
             <h2>함께 하자,</h2>
             <h2>깨끗한 바다 부산으로!</h2>

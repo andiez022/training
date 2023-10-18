@@ -33,6 +33,7 @@
 			height: 60px;
 			font-size: 15px;
 			padding: 20px 0;
+			color: #000000;
 		}
 	}
 }
@@ -42,19 +43,32 @@
 	justify-content: center;
 	margin-top: 60px;
 	gap: 2px;
-}
 
-.button-nav {
-	cursor: pointer;
-}
+	.icon-nav {
+		display: flex;
+		gap: 2px;
 
-.page-number {
-	display: flex;
-	gap: 2px;
+		.button-nav {
+			cursor: pointer;
+			border: none;
+		}
+	}
 
-	button {
-		background-color: white;
-		border: 1px solid #CCCCCC;
-		width: 32px;
+	.page-number {
+		display: flex;
+		gap: 2px;
+	
+		button {
+			background-color: white;
+			border: 1px solid #CCCCCC;
+			width: 1.75rem;
+      height: 1.75rem;
+		}
+
+		button.clicked {
+			background: linear-gradient(90deg, #0367C2 0%, #009FE5 100%);
+			color: white;
+		}
 	}
 }
+
