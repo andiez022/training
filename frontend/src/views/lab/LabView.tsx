@@ -11,7 +11,7 @@ import CustomTable from '../../components/Table/CustomTable';
 
 import './LabView.scss';
 
-const LabView: React.FC = () => {
+const LabView: React.FC<{ userRole: string }> = ({ userRole }) => {
   const [selectedItemText, setSelectedItemText] = useState('');
 
   const handleDropdownItemClick = (itemText: string) => {
@@ -85,7 +85,7 @@ const LabView: React.FC = () => {
                   onClick={() => {
                     console.log('Clicked!');
                   }}
-                  className="button--search"
+                  className="button--icon-text"
                 >
                   제목
                 </Button>
@@ -93,7 +93,7 @@ const LabView: React.FC = () => {
             </div>
           </div>
           <div className="lab-view__table-body">
-            <CustomTable columns={columns} data={data} itemsPerPage={10} />
+            <CustomTable columns={columns} data={data} itemsPerPage={10} userRole={userRole} />
           </div>
         </div>
       </div>

@@ -20,7 +20,10 @@
   z-index: 1;
   box-shadow: 0px 6px 18px rgb(0, 0, 0, 0.16);
   top: 0;
-  background-color: $color-white;
+}
+
+.hide-links {
+  background: linear-gradient(180deg, #0066C1 0%, #0088E3 100%);
 }
 
 .nav {
@@ -28,7 +31,17 @@
 }
 
 .logo {
+  display: flex;
   margin-left: 10%;
+  align-items: center;
+
+  p {
+    margin-bottom: 0.5em;
+    margin-left: 1em;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+  }
 }
 
 .nav-links {

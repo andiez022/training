@@ -1,6 +1,8 @@
-import React from 'react';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
+import React, { useState } from 'react';
+import { Formik, Field, Form, ErrorMessage, useFormik } from 'formik';
 import { Link } from 'react-router-dom';
+
+import Icon, { ICONS, IconSize } from '../../components/SVG/Icon';
 
 import './LoginView.scss';
 
@@ -8,10 +10,18 @@ const LoginView: React.FC = () => {
   const initialValues = {
     username: '',
     password: '',
+    rememberUserId: false,
+  };
+
+  const [passwordVisible, setPasswordVisible] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
   };
 
   const handleSubmit = (values: any) => {
-    console.log(values);
+    console.log('Remember User ID:', values.rememberUserId);
+    console.log('Form values:', values);
   };
 
   return (
@@ -24,13 +34,18 @@ const LoginView: React.FC = () => {
             <Field type="text" id="username" name="username" placeholder="아이디를 입력하세요." />
             <ErrorMessage name="username" component="div" className="error" />
           </div>
-
           <div className="form-group">
             <label htmlFor="password">비밀번호</label>
-            <Field type="password" id="password" name="password" placeholder="비밀번호를 입력하세요." />
+            <Field type={passwordVisible ? 'text' : 'password'} id="password" name="password" placeholder="비밀번호를 입력하세요." />
+            <span onClick={togglePasswordVisibility}>👁️</span>
             <ErrorMessage name="password" component="div" className="error" />
           </div>
-
+          <div className="form-group">
+            <label>
+              <Field type="checkbox" name="rememberUserId" />
+              아이디 기억하기
+            </label>
+          </div>
           <button type="submit">확인</button>
         </Form>
       </Formik>

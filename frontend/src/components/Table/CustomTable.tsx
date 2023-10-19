@@ -9,9 +9,11 @@ interface TableProps {
   itemsPerPage: number;
   columns: { dataId: string; label: string }[];
   className?: string;
+  userRole: string;
+  onCreateButton?: () => void;
 }
 
-const CustomTable: React.FC<TableProps> = ({ data, itemsPerPage, columns, className }) => {
+const CustomTable: React.FC<TableProps> = ({ data, itemsPerPage, columns, className, userRole, onCreateButton }) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -94,6 +96,13 @@ const CustomTable: React.FC<TableProps> = ({ data, itemsPerPage, columns, classN
             <button onClick={handleLastPage} className="button-nav">
               <Icon component={ICONS.LAST} size={IconSize.XL} />
             </button>
+          </div>
+        )}
+        {userRole === 'admin' && (
+          <div className="admin-buttons">
+            <button className="admin-buttons__edit">수정</button>
+            <button className="admin-buttons__remove">삭제</button>
+            <button className="admin-buttons__create" onClick={onCreateButton}>글쓰기</button>
           </div>
         )}
       </div>

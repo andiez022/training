@@ -1,17 +1,21 @@
 import React, { useState } from 'react';
-import Header from '../header/Header';
-
+import { useNavigate } from 'react-router-dom';
 import Button, { ButtonIconPlacement } from '../../components/Button/Button';
 import { ICONS, IconSize } from '../../components/SVG/Icon';
 import Dropdown from '../../components/Dropdown/Dropdown';
 import DropdownItem from '../../components/Dropdown/DropdownItem';
 import TextInput from '../../components/TextInput/TextInput';
-
 import CustomTable from '../../components/Table/CustomTable';
 
 import './AnnView.scss';
 
-const AnnView: React.FC = () => {
+const AnnView: React.FC<{ userRole: string }> = ({ userRole }) => {
+  const navigate = useNavigate();
+
+  const handleCreateAnnouncement = () => {
+    navigate('/announcement/create');
+  };
+
   const [selectedItemText, setSelectedItemText] = useState('');
 
   const handleDropdownItemClick = (itemText: string) => {
@@ -80,14 +84,19 @@ const AnnView: React.FC = () => {
               </Dropdown>
               <div className="ann-view__search-area">
                 <TextInput dataId="" placeholder="공지사항 검색" />
-                <Button icon={ICONS.MAGNIFIER} iconPlacement={ButtonIconPlacement.Left} iconSize={IconSize.XL} className="button--search">
+                <Button
+                  icon={ICONS.MAGNIFIER}
+                  iconPlacement={ButtonIconPlacement.Left}
+                  iconSize={IconSize.XL}
+                  className="button--icon-text"
+                >
                   검색
                 </Button>
               </div>
             </div>
           </div>
           <div className="ann-view__table-body">
-            <CustomTable data={data} itemsPerPage={10} columns={columns} />
+            <CustomTable data={data} itemsPerPage={10} columns={columns} userRole={userRole} onCreateButton={handleCreateAnnouncement} />
           </div>
         </div>
       </div>

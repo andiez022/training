@@ -4,7 +4,7 @@ import VideoCollection from '../../components/VideoCollection/VideoCollection';
 
 import './ContentView.scss';
 
-const ContentView: React.FC = () => {
+const ContentView: React.FC<{ userRole: string }> = ({ userRole }) => {
   return (
     <div className="content-view">
       <div className="content-view__top">

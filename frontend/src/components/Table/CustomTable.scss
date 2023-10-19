@@ -33,16 +33,20 @@
       text-align: center;
       font-size: 14px;
       font-weight: 300;
+
+      input {
+        margin-right: 60px;
+      }
     }
 
     th:first-child,
     td:first-child {
-      width: 6em;
+      width: 15%;
 		}
 
 		th:nth-child(2),
 		td:nth-child(2) {
-			width: 36em;
+			width: 60%;
 		}
 
 		td:nth-child(2) {
@@ -52,16 +56,16 @@
 
 		th:nth-child(3), td:nth-child(3),
 		th:nth-child(4), td:nth-child(4) {
-			width: 10em;
+			width: 12.5%;
 		}
   }
 
   .pagination {
     display: flex;
+    align-self: center;
     justify-content: center;
     margin-top: 60px;
-    gap: 2px;
-  
+
     .icon-nav {
       display: flex;
       gap: 2px;
@@ -86,6 +90,40 @@
       button.clicked {
         background: linear-gradient(90deg, #0367C2 0%, #009FE5 100%);
         color: white;
+      }
+    }
+
+    .admin-buttons {
+      display: flex;
+      gap: 2px;
+      position: absolute;
+      right: 18.75rem;
+
+      button {
+        border: 1px solid #C0C0C0;
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+
+      &__edit {
+        height: 2.5rem;
+        width: 3.75rem;
+        background-color: #FFFFFF;
+      }
+
+      &__remove {
+        height: 2.5rem;
+        width: 3.75rem;
+        background-color: #D9D9D9;
+      }
+
+      &__create {
+        height: 2.5rem;
+        width: 6.25rem;
+        color: white;
+        background: linear-gradient(90deg, #0367C2 0%, #009FE5 100%);
       }
     }
   }

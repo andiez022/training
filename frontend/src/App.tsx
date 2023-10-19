@@ -53,13 +53,14 @@ const App: React.FC = () => {
                   <Route path="/register" element={<PrivateRoute guards={[]} element={<RegisterView />} />} />
                   <Route path="/" element={<PrivateRoute guards={[]} element={<HomeView />} />} />
                   <Route path="/intro" element={<PrivateRoute guards={[]} element={<IntroView />} />} />
-                  <Route path="/announcement" element={<PrivateRoute guards={[]} element={<AnnView />} />} />
-                  <Route path="/facility" element={<PrivateRoute guards={[]} element={<FacilityView />} />} />
-                  <Route path="/content" element={<PrivateRoute guards={[]} element={<ContentView />} />} />
-                  <Route path="/lab" element={<PrivateRoute guards={[]} element={<LabView />} />} />
-                  <Route path="/campaign" element={<PrivateRoute guards={[]} element={<CampaignView />} />} />
-                  <Route path="/campaign/:id" element={<PrivateRoute guards={[]} element={<ItemDetail />} />} />
-                  <Route path="/board" element={<PrivateRoute guards={[]} element={<BoardView />} />} />
+                  <Route path="/announcement" element={<PrivateRoute guards={[]} element={<AnnView userRole={userRole} />} />} />
+                  <Route path="/facility" element={<PrivateRoute guards={[]} element={<FacilityView userRole={userRole} />} />} />
+                  <Route path="/content" element={<PrivateRoute guards={[]} element={<ContentView userRole={userRole} />} />} />
+                  <Route path="/lab" element={<PrivateRoute guards={[]} element={<LabView userRole={userRole} />} />} />
+                  <Route path="/campaign" element={<PrivateRoute guards={[]} element={<CampaignView userRole={userRole} />} />} />
+                  <Route path="/campaign/:id" element={<PrivateRoute guards={[]} element={<CampaignView userRole={userRole} />} />} />
+                  <Route path="/board" element={<PrivateRoute guards={[]} element={<BoardView userRole={userRole} />} />} />
+                  <Route path="/board/:contentType" element={<PrivateRoute guards={[]} element={<BoardView userRole={userRole} />} />} />
                 </Routes>
                 <Footer />
               </div>

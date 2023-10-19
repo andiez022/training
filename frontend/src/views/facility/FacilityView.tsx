@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import Header from '../header/Header';
 
 import './FacilityView.scss';
 
-const FacilityView: React.FC = () => {
+const FacilityView: React.FC<{ userRole: string }> = ({ userRole }) => {
   const [area, setSelectedArea] = useState('부산');
 
   return (

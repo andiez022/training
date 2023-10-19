@@ -11,7 +11,7 @@ export enum ButtonType {
   Subtle = 'subtle',
   Icon = 'icon',
   TextIcon = 'text-icon',
-  Search = 'search',
+  IconText = 'search',
 }
 
 export enum ButtonIconPlacement {
@@ -59,7 +59,7 @@ const Button: React.FunctionComponent<ButtonProps> = ({
     [`button--${buttonType}--outline`]: !!outline,
     'button--animated': !!animated,
     'button--text-icon': buttonType === ButtonType.TextIcon,
-    'button--search': buttonType === ButtonType.Search,
+    'button--icon-text': buttonType === ButtonType.IconText,
   });
 
   return (

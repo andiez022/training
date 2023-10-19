@@ -11,7 +11,7 @@ import ImageGallery from '../../components/ImageGallery/ImageGallery';
 
 import './CampaignView.scss';
 
-const CampaignView: React.FC = () => {
+const CampaignView: React.FC<{ userRole: string }> = ({ userRole }) => {
   const [selectedItemText, setSelectedItemText] = useState('');
 
   const handleDropdownItemClick = (itemText: string) => {
@@ -50,7 +50,12 @@ const CampaignView: React.FC = () => {
               </Dropdown>
               <div className="campaign-view__search-area">
                 <TextInput dataId="" placeholder="캠페인 검색" />
-                <Button icon={ICONS.MAGNIFIER} iconPlacement={ButtonIconPlacement.Left} iconSize={IconSize.XL} className="button--search">
+                <Button
+                  icon={ICONS.MAGNIFIER}
+                  iconPlacement={ButtonIconPlacement.Left}
+                  iconSize={IconSize.XL}
+                  className="button--icon-text"
+                >
                   제목
                 </Button>
               </div>
