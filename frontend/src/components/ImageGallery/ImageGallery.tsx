@@ -1,26 +1,15 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Icon, { ICONS, IconSize } from '../SVG/Icon';
+import GalleryImageDetails, { GalleryImageProps } from './GalleryImageDetails';
 
 import './ImageGallery.scss';
 
-const ImageGallery: React.FC = () => {
-  const data = [
-    { id: 1, image: '/logo192.png', description: 'Item 1' },
-    { id: 2, image: '/logo192.png', description: 'Item 2' },
-    { id: 3, image: '/logo192.png', description: 'Item 3' },
-    { id: 4, image: '/logo192.png', description: 'Item 4' },
-    { id: 5, image: '/logo192.png', description: 'Item 5' },
-    { id: 6, image: '/logo192.png', description: 'Item 6' },
-    { id: 7, image: '/logo192.png', description: 'Item 7' },
-    { id: 8, image: '/logo192.png', description: 'Item 8' },
-    { id: 9, image: '/logo192.png', description: 'Item 9' },
-    { id: 10, image: '/logo192.png', description: 'Item 10' },
-    { id: 11, image: '/logo192.png', description: 'Item 11' },
-    { id: 12, image: '/logo192.png', description: 'Item 12' },
-    { id: 13, image: '/logo192.png', description: 'Item 13' },
-  ];
+interface ImageGalleryProps {
+  data: GalleryImageProps[];
+}
 
+const ImageGallery: React.FC<ImageGalleryProps> = ({ data }) => {
   const itemsPerPage = 12;
   const itemsPerRow = 4;
   const rowsPerPage = 3;
@@ -60,7 +49,7 @@ const ImageGallery: React.FC = () => {
             <Link to={`/campaign/${item.id}`} key={item.id}>
               <figure>
                 <img src={item.image} alt={item.description} />
-                <figcaption>Album name goes here</figcaption>
+                <figcaption>{item.title}</figcaption>
               </figure>
             </Link>
           ))}

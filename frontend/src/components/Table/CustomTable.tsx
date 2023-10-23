@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
 import Icon, { ICONS, IconSize } from '../SVG/Icon';
 
@@ -42,6 +43,12 @@ const CustomTable: React.FC<TableProps> = ({ data, itemsPerPage, columns, classN
     setCurrentPage(totalPageCount);
   };
 
+  const navigate = useNavigate();
+
+  const handleRowClick = (itemId: any) => {
+    navigate(`${itemId}`);
+  };
+
   const tableClasses = classNames('customized-table', className);
 
   return (
@@ -58,7 +65,9 @@ const CustomTable: React.FC<TableProps> = ({ data, itemsPerPage, columns, classN
           {currentItems.map((item) => (
             <tr key={item}>
               {columns.map((column) => (
-                <td key={column.dataId}>{item[column.dataId]}</td>
+                <td key={column.dataId} onClick={() => handleRowClick(item.id)}>
+                  {item[column.dataId]}
+                </td>
               ))}
             </tr>
           ))}
@@ -102,7 +111,9 @@ const CustomTable: React.FC<TableProps> = ({ data, itemsPerPage, columns, classN
           <div className="admin-buttons">
             <button className="admin-buttons__edit">수정</button>
             <button className="admin-buttons__remove">삭제</button>
-            <button className="admin-buttons__create" onClick={onCreateButton}>글쓰기</button>
+            <button className="admin-buttons__create" onClick={onCreateButton}>
+              글쓰기
+            </button>
           </div>
         )}
       </div>

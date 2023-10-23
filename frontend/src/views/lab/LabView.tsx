@@ -1,17 +1,22 @@
 import React, { useState } from 'react';
-import Header from '../header/Header';
-
+import { useNavigate, useParams } from 'react-router-dom';
 import Button, { ButtonIconPlacement } from '../../components/Button/Button';
 import { ICONS, IconSize } from '../../components/SVG/Icon';
 import Dropdown from '../../components/Dropdown/Dropdown';
 import DropdownItem from '../../components/Dropdown/DropdownItem';
 import TextInput from '../../components/TextInput/TextInput';
-
 import CustomTable from '../../components/Table/CustomTable';
 
 import './LabView.scss';
+import TableRowDetails from '../../components/Table/TableRowDetails';
 
 const LabView: React.FC<{ userRole: string }> = ({ userRole }) => {
+  const navigate = useNavigate();
+
+  const handleCreatePost = () => {
+    navigate('/lab/create');
+  };
+
   const [selectedItemText, setSelectedItemText] = useState('');
 
   const handleDropdownItemClick = (itemText: string) => {
@@ -27,24 +32,31 @@ const LabView: React.FC<{ userRole: string }> = ({ userRole }) => {
 
   const data = [
     {
-      id: 1,
+      id: '1',
       title:
         '공지사항 입니다. 공지사항 입니다. 공지사항 입니다. 공지사항 입니다. 공지사항 입니다. 공지사항 입니다. 공지사항 입니다. 공지사',
       author: '관리자 1',
       date: '2023-05-05',
+      body: '글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기.',
     },
-    { id: 2, title: 'Short', author: '관리자 1', date: '2023-05-05' },
-    { id: 2, title: 'Short', author: '관리자 1', date: '2023-05-05' },
-    { id: 2, title: 'Short', author: '관리자 1', date: '2023-05-05' },
-    { id: 2, title: 'Short', author: '관리자 1', date: '2023-05-05' },
-    { id: 2, title: 'Short', author: '관리자 1', date: '2023-05-05' },
-    { id: 2, title: 'Short', author: '관리자 1', date: '2023-05-05' },
-    { id: 2, title: 'Short', author: '관리자 1', date: '2023-05-05' },
-    { id: 2, title: 'Short', author: '관리자 1', date: '2023-05-05' },
+    { id: '2', title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
+    { id: '3', title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
+    { id: '4', title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
+    { id: '5', title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
+    { id: '6', title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
+    { id: '7', title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
+    { id: '8', title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
+    { id: '9', title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
+    { id: '10', title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
+    { id: '11', title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
+    { id: '12', title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
   ];
 
-  return (
-    <div className="lab-view">
+  const { contentType } = useParams();
+  const currentItem = data.find((item) => item.id === contentType);
+
+  if (!contentType) {
+    return (
       <div className="lab-view__top">
         <div className="lab-view__image">
           <div className="lab-view__image__overlay" />
@@ -82,9 +94,6 @@ const LabView: React.FC<{ userRole: string }> = ({ userRole }) => {
                   icon={ICONS.MAGNIFIER}
                   iconPlacement={ButtonIconPlacement.Left}
                   iconSize={IconSize.XL}
-                  onClick={() => {
-                    console.log('Clicked!');
-                  }}
                   className="button--icon-text"
                 >
                   제목
@@ -92,10 +101,46 @@ const LabView: React.FC<{ userRole: string }> = ({ userRole }) => {
               </div>
             </div>
           </div>
-          <div className="lab-view__table-body">
-            <CustomTable columns={columns} data={data} itemsPerPage={10} userRole={userRole} />
+          <CustomTable columns={columns} data={data} itemsPerPage={10} userRole={userRole} onCreateButton={handleCreatePost} />
+        </div>
+      </div>
+    );
+  }
+
+  if (currentItem) {
+    return (
+      <div className="campaign-view">
+        <div className="lab-view__top">
+          <div className="lab-view__content">
+            <div className="lab-view__table-head">
+              <h2 className="gradual-color-transition">리빙랩</h2>
+            </div>
+            <TableRowDetails
+              id={currentItem.id}
+              title={currentItem.title}
+              author={currentItem.author}
+              description={currentItem.body}
+              date={currentItem.date}
+            />
           </div>
         </div>
+      </div>
+    );
+  }
+
+  if (contentType === 'create') {
+    return (
+      <div className="lab-view__top">
+        <h1>Create New Item</h1>
+        <h1>Create New Item</h1>
+      </div>
+    );
+  }
+
+  return (
+    <div className="lab-view">
+      <div className="lab-view__top">
+        <h2>NOT FOUND</h2>
       </div>
     </div>
   );

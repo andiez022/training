@@ -32,7 +32,7 @@ const Header: React.FC<{ userRole: string }> = ({ userRole }) => {
     <header className={headerClasses}>
       <div className="logo">
         <NavLink to="/">
-          <img src="header.svg" alt="Header logo" />
+          <img src="/header.svg" alt="Header logo" />
         </NavLink>
         {!showLinks && <p>[ 관리자 ]</p>}
       </div>

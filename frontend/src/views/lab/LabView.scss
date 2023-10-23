@@ -48,10 +48,10 @@
 	}
 
 	&__content {
-		padding-top: 61px;
-		padding-bottom: 120px;
-		padding-left: 300px;
-		padding-right: 300px;
+		margin-top: 61px;
+		margin-bottom: 120px;
+		margin-left: 17rem;
+		margin-right: 17rem;
 		display: flex;
 		flex-direction: column;
 	}
@@ -60,6 +60,7 @@
 		display: flex;
 		justify-content: space-between;
 		height: 40px;
+		margin-bottom: 2.5rem;
 	}
 
 	&__drop-down {
@@ -70,10 +71,5 @@
 
 	&__search-area {
 		display: flex;
-	}
-
-	&__table-body {
-		margin-top: 39px;
-		padding-bottom: 61px;
 	}
 }

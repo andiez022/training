@@ -1,0 +1,87 @@
+.campaign-view {
+	display: flex;
+	flex-direction: column;
+
+	.item-wrapper {
+		display: flex;
+		gap: 2.5rem;
+
+		img {
+			width: 37.5rem;
+			height: 100%;
+		}
+		
+		.item-body {
+			display: flex;
+			flex-direction: column;
+			border: none;
+			text-align: left;
+			width: 20rem;
+			
+			&__title {
+				background-color: #D4E9FC;
+				height: 3.125rem;
+				display: flex;
+				align-items: center;
+
+				p {
+					margin-left: 1.25rem;
+					font-size: 20px;
+					font-weight: bold;
+				}
+			}
+
+			&__author, &__link {
+				height: 3.125rem;
+				display: flex;
+				align-items: center;
+				border-bottom: #999999 0.5px solid;
+
+				.label {
+					width: 25%;
+					display: flex;
+					align-items: center;
+
+					p {
+						font-weight: bold;
+					}
+				}
+
+				a {
+					cursor: pointer;
+					text-decoration: underline;
+					color: #06c;
+				}
+
+				p, a {
+					margin-left: 1.25rem;
+					font-size: 14px;
+				}
+			}
+
+			&__description {
+				height: 18.75rem;
+				max-height: 100%;
+				border-bottom: #999999 0.5px solid;
+
+				p {
+					margin-top: 0.625rem;
+					margin-left: 1.25rem;
+					font-size: 14px;
+				}
+			}
+		}
+	}
+
+	button {
+		cursor: pointer;
+		height: 2.5rem;
+		width: 5.5rem;
+		margin-top: 1.25rem;
+		align-self: flex-end;
+		color: white;
+		background: linear-gradient(90deg, #0367C2 0%, #009FE5 100%);
+		border: 1px solid #C0C0C0;
+		font-size: 14px;
+	}
+}

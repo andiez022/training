@@ -12,7 +12,6 @@ import store, { persistor } from './store';
 
 import Header from './views/header/Header';
 import Footer from './components/Footer/Footer';
-import ItemDetail from './components/ImageGallery/ItemDetail';
 
 const HomeView = lazy(() => import('./views/home/HomeView'));
 const IntroView = lazy(() => import('./views/intro/IntroView'));
@@ -54,11 +53,19 @@ const App: React.FC = () => {
                   <Route path="/" element={<PrivateRoute guards={[]} element={<HomeView />} />} />
                   <Route path="/intro" element={<PrivateRoute guards={[]} element={<IntroView />} />} />
                   <Route path="/announcement" element={<PrivateRoute guards={[]} element={<AnnView userRole={userRole} />} />} />
+                  <Route
+                    path="/announcement/:contentType"
+                    element={<PrivateRoute guards={[]} element={<AnnView userRole={userRole} />} />}
+                  />
                   <Route path="/facility" element={<PrivateRoute guards={[]} element={<FacilityView userRole={userRole} />} />} />
                   <Route path="/content" element={<PrivateRoute guards={[]} element={<ContentView userRole={userRole} />} />} />
                   <Route path="/lab" element={<PrivateRoute guards={[]} element={<LabView userRole={userRole} />} />} />
+                  <Route path="/lab/:contentType" element={<PrivateRoute guards={[]} element={<LabView userRole={userRole} />} />} />
                   <Route path="/campaign" element={<PrivateRoute guards={[]} element={<CampaignView userRole={userRole} />} />} />
-                  <Route path="/campaign/:id" element={<PrivateRoute guards={[]} element={<CampaignView userRole={userRole} />} />} />
+                  <Route
+                    path="/campaign/:contentType"
+                    element={<PrivateRoute guards={[]} element={<CampaignView userRole={userRole} />} />}
+                  />
                   <Route path="/board" element={<PrivateRoute guards={[]} element={<BoardView userRole={userRole} />} />} />
                   <Route path="/board/:contentType" element={<PrivateRoute guards={[]} element={<BoardView userRole={userRole} />} />} />
                 </Routes>

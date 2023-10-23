@@ -7,6 +7,7 @@
 
   &__top {
 		margin-top: 100px;
+		text-align: center;
 	}
 
 	&__image {
@@ -49,10 +50,10 @@
 	}
 
 	&__content {
-		padding-top: 61px;
-		padding-bottom: 120px;
-		padding-left: 300px;
-		padding-right: 300px;
+		margin-top: 3.75rem;
+		margin-bottom: 7.5rem;
+		margin-left: 17rem;
+		margin-right: 17rem;
 		display: flex;
 		flex-direction: column;
 	}
@@ -61,12 +62,17 @@
 		display: flex;
 		justify-content: space-between;
 		height: 40px;
+		margin-bottom: 2.5rem;
 	}
 
 	&__drop-down {
 		display: flex;
 		justify-content: space-between;
 		gap: 10px;
+
+		.button--text-icon {
+			background-color: white;
+		}
 	}
 
 	&__search-area {

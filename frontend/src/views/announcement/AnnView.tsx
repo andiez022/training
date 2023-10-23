@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Button, { ButtonIconPlacement } from '../../components/Button/Button';
 import { ICONS, IconSize } from '../../components/SVG/Icon';
 import Dropdown from '../../components/Dropdown/Dropdown';
@@ -8,6 +8,7 @@ import TextInput from '../../components/TextInput/TextInput';
 import CustomTable from '../../components/Table/CustomTable';
 
 import './AnnView.scss';
+import TableRowDetails from '../../components/Table/TableRowDetails';
 
 const AnnView: React.FC<{ userRole: string }> = ({ userRole }) => {
   const navigate = useNavigate();
@@ -31,26 +32,31 @@ const AnnView: React.FC<{ userRole: string }> = ({ userRole }) => {
 
   const data = [
     {
-      id: 1,
+      id: '1',
       title:
         '공지사항 입니다. 공지사항 입니다. 공지사항 입니다. 공지사항 입니다. 공지사항 입니다. 공지사항 입니다. 공지사항 입니다. 공지사',
       author: '관리자 1',
       date: '2023-05-05',
+      body: '글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기.',
     },
-    { id: 2, title: 'Short', author: '관리자 1', date: '2023-05-05' },
-    { id: 3, title: 'Short', author: '관리자 1', date: '2023-05-05' },
-    { id: 4, title: 'Short', author: '관리자 1', date: '2023-05-05' },
-    { id: 5, title: 'Short', author: '관리자 1', date: '2023-05-05' },
-    { id: 6, title: 'Short', author: '관리자 1', date: '2023-05-05' },
-    { id: 7, title: 'Short', author: '관리자 1', date: '2023-05-05' },
-    { id: 8, title: 'Short', author: '관리자 1', date: '2023-05-05' },
-    { id: 9, title: 'Short', author: '관리자 1', date: '2023-05-05' },
-    { id: 10, title: 'Short', author: '관리자 1', date: '2023-05-05' },
-    { id: 11, title: 'Short', author: '관리자 1', date: '2023-05-05' },
+    { id: '2', title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
+    { id: '3', title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
+    { id: '4', title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
+    { id: '5', title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
+    { id: '6', title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
+    { id: '7', title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
+    { id: '8', title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
+    { id: '9', title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
+    { id: '10', title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
+    { id: '11', title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
+    { id: '12', title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
   ];
 
-  return (
-    <div className="ann-view">
+  const { contentType } = useParams();
+  const currentItem = data.find((item) => item.id === contentType);
+
+  if (!contentType) {
+    return (
       <div className="ann-view__top">
         <div className="ann-view__image">
           <div className="ann-view__image__overlay" />
@@ -70,9 +76,6 @@ const AnnView: React.FC<{ userRole: string }> = ({ userRole }) => {
                     icon={ICONS.ARROW_DOWN}
                     iconPlacement={ButtonIconPlacement.Right}
                     iconSize={IconSize.LG}
-                    onClick={() => {
-                      console.log('Clicked!');
-                    }}
                     className="button--text-icon"
                   >
                     {selectedItemText || '제목'}
@@ -95,10 +98,46 @@ const AnnView: React.FC<{ userRole: string }> = ({ userRole }) => {
               </div>
             </div>
           </div>
-          <div className="ann-view__table-body">
-            <CustomTable data={data} itemsPerPage={10} columns={columns} userRole={userRole} onCreateButton={handleCreateAnnouncement} />
+          <CustomTable data={data} itemsPerPage={10} columns={columns} userRole={userRole} onCreateButton={handleCreateAnnouncement} />
+        </div>
+      </div>
+    );
+  }
+
+  if (currentItem) {
+    return (
+      <div className="ann-view">
+        <div className="ann-view__top">
+          <div className="ann-view__content">
+            <div className="ann-view__table-head">
+              <h2 className="gradual-color-transition">공지사항</h2>
+            </div>
+            <TableRowDetails
+              id={currentItem.id}
+              title={currentItem.title}
+              author={currentItem.author}
+              description={currentItem.body}
+              date={currentItem.date}
+            />
           </div>
         </div>
+      </div>
+    );
+  }
+
+  if (contentType === 'create') {
+    return (
+      <div className="ann-view__top">
+        <h1>Create New Item</h1>
+        <h1>Create New Item</h1>
+      </div>
+    );
+  }
+
+  return (
+    <div className="ann-view">
+      <div className="ann-view__top">
+        <h2>NOT FOUND</h2>
       </div>
     </div>
   );

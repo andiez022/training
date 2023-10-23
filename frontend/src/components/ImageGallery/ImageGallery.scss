@@ -1,6 +1,5 @@
 .gallery-container {
 	.grid-row {
-		margin-top: 40px;
 		display: flex;
 		justify-content: space-between;
 
@@ -21,10 +20,12 @@
 					transition: 0.3s ease;
 				}
 			}
-		}
-	
-		figure img {
-	
+
+			img {
+				width: 13.25rem;
+				height: 13.125rem;
+				object-fit: cover;
+			}
 		}
 	
 		figcaption {

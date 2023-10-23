@@ -66,33 +66,34 @@ const BoardView: React.FC<{ userRole: string }> = ({ userRole }) => {
     <div className="board-view">
       <div className="board-view__top">
         {contentType === 'create' ? (
-          <div className="create-form">
-            <h2>자유게시판 작성</h2>
+          <div className="board-view__create-form">
+            <h2 className="gradual-color-transition">자유게시판 작성</h2>
             <Formik initialValues={initialValues} onSubmit={handleSubmit}>
               <Form>
-                <div>
-                  <label htmlFor="authorName">작성자 이름</label>
-                  <Field type="text" id="authorName" name="authorName" />
+                <div className="form-row">
+                  <div className="form-group">
+                    <label htmlFor="authorName">작성자 이름</label>
+                    <Field type="text" id="authorName" name="authorName" placeholder="이름을 입력하세요." />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="password">비밀번호</label>
+                    <Field type="password" id="password" name="password" placeholder="비밀번호를 입력하세요." />
+                  </div>
                 </div>
-
-                <div>
-                  <label htmlFor="password">비밀번호</label>
-                  <Field type="password" id="password" name="password" />
+                <div className="form-row">
+                  <div className="form-group">
+                    <label htmlFor="title">제목</label>
+                    <Field type="text" id="title" name="title" placeholder="제목을 입력해주세요." className="input-title" />
+                  </div>
                 </div>
-
-                <div>
-                  <label htmlFor="title">제목</label>
-                  <Field type="text" id="title" name="title" />
+                <div className="form-row">
+                  <div className="form-group">
+                    <Field as="textarea" id="content" name="content" placeholder="내용을 입력하세요." />
+                  </div>
                 </div>
-
-                <div>
-                  <label htmlFor="content">내용</label>
-                  <Field as="textarea" id="content" name="content" />
-                </div>
-
-                <div>
-                  <button type="reset">Cancel</button>
-                  <button type="submit">Submit</button>
+                <div className="form-button">
+                  <button type="reset">등록</button>
+                  <button type="submit">취소</button>
                 </div>
               </Form>
             </Formik>
