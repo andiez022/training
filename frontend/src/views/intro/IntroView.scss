@@ -109,3 +109,14 @@ p {
 	letter-spacing: -0.51px;
 	color: #3D3D3D;
 }
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(2.5rem);
+  transition: opacity 0.75s ease-in-out, transform 0.75s ease-in-out;
+}
+
+.fade-in.active {
+  opacity: 1;
+  transform: translateY(0);
+}

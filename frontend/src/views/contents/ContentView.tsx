@@ -20,9 +20,7 @@ const ContentView: React.FC<{ userRole: string }> = ({ userRole }) => {
           <div className="content-view__heading">
             <h2 className="gradual-color-transition">콘텐츠</h2>
           </div>
-          <div className="content-view__display">
-            <VideoCollection />
-          </div>
+          <VideoCollection />
         </div>
       </div>
     </div>

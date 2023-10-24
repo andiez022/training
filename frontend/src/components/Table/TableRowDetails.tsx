@@ -5,20 +5,32 @@ import './TableRowDetails.scss';
 
 export interface TableRowProps {
   id: string;
+  numbering: number;
   title: string;
   author: string;
   date: string;
   description: string;
+  indexes: string[];
 }
 
-const TableRowDetails: React.FC<TableRowProps> = ({ id, title, author, date, description }) => {
+const TableRowDetails: React.FC<TableRowProps> = ({ id, numbering, title, author, date, description, indexes }) => {
   const navigate = useNavigate();
+  const location = useLocation().pathname.split('/');
+  const currentLocation = location[1];
+  const currentIndex = indexes.indexOf(id);
 
-  const location = useLocation();
-  const previousRoute = location.state?.from;
+  const handleNextItem = () => {
+    const nextIndex = indexes[currentIndex + 1];
+    navigate(`../${currentLocation}/${nextIndex}`);
+  };
+
+  const handlePrevItem = () => {
+    const prevIndex = indexes[currentIndex - 1];
+    navigate(`../${currentLocation}/${prevIndex}`);
+  };
 
   const handleGoBack = () => {
-    navigate(previousRoute);
+    navigate(`../${currentLocation}`);
   };
 
   return (
@@ -44,8 +56,19 @@ const TableRowDetails: React.FC<TableRowProps> = ({ id, title, author, date, des
         <p>{description}</p>
       </div>
       <div className="buttons-container">
-        <button onClick={handleGoBack}> 목록으로 </button>
-        <button onClick={handleGoBack}> 다음 글 </button>
+        {currentIndex !== 0 && (
+          <button onClick={handlePrevItem} className="backward-button">
+            이전 글
+          </button>
+        )}
+        <button onClick={handleGoBack} className="return-button">
+          목록으로
+        </button>
+        {currentIndex !== indexes.length - 1 && (
+          <button onClick={handleNextItem} className="forward-button">
+            다음 글
+          </button>
+        )}
       </div>
     </div>
   );

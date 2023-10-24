@@ -14,7 +14,15 @@ import './CampaignView.scss';
 
 const CampaignView: React.FC<{ userRole: string }> = ({ userRole }) => {
   const data: GalleryImageProps[] = [
-    { id: 'weqweasd', image: '/ctest.jpg', title: 'new campaign!@#@', author: 'admin', link: '33232', description: 'Item 1' },
+    {
+      id: 'weqweasd',
+      image: '/ctest.jpg',
+      title: "The error message \"The term 'choco' is not recognized",
+      author: 'adminadminadminadminadmina dminadminadminadmin',
+      link: 'https://www.youtube.com/watch?v=LqME1y6Mlyg',
+      description:
+        '깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.',
+    },
     { id: '2', image: '/logo192.png', title: '', author: '', link: '', description: 'Item 2' },
     { id: '3', image: '/logo192.png', title: '', author: '', link: '', description: 'Item 3' },
     { id: '4', image: '/logo192.png', title: '', author: '', link: '', description: 'Item 4' },

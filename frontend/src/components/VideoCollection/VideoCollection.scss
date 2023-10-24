@@ -16,7 +16,7 @@
 	&__info {
 		display: flex;
 		flex-direction: column;
-		width: 600px;
+		width: 37.5rem;
 		text-align: left;
 
 		&__header {
@@ -39,11 +39,12 @@
 		}
 
 		&__desc {
-			margin-top: 10px;
+			height: 9.125rem;
+			margin-top: 0.625rem;
 			background-color: #F9F9F9;
 			
 			p {
-				margin: 25px 10px;
+				margin: 1.563rem 1.25rem;
 				color: #676767;
 				font-size: 15px;
 			}

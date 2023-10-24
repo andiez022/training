@@ -1,12 +1,16 @@
 .gallery-container {
+	display: flex;
+	flex-direction: column;
+	gap: 2.5rem;
+
 	.grid-row {
 		display: flex;
 		justify-content: space-between;
 
 		figure {
 			border: 1px solid #CCCCCC;
-			vertical-align: middle;
-
+			max-width: 13.25rem;
+			
 			&:hover {
 				cursor: pointer;
 				border: 1px solid #0066C1;
@@ -29,12 +33,15 @@
 		}
 	
 		figcaption {
+			min-height: 3.75rem;
+			display: flex;
+			flex-direction: column;
 			border-top: 1px solid #CCCCCC;
 			background-color: #D4E9FC;
-			height: 60px;
+			padding: 0.5rem 0.5rem;
 			font-size: 15px;
-			padding: 20px 0;
 			color: #000000;
+			justify-content: center;
 		}
 	}
 }

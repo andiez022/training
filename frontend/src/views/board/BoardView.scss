@@ -30,12 +30,10 @@
 
 		&__icon {
 			position: absolute;
-			top: 100%;
 			left: 50%;
 			transform: translate(-50%, -50%);
 			text-align: center;
 			z-index: 2;
-			opacity: 1;
       animation: slideUp 1s forwards;
 
 			p {
@@ -49,10 +47,10 @@
 	}
 
 	&__content {
-		padding-top: 61px;
-		padding-bottom: 120px;
-		padding-left: 300px;
-		padding-right: 300px;
+		margin-top: 3.75rem;
+		margin-bottom: 7.5rem;
+		margin-left: 17rem;
+		margin-right: 17rem;
 		display: flex;
 		flex-direction: column;
 	}
@@ -61,6 +59,7 @@
 		display: flex;
 		justify-content: space-between;
 		height: 40px;
+		margin-bottom: 2.5rem;
 	}
 
 	&__drop-down {
@@ -71,10 +70,5 @@
 
 	&__search-area {
 		display: flex;
-	}
-
-	&__table-body {
-		margin-top: 39px;
-		padding-bottom: 61px;
 	}
 }

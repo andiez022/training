@@ -1,9 +1,45 @@
 import React, { useState } from 'react';
+import { ReactComponent as MyMap } from '../../components/SVG/map.svg';
 
 import './FacilityView.scss';
 
 const FacilityView: React.FC<{ userRole: string }> = ({ userRole }) => {
   const [area, setSelectedArea] = useState('부산');
+
+  const handleMapClick = () => {
+    const animationElements = document.querySelectorAll('.animation-g');
+
+    animationElements.forEach((element) => {
+      element.addEventListener('click', () => {
+        const pathElement = element.querySelector('path');
+
+        if (pathElement) {
+          const clickedId = pathElement.id;
+
+          const koreanForm = clickedId.replace(/\\u([\dA-Fa-f]{4})/g, (match, grp) => {
+            return String.fromCharCode(parseInt(grp, 16));
+          });
+
+          animationElements.forEach((el) => {
+            el.classList.remove('selected');
+          });
+
+          element.classList.add('selected');
+
+          setSelectedArea(koreanForm);
+        }
+      });
+    });
+  };
+
+  const handleDefaultButton = () => {
+    setSelectedArea('부산');
+
+    const animationElements = document.querySelectorAll('.animation-g');
+    animationElements.forEach((element) => {
+      element.classList.remove('selected');
+    });
+  };
 
   return (
     <div className="facility-view">
@@ -17,27 +53,25 @@ const FacilityView: React.FC<{ userRole: string }> = ({ userRole }) => {
           </div>
         </div>
         <div className="facility-view__content">
-          <h2 className="gradual-color-transition">시설현황</h2>
-          <div className="facility-view__display">
-            <div className="facility-view__map-area">
-              <button>부산 전체보기</button>
-              <img src="/map.svg" alt="map" />
+          <div className="facility-view__head">
+            <div className="facility-view__head__title">
+              <h2 className="gradual-color-transition">시설현황</h2>
             </div>
-            <div className="facility-view__scroll">
-              <span>{area} 수거사각지대</span>
-              <ul className="item-list">
-                <span>현재 사용 가능한 데이터가 없습니다.</span>
-                {/* <li className="item">
-                  <h2>Title 1</h2>
-                  <img src="image1.jpg" alt="1" />
-                  <p>Description 1</p>
-                </li>
-                <li className="item">
-                  <h2>Title 2</h2>
-                  <img src="image2.jpg" alt="2" />
-                  <p>Description 2</p>
-                </li> */}
-              </ul>
+            <div className="facility-view__body">
+              <div className="facility-view__map-area">
+                <button className={`button ${area === '부산' ? 'selected' : ''}`} onClick={handleDefaultButton}>
+                  부산 전체보기
+                </button>
+                <MyMap className="my-map" onClick={handleMapClick} />
+              </div>
+              <div className="facility-view__scroll">
+                <p>
+                  <span>{area}</span> 수거사각지대
+                </p>
+                <ul className="item-list">
+                  <p>현재 사용 가능한 데이터가 없습니다.</p>
+                </ul>
+              </div>
             </div>
           </div>
         </div>

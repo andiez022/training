@@ -30,12 +30,10 @@
 
 		&__icon {
 			position: absolute;
-			top: 100%;
 			left: 50%;
 			transform: translate(-50%, -50%);
 			text-align: center;
 			z-index: 2;
-			opacity: 1;
       animation: slideUp 1s forwards;
 
 			p {
@@ -49,22 +47,18 @@
 	}
 
 	&__content {
-		margin-top: 5%;
-		margin-bottom: 10%;
-		margin-left: 20%;
-		margin-right: 20%;
+		margin-top: 3.75rem;
+		margin-bottom: 7.5rem;
+		margin-left: 17rem;
+		margin-right: 17rem;
 		display: flex;
 		flex-direction: column;
 		text-align: left;
 	}
 
 	&__heading {
+		display: flex;
 		height: 40px;
-		margin-left: 5%;
-	}
-
-	&__display {
-		margin-top: 39px;
-		margin-bottom: 61px;
+		margin-bottom: 2.5rem;
 	}
 }

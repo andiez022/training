@@ -7,8 +7,8 @@ import DropdownItem from '../../components/Dropdown/DropdownItem';
 import TextInput from '../../components/TextInput/TextInput';
 import CustomTable from '../../components/Table/CustomTable';
 
-import './AnnView.scss';
 import TableRowDetails from '../../components/Table/TableRowDetails';
+import './AnnView.scss';
 
 const AnnView: React.FC<{ userRole: string }> = ({ userRole }) => {
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ const AnnView: React.FC<{ userRole: string }> = ({ userRole }) => {
   };
 
   const columns = [
-    { dataId: 'id', label: '번호' },
+    { dataId: 'numbering', label: '번호' },
     { dataId: 'title', label: '제목' },
     { dataId: 'author', label: '작성자' },
     { dataId: 'date', label: '작성일' },
@@ -33,24 +33,27 @@ const AnnView: React.FC<{ userRole: string }> = ({ userRole }) => {
   const data = [
     {
       id: '1',
+      numbering: 1,
       title:
         '공지사항 입니다. 공지사항 입니다. 공지사항 입니다. 공지사항 입니다. 공지사항 입니다. 공지사항 입니다. 공지사항 입니다. 공지사',
       author: '관리자 1',
       date: '2023-05-05',
       body: '글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기.',
     },
-    { id: '2', title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
-    { id: '3', title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
-    { id: '4', title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
-    { id: '5', title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
-    { id: '6', title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
-    { id: '7', title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
-    { id: '8', title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
-    { id: '9', title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
-    { id: '10', title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
-    { id: '11', title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
-    { id: '12', title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
+    { id: '2', numbering: 2, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
+    { id: '3', numbering: 3, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
+    { id: '4', numbering: 4, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
+    { id: '5', numbering: 5, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
+    { id: '6', numbering: 6, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
+    { id: '7', numbering: 7, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
+    { id: '8', numbering: 8, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
+    { id: '9', numbering: 9, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
+    { id: '10', numbering: 10, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
+    { id: '11', numbering: 11, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
+    { id: '12', numbering: 12, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
   ];
+
+  const indexes = data.map((item) => item.id);
 
   const { contentType } = useParams();
   const currentItem = data.find((item) => item.id === contentType);
@@ -115,9 +118,11 @@ const AnnView: React.FC<{ userRole: string }> = ({ userRole }) => {
             <TableRowDetails
               id={currentItem.id}
               title={currentItem.title}
+              numbering={currentItem.numbering}
               author={currentItem.author}
               description={currentItem.body}
               date={currentItem.date}
+              indexes={indexes}
             />
           </div>
         </div>

@@ -34,7 +34,6 @@
 			transform: translate(-50%, -50%);
 			text-align: center;
 			z-index: 2;
-			opacity: 1;
       animation: slideUp 1s forwards;
 
 			p {
@@ -48,8 +47,8 @@
 	}
 
 	&__content {
-		margin-top: 61px;
-		margin-bottom: 120px;
+		margin-top: 3.75rem;
+		margin-bottom: 7.5rem;
 		margin-left: 17rem;
 		margin-right: 17rem;
 		display: flex;
