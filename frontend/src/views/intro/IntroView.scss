@@ -112,8 +112,8 @@ p {
 
 .fade-in {
   opacity: 0;
-  transform: translateY(2.5rem);
-  transition: opacity 0.75s ease-in-out, transform 0.75s ease-in-out;
+  transform: translateY(7.5rem);
+  transition: opacity 1s, transform 1s;
 }
 
 .fade-in.active {

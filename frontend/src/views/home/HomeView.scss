@@ -3,33 +3,25 @@
 .home-container {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-
-  &__top {
-    margin-top: 5%;
-  }
 
   .banner-container {
     z-index: -1;
-    width: 100%;
-    height: 700px;
-    overflow: hidden;
+    height: 100vh;
 
     .banner-item {
+      height: 100vh;
       position: absolute;
       opacity: 0;
-      transition: width 0.5s, opacity 3s, transform 3s;
+      transition: width 0.5s, opacity 3s;
+
+      img {
+        height: 100%;
+        object-fit: cover;
+      }
     }
 
     .banner-item.active {
       opacity: 1;
-    }
-
-    .img-item {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      transition: transform 1s ease-in-out, opacity 1s ease-in-out;
     }
 
     .text-overlay {
@@ -40,6 +32,7 @@
       z-index: 1;
       opacity: 1;
       animation: slideUp 1s forwards;
+      width: 90%;
     
       h2 {
         color: $color-white;
@@ -56,11 +49,10 @@
   }
 
   .context-container {
-    top: 100%;
-    margin-top: 10%;
-    margin-bottom: 10%;
-    margin-left: 8%;
-    margin-right: 8%;
+    margin-top: 8.75rem;
+    margin-bottom: 10.125rem;
+    margin-left: 10%;
+    margin-right: 10%;
 
     .announcement-container {
       display: flex;
@@ -85,11 +77,11 @@
       margin-top: 140px;
       margin-bottom: 162px;
       gap: 30px;
-    
+
       .list-container {
+        min-width: 250px;
         display: flex;
         flex-direction: column;
-        width: 300px;
   
         .list-header {
           display: flex;
@@ -147,3 +139,12 @@ button {
   border: none;
 }
 
+@media only screen and (max-width: $breakpoint-xl) {
+  .announcement-card {
+    flex-direction: column;
+  }
+  
+  .highlights-container {
+    flex-direction: column;
+  }
+}

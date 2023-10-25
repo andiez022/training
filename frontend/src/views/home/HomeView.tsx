@@ -56,115 +56,109 @@ const Home: React.FC = () => {
 
   return (
     <div className="home-container">
-      <div className="home-container__top">
-        <div className="banner-container">
-          {banners.map((banner, index) => (
-            <div key={banner.id} className={`banner-item ${index === currentBanner ? 'active' : ''}`}>
-              <img
-                src={banner.imgSrc}
-                alt={`Home banner ${banner.id}`}
-                className={`image-item ${index === currentBanner ? 'active' : ''}`}
-              />
-            </div>
-          ))}
-          <div className="text-overlay">
-            <h2>함께 하자,</h2>
-            <h2>깨끗한 바다 부산으로!</h2>
-            <p>깨바부는 부산지역 내 테트라포드와 습지 현황에 대한 정보를 제공하고 있습니다.</p>
+      <div className="banner-container">
+        {banners.map((banner, index) => (
+          <div key={banner.id} className={`banner-item ${index === currentBanner ? 'active' : ''}`}>
+            <img src={banner.imgSrc} alt={`Home banner ${banner.id}`} />
+          </div>
+        ))}
+        <div className="text-overlay">
+          <h2>함께 하자,</h2>
+          <h2>깨끗한 바다 부산으로!</h2>
+          <p>깨바부는 부산지역 내 테트라포드와 습지 현황에 대한 정보를 제공하고 있습니다.</p>
+        </div>
+      </div>
+      <div className="context-container">
+        <div className="announcement-container">
+          <div className="announcement-title">
+            <h2 className="gradual-color-transition">공지사항</h2>
+            <button>
+              <Icon component={ICONS.PLUS} size={IconSize.XXL} />
+            </button>
+          </div>
+          <div className="announcement-card">
+            <Card title={card1Info.title} content={card1Info.content} date={card1Info.date} />
+            <Card title={card2Info.title} content={card2Info.content} date={card2Info.date} />
+            <Card title={card3Info.title} content={card3Info.content} date={card3Info.date} />
+            <Card title={card4Info.title} content={card4Info.content} date={card4Info.date} />
           </div>
         </div>
-        <div className="context-container">
-          <div className="announcement-container">
-            <div className="announcement-title">
-              <h2 className="gradual-color-transition">공지사항</h2>
+        <div className="highlights-container">
+          <div className="list-container">
+            <div className="list-header">
+              <h2 className="gradual-color-transition">콘텐츠</h2>
               <button>
                 <Icon component={ICONS.PLUS} size={IconSize.XXL} />
               </button>
             </div>
-            <div className="announcement-card">
-              <Card title={card1Info.title} content={card1Info.content} date={card1Info.date} />
-              <Card title={card2Info.title} content={card2Info.content} date={card2Info.date} />
-              <Card title={card3Info.title} content={card3Info.content} date={card3Info.date} />
-              <Card title={card4Info.title} content={card4Info.content} date={card4Info.date} />
-            </div>
+            <ul className="list-body">
+              {items.map((item) => (
+                <li key={item.id} className="list-item">
+                  <div className="item-title">
+                    <span className="icon-span" />
+                    <span className="title-span">{item.title}</span>
+                  </div>
+                  <Icon component={ICONS.ARROW_RIGHT} />
+                </li>
+              ))}
+            </ul>
           </div>
-          <div className="highlights-container">
-            <div className="list-container">
-              <div className="list-header">
-                <h2 className="gradual-color-transition">콘텐츠</h2>
-                <button>
-                  <Icon component={ICONS.PLUS} size={IconSize.XXL} />
-                </button>
-              </div>
-              <ul className="list-body">
-                {items.map((item) => (
-                  <li key={item.id} className="list-item">
-                    <div className="item-title">
-                      <span className="icon-span" />
-                      <span className="title-span">{item.title}</span>
-                    </div>
-                    <Icon component={ICONS.ARROW_RIGHT} />
-                  </li>
-                ))}
-              </ul>
+          <div className="list-container">
+            <div className="list-header">
+              <h2 className="gradual-color-transition">리빙랩</h2>
+              <button>
+                <Icon component={ICONS.PLUS} size={IconSize.XXL} />
+              </button>
             </div>
-            <div className="list-container">
-              <div className="list-header">
-                <h2 className="gradual-color-transition">리빙랩</h2>
-                <button>
-                  <Icon component={ICONS.PLUS} size={IconSize.XXL} />
-                </button>
-              </div>
-              <ul className="list-body">
-                {items.map((item) => (
-                  <li key={item.id} className="list-item">
-                    <div className="item-title">
-                      <span className="icon-span" />
-                      <span className="title-span">{item.title}</span>
-                    </div>
-                    <Icon component={ICONS.ARROW_RIGHT} />
-                  </li>
-                ))}
-              </ul>
+            <ul className="list-body">
+              {items.map((item) => (
+                <li key={item.id} className="list-item">
+                  <div className="item-title">
+                    <span className="icon-span" />
+                    <span className="title-span">{item.title}</span>
+                  </div>
+                  <Icon component={ICONS.ARROW_RIGHT} />
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="list-container">
+            <div className="list-header">
+              <h2 className="gradual-color-transition">캠페인</h2>
+              <button>
+                <Icon component={ICONS.PLUS} size={IconSize.XXL} />
+              </button>
             </div>
-            <div className="list-container">
-              <div className="list-header">
-                <h2 className="gradual-color-transition">캠페인</h2>
-                <button>
-                  <Icon component={ICONS.PLUS} size={IconSize.XXL} />
-                </button>
-              </div>
-              <ul className="list-body">
-                {items.map((item) => (
-                  <li key={item.id} className="list-item">
-                    <div className="item-title">
-                      <span className="icon-span" />
-                      <span className="title-span">{item.title}</span>
-                    </div>
-                    <Icon component={ICONS.ARROW_RIGHT} />
-                  </li>
-                ))}
-              </ul>
+            <ul className="list-body">
+              {items.map((item) => (
+                <li key={item.id} className="list-item">
+                  <div className="item-title">
+                    <span className="icon-span" />
+                    <span className="title-span">{item.title}</span>
+                  </div>
+                  <Icon component={ICONS.ARROW_RIGHT} />
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="list-container">
+            <div className="list-header">
+              <h2 className="gradual-color-transition">자유게시판</h2>
+              <button>
+                <Icon component={ICONS.PLUS} size={IconSize.XXL} />
+              </button>
             </div>
-            <div className="list-container">
-              <div className="list-header">
-                <h2 className="gradual-color-transition">자유게시판</h2>
-                <button>
-                  <Icon component={ICONS.PLUS} size={IconSize.XXL} />
-                </button>
-              </div>
-              <ul className="list-body">
-                {items.map((item) => (
-                  <li key={item.id} className="list-item">
-                    <div className="item-title">
-                      <span className="icon-span" />
-                      <span className="title-span">{item.title}</span>
-                    </div>
-                    <Icon component={ICONS.ARROW_RIGHT} />
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <ul className="list-body">
+              {items.map((item) => (
+                <li key={item.id} className="list-item">
+                  <div className="item-title">
+                    <span className="icon-span" />
+                    <span className="title-span">{item.title}</span>
+                  </div>
+                  <Icon component={ICONS.ARROW_RIGHT} />
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>

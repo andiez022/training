@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Icon, { ICONS, IconSize } from '../SVG/Icon';
-import GalleryImageDetails, { GalleryImageProps } from './GalleryImageDetails';
+import { GalleryImageProps } from './GalleryImageDetails';
 
 import './ImageGallery.scss';
 
@@ -11,8 +11,6 @@ interface ImageGalleryProps {
 
 const ImageGallery: React.FC<ImageGalleryProps> = ({ data }) => {
   const itemsPerPage = 12;
-  const itemsPerRow = 4;
-  const rowsPerPage = 3;
   const totalPageCount = Math.ceil(data.length / itemsPerPage);
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -43,9 +41,9 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ data }) => {
 
   return (
     <div className="gallery-container">
-      {Array.from({ length: rowsPerPage }, (_, rowIndex) => (
-        <div key={rowIndex} className="grid-row">
-          {currentItems.slice(rowIndex * itemsPerRow, (rowIndex + 1) * itemsPerRow).map((item) => (
+      {Array.from({ length: itemsPerPage }, (_, itemIndex) => (
+        <div key={itemIndex} className="grid-row">
+          {currentItems.slice(itemIndex * itemsPerPage, (itemIndex + 1) * itemsPerPage).map((item) => (
             <Link to={`/campaign/${item.id}`} key={item.id}>
               <figure>
                 <img src={item.image} alt={item.description} />

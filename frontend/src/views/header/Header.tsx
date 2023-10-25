@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import path from 'path';
+import React, { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import Icon, { ICONS, IconSize } from '../../components/SVG/Icon';
 
@@ -19,25 +18,51 @@ const CustomNavLink: React.FC<NavLinkProps> = ({ to, text }) => {
 };
 
 const Header: React.FC<{ userRole: string }> = ({ userRole }) => {
+  const [isTransparent, setIsTransparent] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY <= 200) {
+        setIsTransparent(true);
+      } else {
+        setIsTransparent(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    handleScroll();
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const location = useLocation();
   const currentPath = location.pathname;
 
   const showLinks = currentPath !== '/login' && currentPath !== '/register';
+  const isHomePage = currentPath === '/';
 
-  const headerClasses = `app-header ${isMenuOpen ? 'show-menu' : ''} ${!showLinks ? 'hide-links' : ''}`;
+  const headerClasses = `app-header ${isMenuOpen ? 'show-menu' : ''} ${!showLinks ? 'hide-links' : ''} ${
+    isHomePage && isTransparent ? 'transparent' : ''
+  }`;
 
   return (
     <header className={headerClasses}>
-      <div className="logo">
+      <div className="header-left">
         <NavLink to="/">
           <img src="/header.svg" alt="Header logo" />
         </NavLink>
         {!showLinks && <p>[ 관리자 ]</p>}
       </div>
       {showLinks && (
-        <>
+        <div className="header-right">
+          <div className="menu-icon" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            <Icon className="icon" component={isMenuOpen ? ICONS.CLOSE : ICONS.MENU} size={isMenuOpen ? IconSize.LG : IconSize.XL} />
+          </div>
           <nav className={`nav-links ${isMenuOpen ? 'show-menu' : ''}`}>
             <CustomNavLink to="/" text="홈" />
             <CustomNavLink to="/intro" text="소개" />
@@ -48,10 +73,7 @@ const Header: React.FC<{ userRole: string }> = ({ userRole }) => {
             <CustomNavLink to="/campaign" text="캠페인" />
             <CustomNavLink to="/board" text="자유게시판" />
           </nav>
-          <div className="menu-icon" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-            <Icon className="icon" component={isMenuOpen ? ICONS.CLOSE : ICONS.EXPAND_MORE} size={IconSize.XL} />
-          </div>
-        </>
+        </div>
       )}
     </header>
   );

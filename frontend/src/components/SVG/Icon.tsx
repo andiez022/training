@@ -17,11 +17,14 @@ import { ReactComponent as Dashboard } from './icons/dashboard.svg';
 import { ReactComponent as ErrorCircle } from './icons/error-circle.svg';
 import { ReactComponent as ExpandLess } from './icons/expand-less.svg';
 import { ReactComponent as ExpandMore } from './icons/expand-more.svg';
+import { ReactComponent as EyeInvisible } from './icons/eye-invisible.svg';
+import { ReactComponent as EyeVisible } from './icons/eye-visible.svg';
 import { ReactComponent as First } from './icons/first.svg';
 import { ReactComponent as Forward } from './icons/forward.svg';
 import { ReactComponent as Italic } from './icons/italic.svg';
 import { ReactComponent as Justify } from './icons/justify.svg';
 import { ReactComponent as Magnifier } from './icons/magnifier.svg';
+import { ReactComponent as Menu } from './icons/menu.svg';
 import { ReactComponent as ModalClose } from './icons/modal-close.svg';
 import { ReactComponent as OrderedList } from './icons/ordered-list.svg';
 import { ReactComponent as Plus } from './icons/plus.svg';
@@ -57,6 +60,7 @@ export const ICONS = {
   CLOSE: Close,
   CHECK: Check,
   MAGNIFIER: Magnifier,
+  MENU: Menu,
   PLUS: Plus,
   ERROR_CIRCLE: ErrorCircle,
   INFO_CIRCLE: InfoCircle,
@@ -77,6 +81,8 @@ export const ICONS = {
   FORWARD: Forward,
   FIRST: First,
   LAST: Last,
+  EYE_INVISIBLE: EyeInvisible,
+  EYE_VISIBLE: EyeVisible,
 };
 
 export interface IconProps {

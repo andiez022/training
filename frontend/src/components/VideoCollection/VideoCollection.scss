@@ -1,3 +1,5 @@
+@import "../../common/sass/variables";
+
 .video-collection {
 	display: flex;
 	flex-direction: column;
@@ -16,7 +18,7 @@
 	&__info {
 		display: flex;
 		flex-direction: column;
-		width: 37.5rem;
+		width: 100%;
 		text-align: left;
 
 		&__header {
@@ -39,7 +41,7 @@
 		}
 
 		&__desc {
-			height: 9.125rem;
+			min-height: 9.125rem;
 			margin-top: 0.625rem;
 			background-color: #F9F9F9;
 			
@@ -83,5 +85,17 @@
 			background: linear-gradient(90deg, #0367C2 0%, #009FE5 100%);
 			color: white;
 		}
+	}
+}
+
+@media only screen and (max-width: $breakpoint-xl) {
+	.video {
+		flex-direction: column;
+	}
+}
+
+@media only screen and (max-width: $breakpoint-md) {
+	.video {
+		flex-direction: column;
 	}
 }

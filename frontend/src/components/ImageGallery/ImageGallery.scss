@@ -1,16 +1,22 @@
+@import "../../common/sass/variables";
+
+$itemsPerRowDesktop: 4;
+$itemsPerRowTablet: 2;
+$itemsPerRowMobile: 1;
+
 .gallery-container {
 	display: flex;
 	flex-direction: column;
-	gap: 2.5rem;
 
 	.grid-row {
-		display: flex;
-		justify-content: space-between;
+		display: grid;
+		grid-template-columns: repeat(var(--itemsPerRow), 1fr);
+		gap: 2.5rem;
 
 		figure {
 			border: 1px solid #CCCCCC;
-			max-width: 13.25rem;
-			
+			width: 100%;
+
 			&:hover {
 				cursor: pointer;
 				border: 1px solid #0066C1;
@@ -26,9 +32,10 @@
 			}
 
 			img {
-				width: 13.25rem;
+				width: 100%;
 				height: 13.125rem;
 				object-fit: cover;
+				vertical-align: middle;
 			}
 		}
 	
@@ -38,7 +45,6 @@
 			flex-direction: column;
 			border-top: 1px solid #CCCCCC;
 			background-color: #D4E9FC;
-			padding: 0.5rem 0.5rem;
 			font-size: 15px;
 			color: #000000;
 			justify-content: center;
@@ -80,3 +86,20 @@
 	}
 }
 
+@media only screen and (max-width: $breakpoint-xxl) {
+	:root {
+    --itemsPerRow: #{$itemsPerRowDesktop};
+  }
+}
+
+@media only screen and (max-width: $breakpoint-xl) {
+	:root {
+    --itemsPerRow: #{$itemsPerRowTablet};
+  }
+}
+
+@media only screen and (max-width: $breakpoint-md) {
+	:root {
+    --itemsPerRow: #{$itemsPerRowMobile};
+  }
+}

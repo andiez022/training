@@ -84,9 +84,9 @@ const BoardView: React.FC<{ userRole: string }> = ({ userRole }) => {
           </div>
         </div>
         <div className="board-view__content">
-          <div className="lab-view__table-head">
+          <div className="board-view__table-head">
             <h2 className="gradual-color-transition">자유게시판</h2>
-            <div className="lab-view__drop-down">
+            <div className="board-view__drop-down">
               <Dropdown
                 elementAction={
                   <Button
@@ -102,15 +102,12 @@ const BoardView: React.FC<{ userRole: string }> = ({ userRole }) => {
                 <DropdownItem onClick={() => handleDropdownItemClick('제목')}>제목</DropdownItem>
                 <DropdownItem onClick={() => handleDropdownItemClick('작성자')}>작성자</DropdownItem>
               </Dropdown>
-              <div className="lab-view__search-area">
+              <div className="board-view__search-area">
                 <TextInput dataId="" placeholder="공지사항 검색" />
                 <Button
                   icon={ICONS.MAGNIFIER}
                   iconPlacement={ButtonIconPlacement.Left}
                   iconSize={IconSize.XL}
-                  onClick={() => {
-                    console.log('Clicked!');
-                  }}
                   className="button--icon-text"
                 >
                   제목
@@ -118,9 +115,7 @@ const BoardView: React.FC<{ userRole: string }> = ({ userRole }) => {
               </div>
             </div>
           </div>
-          <div className="lab-view__table-body">
-            <CustomTable columns={columns} data={data} itemsPerPage={10} userRole={userRole} onCreateButton={handleCreatePost} />
-          </div>
+          <CustomTable columns={columns} data={data} itemsPerPage={10} userRole={userRole} onCreateButton={handleCreatePost} />
         </div>
       </div>
     );

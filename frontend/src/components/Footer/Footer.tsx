@@ -11,7 +11,13 @@ const Footer: React.FC<FooterProps> = () => {
         <img src="/footer.svg" alt="footerLogo" />
       </div>
       <div className="footer__right">
-        <p>47430 부산광역시 부산진구 엄광로 176 | TEL. 051-890-1754 | FAX. 051-890-1759</p>
+        <div className="footer__right__contact">
+          <p>47430 부산광역시 부산진구 엄광로 176</p>
+          <span />
+          <p>TEL. 051-890-1754</p>
+          <span />
+          <p>FAX. 051-890-1759</p>
+        </div>
         <p>COPYRIGHT 2023 DONG-EUI UNIVERSITY. ALL RIGHTS RESERVED.</p>
       </div>
     </footer>
