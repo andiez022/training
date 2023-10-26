@@ -8,11 +8,9 @@
 
 .video {
 	display: flex;
-	justify-content: center;
-	gap: 2.5rem;
+	gap: 2rem;
 
 	&__thumbnail {
-
 	}
 
 	&__info {
@@ -58,27 +56,29 @@
 	display: flex;
 	justify-content: center;
 	margin-top: 60px;
-	gap: 2px;
+	gap: 4px;
 
 	.icon-nav {
 		display: flex;
-		gap: 2px;
+		gap: 4px;
 
 		.button-nav {
 			cursor: pointer;
 			border: none;
+			width: 2rem;
+      height: 2rem;
 		}
 	}
 
 	.page-number {
 		display: flex;
-		gap: 2px;
+		gap: 4px;
 	
 		button {
 			background-color: white;
 			border: 1px solid #CCCCCC;
-			width: 1.75rem;
-      height: 1.75rem;
+			width: 2rem;
+      height: 2rem;
 		}
 
 		button.clicked {
@@ -88,14 +88,27 @@
 	}
 }
 
+iframe {
+	border: none;
+}
+
 @media only screen and (max-width: $breakpoint-xl) {
 	.video {
-		flex-direction: column;
+		flex-direction: column;		
+	}
+
+	iframe {
+		width: 325px;
+		height: 175px;
 	}
 }
 
 @media only screen and (max-width: $breakpoint-md) {
 	.video {
 		flex-direction: column;
+	}
+
+	iframe {
+		height: 175px;
 	}
 }

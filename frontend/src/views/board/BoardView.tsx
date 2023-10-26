@@ -21,7 +21,7 @@ const BoardView: React.FC<{ userRole: string }> = ({ userRole }) => {
     navigate('/board/create');
   };
 
-  const [selectedItemText, setSelectedItemText] = useState('');
+  const [selectedItemText, setSelectedItemText] = useState('제목');
 
   const handleDropdownItemClick = (itemText: string) => {
     setSelectedItemText(itemText);
@@ -85,32 +85,33 @@ const BoardView: React.FC<{ userRole: string }> = ({ userRole }) => {
         </div>
         <div className="board-view__content">
           <div className="board-view__table-head">
-            <h2 className="gradual-color-transition">자유게시판</h2>
+            <div className="board-view__title">
+              <h2 className="gradual-color-transition">자유게시판</h2>
+            </div>
             <div className="board-view__drop-down">
               <Dropdown
                 elementAction={
-                  <Button
-                    icon={ICONS.ARROW_DOWN}
-                    iconPlacement={ButtonIconPlacement.Right}
-                    iconSize={IconSize.LG}
-                    className="button--text-icon"
-                  >
+                  <Button icon={ICONS.ARROW_DOWN} iconPlacement={ButtonIconPlacement.Right} className="button--text-icon">
                     {selectedItemText || '제목'}
                   </Button>
                 }
               >
-                <DropdownItem onClick={() => handleDropdownItemClick('제목')}>제목</DropdownItem>
-                <DropdownItem onClick={() => handleDropdownItemClick('작성자')}>작성자</DropdownItem>
+                <DropdownItem onClick={() => handleDropdownItemClick('제목')} isSelected={selectedItemText === '제목'}>
+                  제목
+                </DropdownItem>
+                <DropdownItem onClick={() => handleDropdownItemClick('작성자')} isSelected={selectedItemText === '작성자'}>
+                  작성자
+                </DropdownItem>
               </Dropdown>
               <div className="board-view__search-area">
-                <TextInput dataId="" placeholder="공지사항 검색" />
+                <TextInput dataId="author" placeholder="자유게시판 검색" />
                 <Button
                   icon={ICONS.MAGNIFIER}
                   iconPlacement={ButtonIconPlacement.Left}
                   iconSize={IconSize.XL}
                   className="button--icon-text"
                 >
-                  제목
+                  검색
                 </Button>
               </div>
             </div>
@@ -127,7 +128,9 @@ const BoardView: React.FC<{ userRole: string }> = ({ userRole }) => {
         <div className="board-view__top">
           <div className="board-view__content">
             <div className="board-view__table-head">
-              <h2 className="gradual-color-transition">공지사항</h2>
+              <div className="board-view__title">
+                <h2 className="gradual-color-transition">자유게시판</h2>
+              </div>
             </div>
             <TableRowDetails
               id={currentItem.id}
@@ -146,38 +149,46 @@ const BoardView: React.FC<{ userRole: string }> = ({ userRole }) => {
 
   if (contentType === 'create') {
     return (
-      <div className="board-view__top">
-        <div className="board-view__create-form">
-          <h2 className="gradual-color-transition">자유게시판 작성</h2>
-          <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-            <Form>
-              <div className="form-row">
-                <div className="form-group">
-                  <label htmlFor="authorName">작성자 이름</label>
-                  <Field type="text" id="authorName" name="authorName" placeholder="이름을 입력하세요." />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="password">비밀번호</label>
-                  <Field type="password" id="password" name="password" placeholder="비밀번호를 입력하세요." />
-                </div>
+      <div className="board-view">
+        <div className="board-view__top">
+          <div className="board-view__content">
+            <div className="board-view__table-head">
+              <div className="board-view__title">
+                <h2 className="gradual-color-transition">자유게시판 작성</h2>
               </div>
-              <div className="form-row">
-                <div className="form-group">
-                  <label htmlFor="title">제목</label>
-                  <Field type="text" id="title" name="title" placeholder="제목을 입력해주세요." className="input-title" />
-                </div>
-              </div>
-              <div className="form-row">
-                <div className="form-group">
-                  <Field as="textarea" id="content" name="content" placeholder="내용을 입력하세요." />
-                </div>
-              </div>
+            </div>
+            <div className="form-container">
+              <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+                <Form className="form-create">
+                  <div className="form-row">
+                    <div className="form-group">
+                      <label htmlFor="authorName">작성자 이름</label>
+                      <Field type="text" id="authorName" name="authorName" placeholder="이름을 입력하세요." />
+                      <label htmlFor="password">비밀번호</label>
+                      <Field type="password" id="password" name="password" placeholder="비밀번호를 입력하세요." />
+                    </div>
+                  </div>
+                  <div className="form-row">
+                    <div className="form-group">
+                      <label htmlFor="title">제목</label>
+                      <Field type="text" id="title" name="title" placeholder="제목을 입력해주세요." />
+                    </div>
+                  </div>
+                  <div className="form-row">
+                    <div className="form-group">
+                      <Field as="textarea" id="content" name="content" placeholder="내용을 입력하세요." className="content-area" />
+                    </div>
+                  </div>
+                </Form>
+              </Formik>
               <div className="form-button">
-                <button type="reset">등록</button>
-                <button type="submit">취소</button>
+                <button type="submit" className="submit-button">
+                  등록
+                </button>
+                <button className="cancel-button">취소</button>
               </div>
-            </Form>
-          </Formik>
+            </div>
+          </div>
         </div>
       </div>
     );

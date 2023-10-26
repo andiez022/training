@@ -63,29 +63,31 @@
 
   .pagination {
     display: flex;
-    align-self: center;
     justify-content: center;
     margin-top: 60px;
+    gap: 4px;
 
     .icon-nav {
       display: flex;
-      gap: 2px;
+      gap: 4px;
   
       .button-nav {
         cursor: pointer;
         border: none;
+        width: 2rem;
+        height: 2rem;
       }
     }
   
     .page-number {
       display: flex;
-      gap: 2px;
+      gap: 4px;
     
       button {
         background-color: white;
         border: 1px solid #CCCCCC;
-        width: 1.75rem;
-        height: 1.75rem;
+        width: 2rem;
+        height: 2rem;
       }
 
       button.clicked {
@@ -96,12 +98,14 @@
 
     .admin-buttons {
       display: flex;
-      gap: 2px;
+      gap: 4px;
       position: absolute;
-      right: 18.75rem;
-
+      right: 18%;
+      
       button {
         border: 1px solid #C0C0C0;
+        height: 2.5rem;
+        min-width: 3.75rem;
 
         &:hover {
           cursor: pointer;
@@ -109,19 +113,14 @@
       }
 
       &__edit {
-        height: 2.5rem;
-        width: 3.75rem;
         background-color: #FFFFFF;
       }
 
       &__remove {
-        height: 2.5rem;
-        width: 3.75rem;
         background-color: #D9D9D9;
       }
 
       &__create {
-        height: 2.5rem;
         width: 6.25rem;
         color: white;
         background: linear-gradient(90deg, #0367C2 0%, #009FE5 100%);
@@ -132,9 +131,23 @@
 
 @media only screen and (max-width: $breakpoint-xl) {
   .customized-table {
+    margin-top: 2.5rem;
+
     th:nth-child(3), td:nth-child(3),
 		th:nth-child(4), td:nth-child(4) {
 			display: none;
 		}
+
+    .pagination {
+      .admin-buttons {
+        margin-top: 75px;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: $breakpoint-md) {
+  .customized-table {
+    margin-top: 5rem;
   }
 }

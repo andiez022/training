@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Formik, Field, Form, ErrorMessage, useFormik } from 'formik';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { Link } from 'react-router-dom';
 
 import Icon, { ICONS, IconSize } from '../../components/SVG/Icon';
@@ -37,7 +37,9 @@ const LoginView: React.FC = () => {
           <div className="form-group">
             <label htmlFor="password">비밀번호</label>
             <Field type={passwordVisible ? 'text' : 'password'} id="password" name="password" placeholder="비밀번호를 입력하세요." />
-            <span onClick={togglePasswordVisibility}>👁️</span>
+            <span onClick={togglePasswordVisibility}>
+              <Icon component={passwordVisible ? ICONS.EYE_VISIBLE : ICONS.EYE_INVISIBLE} size={IconSize.LG} />
+            </span>
             <ErrorMessage name="password" component="div" className="error" />
           </div>
           <div className="form-group">

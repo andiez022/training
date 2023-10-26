@@ -57,10 +57,10 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ data }) => {
         {currentPage > 1 && (
           <div className="icon-nav">
             <button onClick={handleFirstPage} className="button-nav">
-              <Icon component={ICONS.FIRST} size={IconSize.XL} />
+              <Icon component={ICONS.FIRST} size={IconSize.XXL} />
             </button>
             <button onClick={handlePrevPage} className="button-nav">
-              <Icon component={ICONS.BACKWARD} size={IconSize.XL} />
+              <Icon component={ICONS.BACKWARD} size={IconSize.XXL} />
             </button>
           </div>
         )}
@@ -80,10 +80,10 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ data }) => {
         {currentPage < totalPageCount && (
           <div className="icon-nav">
             <button onClick={handleNextPage} className="button-nav">
-              <Icon component={ICONS.FORWARD} size={IconSize.XL} />
+              <Icon component={ICONS.FORWARD} size={IconSize.XXL} />
             </button>
             <button onClick={handleLastPage} className="button-nav">
-              <Icon component={ICONS.LAST} size={IconSize.XL} />
+              <Icon component={ICONS.LAST} size={IconSize.XXL} />
             </button>
           </div>
         )}

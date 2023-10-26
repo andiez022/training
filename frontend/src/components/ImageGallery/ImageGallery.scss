@@ -56,27 +56,29 @@ $itemsPerRowMobile: 1;
 	display: flex;
 	justify-content: center;
 	margin-top: 60px;
-	gap: 2px;
+	gap: 4px;
 
 	.icon-nav {
 		display: flex;
-		gap: 2px;
+		gap: 4px;
 
 		.button-nav {
 			cursor: pointer;
 			border: none;
+			width: 2rem;
+      height: 2rem;
 		}
 	}
 
 	.page-number {
 		display: flex;
-		gap: 2px;
+		gap: 4px;
 	
 		button {
 			background-color: white;
 			border: 1px solid #CCCCCC;
-			width: 1.75rem;
-      height: 1.75rem;
+			width: 2rem;
+      height: 2rem;
 		}
 
 		button.clicked {
@@ -96,10 +98,18 @@ $itemsPerRowMobile: 1;
 	:root {
     --itemsPerRow: #{$itemsPerRowTablet};
   }
+
+	.gallery-container {
+		margin-top: 2.5rem;
+	}
 }
 
 @media only screen and (max-width: $breakpoint-md) {
 	:root {
     --itemsPerRow: #{$itemsPerRowMobile};
   }
+
+	.gallery-container {
+		margin-top: 5rem;
+	}
 }

@@ -84,7 +84,10 @@
 		&__table-head  {
 			flex-direction: column;
 			gap: 1.25rem;
-			margin-bottom: 6rem;
+		}
+
+		&__title {
+			display: flex;
 		}
 
 		&__drop-down {
@@ -97,8 +100,6 @@
 	.lab-view {
 		&__table-head  {
 			flex-direction: column;
-			gap: 1.25rem;
-			margin-bottom: 9rem;
 		}
 
 		&__drop-down {

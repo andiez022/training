@@ -40,7 +40,7 @@ const CampaignView: React.FC<{ userRole: string }> = ({ userRole }) => {
   const { contentType } = useParams();
   const currentItem = data.find((item) => item.id === contentType);
 
-  const [selectedItemText, setSelectedItemText] = useState('');
+  const [selectedItemText, setSelectedItemText] = useState('제목');
 
   const handleDropdownItemClick = (itemText: string) => {
     setSelectedItemText(itemText);
@@ -59,32 +59,33 @@ const CampaignView: React.FC<{ userRole: string }> = ({ userRole }) => {
         </div>
         <div className="campaign-view__content">
           <div className="campaign-view__grid-head">
-            <h2 className="gradual-color-transition">캠페인</h2>
+            <div className="campaign-view__title">
+              <h2 className="gradual-color-transition">캠페인</h2>
+            </div>
             <div className="campaign-view__drop-down">
               <Dropdown
                 elementAction={
-                  <Button
-                    icon={ICONS.ARROW_DOWN}
-                    iconPlacement={ButtonIconPlacement.Right}
-                    iconSize={IconSize.LG}
-                    className="button--text-icon"
-                  >
+                  <Button icon={ICONS.ARROW_DOWN} iconPlacement={ButtonIconPlacement.Right} className="button--text-icon">
                     {selectedItemText || '제목'}
                   </Button>
                 }
               >
-                <DropdownItem onClick={() => handleDropdownItemClick('제목')}>제목</DropdownItem>
-                <DropdownItem onClick={() => handleDropdownItemClick('작성자')}>작성자</DropdownItem>
+                <DropdownItem onClick={() => handleDropdownItemClick('제목')} isSelected={selectedItemText === '제목'}>
+                  제목
+                </DropdownItem>
+                <DropdownItem onClick={() => handleDropdownItemClick('작성자')} isSelected={selectedItemText === '작성자'}>
+                  작성자
+                </DropdownItem>
               </Dropdown>
               <div className="campaign-view__search-area">
-                <TextInput dataId="" placeholder="캠페인 검색" />
+                <TextInput dataId="author" placeholder="캠페인 검색" />
                 <Button
                   icon={ICONS.MAGNIFIER}
                   iconPlacement={ButtonIconPlacement.Left}
                   iconSize={IconSize.XL}
                   className="button--icon-text"
                 >
-                  제목
+                  검색
                 </Button>
               </div>
             </div>
@@ -100,7 +101,9 @@ const CampaignView: React.FC<{ userRole: string }> = ({ userRole }) => {
         <div className="campaign-view__top">
           <div className="campaign-view__content">
             <div className="campaign-view__grid-head">
-              <h2 className="gradual-color-transition">캠페인</h2>
+              <div className="campaign-view__title">
+                <h2 className="gradual-color-transition">캠페인</h2>
+              </div>
             </div>
             <GalleryImageDetails
               id={currentItem.id}

@@ -9,14 +9,6 @@ interface NavLinkProps {
   text: string;
 }
 
-const CustomNavLink: React.FC<NavLinkProps> = ({ to, text }) => {
-  return (
-    <NavLink to={to} className={(navData) => (navData.isActive ? 'active-link' : 'default-link')}>
-      {text}
-    </NavLink>
-  );
-};
-
 const Header: React.FC<{ userRole: string }> = ({ userRole }) => {
   const [isTransparent, setIsTransparent] = useState(false);
 
@@ -40,6 +32,14 @@ const Header: React.FC<{ userRole: string }> = ({ userRole }) => {
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const CustomNavLink: React.FC<NavLinkProps> = ({ to, text }) => {
+    return (
+      <NavLink to={to} className={(navData) => (navData.isActive ? 'active-link' : 'default-link')} onClick={() => setIsMenuOpen(false)}>
+        {text}
+      </NavLink>
+    );
+  };
+
   const location = useLocation();
   const currentPath = location.pathname;
 
@@ -50,18 +50,22 @@ const Header: React.FC<{ userRole: string }> = ({ userRole }) => {
     isHomePage && isTransparent ? 'transparent' : ''
   }`;
 
+  const isSmallerScreen = window.innerWidth <= 768;
+
   return (
     <header className={headerClasses}>
       <div className="header-left">
-        <NavLink to="/">
-          <img src="/header.svg" alt="Header logo" />
-        </NavLink>
-        {!showLinks && <p>[ 관리자 ]</p>}
+        <NavLink to="/" className={`header-img ${isSmallerScreen ? 'small-screen' : ''}`} />
+        {!showLinks && (
+          <div className="header-img-text">
+            <p>[ 관리자 ]</p>
+          </div>
+        )}
       </div>
       {showLinks && (
         <div className="header-right">
-          <div className="menu-icon" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-            <Icon className="icon" component={isMenuOpen ? ICONS.CLOSE : ICONS.MENU} size={isMenuOpen ? IconSize.LG : IconSize.XL} />
+          <div className="menu-container" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            <Icon className="menu-icon" component={isMenuOpen ? ICONS.CLOSE : ICONS.MENU} size={isMenuOpen ? IconSize.LG : IconSize.XL} />
           </div>
           <nav className={`nav-links ${isMenuOpen ? 'show-menu' : ''}`}>
             <CustomNavLink to="/" text="홈" />

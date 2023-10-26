@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
 import Icon, { ICONS, IconSize } from '../SVG/Icon';
+import VideoPlayer from './VideoPlayer';
 
 import './VideoCollection.scss';
 
 export interface VideoItem {
   id: number;
-  link: string;
+  video_id?: string;
   image: string;
   title: string;
   description: string;
@@ -24,7 +25,6 @@ const VideoCollection: React.FC = () => {
     const exampleVideoData: VideoItem[] = [
       {
         id: 1,
-        link: 'https://www.youtube.com/watch?v=jNQXAC9IVRw',
         image: '/logo192.png',
         title: '전영은 콘텐츠 테스트 전영은 콘텐츠 테스트 전영은 콘텐츠 테스트 전영은 콘텐츠 테스트 전영 츠 테스트 전영ㅇ',
         description: 'acb3213123555dsadsad',
@@ -32,7 +32,7 @@ const VideoCollection: React.FC = () => {
       },
       {
         id: 2,
-        link: 'https://www.youtube.com/watch?v=jNQXAC9IVRw',
+        video_id: 'jNQXAC9IVRw',
         image: '/logo192.png',
         title: 'Video 2',
         description:
@@ -41,7 +41,6 @@ const VideoCollection: React.FC = () => {
       },
       {
         id: 3,
-        link: 'https://www.youtube.com/watch?v=jNQXAC9IVRw',
         image: '/logo192.png',
         title: 'Video 3',
         description: 'acb3213123555dsadsad',
@@ -49,7 +48,6 @@ const VideoCollection: React.FC = () => {
       },
       {
         id: 4,
-        link: 'https://www.youtube.com/watch?v=jNQXAC9IVRw',
         image: '/logo192.png',
         title: 'Video 4',
         description: 'acb3213123555dsadsad',
@@ -57,7 +55,6 @@ const VideoCollection: React.FC = () => {
       },
       {
         id: 5,
-        link: 'https://www.youtube.com/watch?v=jNQXAC9IVRw',
         image: '/logo192.png',
         title: 'Video 5',
         description: 'acb3213123555dsadsad',
@@ -65,7 +62,6 @@ const VideoCollection: React.FC = () => {
       },
       {
         id: 6,
-        link: 'https://www.youtube.com/watch?v=jNQXAC9IVRw',
         image: '/logo192.png',
         title: 'Video 6',
         description: 'acb3213123555dsadsad',
@@ -73,7 +69,6 @@ const VideoCollection: React.FC = () => {
       },
       {
         id: 7,
-        link: 'https://www.youtube.com/watch?v=jNQXAC9IVRw',
         image: '/logo192.png',
         title: 'Video 7',
         description: 'acb3213123555dsadsad',
@@ -81,7 +76,6 @@ const VideoCollection: React.FC = () => {
       },
       {
         id: 8,
-        link: 'https://www.youtube.com/watch?v=jNQXAC9IVRw',
         image: '/logo192.png',
         title: 'Video 8',
         description: 'acb3213123555dsadsad',
@@ -89,7 +83,6 @@ const VideoCollection: React.FC = () => {
       },
       {
         id: 9,
-        link: 'https://www.youtube.com/watch?v=jNQXAC9IVRw',
         image: '/logo192.png',
         title: 'Video 9',
         description: 'acb3213123555dsadsad',
@@ -97,7 +90,7 @@ const VideoCollection: React.FC = () => {
       },
       {
         id: 10,
-        link: 'https://www.youtube.com/watch?v=jNQXAC9IVRw',
+        video_id: 'jNQXAC9IVRw',
         image: '/logo192.png',
         title: 'Video 10',
         description: 'acb3213123555dsadsad',
@@ -105,7 +98,7 @@ const VideoCollection: React.FC = () => {
       },
       {
         id: 11,
-        link: 'https://www.youtube.com/watch?v=jNQXAC9IVRw',
+        video_id: 'jNQXAC9IVRw',
         image: '/logo192.png',
         title: 'Video 11',
         description: 'acb3213123555dsadsad',
@@ -113,7 +106,7 @@ const VideoCollection: React.FC = () => {
       },
       {
         id: 12,
-        link: 'https://www.youtube.com/watch?v=jNQXAC9IVRw',
+        video_id: 'jNQXAC9IVRw',
         image: '/logo192.png',
         title: 'Video 12',
         description: 'acb3213123555dsadsad',
@@ -121,7 +114,7 @@ const VideoCollection: React.FC = () => {
       },
       {
         id: 13,
-        link: 'https://www.youtube.com/watch?v=jNQXAC9IVRw',
+        video_id: 'jNQXAC9IVRw',
         image: '/logo192.png',
         title: 'Video 13',
         description: 'acb3213123555dsadsad',
@@ -140,9 +133,7 @@ const VideoCollection: React.FC = () => {
     return itemsToDisplay.map((video) => (
       <div key={video.id} className="video">
         <div className="video__thumbnail">
-          <a href={video.link}>
-            <img src={video.image} alt="Video Thumbnail" />
-          </a>
+          <VideoPlayer videoId={video.video_id} />
         </div>
         <div className="video__info">
           <div className="video__info__header">
@@ -186,10 +177,10 @@ const VideoCollection: React.FC = () => {
         {currentPage > 1 && (
           <div className="icon-nav">
             <button onClick={handleFirstPage} className="button-nav">
-              <Icon component={ICONS.FIRST} size={IconSize.XL} />
+              <Icon component={ICONS.FIRST} size={IconSize.XXL} />
             </button>
             <button onClick={handlePrevPage} className="button-nav">
-              <Icon component={ICONS.BACKWARD} size={IconSize.XL} />
+              <Icon component={ICONS.BACKWARD} size={IconSize.XXL} />
             </button>
           </div>
         )}
@@ -209,10 +200,10 @@ const VideoCollection: React.FC = () => {
         {currentPage < totalPageCount && (
           <div className="icon-nav">
             <button onClick={handleNextPage} className="button-nav">
-              <Icon component={ICONS.FORWARD} size={IconSize.XL} />
+              <Icon component={ICONS.FORWARD} size={IconSize.XXL} />
             </button>
             <button onClick={handleLastPage} className="button-nav">
-              <Icon component={ICONS.LAST} size={IconSize.XL} />
+              <Icon component={ICONS.LAST} size={IconSize.XXL} />
             </button>
           </div>
         )}

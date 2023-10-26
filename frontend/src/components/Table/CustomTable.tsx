@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
 import Icon, { ICONS, IconSize } from '../SVG/Icon';
 
@@ -77,10 +77,10 @@ const CustomTable: React.FC<TableProps> = ({ data, itemsPerPage, columns, classN
         {currentPage > 1 && (
           <div className="icon-nav">
             <button onClick={handleFirstPage} className="button-nav">
-              <Icon component={ICONS.FIRST} size={IconSize.XL} />
+              <Icon component={ICONS.FIRST} size={IconSize.XXL} />
             </button>
             <button onClick={handlePrevPage} className="button-nav">
-              <Icon component={ICONS.BACKWARD} size={IconSize.XL} />
+              <Icon component={ICONS.BACKWARD} size={IconSize.XXL} />
             </button>
           </div>
         )}
@@ -100,10 +100,10 @@ const CustomTable: React.FC<TableProps> = ({ data, itemsPerPage, columns, classN
         {currentPage < totalPageCount && (
           <div className="icon-nav">
             <button onClick={handleNextPage} className="button-nav">
-              <Icon component={ICONS.FORWARD} size={IconSize.XL} />
+              <Icon component={ICONS.FORWARD} size={IconSize.XXL} />
             </button>
             <button onClick={handleLastPage} className="button-nav">
-              <Icon component={ICONS.LAST} size={IconSize.XL} />
+              <Icon component={ICONS.LAST} size={IconSize.XXL} />
             </button>
           </div>
         )}

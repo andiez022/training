@@ -7,8 +7,8 @@ import DropdownItem from '../../components/Dropdown/DropdownItem';
 import TextInput from '../../components/TextInput/TextInput';
 import CustomTable from '../../components/Table/CustomTable';
 
-import './LabView.scss';
 import TableRowDetails from '../../components/Table/TableRowDetails';
+import './LabView.scss';
 
 const LabView: React.FC<{ userRole: string }> = ({ userRole }) => {
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ const LabView: React.FC<{ userRole: string }> = ({ userRole }) => {
     navigate('/lab/create');
   };
 
-  const [selectedItemText, setSelectedItemText] = useState('');
+  const [selectedItemText, setSelectedItemText] = useState('제목');
 
   const handleDropdownItemClick = (itemText: string) => {
     setSelectedItemText(itemText);
@@ -71,32 +71,33 @@ const LabView: React.FC<{ userRole: string }> = ({ userRole }) => {
         </div>
         <div className="lab-view__content">
           <div className="lab-view__table-head">
-            <h2 className="gradual-color-transition">리빙랩</h2>
+            <div className="lab-view__title">
+              <h2 className="gradual-color-transition">리빙랩</h2>
+            </div>
             <div className="lab-view__drop-down">
               <Dropdown
                 elementAction={
-                  <Button
-                    icon={ICONS.ARROW_DOWN}
-                    iconPlacement={ButtonIconPlacement.Right}
-                    iconSize={IconSize.LG}
-                    className="button--text-icon"
-                  >
+                  <Button icon={ICONS.ARROW_DOWN} iconPlacement={ButtonIconPlacement.Right} className="button--text-icon">
                     {selectedItemText || '제목'}
                   </Button>
                 }
               >
-                <DropdownItem onClick={() => handleDropdownItemClick('제목')}>제목</DropdownItem>
-                <DropdownItem onClick={() => handleDropdownItemClick('작성자')}>작성자</DropdownItem>
+                <DropdownItem onClick={() => handleDropdownItemClick('제목')} isSelected={selectedItemText === '제목'}>
+                  제목
+                </DropdownItem>
+                <DropdownItem onClick={() => handleDropdownItemClick('작성자')} isSelected={selectedItemText === '작성자'}>
+                  작성자
+                </DropdownItem>
               </Dropdown>
               <div className="lab-view__search-area">
-                <TextInput dataId="" placeholder="공지사항 검색" />
+                <TextInput dataId="" placeholder="리빙랩 검색" />
                 <Button
                   icon={ICONS.MAGNIFIER}
                   iconPlacement={ButtonIconPlacement.Left}
                   iconSize={IconSize.XL}
                   className="button--icon-text"
                 >
-                  제목
+                  검색
                 </Button>
               </div>
             </div>
@@ -113,7 +114,9 @@ const LabView: React.FC<{ userRole: string }> = ({ userRole }) => {
         <div className="lab-view__top">
           <div className="lab-view__content">
             <div className="lab-view__table-head">
-              <h2 className="gradual-color-transition">리빙랩</h2>
+              <div className="lab-view__title">
+                <h2 className="gradual-color-transition">리빙랩</h2>
+              </div>
             </div>
             <TableRowDetails
               id={currentItem.id}

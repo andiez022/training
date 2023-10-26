@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { Formik, Form, Field } from 'formik';
+
 import Button, { ButtonIconPlacement } from '../../components/Button/Button';
 import { ICONS, IconSize } from '../../components/SVG/Icon';
 import Dropdown from '../../components/Dropdown/Dropdown';
@@ -17,7 +19,7 @@ const AnnView: React.FC<{ userRole: string }> = ({ userRole }) => {
     navigate('/announcement/create');
   };
 
-  const [selectedItemText, setSelectedItemText] = useState('');
+  const [selectedItemText, setSelectedItemText] = useState('제목');
 
   const handleDropdownItemClick = (itemText: string) => {
     setSelectedItemText(itemText);
@@ -58,50 +60,64 @@ const AnnView: React.FC<{ userRole: string }> = ({ userRole }) => {
   const { contentType } = useParams();
   const currentItem = data.find((item) => item.id === contentType);
 
+  const initialValues = {
+    authorName: '',
+    password: '',
+    title: '',
+    content: '',
+  };
+
+  const handleSubmit = (values: any) => {
+    console.log('Form values:', values);
+  };
+
   if (!contentType) {
     return (
-      <div className="ann-view__top">
-        <div className="ann-view__image">
-          <div className="ann-view__image__overlay" />
-          <img src="/announcement_bn.png" alt="AnnBG" />
-          <div className="ann-view__image__icon">
-            <img src="icon_announcement.svg" alt="AnnIcon" />
-            <p>깨바부의 새로운 소식을 전합니다.</p>
-          </div>
-        </div>
-        <div className="ann-view__content">
-          <div className="ann-view__table-head">
-            <h2 className="gradual-color-transition">공지사항</h2>
-            <div className="ann-view__drop-down">
-              <Dropdown
-                elementAction={
-                  <Button
-                    icon={ICONS.ARROW_DOWN}
-                    iconPlacement={ButtonIconPlacement.Right}
-                    iconSize={IconSize.LG}
-                    className="button--text-icon"
-                  >
-                    {selectedItemText || '제목'}
-                  </Button>
-                }
-              >
-                <DropdownItem onClick={() => handleDropdownItemClick('제목')}>제목</DropdownItem>
-                <DropdownItem onClick={() => handleDropdownItemClick('작성자')}>작성자</DropdownItem>
-              </Dropdown>
-              <div className="ann-view__search-area">
-                <TextInput dataId="" placeholder="공지사항 검색" />
-                <Button
-                  icon={ICONS.MAGNIFIER}
-                  iconPlacement={ButtonIconPlacement.Left}
-                  iconSize={IconSize.XL}
-                  className="button--icon-text"
-                >
-                  검색
-                </Button>
-              </div>
+      <div className="ann-view">
+        <div className="ann-view__top">
+          <div className="ann-view__image">
+            <div className="ann-view__image__overlay" />
+            <img src="/announcement_bn.png" alt="AnnBG" />
+            <div className="ann-view__image__icon">
+              <img src="icon_announcement.svg" alt="AnnIcon" />
+              <p>깨바부의 새로운 소식을 전합니다.</p>
             </div>
           </div>
-          <CustomTable data={data} itemsPerPage={10} columns={columns} userRole={userRole} onCreateButton={handleCreateAnnouncement} />
+          <div className="ann-view__content">
+            <div className="ann-view__table-head">
+              <div className="ann-view__title">
+                <h2 className="gradual-color-transition">공지사항</h2>
+              </div>
+              <div className="ann-view__drop-down">
+                <Dropdown
+                  elementAction={
+                    <Button icon={ICONS.ARROW_DOWN} iconPlacement={ButtonIconPlacement.Right} className="button--text-icon">
+                      {selectedItemText || '제목'}
+                    </Button>
+                  }
+                >
+                  <DropdownItem onClick={() => handleDropdownItemClick('제목')} isSelected={selectedItemText === '제목'}>
+                    제목
+                  </DropdownItem>
+                  <DropdownItem onClick={() => handleDropdownItemClick('작성자')} isSelected={selectedItemText === '작성자'}>
+                    작성자
+                  </DropdownItem>
+                </Dropdown>
+                <div className="ann-view__search-area">
+                  <TextInput dataId="author" placeholder="공지사항 검색" />
+                  <Button
+                    icon={ICONS.MAGNIFIER}
+                    iconPlacement={ButtonIconPlacement.Left}
+                    iconSize={IconSize.XL}
+                    className="button--icon-text"
+                  >
+                    검색
+                  </Button>
+                </div>
+              </div>
+            </div>
+            <CustomTable data={data} itemsPerPage={10} columns={columns} userRole={userRole} onCreateButton={handleCreateAnnouncement} />
+          </div>
         </div>
       </div>
     );
@@ -113,7 +129,9 @@ const AnnView: React.FC<{ userRole: string }> = ({ userRole }) => {
         <div className="ann-view__top">
           <div className="ann-view__content">
             <div className="ann-view__table-head">
-              <h2 className="gradual-color-transition">공지사항</h2>
+              <div className="ann-view__title">
+                <h2 className="gradual-color-transition">공지사항</h2>
+              </div>
             </div>
             <TableRowDetails
               id={currentItem.id}
@@ -132,9 +150,47 @@ const AnnView: React.FC<{ userRole: string }> = ({ userRole }) => {
 
   if (contentType === 'create') {
     return (
-      <div className="ann-view__top">
-        <h1>Create New Item</h1>
-        <h1>Create New Item</h1>
+      <div className="ann-view">
+        <div className="ann-view__top">
+          <div className="ann-view__content">
+            <div className="ann-view__table-head">
+              <div className="ann-view__title">
+                <h2 className="gradual-color-transition">공지사항 작성</h2>
+              </div>
+            </div>
+            <div className="form-container">
+              <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+                <Form className="form-create">
+                  <div className="form-row">
+                    <div className="form-group">
+                      <label htmlFor="authorName">작성자 이름</label>
+                      <Field type="text" id="authorName" name="authorName" placeholder="이름을 입력하세요." />
+                      <label htmlFor="password">비밀번호</label>
+                      <Field type="password" id="password" name="password" placeholder="비밀번호를 입력하세요." />
+                    </div>
+                  </div>
+                  <div className="form-row">
+                    <div className="form-group">
+                      <label htmlFor="title">제목</label>
+                      <Field type="text" id="title" name="title" placeholder="제목을 입력해주세요." />
+                    </div>
+                  </div>
+                  <div className="form-row">
+                    <div className="form-group">
+                      <Field as="textarea" id="content" name="content" placeholder="내용을 입력하세요." className="content-area" />
+                    </div>
+                  </div>
+                </Form>
+              </Formik>
+              <div className="form-button">
+                <button type="submit" className="submit-button">
+                  등록
+                </button>
+                <button className="cancel-button">취소</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

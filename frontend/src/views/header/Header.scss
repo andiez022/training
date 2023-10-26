@@ -14,15 +14,22 @@
 
   .header-left {
     display: flex;
-    margin-left: 10%;
-    align-items: center;
+    margin-left: 9.25%;
+
+    .header-img {
+      background-image: url('assets/logo_medium.svg');
+      background-repeat: no-repeat;
+      width: 217.293px;
+      height: 40px;
+    }
   
-    p {
-      margin-bottom: 0.5em;
+    .header-img-text {
+      display: flex;
       margin-left: 1em;
       color: white;
       font-size: 12px;
       font-weight: bold;
+      margin-top: 10px;
     }
   }
   
@@ -45,6 +52,7 @@
 .app-header.transparent {
   background: transparent;
   box-shadow: none;
+  color: white;
 
   .active-link, .default-link {
     color: white;
@@ -52,18 +60,21 @@
 }
 
 .app-header.show-menu {
+  background-color: white;
+  color: black;
   display: flex;
   align-items: flex-start;
   position: fixed;
   z-index: 1;
   box-shadow: 0px 6px 18px rgb(0, 0, 0, 0.16);
 
-  .menu-icon {
+  .menu-container {
     margin-bottom: 1.875rem;
     align-self: flex-end;
+    color: white;
 
-    .icon {
-      padding-top: 15px;
+    .menu-icon {
+      padding-top: 10px;
     }
   }
 
@@ -72,6 +83,14 @@
     flex-direction: column;
     gap: 1.875rem;
     text-align: right;
+  }
+
+  .default-link {
+    color: black;
+  }
+
+  .active-link {
+    color: #0066C1;
   }
 }
 
@@ -95,5 +114,25 @@
 
   .menu-icon {
     display: flex;
+  }
+}
+
+@media screen and (max-width: $breakpoint-md) {
+  .nav-links {
+    display: none;
+  }
+
+  .menu-icon {
+    display: flex;
+  }
+
+  .header-left {
+    .header-img.small-screen {
+      margin-top: 10px;
+      background-image: url('assets/logo_small.svg');
+      background-repeat: no-repeat;
+      width: 148.422px;
+      height: 30px;
+    }
   }
 }

@@ -90,7 +90,10 @@
 		&__grid-head  {
 			flex-direction: column;
 			gap: 1.25rem;
-			margin-bottom: 6rem;
+		}
+
+		&__title {
+			display: flex;
 		}
 
 		&__drop-down {
@@ -104,7 +107,6 @@
 		&__grid-head  {
 			flex-direction: column;
 			gap: 1.25rem;
-			margin-bottom: 9rem;
 		}
 
 		&__drop-down {

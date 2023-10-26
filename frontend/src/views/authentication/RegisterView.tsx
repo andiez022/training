@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 
+import Icon, { ICONS, IconSize } from '../../components/SVG/Icon';
+
 import './RegisterView.scss';
 
 const RegisterView: React.FC = () => {
@@ -49,7 +51,9 @@ const RegisterView: React.FC = () => {
             <div className="form-group">
               <label htmlFor="password">비밀번호</label>
               <Field type={passwordVisible ? 'text' : 'password'} id="password" name="password" placeholder="비밀번호를 입력하세요." />
-              <span onClick={togglePasswordVisibility}>👁️</span>
+              <span onClick={togglePasswordVisibility}>
+                <Icon component={passwordVisible ? ICONS.EYE_VISIBLE : ICONS.EYE_INVISIBLE} size={IconSize.LG} />
+              </span>
               <ErrorMessage name="password" component="div" className="error" />
             </div>
             <div className="form-group">
@@ -67,7 +71,9 @@ const RegisterView: React.FC = () => {
                 name="confirmPassword"
                 placeholder="비밀번호를 입력하세요."
               />
-              <span onClick={togglePasswordConfirmVisibility}>👁️</span>
+              <span onClick={togglePasswordConfirmVisibility}>
+                <Icon component={passwordConfirmVisible ? ICONS.EYE_VISIBLE : ICONS.EYE_INVISIBLE} size={IconSize.LG} />
+              </span>
               <ErrorMessage name="confirmPassword" component="div" className="error" />
             </div>
             <div className="form-group">

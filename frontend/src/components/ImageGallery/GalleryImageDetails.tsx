@@ -16,7 +16,7 @@ const GalleryImageDetails: React.FC<GalleryImageProps> = ({ id, image, title, au
   const navigate = useNavigate();
 
   return (
-    <div className="campaign-view">
+    <div className="image-view">
       <div className="item-wrapper">
         <img src={image} alt="item detail" />
         <div className="item-body">
