@@ -86,6 +86,37 @@ $itemsPerRowMobile: 1;
 			color: white;
 		}
 	}
+
+	.admin-buttons {
+		display: flex;
+		gap: 4px;
+		position: absolute;
+		right: 18%;
+		
+		button {
+			border: 1px solid #C0C0C0;
+			height: 2.5rem;
+			min-width: 3.75rem;
+
+			&:hover {
+				cursor: pointer;
+			}
+		}
+
+		&__edit {
+			background-color: #FFFFFF;
+		}
+
+		&__remove {
+			background-color: #D9D9D9;
+		}
+
+		&__create {
+			width: 6.25rem;
+			color: white;
+			background: linear-gradient(90deg, #0367C2 0%, #009FE5 100%);
+		}
+	}
 }
 
 @media only screen and (max-width: $breakpoint-xxl) {

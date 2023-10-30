@@ -7,9 +7,11 @@ import './ImageGallery.scss';
 
 interface ImageGalleryProps {
   data: GalleryImageProps[];
+  userRole: string;
+  onCreateButton: () => void;
 }
 
-const ImageGallery: React.FC<ImageGalleryProps> = ({ data }) => {
+const ImageGallery: React.FC<ImageGalleryProps> = ({ data, userRole, onCreateButton }) => {
   const itemsPerPage = 12;
   const totalPageCount = Math.ceil(data.length / itemsPerPage);
 
@@ -84,6 +86,15 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ data }) => {
             </button>
             <button onClick={handleLastPage} className="button-nav">
               <Icon component={ICONS.LAST} size={IconSize.XXL} />
+            </button>
+          </div>
+        )}
+        {userRole === 'admin' && (
+          <div className="admin-buttons">
+            <button className="admin-buttons__edit">수정</button>
+            <button className="admin-buttons__remove">삭제</button>
+            <button className="admin-buttons__create" onClick={onCreateButton}>
+              글쓰기
             </button>
           </div>
         )}

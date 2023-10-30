@@ -11,7 +11,7 @@ interface TableProps {
   columns: { dataId: string; label: string }[];
   className?: string;
   userRole: string;
-  onCreateButton?: () => void;
+  onCreateButton: () => void;
 }
 
 const CustomTable: React.FC<TableProps> = ({ data, itemsPerPage, columns, className, userRole, onCreateButton }) => {

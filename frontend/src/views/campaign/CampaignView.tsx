@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import { Formik, Form, Field } from 'formik';
 
 import Dropdown from '../../components/Dropdown/Dropdown';
 import DropdownItem from '../../components/Dropdown/DropdownItem';
@@ -11,30 +12,148 @@ import GalleryImageDetails, { GalleryImageProps } from '../../components/ImageGa
 import ImageGallery from '../../components/ImageGallery/ImageGallery';
 
 import './CampaignView.scss';
+import CustomTable from '../../components/Table/CustomTable';
 
 const CampaignView: React.FC<{ userRole: string }> = ({ userRole }) => {
   const data: GalleryImageProps[] = [
     {
       id: 'weqweasd',
+      numbering: 1,
       image: '/ctest.jpg',
       title: "The error message \"The term 'choco' is not recognized",
-      author: 'adminadminadminadminadmina dminadminadminadmin',
+      author: 'admin',
+      date: '2023-05-05',
       link: 'https://www.youtube.com/watch?v=LqME1y6Mlyg',
       description:
         '깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.',
     },
-    { id: '2', image: '/logo192.png', title: '', author: '', link: '', description: 'Item 2' },
-    { id: '3', image: '/logo192.png', title: '', author: '', link: '', description: 'Item 3' },
-    { id: '4', image: '/logo192.png', title: '', author: '', link: '', description: 'Item 4' },
-    { id: '5', image: '/logo192.png', title: '', author: '', link: '', description: 'Item 5' },
-    { id: '6', image: '/logo192.png', title: '', author: '', link: '', description: 'Item 6' },
-    { id: '7', image: '/logo192.png', title: '', author: '', link: '', description: 'Item 7' },
-    { id: '8', image: '/logo192.png', title: '', author: '', link: '', description: 'Item 8' },
-    { id: '9', image: '/logo192.png', title: '', author: '', link: '', description: 'Item 9' },
-    { id: '10', image: '/logo192.png', title: '', author: '', link: '', description: 'Item 10' },
-    { id: '11', image: '/logo192.png', title: '', author: '', link: '', description: 'Item 11' },
-    { id: '12', image: '/logo192.png', title: '', author: '', link: '', description: 'Item 12' },
-    { id: '13', image: '/logo192.png', title: '', author: '', link: '', description: 'Item 13' },
+    {
+      id: '2',
+      numbering: 2,
+      image: '/logo192.png',
+      title: 'www',
+      author: 'admin',
+      date: '2023-05-05',
+      link: '',
+      description: 'Item 2',
+    },
+    {
+      id: '3',
+      numbering: 3,
+      image: '/logo192.png',
+      title: 'www',
+      author: 'admin',
+      date: '2023-05-05',
+      link: '',
+      description: 'Item 3',
+    },
+    {
+      id: '4',
+      numbering: 4,
+      image: '/logo192.png',
+      title: 'www',
+      author: 'admin',
+      date: '2023-05-05',
+      link: '',
+      description: 'Item 4',
+    },
+    {
+      id: '5',
+      numbering: 5,
+      image: '/logo192.png',
+      title: 'www',
+      author: 'admin',
+      date: '2023-05-05',
+      link: '',
+      description: 'Item 5',
+    },
+    {
+      id: '6',
+      numbering: 6,
+      image: '/logo192.png',
+      title: 'www',
+      author: 'admin',
+      date: '2023-05-05',
+      link: '',
+      description: 'Item 6',
+    },
+    {
+      id: '7',
+      numbering: 7,
+      image: '/logo192.png',
+      title: 'www',
+      author: 'admin',
+      date: '2023-05-05',
+      link: '',
+      description: 'Item 7',
+    },
+    {
+      id: '8',
+      numbering: 8,
+      image: '/logo192.png',
+      title: 'www',
+      author: 'admin',
+      date: '2023-05-05',
+      link: '',
+      description: 'Item 8',
+    },
+    {
+      id: '9',
+      numbering: 9,
+      image: '/logo192.png',
+      title: 'www',
+      author: 'admin',
+      date: '2023-05-05',
+      link: '',
+      description: 'Item 9',
+    },
+    {
+      id: '10',
+      numbering: 10,
+      image: '/logo192.png',
+      title: 'www',
+      author: 'admin',
+      date: '2023-05-05',
+      link: '',
+      description: 'Item 10',
+    },
+    {
+      id: '11',
+      numbering: 11,
+      image: '/logo192.png',
+      title: 'www',
+      author: 'admin',
+      date: '2023-05-05',
+      link: '',
+      description: 'Item 11',
+    },
+    {
+      id: '12',
+      numbering: 12,
+      image: '/logo192.png',
+      title: 'www',
+      author: 'admin',
+      date: '2023-05-05',
+      link: '',
+      description: 'Item 12',
+    },
+    {
+      id: '13',
+      numbering: 13,
+      image: '/logo192.png',
+      title: 'www',
+      author: 'admin',
+      date: '2023-05-05',
+      link: '',
+      description: 'Item 13',
+    },
+  ];
+
+  const columns = [
+    { dataId: 'numbering', label: '번호' },
+    { dataId: 'title', label: '제목' },
+    { dataId: 'author', label: '작성자' },
+    { dataId: 'date', label: '작성일' },
   ];
 
   const { contentType } = useParams();
@@ -44,6 +163,21 @@ const CampaignView: React.FC<{ userRole: string }> = ({ userRole }) => {
 
   const handleDropdownItemClick = (itemText: string) => {
     setSelectedItemText(itemText);
+  };
+
+  const navigate = useNavigate();
+
+  const handleCreatePost = () => {
+    navigate('create');
+  };
+
+  const initialValues = {
+    title: 'www',
+    content: '',
+  };
+
+  const handleSubmit = (values: any) => {
+    console.log('Form values:', values);
   };
 
   if (!contentType) {
@@ -90,11 +224,15 @@ const CampaignView: React.FC<{ userRole: string }> = ({ userRole }) => {
               </div>
             </div>
           </div>
-          <ImageGallery data={data} />
+          {userRole === 'user' && <ImageGallery data={data} userRole={userRole} onCreateButton={handleCreatePost} />}
+          {userRole === 'admin' && (
+            <CustomTable data={data} itemsPerPage={10} columns={columns} userRole={userRole} onCreateButton={handleCreatePost} />
+          )}
         </div>
       </div>
     );
   }
+
   if (currentItem) {
     return (
       <div className="campaign-view">
@@ -107,9 +245,11 @@ const CampaignView: React.FC<{ userRole: string }> = ({ userRole }) => {
             </div>
             <GalleryImageDetails
               id={currentItem.id}
+              numbering={currentItem.numbering}
               image={currentItem.image}
               title={currentItem.title}
               author={currentItem.author}
+              date={currentItem.date}
               link={currentItem.link}
               description={currentItem.description}
             />
@@ -121,9 +261,41 @@ const CampaignView: React.FC<{ userRole: string }> = ({ userRole }) => {
 
   if (contentType === 'create') {
     return (
-      <div className="campaign-view__top">
-        <h1>Create New Item</h1>
-        <h1>Create New Item</h1>
+      <div className="campaign-view">
+        <div className="campaign-view__top">
+          <div className="campaign-view__content">
+            <div className="campaign-view__grid-head">
+              <div className="campaign-view__title">
+                <h2 className="gradual-color-transition">콘텐츠 작성</h2>
+              </div>
+            </div>
+            <div className="form-container">
+              <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+                <Form className="form-create">
+                  <div className="form-row">
+                    <div className="form-group">
+                      <Field as="textarea" id="content" name="content" placeholder="내용을 입력하세요." className="content-area" />
+                    </div>
+                  </div>
+                  <div className="form-row">
+                    <div className="form-group">
+                      <label htmlFor="link">링크</label>
+                      <Field type="text" id="link" name="link" placeholder="링크를 입력해주세요." />
+                    </div>
+                  </div>
+                </Form>
+              </Formik>
+              <div className="form-button">
+                <button type="submit" className="submit-button">
+                  등록
+                </button>
+                <button className="cancel-button" onClick={() => window.history.back()}>
+                  취소
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

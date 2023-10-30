@@ -35,7 +35,7 @@ const queryClient = new QueryClient({
 const App: React.FC = () => {
   console.log('start');
 
-  const userRole = 'admin';
+  const userRole = 'user';
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -59,6 +59,10 @@ const App: React.FC = () => {
                   />
                   <Route path="/facility" element={<PrivateRoute guards={[]} element={<FacilityView userRole={userRole} />} />} />
                   <Route path="/content" element={<PrivateRoute guards={[]} element={<ContentView userRole={userRole} />} />} />
+                  <Route
+                    path="/content/:contentType"
+                    element={<PrivateRoute guards={[]} element={<ContentView userRole={userRole} />} />}
+                  />
                   <Route path="/lab" element={<PrivateRoute guards={[]} element={<LabView userRole={userRole} />} />} />
                   <Route path="/lab/:contentType" element={<PrivateRoute guards={[]} element={<LabView userRole={userRole} />} />} />
                   <Route path="/campaign" element={<PrivateRoute guards={[]} element={<CampaignView userRole={userRole} />} />} />

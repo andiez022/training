@@ -185,7 +185,9 @@ const BoardView: React.FC<{ userRole: string }> = ({ userRole }) => {
                 <button type="submit" className="submit-button">
                   등록
                 </button>
-                <button className="cancel-button">취소</button>
+                <button className="cancel-button" onClick={() => window.history.back()}>
+                  취소
+                </button>
               </div>
             </div>
           </div>

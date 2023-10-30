@@ -5,14 +5,16 @@ import { useNavigate } from 'react-router-dom';
 
 export interface GalleryImageProps {
   id: string;
+  numbering: number;
   image: string;
   title: string;
   author: string;
+  date: string;
   link: string;
   description: string;
 }
 
-const GalleryImageDetails: React.FC<GalleryImageProps> = ({ id, image, title, author, link, description }) => {
+const GalleryImageDetails: React.FC<GalleryImageProps> = ({ id, numbering, image, title, author, date, link, description }) => {
   const navigate = useNavigate();
 
   return (

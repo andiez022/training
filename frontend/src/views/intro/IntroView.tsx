@@ -59,7 +59,11 @@ const Intro: React.FC = () => {
             </p>
           </div>
           <div className="intro-view__image-1 fade-in">
-            <img src="about1.svg" alt="Process" />
+            <picture>
+              <source media="(max-width: 767px)" srcSet="/about1_vertical.svg" />
+              <source media="(min-width: 768px)" srcSet="/about1.svg" />
+              <img src="about1-default.jpg" alt="Process" />
+            </picture>
           </div>
           <div className="intro-view__paragraph-2 fade-in">
             <p>
@@ -95,7 +99,11 @@ const Intro: React.FC = () => {
             </p>
           </div>
           <div className="intro-view__image-2 fade-in">
-            <img src="about2.svg" alt="Cards" />
+            <picture>
+              <source media="(max-width: 767px)" srcSet="/about2_vertical.svg" />
+              <source media="(min-width: 768px)" srcSet="/about2.svg" />
+              <img src="about1-default.jpg" alt="Process" />
+            </picture>
           </div>
           <div className="intro-view__paragraph-4 fade-in">
             <p>아름다운 미래 해양도시 부산을 위하여 시민 여러분들의 많은 관심과 참여를 부탁드립니다. 감사합니다.</p>

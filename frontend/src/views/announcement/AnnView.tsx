@@ -61,8 +61,6 @@ const AnnView: React.FC<{ userRole: string }> = ({ userRole }) => {
   const currentItem = data.find((item) => item.id === contentType);
 
   const initialValues = {
-    authorName: '',
-    password: '',
     title: '',
     content: '',
   };
@@ -163,14 +161,6 @@ const AnnView: React.FC<{ userRole: string }> = ({ userRole }) => {
                 <Form className="form-create">
                   <div className="form-row">
                     <div className="form-group">
-                      <label htmlFor="authorName">작성자 이름</label>
-                      <Field type="text" id="authorName" name="authorName" placeholder="이름을 입력하세요." />
-                      <label htmlFor="password">비밀번호</label>
-                      <Field type="password" id="password" name="password" placeholder="비밀번호를 입력하세요." />
-                    </div>
-                  </div>
-                  <div className="form-row">
-                    <div className="form-group">
                       <label htmlFor="title">제목</label>
                       <Field type="text" id="title" name="title" placeholder="제목을 입력해주세요." />
                     </div>
@@ -186,7 +176,9 @@ const AnnView: React.FC<{ userRole: string }> = ({ userRole }) => {
                 <button type="submit" className="submit-button">
                   등록
                 </button>
-                <button className="cancel-button">취소</button>
+                <button className="cancel-button" onClick={() => window.history.back()}>
+                  취소
+                </button>
               </div>
             </div>
           </div>
