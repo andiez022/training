@@ -13,25 +13,6 @@ import TableRowDetails from '../../components/Table/TableRowDetails';
 import './AnnView.scss';
 
 const AnnView: React.FC<{ userRole: string }> = ({ userRole }) => {
-  const navigate = useNavigate();
-
-  const handleCreateAnnouncement = () => {
-    navigate('/announcement/create');
-  };
-
-  const [selectedItemText, setSelectedItemText] = useState('제목');
-
-  const handleDropdownItemClick = (itemText: string) => {
-    setSelectedItemText(itemText);
-  };
-
-  const columns = [
-    { dataId: 'numbering', label: '번호' },
-    { dataId: 'title', label: '제목' },
-    { dataId: 'author', label: '작성자' },
-    { dataId: 'date', label: '작성일' },
-  ];
-
   const data = [
     {
       id: '1',
@@ -42,7 +23,7 @@ const AnnView: React.FC<{ userRole: string }> = ({ userRole }) => {
       date: '2023-05-05',
       body: '글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기.',
     },
-    { id: '2', numbering: 2, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
+    { id: '2', numbering: 2, title: 'Short', author: '관리자 2', date: '2023-05-05', body: '' },
     { id: '3', numbering: 3, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
     { id: '4', numbering: 4, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
     { id: '5', numbering: 5, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
@@ -54,11 +35,57 @@ const AnnView: React.FC<{ userRole: string }> = ({ userRole }) => {
     { id: '11', numbering: 11, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
     { id: '12', numbering: 12, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
   ];
-
   const indexes = data.map((item) => item.id);
+
+  const columns = [
+    { dataId: 'numbering', label: '번호' },
+    { dataId: 'title', label: '제목' },
+    { dataId: 'author', label: '작성자' },
+    { dataId: 'date', label: '작성일' },
+  ];
+
+  type TableSearchColumn = 'title' | 'author';
+
+  const [filteredData, setFilteredData] = useState(data);
+
+  const updateFilteredData = () => {
+    const newFilteredData = data.filter((row) => {
+      const cellValue = row[selectedSearchColumn];
+      return cellValue.toLowerCase().includes(searchText.toLowerCase());
+    });
+    setFilteredData(newFilteredData);
+  };
+
+  const handleEnterKeyPress = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      updateFilteredData();
+    }
+  };
+
+  const navigate = useNavigate();
+  const handleCreateAnnouncement = () => {
+    navigate('create');
+  };
 
   const { contentType } = useParams();
   const currentItem = data.find((item) => item.id === contentType);
+
+  const [selectedDropdownText, setSelectedDropdownText] = useState('제목');
+  const [searchText, setSearchText] = useState('');
+  const [selectedSearchColumn, setSelectedSearchColumn] = useState<TableSearchColumn>('title');
+
+  const handleDropdownItemClick = (itemText: string) => {
+    if (itemText !== selectedDropdownText) {
+      setSelectedDropdownText(itemText);
+      if (itemText === '제목') {
+        setSelectedSearchColumn('title');
+      } else {
+        setSelectedSearchColumn('author');
+      }
+      setSearchText('');
+      setFilteredData(data);
+    }
+  };
 
   const initialValues = {
     title: '',
@@ -90,31 +117,44 @@ const AnnView: React.FC<{ userRole: string }> = ({ userRole }) => {
                 <Dropdown
                   elementAction={
                     <Button icon={ICONS.ARROW_DOWN} iconPlacement={ButtonIconPlacement.Right} className="button--text-icon">
-                      {selectedItemText || '제목'}
+                      {selectedDropdownText || '제목'}
                     </Button>
                   }
                 >
-                  <DropdownItem onClick={() => handleDropdownItemClick('제목')} isSelected={selectedItemText === '제목'}>
+                  <DropdownItem onClick={() => handleDropdownItemClick('제목')} isSelected={selectedDropdownText === '제목'}>
                     제목
                   </DropdownItem>
-                  <DropdownItem onClick={() => handleDropdownItemClick('작성자')} isSelected={selectedItemText === '작성자'}>
+                  <DropdownItem onClick={() => handleDropdownItemClick('작성자')} isSelected={selectedDropdownText === '작성자'}>
                     작성자
                   </DropdownItem>
                 </Dropdown>
                 <div className="ann-view__search-area">
-                  <TextInput dataId="author" placeholder="공지사항 검색" />
+                  <TextInput
+                    dataId=""
+                    placeholder="공지사항 검색"
+                    value={searchText}
+                    onChange={(e) => setSearchText(e.target.value)}
+                    onKeyDown={handleEnterKeyPress}
+                  />
                   <Button
                     icon={ICONS.MAGNIFIER}
                     iconPlacement={ButtonIconPlacement.Left}
                     iconSize={IconSize.XL}
                     className="button--icon-text"
+                    onClick={updateFilteredData}
                   >
                     검색
                   </Button>
                 </div>
               </div>
             </div>
-            <CustomTable data={data} itemsPerPage={10} columns={columns} userRole={userRole} onCreateButton={handleCreateAnnouncement} />
+            <CustomTable
+              data={filteredData}
+              itemsPerPage={10}
+              columns={columns}
+              userRole={userRole}
+              onCreateButton={handleCreateAnnouncement}
+            />
           </div>
         </div>
       </div>
@@ -170,16 +210,16 @@ const AnnView: React.FC<{ userRole: string }> = ({ userRole }) => {
                       <Field as="textarea" id="content" name="content" placeholder="내용을 입력하세요." className="content-area" />
                     </div>
                   </div>
+                  <div className="form-button">
+                    <button type="submit" className="submit-button">
+                      등록
+                    </button>
+                    <button className="cancel-button" onClick={() => window.history.back()}>
+                      취소
+                    </button>
+                  </div>
                 </Form>
               </Formik>
-              <div className="form-button">
-                <button type="submit" className="submit-button">
-                  등록
-                </button>
-                <button className="cancel-button" onClick={() => window.history.back()}>
-                  취소
-                </button>
-              </div>
             </div>
           </div>
         </div>

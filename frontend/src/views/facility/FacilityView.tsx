@@ -10,55 +10,6 @@ interface AreaData {
 }
 
 const FacilityView: React.FC<{ userRole: string }> = ({ userRole }) => {
-  const [area, setSelectedArea] = useState('부산');
-
-  const handleMapClick = () => {
-    const animationElements = document.querySelectorAll('.animation-g');
-
-    animationElements.forEach((element) => {
-      element.addEventListener('click', () => {
-        const pathElement = element.querySelector('path');
-
-        if (pathElement) {
-          const clickedId = pathElement.id;
-
-          const koreanForm = clickedId.replace(/\\u([\dA-Fa-f]{4})/g, (match, grp) => {
-            return String.fromCharCode(parseInt(grp, 16));
-          });
-
-          animationElements.forEach((el) => {
-            el.classList.remove('selected');
-          });
-
-          element.classList.add('selected');
-
-          setSelectedArea(koreanForm);
-        }
-      });
-    });
-  };
-
-  const handleDefaultButton = () => {
-    setSelectedArea('부산');
-
-    const animationElements = document.querySelectorAll('.animation-g');
-    animationElements.forEach((element) => {
-      element.classList.remove('selected');
-    });
-  };
-
-  const [selectedItem, setSelectedItem] = useState<FacilityItem | null>(null);
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleFacilityClick = (item: FacilityItem) => {
-    setSelectedItem(item);
-    setIsOpen(true);
-  };
-
-  const handleClose = () => {
-    setIsOpen(false);
-  };
-
   const data: AreaData = {
     부산: [
       {
@@ -126,6 +77,55 @@ const FacilityView: React.FC<{ userRole: string }> = ({ userRole }) => {
         status: 'E',
       },
     ],
+  };
+
+  const [area, setSelectedArea] = useState('부산');
+
+  const handleMapClick = () => {
+    const animationElements = document.querySelectorAll('.animation-g');
+
+    animationElements.forEach((element) => {
+      element.addEventListener('click', () => {
+        const pathElement = element.querySelector('path');
+
+        if (pathElement) {
+          const clickedId = pathElement.id;
+
+          const koreanForm = clickedId.replace(/\\u([\dA-Fa-f]{4})/g, (match, grp) => {
+            return String.fromCharCode(parseInt(grp, 16));
+          });
+
+          animationElements.forEach((el) => {
+            el.classList.remove('selected');
+          });
+
+          element.classList.add('selected');
+
+          setSelectedArea(koreanForm);
+        }
+      });
+    });
+  };
+
+  const handleDefaultButton = () => {
+    setSelectedArea('부산');
+
+    const animationElements = document.querySelectorAll('.animation-g');
+    animationElements.forEach((element) => {
+      element.classList.remove('selected');
+    });
+  };
+
+  const [selectedItem, setSelectedItem] = useState<FacilityItem | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleFacilityClick = (item: FacilityItem) => {
+    setSelectedItem(item);
+    setIsOpen(true);
+  };
+
+  const handleClose = () => {
+    setIsOpen(false);
   };
 
   return (

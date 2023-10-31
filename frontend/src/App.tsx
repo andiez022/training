@@ -35,7 +35,7 @@ const queryClient = new QueryClient({
 const App: React.FC = () => {
   console.log('start');
 
-  const userRole = 'user';
+  const userRole = 'admin';
 
   return (
     <QueryClientProvider client={queryClient}>

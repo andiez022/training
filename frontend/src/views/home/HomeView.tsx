@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Header from '../header/Header';
+
+import RevealOnScroll from '../../components/RevealOnScroll/RevealOnScroll';
 import Card from '../../components/Card/Card';
 
 import './HomeView.scss';
@@ -69,22 +70,24 @@ const Home: React.FC = () => {
         </div>
       </div>
       <div className="context-container">
-        <div className="announcement-container">
-          <div className="announcement-title">
-            <h2 className="gradual-color-transition">공지사항</h2>
-            <button>
-              <Icon component={ICONS.PLUS} size={IconSize.XXL} />
-            </button>
+        <RevealOnScroll>
+          <div className="announcement-container">
+            <div className="announcement-title">
+              <h2 className="gradual-color-transition">공지사항</h2>
+              <button>
+                <Icon component={ICONS.PLUS} size={IconSize.XXL} />
+              </button>
+            </div>
+            <div className="announcement-card">
+              <Card title={card1Info.title} content={card1Info.content} date={card1Info.date} />
+              <Card title={card2Info.title} content={card2Info.content} date={card2Info.date} />
+              <Card title={card3Info.title} content={card3Info.content} date={card3Info.date} />
+              <Card title={card4Info.title} content={card4Info.content} date={card4Info.date} />
+            </div>
           </div>
-          <div className="announcement-card">
-            <Card title={card1Info.title} content={card1Info.content} date={card1Info.date} />
-            <Card title={card2Info.title} content={card2Info.content} date={card2Info.date} />
-            <Card title={card3Info.title} content={card3Info.content} date={card3Info.date} />
-            <Card title={card4Info.title} content={card4Info.content} date={card4Info.date} />
-          </div>
-        </div>
+        </RevealOnScroll>
         <div className="highlights-container">
-          <div className="list-container">
+          <RevealOnScroll className="list-container">
             <div className="list-header">
               <h2 className="gradual-color-transition">콘텐츠</h2>
               <button>
@@ -102,8 +105,8 @@ const Home: React.FC = () => {
                 </li>
               ))}
             </ul>
-          </div>
-          <div className="list-container">
+          </RevealOnScroll>
+          <RevealOnScroll className="list-container" style={{ transitionDelay: '0.25s' }}>
             <div className="list-header">
               <h2 className="gradual-color-transition">리빙랩</h2>
               <button>
@@ -121,8 +124,8 @@ const Home: React.FC = () => {
                 </li>
               ))}
             </ul>
-          </div>
-          <div className="list-container">
+          </RevealOnScroll>
+          <RevealOnScroll className="list-container" style={{ transitionDelay: '0.5s' }}>
             <div className="list-header">
               <h2 className="gradual-color-transition">캠페인</h2>
               <button>
@@ -140,8 +143,8 @@ const Home: React.FC = () => {
                 </li>
               ))}
             </ul>
-          </div>
-          <div className="list-container">
+          </RevealOnScroll>
+          <RevealOnScroll className="list-container" style={{ transitionDelay: '0.75s' }}>
             <div className="list-header">
               <h2 className="gradual-color-transition">자유게시판</h2>
               <button>
@@ -159,7 +162,7 @@ const Home: React.FC = () => {
                 </li>
               ))}
             </ul>
-          </div>
+          </RevealOnScroll>
         </div>
       </div>
     </div>

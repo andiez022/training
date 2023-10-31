@@ -13,27 +13,6 @@ import TableRowDetails from '../../components/Table/TableRowDetails';
 import './BoardView.scss';
 
 const BoardView: React.FC<{ userRole: string }> = ({ userRole }) => {
-  const { contentType } = useParams();
-
-  const navigate = useNavigate();
-
-  const handleCreatePost = () => {
-    navigate('/board/create');
-  };
-
-  const [selectedItemText, setSelectedItemText] = useState('제목');
-
-  const handleDropdownItemClick = (itemText: string) => {
-    setSelectedItemText(itemText);
-  };
-
-  const columns = [
-    { dataId: 'numbering', label: '번호' },
-    { dataId: 'title', label: '제목' },
-    { dataId: 'author', label: '작성자' },
-    { dataId: 'date', label: '작성일' },
-  ];
-
   const data = [
     {
       id: '1',
@@ -56,10 +35,28 @@ const BoardView: React.FC<{ userRole: string }> = ({ userRole }) => {
     { id: '11', numbering: 11, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
     { id: '12', numbering: 12, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
   ];
+  const indexes = data.map((item) => item.id);
 
+  const columns = [
+    { dataId: 'numbering', label: '번호' },
+    { dataId: 'title', label: '제목' },
+    { dataId: 'author', label: '작성자' },
+    { dataId: 'date', label: '작성일' },
+  ];
+
+  const navigate = useNavigate();
+  const handleCreatePost = () => {
+    navigate('create');
+  };
+
+  const { contentType } = useParams();
   const currentItem = data.find((item) => item.id === contentType);
 
-  const indexes = data.map((item) => item.id);
+  const [selectedDropdownText, setSelectedDropdownText] = useState('제목');
+
+  const handleDropdownItemClick = (itemText: string) => {
+    setSelectedDropdownText(itemText);
+  };
 
   const initialValues = {
     authorName: '',
@@ -69,7 +66,7 @@ const BoardView: React.FC<{ userRole: string }> = ({ userRole }) => {
   };
 
   const handleSubmit = (values: any) => {
-    console.log('Form values:', values);
+    console.log(values);
   };
 
   if (!contentType) {
@@ -92,14 +89,14 @@ const BoardView: React.FC<{ userRole: string }> = ({ userRole }) => {
               <Dropdown
                 elementAction={
                   <Button icon={ICONS.ARROW_DOWN} iconPlacement={ButtonIconPlacement.Right} className="button--text-icon">
-                    {selectedItemText || '제목'}
+                    {selectedDropdownText || '제목'}
                   </Button>
                 }
               >
-                <DropdownItem onClick={() => handleDropdownItemClick('제목')} isSelected={selectedItemText === '제목'}>
+                <DropdownItem onClick={() => handleDropdownItemClick('제목')} isSelected={selectedDropdownText === '제목'}>
                   제목
                 </DropdownItem>
-                <DropdownItem onClick={() => handleDropdownItemClick('작성자')} isSelected={selectedItemText === '작성자'}>
+                <DropdownItem onClick={() => handleDropdownItemClick('작성자')} isSelected={selectedDropdownText === '작성자'}>
                   작성자
                 </DropdownItem>
               </Dropdown>
@@ -176,19 +173,22 @@ const BoardView: React.FC<{ userRole: string }> = ({ userRole }) => {
                   </div>
                   <div className="form-row">
                     <div className="form-group">
-                      <Field as="textarea" id="content" name="content" placeholder="내용을 입력하세요." className="content-area" />
+                      <div className="content-container">
+                        <div className="toolbar">A</div>
+                        <Field as="textarea" id="content" name="content" placeholder="내용을 입력하세요." className="content-area" />
+                      </div>
                     </div>
+                  </div>
+                  <div className="form-button">
+                    <button type="submit" className="submit-button">
+                      등록
+                    </button>
+                    <button className="cancel-button" onClick={() => window.history.back()}>
+                      취소
+                    </button>
                   </div>
                 </Form>
               </Formik>
-              <div className="form-button">
-                <button type="submit" className="submit-button">
-                  등록
-                </button>
-                <button className="cancel-button" onClick={() => window.history.back()}>
-                  취소
-                </button>
-              </div>
             </div>
           </div>
         </div>

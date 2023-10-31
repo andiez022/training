@@ -131,9 +131,9 @@ export const exampleVideoData: VideoItem[] = [
 const VideoCollection: React.FC = () => {
   const [videoData, setVideoData] = useState<VideoItem[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const itemsPerPage: number = 10;
+  const itemsPerPage = 10;
 
-  const totalPageCount = Math.ceil(videoData.length / itemsPerPage);
+  const totalPageCount = Math.ceil(exampleVideoData.length / itemsPerPage);
 
   const renderVideoItems = (page: number) => {
     const startIdx = (page - 1) * itemsPerPage;

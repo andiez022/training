@@ -156,23 +156,23 @@ const CampaignView: React.FC<{ userRole: string }> = ({ userRole }) => {
     { dataId: 'date', label: '작성일' },
   ];
 
-  const { contentType } = useParams();
-  const currentItem = data.find((item) => item.id === contentType);
-
-  const [selectedItemText, setSelectedItemText] = useState('제목');
-
-  const handleDropdownItemClick = (itemText: string) => {
-    setSelectedItemText(itemText);
-  };
-
   const navigate = useNavigate();
-
   const handleCreatePost = () => {
     navigate('create');
   };
 
+  const { contentType } = useParams();
+  const currentItem = data.find((item) => item.id === contentType);
+
+  const [selectedDropdownText, setSelectedDropdownText] = useState('제목');
+
+  const handleDropdownItemClick = (itemText: string) => {
+    setSelectedDropdownText(itemText);
+  };
+
   const initialValues = {
-    title: 'www',
+    file: null,
+    title: '',
     content: '',
   };
 
@@ -200,14 +200,14 @@ const CampaignView: React.FC<{ userRole: string }> = ({ userRole }) => {
               <Dropdown
                 elementAction={
                   <Button icon={ICONS.ARROW_DOWN} iconPlacement={ButtonIconPlacement.Right} className="button--text-icon">
-                    {selectedItemText || '제목'}
+                    {selectedDropdownText || '제목'}
                   </Button>
                 }
               >
-                <DropdownItem onClick={() => handleDropdownItemClick('제목')} isSelected={selectedItemText === '제목'}>
+                <DropdownItem onClick={() => handleDropdownItemClick('제목')} isSelected={selectedDropdownText === '제목'}>
                   제목
                 </DropdownItem>
-                <DropdownItem onClick={() => handleDropdownItemClick('작성자')} isSelected={selectedItemText === '작성자'}>
+                <DropdownItem onClick={() => handleDropdownItemClick('작성자')} isSelected={selectedDropdownText === '작성자'}>
                   작성자
                 </DropdownItem>
               </Dropdown>
@@ -266,12 +266,18 @@ const CampaignView: React.FC<{ userRole: string }> = ({ userRole }) => {
           <div className="campaign-view__content">
             <div className="campaign-view__grid-head">
               <div className="campaign-view__title">
-                <h2 className="gradual-color-transition">콘텐츠 작성</h2>
+                <h2 className="gradual-color-transition">캠페인 작성</h2>
               </div>
             </div>
             <div className="form-container">
               <Formik initialValues={initialValues} onSubmit={handleSubmit}>
                 <Form className="form-create">
+                  <div className="form-row">
+                    <div className="form-group">
+                      <label htmlFor="title">제목</label>
+                      <Field type="text" id="title" name="title" placeholder="제목을 입력해주세요." />
+                    </div>
+                  </div>
                   <div className="form-row">
                     <div className="form-group">
                       <Field as="textarea" id="content" name="content" placeholder="내용을 입력하세요." className="content-area" />
@@ -283,16 +289,19 @@ const CampaignView: React.FC<{ userRole: string }> = ({ userRole }) => {
                       <Field type="text" id="link" name="link" placeholder="링크를 입력해주세요." />
                     </div>
                   </div>
+                  <div>
+                    <input id="file" name="file" type="file" accept="image/*" />
+                  </div>
+                  <div className="form-button">
+                    <button type="submit" className="submit-button">
+                      등록
+                    </button>
+                    <button className="cancel-button" onClick={() => window.history.back()}>
+                      취소
+                    </button>
+                  </div>
                 </Form>
               </Formik>
-              <div className="form-button">
-                <button type="submit" className="submit-button">
-                  등록
-                </button>
-                <button className="cancel-button" onClick={() => window.history.back()}>
-                  취소
-                </button>
-              </div>
             </div>
           </div>
         </div>

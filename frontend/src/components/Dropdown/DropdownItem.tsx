@@ -24,7 +24,7 @@ export const DropdownItem: React.FunctionComponent<DropdownItemProps> = ({
 
   const handleClick = async (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
     if (toggleMenu) toggleMenu(e);
-    if (onClick) delay(onClick, 200);
+    if (onClick) delay(onClick, 50);
   };
 
   return (

@@ -4,6 +4,10 @@
   tbody {
     display: block;
     overflow: auto;
+
+    .empty-body {
+      line-height: 50vh;
+    }
   }
 
   thead {

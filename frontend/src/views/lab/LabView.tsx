@@ -11,25 +11,6 @@ import TableRowDetails from '../../components/Table/TableRowDetails';
 import './LabView.scss';
 
 const LabView: React.FC<{ userRole: string }> = ({ userRole }) => {
-  const navigate = useNavigate();
-
-  const handleCreatePost = () => {
-    navigate('/lab/create');
-  };
-
-  const [selectedItemText, setSelectedItemText] = useState('제목');
-
-  const handleDropdownItemClick = (itemText: string) => {
-    setSelectedItemText(itemText);
-  };
-
-  const columns = [
-    { dataId: 'numbering', label: '번호' },
-    { dataId: 'title', label: '제목' },
-    { dataId: 'author', label: '작성자' },
-    { dataId: 'date', label: '작성일' },
-  ];
-
   const data = [
     {
       id: '1',
@@ -52,11 +33,28 @@ const LabView: React.FC<{ userRole: string }> = ({ userRole }) => {
     { id: '11', numbering: 11, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
     { id: '12', numbering: 12, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
   ];
-
   const indexes = data.map((item) => item.id);
+
+  const columns = [
+    { dataId: 'numbering', label: '번호' },
+    { dataId: 'title', label: '제목' },
+    { dataId: 'author', label: '작성자' },
+    { dataId: 'date', label: '작성일' },
+  ];
+
+  const navigate = useNavigate();
+  const handleCreatePost = () => {
+    navigate('/lab/create');
+  };
 
   const { contentType } = useParams();
   const currentItem = data.find((item) => item.id === contentType);
+
+  const [selectedDropdownText, setSelectedDropdownText] = useState('제목');
+
+  const handleDropdownItemClick = (itemText: string) => {
+    setSelectedDropdownText(itemText);
+  };
 
   if (!contentType) {
     return (
@@ -78,14 +76,14 @@ const LabView: React.FC<{ userRole: string }> = ({ userRole }) => {
               <Dropdown
                 elementAction={
                   <Button icon={ICONS.ARROW_DOWN} iconPlacement={ButtonIconPlacement.Right} className="button--text-icon">
-                    {selectedItemText || '제목'}
+                    {selectedDropdownText || '제목'}
                   </Button>
                 }
               >
-                <DropdownItem onClick={() => handleDropdownItemClick('제목')} isSelected={selectedItemText === '제목'}>
+                <DropdownItem onClick={() => handleDropdownItemClick('제목')} isSelected={selectedDropdownText === '제목'}>
                   제목
                 </DropdownItem>
-                <DropdownItem onClick={() => handleDropdownItemClick('작성자')} isSelected={selectedItemText === '작성자'}>
+                <DropdownItem onClick={() => handleDropdownItemClick('작성자')} isSelected={selectedDropdownText === '작성자'}>
                   작성자
                 </DropdownItem>
               </Dropdown>

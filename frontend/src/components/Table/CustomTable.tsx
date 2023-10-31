@@ -62,15 +62,21 @@ const CustomTable: React.FC<TableProps> = ({ data, itemsPerPage, columns, classN
           </tr>
         </thead>
         <tbody style={{ maxHeight: '600px' }}>
-          {currentItems.map((item) => (
-            <tr key={item}>
-              {columns.map((column) => (
-                <td key={column.dataId} onClick={() => handleRowClick(item.id)}>
-                  {item[column.dataId]}
-                </td>
+          {data.length !== 0 ? (
+            <>
+              {currentItems.map((item) => (
+                <tr key={item}>
+                  {columns.map((column) => (
+                    <td key={column.dataId} onClick={() => handleRowClick(item.id)}>
+                      {item[column.dataId]}
+                    </td>
+                  ))}
+                </tr>
               ))}
-            </tr>
-          ))}
+            </>
+          ) : (
+            <div className="empty-body">현재 사용 가능한 데이터가 없습니다.</div>
+          )}
         </tbody>
       </table>
       <div className="pagination">
