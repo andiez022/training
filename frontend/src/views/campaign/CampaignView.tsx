@@ -150,11 +150,14 @@ const CampaignView: React.FC<{ userRole: string }> = ({ userRole }) => {
   ];
 
   const columns = [
+    { dataId: 'selected', label: '' },
     { dataId: 'numbering', label: '번호' },
     { dataId: 'title', label: '제목' },
     { dataId: 'author', label: '작성자' },
     { dataId: 'date', label: '작성일' },
   ];
+
+  const [filteredData, setFilteredData] = useState(data);
 
   const navigate = useNavigate();
   const handleCreatePost = () => {
@@ -174,6 +177,12 @@ const CampaignView: React.FC<{ userRole: string }> = ({ userRole }) => {
     file: null,
     title: '',
     content: '',
+  };
+
+  const handleCancel = () => {
+    const updatedData = data.map((item) => ({ ...item, selected: false }));
+    setFilteredData(updatedData);
+    window.history.back();
   };
 
   const handleSubmit = (values: any) => {
@@ -226,7 +235,14 @@ const CampaignView: React.FC<{ userRole: string }> = ({ userRole }) => {
           </div>
           {userRole === 'user' && <ImageGallery data={data} userRole={userRole} onCreateButton={handleCreatePost} />}
           {userRole === 'admin' && (
-            <CustomTable data={data} itemsPerPage={10} columns={columns} userRole={userRole} onCreateButton={handleCreatePost} />
+            <CustomTable
+              data={filteredData}
+              itemsPerPage={10}
+              columns={columns}
+              showAdminActions={userRole === 'admin'}
+              onCreateButton={handleCreatePost}
+              setData={setFilteredData}
+            />
           )}
         </div>
       </div>
@@ -296,7 +312,7 @@ const CampaignView: React.FC<{ userRole: string }> = ({ userRole }) => {
                     <button type="submit" className="submit-button">
                       등록
                     </button>
-                    <button className="cancel-button" onClick={() => window.history.back()}>
+                    <button className="cancel-button" onClick={handleCancel}>
                       취소
                     </button>
                   </div>

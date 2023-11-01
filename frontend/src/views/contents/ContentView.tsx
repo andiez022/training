@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 import VideoCollection, { exampleVideoData } from '../../components/VideoCollection/VideoCollection';
 import Button, { ButtonIconPlacement } from '../../components/Button/Button';
@@ -14,11 +16,14 @@ import './ContentView.scss';
 
 const ContentView: React.FC<{ userRole: string }> = ({ userRole }) => {
   const columns = [
+    { dataId: 'selected', label: '' },
     { dataId: 'numbering', label: '번호' },
     { dataId: 'title', label: '제목' },
     { dataId: 'author', label: '작성자' },
     { dataId: 'date', label: '작성일' },
   ];
+
+  const [filteredData, setFilteredData] = useState(exampleVideoData);
 
   const navigate = useNavigate();
   const handleCreatePost = () => {
@@ -36,6 +41,24 @@ const ContentView: React.FC<{ userRole: string }> = ({ userRole }) => {
   const initialValues = {
     title: '',
     content: '',
+  };
+
+  const toolBarOptions = [
+    [{ header: [1, 2, false] }],
+    ['bold', 'italic', 'underline'],
+    [{ align: '' }, { align: 'center' }, { align: 'right' }, { align: 'justify' }],
+    [{ list: 'bullet' }, { list: 'ordered' }, 'blockquote'],
+    ['link', 'image'],
+  ];
+
+  const modules = {
+    toolbar: toolBarOptions,
+  };
+
+  const handleCancel = () => {
+    const updatedData = exampleVideoData.map((item) => ({ ...item, selected: false }));
+    setFilteredData(updatedData);
+    window.history.back();
   };
 
   const handleSubmit = (values: any) => {
@@ -69,14 +92,24 @@ const ContentView: React.FC<{ userRole: string }> = ({ userRole }) => {
                   </div>
                   <div className="form-row">
                     <div className="form-group">
-                      <Field as="textarea" id="content" name="content" placeholder="내용을 입력하세요." className="content-area" />
+                      <Field id="content" name="content">
+                        {({ field }: { field: { value: string; onChange: (e: any) => void } }) => (
+                          <ReactQuill
+                            value={field.value}
+                            onChange={(value) => field.onChange({ target: { name: 'content', value } })}
+                            placeholder="내용을 입력하세요."
+                            className="content-area"
+                            modules={modules}
+                          />
+                        )}
+                      </Field>
                     </div>
                   </div>
                   <div className="form-button">
                     <button type="submit" className="submit-button">
                       등록
                     </button>
-                    <button className="cancel-button" onClick={() => window.history.back()}>
+                    <button className="cancel-button" onClick={handleCancel}>
                       취소
                     </button>
                   </div>
@@ -140,9 +173,10 @@ const ContentView: React.FC<{ userRole: string }> = ({ userRole }) => {
             <CustomTable
               data={exampleVideoData}
               itemsPerPage={10}
-              userRole={userRole}
+              showAdminActions={userRole === 'admin'}
               columns={columns}
               onCreateButton={handleCreatePost}
+              setData={setFilteredData}
             />
           )}
         </div>

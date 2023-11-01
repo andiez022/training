@@ -10,11 +10,17 @@ interface TableProps {
   itemsPerPage: number;
   columns: { dataId: string; label: string }[];
   className?: string;
-  userRole: string;
+  showAdminActions: boolean;
   onCreateButton: () => void;
+  setData: (newData: any[]) => void;
 }
 
-const CustomTable: React.FC<TableProps> = ({ data, itemsPerPage, columns, className, userRole, onCreateButton }) => {
+const CustomTable: React.FC<TableProps> = ({ data, setData, itemsPerPage, columns, className, showAdminActions, onCreateButton }) => {
+  const navigate = useNavigate();
+  const handleRowClick = (itemId: any) => {
+    navigate(`${itemId}`);
+  };
+
   const [currentPage, setCurrentPage] = useState(1);
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -43,34 +49,50 @@ const CustomTable: React.FC<TableProps> = ({ data, itemsPerPage, columns, classN
     setCurrentPage(totalPageCount);
   };
 
-  const navigate = useNavigate();
-
-  const handleRowClick = (itemId: any) => {
-    navigate(`${itemId}`);
+  const handleToggleSelect = (rowIndex: number) => {
+    const newData = [...data];
+    newData[rowIndex].selected = !newData[rowIndex].selected;
+    setData(newData);
+    console.log(data[rowIndex].selected);
   };
 
-  const tableClasses = classNames('customized-table', className);
+  const tableClasses = classNames('customized-table', { managerial: showAdminActions }, className);
 
   return (
     <div className={tableClasses}>
       <table>
         <thead>
           <tr>
-            {columns.map((column) => (
-              <th key={column.dataId}>{column.label}</th>
-            ))}
+            {columns.map((column, columnIndex) => {
+              if (columnIndex === 0 && !showAdminActions) {
+                return null;
+              }
+              return <th key={column.dataId}>{column.label}</th>;
+            })}
           </tr>
         </thead>
         <tbody style={{ maxHeight: '600px' }}>
           {data.length !== 0 ? (
             <>
-              {currentItems.map((item) => (
-                <tr key={item}>
-                  {columns.map((column) => (
-                    <td key={column.dataId} onClick={() => handleRowClick(item.id)}>
-                      {item[column.dataId]}
-                    </td>
-                  ))}
+              {currentItems.map((item, index) => (
+                <tr key={item.id}>
+                  {columns.map((column, columnIndex) => {
+                    if (columnIndex === 0 && showAdminActions) {
+                      return (
+                        <td key={column.dataId}>
+                          <input type="checkbox" checked={item.selected} onChange={() => handleToggleSelect(index + indexOfFirstItem)} />
+                        </td>
+                      );
+                    }
+                    if (!showAdminActions && columnIndex === 0) {
+                      return null;
+                    }
+                    return (
+                      <td key={column.dataId} onClick={() => handleRowClick(item.id)}>
+                        {item[column.dataId]}
+                      </td>
+                    );
+                  })}
                 </tr>
               ))}
             </>
@@ -113,7 +135,7 @@ const CustomTable: React.FC<TableProps> = ({ data, itemsPerPage, columns, classN
             </button>
           </div>
         )}
-        {userRole === 'admin' && (
+        {showAdminActions && (
           <div className="admin-buttons">
             <button className="admin-buttons__edit">수정</button>
             <button className="admin-buttons__remove">삭제</button>

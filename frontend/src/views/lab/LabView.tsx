@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { Formik, Form, Field } from 'formik';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+
 import Button, { ButtonIconPlacement } from '../../components/Button/Button';
 import { ICONS, IconSize } from '../../components/SVG/Icon';
 import Dropdown from '../../components/Dropdown/Dropdown';
@@ -14,6 +18,7 @@ const LabView: React.FC<{ userRole: string }> = ({ userRole }) => {
   const data = [
     {
       id: '1',
+      selected: false,
       numbering: 1,
       title:
         '공지사항 입니다. 공지사항 입니다. 공지사항 입니다. 공지사항 입니다. 공지사항 입니다. 공지사항 입니다. 공지사항 입니다. 공지사',
@@ -21,30 +26,33 @@ const LabView: React.FC<{ userRole: string }> = ({ userRole }) => {
       date: '2023-05-05',
       body: '글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기.',
     },
-    { id: '2', numbering: 2, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
-    { id: '3', numbering: 3, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
-    { id: '4', numbering: 4, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
-    { id: '5', numbering: 5, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
-    { id: '6', numbering: 6, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
-    { id: '7', numbering: 7, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
-    { id: '8', numbering: 8, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
-    { id: '9', numbering: 9, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
-    { id: '10', numbering: 10, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
-    { id: '11', numbering: 11, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
-    { id: '12', numbering: 12, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
+    { id: '2', selected: false, numbering: 2, title: 'Short', author: '관리자 2', date: '2023-05-05', body: '' },
+    { id: '3', selected: false, numbering: 3, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
+    { id: '4', selected: false, numbering: 4, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
+    { id: '5', selected: false, numbering: 5, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
+    { id: '6', selected: false, numbering: 6, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
+    { id: '7', selected: false, numbering: 7, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
+    { id: '8', selected: false, numbering: 8, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
+    { id: '9', selected: false, numbering: 9, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
+    { id: '10', selected: false, numbering: 10, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
+    { id: '11', selected: false, numbering: 11, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
+    { id: '12', selected: false, numbering: 12, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
   ];
   const indexes = data.map((item) => item.id);
 
   const columns = [
+    { dataId: 'selected', label: '' },
     { dataId: 'numbering', label: '번호' },
     { dataId: 'title', label: '제목' },
     { dataId: 'author', label: '작성자' },
     { dataId: 'date', label: '작성일' },
   ];
 
+  const [filteredData, setFilteredData] = useState(data);
+
   const navigate = useNavigate();
   const handleCreatePost = () => {
-    navigate('/lab/create');
+    navigate('create');
   };
 
   const { contentType } = useParams();
@@ -54,6 +62,33 @@ const LabView: React.FC<{ userRole: string }> = ({ userRole }) => {
 
   const handleDropdownItemClick = (itemText: string) => {
     setSelectedDropdownText(itemText);
+  };
+
+  const initialValues = {
+    title: '',
+    content: '',
+  };
+
+  const toolBarOptions = [
+    [{ header: [1, 2, false] }],
+    ['bold', 'italic', 'underline'],
+    [{ align: '' }, { align: 'center' }, { align: 'right' }, { align: 'justify' }],
+    [{ list: 'bullet' }, { list: 'ordered' }, 'blockquote'],
+    ['link', 'image'],
+  ];
+
+  const modules = {
+    toolbar: toolBarOptions,
+  };
+
+  const handleCancel = () => {
+    const updatedData = data.map((item) => ({ ...item, selected: false }));
+    setFilteredData(updatedData);
+    window.history.back();
+  };
+
+  const handleSubmit = (values: any) => {
+    console.log(values);
   };
 
   if (!contentType) {
@@ -100,7 +135,14 @@ const LabView: React.FC<{ userRole: string }> = ({ userRole }) => {
               </div>
             </div>
           </div>
-          <CustomTable columns={columns} data={data} itemsPerPage={10} userRole={userRole} onCreateButton={handleCreatePost} />
+          <CustomTable
+            data={filteredData}
+            itemsPerPage={10}
+            columns={columns}
+            showAdminActions={userRole === 'admin'}
+            onCreateButton={handleCreatePost}
+            setData={setFilteredData}
+          />
         </div>
       </div>
     );
@@ -133,9 +175,51 @@ const LabView: React.FC<{ userRole: string }> = ({ userRole }) => {
 
   if (contentType === 'create') {
     return (
-      <div className="lab-view__top">
-        <h1>Create New Item</h1>
-        <h1>Create New Item</h1>
+      <div className="lab-view">
+        <div className="lab-view__top">
+          <div className="lab-view__content">
+            <div className="lab-view__table-head">
+              <div className="lab-view__title">
+                <h2 className="gradual-color-transition">자유게시판 작성</h2>
+              </div>
+            </div>
+            <div className="form-container">
+              <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+                <Form className="form-create">
+                  <div className="form-row">
+                    <div className="form-group">
+                      <label htmlFor="title">제목</label>
+                      <Field type="text" id="title" name="title" placeholder="제목을 입력해주세요." />
+                    </div>
+                  </div>
+                  <div className="form-row">
+                    <div className="form-group">
+                      <Field id="content" name="content">
+                        {({ field }: { field: { value: string; onChange: (e: any) => void } }) => (
+                          <ReactQuill
+                            value={field.value}
+                            onChange={(value) => field.onChange({ target: { name: 'content', value } })}
+                            placeholder="내용을 입력하세요."
+                            className="content-area"
+                            modules={modules}
+                          />
+                        )}
+                      </Field>
+                    </div>
+                  </div>
+                  <div className="form-button">
+                    <button type="submit" className="submit-button">
+                      등록
+                    </button>
+                    <button className="cancel-button" onClick={handleCancel}>
+                      취소
+                    </button>
+                  </div>
+                </Form>
+              </Formik>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

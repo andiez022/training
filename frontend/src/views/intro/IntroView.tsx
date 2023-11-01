@@ -32,21 +32,17 @@ const Intro: React.FC = () => {
               <p>
                 제2 수도로 불리는 부산은 동남권에는 바다가, 북서로는 낙동강이 흐르고 있는 <span className="span-blue">친수도시</span>로
                 지리적 이점과 풍부한 해양자원을 바탕으로
-              </p>
-              <p>
                 <span className="span-blue">항만물류, 해양수산, 관광·MICE산업</span> 등 고부가가치 산업기반의
                 <span className="span-blue">글로벌 해양도시</span>로 나아가고 있습니다.
               </p>
             </div>
           </RevealOnScroll>
           <RevealOnScroll>
-            <div className="intro-view__image-1">
-              <picture>
-                <source media="(max-width: 767px)" srcSet="/about1_vertical.svg" />
-                <source media="(min-width: 768px)" srcSet="/about1.svg" />
-                <img src="about1-default.jpg" alt="Process" />
-              </picture>
-            </div>
+            <picture className="intro-view__image-1">
+              <source media="(max-width: 767px)" srcSet="/about1_vertical.svg" />
+              <source media="(min-width: 768px)" srcSet="/about1.svg" />
+              <img src="about1.svg" alt="Process 1" />
+            </picture>
           </RevealOnScroll>
           <RevealOnScroll>
             <div className="intro-view__paragraph-2">
@@ -87,13 +83,11 @@ const Intro: React.FC = () => {
             </div>
           </RevealOnScroll>
           <RevealOnScroll>
-            <div className="intro-view__image-2">
-              <picture>
-                <source media="(max-width: 767px)" srcSet="/about2_vertical.svg" />
-                <source media="(min-width: 768px)" srcSet="/about2.svg" />
-                <img src="about1-default.jpg" alt="Process" />
-              </picture>
-            </div>
+            <picture className="intro-view__image-2">
+              <source media="(max-width: 767px)" srcSet="/about2_vertical.svg" />
+              <source media="(min-width: 768px)" srcSet="/about2.svg" />
+              <img src="about2.svg" alt="Process 2" />
+            </picture>
           </RevealOnScroll>
           <RevealOnScroll>
             <div className="intro-view__paragraph-4">
