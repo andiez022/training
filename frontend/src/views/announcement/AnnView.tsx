@@ -10,35 +10,16 @@ import Dropdown from '../../components/Dropdown/Dropdown';
 import DropdownItem from '../../components/Dropdown/DropdownItem';
 import TextInput from '../../components/TextInput/TextInput';
 import CustomTable from '../../components/Table/CustomTable';
-
 import TableRowDetails from '../../components/Table/TableRowDetails';
+
+import { AnnData } from '../../services/constants/constants';
+
 import './AnnView.scss';
 
 const AnnView: React.FC<{ userRole: string }> = ({ userRole }) => {
-  const data = [
-    {
-      id: '1',
-      selected: false,
-      numbering: 1,
-      title:
-        '공지사항 입니다. 공지사항 입니다. 공지사항 입니다. 공지사항 입니다. 공지사항 입니다. 공지사항 입니다. 공지사항 입니다. 공지사',
-      author: '관리자 1',
-      date: '2023-05-05',
-      body: '글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기.',
-    },
-    { id: '2', selected: false, numbering: 2, title: 'Short', author: '관리자 2', date: '2023-05-05', body: '' },
-    { id: '3', selected: false, numbering: 3, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
-    { id: '4', selected: false, numbering: 4, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
-    { id: '5', selected: false, numbering: 5, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
-    { id: '6', selected: false, numbering: 6, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
-    { id: '7', selected: false, numbering: 7, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
-    { id: '8', selected: false, numbering: 8, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
-    { id: '9', selected: false, numbering: 9, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
-    { id: '10', selected: false, numbering: 10, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
-    { id: '11', selected: false, numbering: 11, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
-    { id: '12', selected: false, numbering: 12, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
-  ];
-  const indexes = data.map((item) => item.id);
+  const isManagerial = userRole === 'admin';
+
+  const indexes = AnnData.map((item) => item.id);
 
   const columns = [
     { dataId: 'selected', label: '' },
@@ -50,10 +31,11 @@ const AnnView: React.FC<{ userRole: string }> = ({ userRole }) => {
 
   type TableSearchColumn = 'title' | 'author';
 
-  const [filteredData, setFilteredData] = useState(data);
+  const [filteredData, setFilteredData] = useState(AnnData);
+  const [editMode, setEditMode] = useState(false);
 
   const updateFilteredData = () => {
-    const newFilteredData = data.filter((row) => {
+    const newFilteredData = AnnData.filter((row) => {
       const cellValue = row[selectedSearchColumn];
       return cellValue.toLowerCase().includes(searchText.toLowerCase());
     });
@@ -66,13 +48,23 @@ const AnnView: React.FC<{ userRole: string }> = ({ userRole }) => {
     }
   };
 
+  const handleDelete = () => {
+    const dataToKeep = AnnData.filter((item) => !item.selected);
+    setFilteredData(dataToKeep);
+  };
+
+  const handleEdit = (itemId: string) => {
+    navigate(`${itemId}/edit`);
+    setEditMode(true);
+  };
+
   const navigate = useNavigate();
   const handleCreateAnnouncement = () => {
     navigate('create');
   };
 
   const { contentType } = useParams();
-  const currentItem = data.find((item) => item.id === contentType);
+  const currentItem = AnnData.find((item) => item.id === contentType);
 
   const [selectedDropdownText, setSelectedDropdownText] = useState('제목');
   const [searchText, setSearchText] = useState('');
@@ -87,13 +79,17 @@ const AnnView: React.FC<{ userRole: string }> = ({ userRole }) => {
         setSelectedSearchColumn('author');
       }
       setSearchText('');
-      setFilteredData(data);
     }
   };
 
   const initialValues = {
     title: '',
     content: '',
+  };
+
+  const initialEditValues = {
+    title: currentItem ? currentItem.id : '',
+    content: currentItem ? currentItem.body : '',
   };
 
   const toolBarOptions = [
@@ -109,8 +105,6 @@ const AnnView: React.FC<{ userRole: string }> = ({ userRole }) => {
   };
 
   const handleCancel = () => {
-    const updatedData = data.map((item) => ({ ...item, selected: false }));
-    setFilteredData(updatedData);
     window.history.back();
   };
 
@@ -118,24 +112,36 @@ const AnnView: React.FC<{ userRole: string }> = ({ userRole }) => {
     console.log('Form values:', values);
   };
 
+  useEffect(() => {
+    if (!contentType) {
+      setEditMode(false);
+      const updatedData = AnnData.map((item) => ({ ...item, selected: false }));
+      setFilteredData(updatedData);
+    }
+  }, [contentType]);
+
   if (!contentType) {
     return (
       <div className="ann-view">
         <div className="ann-view__top">
           <div className="ann-view__image">
-            <div className="ann-view__image__overlay" />
             <img src="/announcement_bn.png" alt="AnnBG" />
-            <div className="ann-view__image__icon">
-              <img src="icon_announcement.svg" alt="AnnIcon" />
-              <p>깨바부의 새로운 소식을 전합니다.</p>
-            </div>
+            {!isManagerial && (
+              <>
+                <div className="ann-view__image__overlay" />
+                <div className="ann-view__image__icon">
+                  <img src="icon_announcement.svg" alt="AnnIcon" />
+                  <p>깨바부의 새로운 소식을 전합니다.</p>
+                </div>
+              </>
+            )}
           </div>
           <div className="ann-view__content">
             <div className="ann-view__table-head">
               <div className="ann-view__title">
                 <h2 className="gradual-color-transition">공지사항</h2>
               </div>
-              <div className="ann-view__drop-down">
+              <div className="ann-view__search-container">
                 <Dropdown
                   elementAction={
                     <Button icon={ICONS.ARROW_DOWN} iconPlacement={ButtonIconPlacement.Right} className="button--text-icon">
@@ -174,9 +180,11 @@ const AnnView: React.FC<{ userRole: string }> = ({ userRole }) => {
               data={filteredData}
               itemsPerPage={10}
               columns={columns}
-              showAdminActions={userRole === 'admin'}
+              showAdminActions={isManagerial}
               onCreateButton={handleCreateAnnouncement}
               setData={setFilteredData}
+              handleDelete={handleDelete}
+              handleEdit={handleEdit}
             />
           </div>
         </div>
@@ -184,7 +192,7 @@ const AnnView: React.FC<{ userRole: string }> = ({ userRole }) => {
     );
   }
 
-  if (currentItem) {
+  if (!editMode && currentItem) {
     return (
       <div className="ann-view">
         <div className="ann-view__top">
@@ -236,6 +244,56 @@ const AnnView: React.FC<{ userRole: string }> = ({ userRole }) => {
                             value={field.value}
                             onChange={(value) => field.onChange({ target: { name: 'content', value } })}
                             placeholder="내용을 입력하세요."
+                            className="content-area"
+                            modules={modules}
+                          />
+                        )}
+                      </Field>
+                    </div>
+                  </div>
+                  <div className="form-button">
+                    <button type="submit" className="submit-button">
+                      등록
+                    </button>
+                    <button type="button" className="cancel-button" onClick={handleCancel}>
+                      취소
+                    </button>
+                  </div>
+                </Form>
+              </Formik>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (editMode && currentItem) {
+    return (
+      <div className="ann-view">
+        <div className="ann-view__top">
+          <div className="ann-view__content">
+            <div className="ann-view__table-head">
+              <div className="ann-view__title">
+                <h2 className="gradual-color-transition">공지사항 작성</h2>
+              </div>
+            </div>
+            <div className="form-container">
+              <Formik initialValues={initialEditValues} onSubmit={handleSubmit}>
+                <Form className="form-create">
+                  <div className="form-row">
+                    <div className="form-group">
+                      <label htmlFor="title">제목</label>
+                      <Field type="text" id="title" name="title" />
+                    </div>
+                  </div>
+                  <div className="form-row">
+                    <div className="form-group">
+                      <Field id="content" name="content">
+                        {({ field }: { field: { value: string; onChange: (e: any) => void } }) => (
+                          <ReactQuill
+                            value={field.value}
+                            onChange={(value) => field.onChange({ target: { name: 'content', value } })}
                             className="content-area"
                             modules={modules}
                           />

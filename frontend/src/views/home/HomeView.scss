@@ -12,7 +12,8 @@
       height: 100vh;
       position: absolute;
       opacity: 0;
-      transition: width 0.5s, opacity 3s;
+      transition: opacity 4s;
+      width: 100%;
 
       img {
         height: 100%;
@@ -22,6 +23,11 @@
 
     .banner-item.active {
       opacity: 1;
+      overflow: hidden;
+
+      img {
+        animation: scaleZ 4s;
+      }
     }
 
     .text-overlay {
@@ -137,6 +143,16 @@
 
 button {
   border: none;
+}
+
+@keyframes scaleZ{
+  0% {
+    transform: perspective(100px) translate3d(0, 0, 30px);
+  }
+
+  100% {
+    transform: perspective(100px) translate3d(0, 0, 0px);
+  }
 }
 
 @media only screen and (max-width: $breakpoint-xl) {

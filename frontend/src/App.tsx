@@ -57,6 +57,10 @@ const App: React.FC = () => {
                     path="/announcement/:contentType"
                     element={<PrivateRoute guards={[]} element={<AnnView userRole={userRole} />} />}
                   />
+                  <Route
+                    path="/announcement/:contentType/edit"
+                    element={<PrivateRoute guards={[]} element={<AnnView userRole={userRole} />} />}
+                  />
                   <Route path="/facility" element={<PrivateRoute guards={[]} element={<FacilityView userRole={userRole} />} />} />
                   <Route path="/content" element={<PrivateRoute guards={[]} element={<ContentView userRole={userRole} />} />} />
                   <Route

@@ -10,35 +10,16 @@ import Dropdown from '../../components/Dropdown/Dropdown';
 import DropdownItem from '../../components/Dropdown/DropdownItem';
 import TextInput from '../../components/TextInput/TextInput';
 import CustomTable from '../../components/Table/CustomTable';
-
 import TableRowDetails from '../../components/Table/TableRowDetails';
+
+import { LabData } from '../../services/constants/constants';
+
 import './LabView.scss';
 
 const LabView: React.FC<{ userRole: string }> = ({ userRole }) => {
-  const data = [
-    {
-      id: '1',
-      selected: false,
-      numbering: 1,
-      title:
-        '공지사항 입니다. 공지사항 입니다. 공지사항 입니다. 공지사항 입니다. 공지사항 입니다. 공지사항 입니다. 공지사항 입니다. 공지사',
-      author: '관리자 1',
-      date: '2023-05-05',
-      body: '글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기글쓰기.',
-    },
-    { id: '2', selected: false, numbering: 2, title: 'Short', author: '관리자 2', date: '2023-05-05', body: '' },
-    { id: '3', selected: false, numbering: 3, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
-    { id: '4', selected: false, numbering: 4, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
-    { id: '5', selected: false, numbering: 5, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
-    { id: '6', selected: false, numbering: 6, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
-    { id: '7', selected: false, numbering: 7, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
-    { id: '8', selected: false, numbering: 8, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
-    { id: '9', selected: false, numbering: 9, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
-    { id: '10', selected: false, numbering: 10, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
-    { id: '11', selected: false, numbering: 11, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
-    { id: '12', selected: false, numbering: 12, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
-  ];
-  const indexes = data.map((item) => item.id);
+  const isManagerial = userRole === 'admin';
+
+  const indexes = LabData.map((item) => item.id);
 
   const columns = [
     { dataId: 'selected', label: '' },
@@ -48,7 +29,25 @@ const LabView: React.FC<{ userRole: string }> = ({ userRole }) => {
     { dataId: 'date', label: '작성일' },
   ];
 
-  const [filteredData, setFilteredData] = useState(data);
+  type TableSearchColumn = 'title' | 'author';
+
+  const [filteredData, setFilteredData] = useState(LabData);
+
+  const updateFilteredData = () => {
+    const newFilteredData = LabData.filter((row) => {
+      const cellValue = row[selectedSearchColumn];
+      return cellValue.toLowerCase().includes(searchText.toLowerCase());
+    });
+    setFilteredData(newFilteredData);
+  };
+
+  const handleEnterKeyPress = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      updateFilteredData();
+    }
+  };
+
+  const handleDelete = () => {};
 
   const navigate = useNavigate();
   const handleCreatePost = () => {
@@ -56,12 +55,23 @@ const LabView: React.FC<{ userRole: string }> = ({ userRole }) => {
   };
 
   const { contentType } = useParams();
-  const currentItem = data.find((item) => item.id === contentType);
+  const currentItem = LabData.find((item) => item.id === contentType);
 
   const [selectedDropdownText, setSelectedDropdownText] = useState('제목');
+  const [searchText, setSearchText] = useState('');
+  const [selectedSearchColumn, setSelectedSearchColumn] = useState<TableSearchColumn>('title');
 
   const handleDropdownItemClick = (itemText: string) => {
-    setSelectedDropdownText(itemText);
+    if (itemText !== selectedDropdownText) {
+      setSelectedDropdownText(itemText);
+      if (itemText === '제목') {
+        setSelectedSearchColumn('title');
+      } else {
+        setSelectedSearchColumn('author');
+      }
+      setSearchText('');
+      setFilteredData(LabData);
+    }
   };
 
   const initialValues = {
@@ -82,7 +92,7 @@ const LabView: React.FC<{ userRole: string }> = ({ userRole }) => {
   };
 
   const handleCancel = () => {
-    const updatedData = data.map((item) => ({ ...item, selected: false }));
+    const updatedData = LabData.map((item) => ({ ...item, selected: false }));
     setFilteredData(updatedData);
     window.history.back();
   };
@@ -93,56 +103,71 @@ const LabView: React.FC<{ userRole: string }> = ({ userRole }) => {
 
   if (!contentType) {
     return (
-      <div className="lab-view__top">
-        <div className="lab-view__image">
-          <div className="lab-view__image__overlay" />
-          <img src="/lab_bn.png" alt="labBG" />
-          <div className="lab-view__image__icon">
-            <img src="icon_lab.svg" alt="labIcon" />
-            <p>깨끗한 바다 부산을 위해 시민들이 직접 참여 중인 프로젝트를 소개합니다.</p>
+      <div className="lab-view">
+        <div className="lab-view__top">
+          <div className="lab-view__image">
+            <img src="/lab_bn.png" alt="labBG" />
+            {!isManagerial && (
+              <>
+                <div className="lab-view__image__overlay" />
+                <div className="lab-view__image__icon">
+                  <img src="icon_lab.svg" alt="labIcon" />
+                  <p>깨끗한 바다 부산을 위해 시민들이 직접 참여 중인 프로젝트를 소개합니다.</p>
+                </div>
+              </>
+            )}
           </div>
-        </div>
-        <div className="lab-view__content">
-          <div className="lab-view__table-head">
-            <div className="lab-view__title">
-              <h2 className="gradual-color-transition">리빙랩</h2>
-            </div>
-            <div className="lab-view__drop-down">
-              <Dropdown
-                elementAction={
-                  <Button icon={ICONS.ARROW_DOWN} iconPlacement={ButtonIconPlacement.Right} className="button--text-icon">
-                    {selectedDropdownText || '제목'}
-                  </Button>
-                }
-              >
-                <DropdownItem onClick={() => handleDropdownItemClick('제목')} isSelected={selectedDropdownText === '제목'}>
-                  제목
-                </DropdownItem>
-                <DropdownItem onClick={() => handleDropdownItemClick('작성자')} isSelected={selectedDropdownText === '작성자'}>
-                  작성자
-                </DropdownItem>
-              </Dropdown>
-              <div className="lab-view__search-area">
-                <TextInput dataId="" placeholder="리빙랩 검색" />
-                <Button
-                  icon={ICONS.MAGNIFIER}
-                  iconPlacement={ButtonIconPlacement.Left}
-                  iconSize={IconSize.XL}
-                  className="button--icon-text"
+          <div className="lab-view__content">
+            <div className="lab-view__table-head">
+              <div className="lab-view__title">
+                <h2 className="gradual-color-transition">리빙랩</h2>
+              </div>
+              <div className="lab-view__search-container">
+                <Dropdown
+                  elementAction={
+                    <Button icon={ICONS.ARROW_DOWN} iconPlacement={ButtonIconPlacement.Right} className="button--text-icon">
+                      {selectedDropdownText || '제목'}
+                    </Button>
+                  }
                 >
-                  검색
-                </Button>
+                  <DropdownItem onClick={() => handleDropdownItemClick('제목')} isSelected={selectedDropdownText === '제목'}>
+                    제목
+                  </DropdownItem>
+                  <DropdownItem onClick={() => handleDropdownItemClick('작성자')} isSelected={selectedDropdownText === '작성자'}>
+                    작성자
+                  </DropdownItem>
+                </Dropdown>
+                <div className="lab-view__search-area">
+                  <TextInput
+                    dataId=""
+                    placeholder="리빙랩 검색"
+                    value={searchText}
+                    onChange={(e) => setSearchText(e.target.value)}
+                    onKeyDown={handleEnterKeyPress}
+                  />
+                  <Button
+                    icon={ICONS.MAGNIFIER}
+                    iconPlacement={ButtonIconPlacement.Left}
+                    iconSize={IconSize.XL}
+                    className="button--icon-text"
+                    onClick={updateFilteredData}
+                  >
+                    검색
+                  </Button>
+                </div>
               </div>
             </div>
+            <CustomTable
+              data={filteredData}
+              itemsPerPage={10}
+              columns={columns}
+              showAdminActions={isManagerial}
+              onCreateButton={handleCreatePost}
+              setData={setFilteredData}
+              handleDelete={handleDelete}
+              handleEdit={() => {}}
+            />
           </div>
-          <CustomTable
-            data={filteredData}
-            itemsPerPage={10}
-            columns={columns}
-            showAdminActions={userRole === 'admin'}
-            onCreateButton={handleCreatePost}
-            setData={setFilteredData}
-          />
         </div>
       </div>
     );
@@ -211,7 +236,7 @@ const LabView: React.FC<{ userRole: string }> = ({ userRole }) => {
                     <button type="submit" className="submit-button">
                       등록
                     </button>
-                    <button className="cancel-button" onClick={handleCancel}>
+                    <button type="button" className="cancel-button" onClick={handleCancel}>
                       취소
                     </button>
                   </div>

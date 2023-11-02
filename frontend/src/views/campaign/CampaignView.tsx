@@ -7,147 +7,16 @@ import DropdownItem from '../../components/Dropdown/DropdownItem';
 import Button, { ButtonIconPlacement } from '../../components/Button/Button';
 import { ICONS, IconSize } from '../../components/SVG/Icon';
 import TextInput from '../../components/TextInput/TextInput';
-
-import GalleryImageDetails, { GalleryImageProps } from '../../components/ImageGallery/GalleryImageDetails';
+import CustomTable from '../../components/Table/CustomTable';
+import GalleryImageDetails from '../../components/ImageGallery/GalleryImageDetails';
 import ImageGallery from '../../components/ImageGallery/ImageGallery';
 
+import { CampaignData } from '../../services/constants/constants';
+
 import './CampaignView.scss';
-import CustomTable from '../../components/Table/CustomTable';
 
 const CampaignView: React.FC<{ userRole: string }> = ({ userRole }) => {
-  const data: GalleryImageProps[] = [
-    {
-      id: 'weqweasd',
-      numbering: 1,
-      image: '/ctest.jpg',
-      title: "The error message \"The term 'choco' is not recognized",
-      author: 'admin',
-      date: '2023-05-05',
-      link: 'https://www.youtube.com/watch?v=LqME1y6Mlyg',
-      description:
-        '깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.',
-    },
-    {
-      id: '2',
-      numbering: 2,
-      image: '/logo192.png',
-      title: 'www',
-      author: 'admin',
-      date: '2023-05-05',
-      link: '',
-      description: 'Item 2',
-    },
-    {
-      id: '3',
-      numbering: 3,
-      image: '/logo192.png',
-      title: 'www',
-      author: 'admin',
-      date: '2023-05-05',
-      link: '',
-      description: 'Item 3',
-    },
-    {
-      id: '4',
-      numbering: 4,
-      image: '/logo192.png',
-      title: 'www',
-      author: 'admin',
-      date: '2023-05-05',
-      link: '',
-      description: 'Item 4',
-    },
-    {
-      id: '5',
-      numbering: 5,
-      image: '/logo192.png',
-      title: 'www',
-      author: 'admin',
-      date: '2023-05-05',
-      link: '',
-      description: 'Item 5',
-    },
-    {
-      id: '6',
-      numbering: 6,
-      image: '/logo192.png',
-      title: 'www',
-      author: 'admin',
-      date: '2023-05-05',
-      link: '',
-      description: 'Item 6',
-    },
-    {
-      id: '7',
-      numbering: 7,
-      image: '/logo192.png',
-      title: 'www',
-      author: 'admin',
-      date: '2023-05-05',
-      link: '',
-      description: 'Item 7',
-    },
-    {
-      id: '8',
-      numbering: 8,
-      image: '/logo192.png',
-      title: 'www',
-      author: 'admin',
-      date: '2023-05-05',
-      link: '',
-      description: 'Item 8',
-    },
-    {
-      id: '9',
-      numbering: 9,
-      image: '/logo192.png',
-      title: 'www',
-      author: 'admin',
-      date: '2023-05-05',
-      link: '',
-      description: 'Item 9',
-    },
-    {
-      id: '10',
-      numbering: 10,
-      image: '/logo192.png',
-      title: 'www',
-      author: 'admin',
-      date: '2023-05-05',
-      link: '',
-      description: 'Item 10',
-    },
-    {
-      id: '11',
-      numbering: 11,
-      image: '/logo192.png',
-      title: 'www',
-      author: 'admin',
-      date: '2023-05-05',
-      link: '',
-      description: 'Item 11',
-    },
-    {
-      id: '12',
-      numbering: 12,
-      image: '/logo192.png',
-      title: 'www',
-      author: 'admin',
-      date: '2023-05-05',
-      link: '',
-      description: 'Item 12',
-    },
-    {
-      id: '13',
-      numbering: 13,
-      image: '/logo192.png',
-      title: 'www',
-      author: 'admin',
-      date: '2023-05-05',
-      link: '',
-      description: 'Item 13',
-    },
-  ];
+  const isManagerial = userRole === 'admin';
 
   const columns = [
     { dataId: 'selected', label: '' },
@@ -157,7 +26,25 @@ const CampaignView: React.FC<{ userRole: string }> = ({ userRole }) => {
     { dataId: 'date', label: '작성일' },
   ];
 
-  const [filteredData, setFilteredData] = useState(data);
+  type TableSearchColumn = 'title' | 'author';
+
+  const [filteredData, setFilteredData] = useState(CampaignData);
+
+  const updateFilteredData = () => {
+    const newFilteredData = CampaignData.filter((row) => {
+      const cellValue = row[selectedSearchColumn];
+      return cellValue.toLowerCase().includes(searchText.toLowerCase());
+    });
+    setFilteredData(newFilteredData);
+  };
+
+  const handleEnterKeyPress = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      updateFilteredData();
+    }
+  };
+
+  const handleDelete = () => {};
 
   const navigate = useNavigate();
   const handleCreatePost = () => {
@@ -165,12 +52,23 @@ const CampaignView: React.FC<{ userRole: string }> = ({ userRole }) => {
   };
 
   const { contentType } = useParams();
-  const currentItem = data.find((item) => item.id === contentType);
+  const currentItem = CampaignData.find((item) => item.id === contentType);
 
   const [selectedDropdownText, setSelectedDropdownText] = useState('제목');
+  const [searchText, setSearchText] = useState('');
+  const [selectedSearchColumn, setSelectedSearchColumn] = useState<TableSearchColumn>('title');
 
   const handleDropdownItemClick = (itemText: string) => {
-    setSelectedDropdownText(itemText);
+    if (itemText !== selectedDropdownText) {
+      setSelectedDropdownText(itemText);
+      if (itemText === '제목') {
+        setSelectedSearchColumn('title');
+      } else {
+        setSelectedSearchColumn('author');
+      }
+      setSearchText('');
+      setFilteredData(CampaignData);
+    }
   };
 
   const initialValues = {
@@ -180,7 +78,7 @@ const CampaignView: React.FC<{ userRole: string }> = ({ userRole }) => {
   };
 
   const handleCancel = () => {
-    const updatedData = data.map((item) => ({ ...item, selected: false }));
+    const updatedData = CampaignData.map((item) => ({ ...item, selected: false }));
     setFilteredData(updatedData);
     window.history.back();
   };
@@ -191,59 +89,74 @@ const CampaignView: React.FC<{ userRole: string }> = ({ userRole }) => {
 
   if (!contentType) {
     return (
-      <div className="campaign-view__top">
-        <div className="campaign-view__image">
-          <div className="campaign-view__image__overlay" />
-          <img src="/campaign_bn.png" alt="campaignBG" />
-          <div className="campaign-view__image__icon">
-            <img src="/icon_campaign.svg" alt="campaignIcon" />
-            <p>깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.</p>
+      <div className="campaign-view">
+        <div className="campaign-view__top">
+          <div className="campaign-view__image">
+            <img src="/campaign_bn.png" alt="campaignBG" />
+            {!isManagerial && (
+              <>
+                <div className="campaign-view__image__overlay" />
+                <div className="campaign-view__image__icon">
+                  <img src="/icon_campaign.svg" alt="campaignIcon" />
+                  <p>깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.</p>
+                </div>
+              </>
+            )}
           </div>
-        </div>
-        <div className="campaign-view__content">
-          <div className="campaign-view__grid-head">
-            <div className="campaign-view__title">
-              <h2 className="gradual-color-transition">캠페인</h2>
-            </div>
-            <div className="campaign-view__drop-down">
-              <Dropdown
-                elementAction={
-                  <Button icon={ICONS.ARROW_DOWN} iconPlacement={ButtonIconPlacement.Right} className="button--text-icon">
-                    {selectedDropdownText || '제목'}
-                  </Button>
-                }
-              >
-                <DropdownItem onClick={() => handleDropdownItemClick('제목')} isSelected={selectedDropdownText === '제목'}>
-                  제목
-                </DropdownItem>
-                <DropdownItem onClick={() => handleDropdownItemClick('작성자')} isSelected={selectedDropdownText === '작성자'}>
-                  작성자
-                </DropdownItem>
-              </Dropdown>
-              <div className="campaign-view__search-area">
-                <TextInput dataId="author" placeholder="캠페인 검색" />
-                <Button
-                  icon={ICONS.MAGNIFIER}
-                  iconPlacement={ButtonIconPlacement.Left}
-                  iconSize={IconSize.XL}
-                  className="button--icon-text"
+          <div className="campaign-view__content">
+            <div className="campaign-view__grid-head">
+              <div className="campaign-view__title">
+                <h2 className="gradual-color-transition">캠페인</h2>
+              </div>
+              <div className="campaign-view__search-container">
+                <Dropdown
+                  elementAction={
+                    <Button icon={ICONS.ARROW_DOWN} iconPlacement={ButtonIconPlacement.Right} className="button--text-icon">
+                      {selectedDropdownText || '제목'}
+                    </Button>
+                  }
                 >
-                  검색
-                </Button>
+                  <DropdownItem onClick={() => handleDropdownItemClick('제목')} isSelected={selectedDropdownText === '제목'}>
+                    제목
+                  </DropdownItem>
+                  <DropdownItem onClick={() => handleDropdownItemClick('작성자')} isSelected={selectedDropdownText === '작성자'}>
+                    작성자
+                  </DropdownItem>
+                </Dropdown>
+                <div className="campaign-view__search-area">
+                  <TextInput
+                    dataId="author"
+                    placeholder="캠페인 검색"
+                    value={searchText}
+                    onChange={(e) => setSearchText(e.target.value)}
+                    onKeyDown={handleEnterKeyPress}
+                  />
+                  <Button
+                    icon={ICONS.MAGNIFIER}
+                    iconPlacement={ButtonIconPlacement.Left}
+                    iconSize={IconSize.XL}
+                    className="button--icon-text"
+                    onClick={updateFilteredData}
+                  >
+                    검색
+                  </Button>
+                </div>
               </div>
             </div>
+            {!isManagerial && <ImageGallery data={CampaignData} userRole={userRole} onCreateButton={handleCreatePost} />}
+            {isManagerial && (
+              <CustomTable
+                data={filteredData}
+                itemsPerPage={10}
+                columns={columns}
+                showAdminActions={isManagerial}
+                onCreateButton={handleCreatePost}
+                setData={setFilteredData}
+                handleDelete={handleDelete}
+                handleEdit={() => {}}
+              />
+            )}
           </div>
-          {userRole === 'user' && <ImageGallery data={data} userRole={userRole} onCreateButton={handleCreatePost} />}
-          {userRole === 'admin' && (
-            <CustomTable
-              data={filteredData}
-              itemsPerPage={10}
-              columns={columns}
-              showAdminActions={userRole === 'admin'}
-              onCreateButton={handleCreatePost}
-              setData={setFilteredData}
-            />
-          )}
         </div>
       </div>
     );

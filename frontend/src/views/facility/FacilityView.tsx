@@ -1,83 +1,26 @@
 import React, { useState } from 'react';
 import { ReactComponent as MyMap } from '../../components/SVG/map.svg';
 
+import Button, { ButtonIconPlacement } from '../../components/Button/Button';
+import TextInput from '../../components/TextInput/TextInput';
+import { ICONS, IconSize } from '../../components/SVG/Icon';
 import ItemModal, { FacilityItem } from './ItemModal';
+
+import { FacilityData } from '../../services/constants/constants';
 
 import './FacilityView.scss';
 
-interface AreaData {
-  [area: string]: FacilityItem[];
-}
-
 const FacilityView: React.FC<{ userRole: string }> = ({ userRole }) => {
-  const data: AreaData = {
-    부산: [
-      {
-        title: '부산국립해양대학교 진입로 방파재',
-        img: '/logo192.png',
-        location: '영도구 해양로 435',
-        dimension: '길이 590m / 폭 9m',
-        status: 'E',
-        details: [
-          { date: '2022.03.22', hour: 4, amount: 3, effort: 12 },
-          { date: '2022.05.20', hour: 3, amount: 2, effort: 15 },
-          { date: '2022.03.22', hour: 5, amount: 5, effort: 10 },
-          { date: '2022.03.22', hour: 5, amount: 5, effort: 10 },
-        ],
-      },
-      {
-        title: '부산국립해양대학교 진입로 방파재',
-        img: '/ctest.jpg',
-        location: '영도구 해양로 435',
-        dimension: '길이 590m / 폭 9m',
-        status: 'E',
-      },
-      {
-        title: '부산국립해양대학교 진입로 방파재',
-        img: '/logo192.png',
-        location: '영도구 해양로 435',
-        dimension: '길이 590m / 폭 9m',
-        status: 'E',
-      },
-      {
-        title: '부산국립해양대학교 진입로 방파재',
-        img: '/logo192.png',
-        location: '영도구 해양로 435',
-        dimension: '길이 590m / 폭 9m',
-        status: 'E',
-      },
-      {
-        title: '부산국립해양대학교 진입로 방파재',
-        img: '/logo192.png',
-        location: '영도구 해양로 435',
-        dimension: '길이 590m / 폭 9m',
-        status: 'E',
-      },
-      {
-        title: '부산국립해양대학교 진입로 방파재',
-        img: 'item1.jpg',
-        location: '영도구 해양로 435',
-        dimension: '길이 590m / 폭 9m',
-        status: 'E',
-      },
-    ],
-    기장군: [
-      {
-        title: '부산국립해양대학교 진입로 방파재',
-        img: '/logo192.png',
-        location: '영도구 해양로 435',
-        dimension: '길이 590m / 폭 9m',
-        status: 'E',
-      },
-      {
-        title: '부산국립해양대학교 진입로 방파재',
-        img: 'item1.jpg',
-        location: '영도구 해양로 435',
-        dimension: '길이 590m / 폭 9m',
-        status: 'E',
-      },
-    ],
-  };
+  const isManagerial = userRole === 'admin';
+
+  const columns = [
+    { dataId: 'numbering', label: '번호' },
+    { dataId: 'district', label: '행정구역' },
+    { dataId: 'zone', label: '지대종류' },
+    { dataId: 'name', label: '시설명' },
+    { dataId: 'size', label: '시설규모' },
+    { dataId: 'img', label: '이미지' },
+  ];
 
   const [area, setSelectedArea] = useState('부산');
 
@@ -128,6 +71,38 @@ const FacilityView: React.FC<{ userRole: string }> = ({ userRole }) => {
     setIsOpen(false);
   };
 
+  if (userRole === 'admin') {
+    return (
+      <div className="facility-view">
+        <div className="facility-view__top">
+          <div className="facility-view__image">
+            <img src="/facility_bn.png" alt="facilityBG" />
+          </div>
+          <div className="facility-view__content">
+            <div className="facility-view__table-head">
+              <div className="facility-view__head__title">
+                <h2 className="gradual-color-transition">시설현황</h2>
+              </div>
+              <div className="facility-view__search-container">
+                <div className="facility-view__search-area">
+                  <TextInput dataId="" placeholder="시설명 검색" />
+                  <Button
+                    icon={ICONS.MAGNIFIER}
+                    iconPlacement={ButtonIconPlacement.Left}
+                    iconSize={IconSize.XL}
+                    className="button--icon-text"
+                  >
+                    검색
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="facility-view">
       <div className="facility-view__top">
@@ -156,8 +131,8 @@ const FacilityView: React.FC<{ userRole: string }> = ({ userRole }) => {
                   <span>{area}</span> 수거사각지대
                 </div>
                 <ul className="item-list">
-                  {data[area] ? (
-                    data[area].map((item, index) => (
+                  {FacilityData[area] ? (
+                    FacilityData[area].map((item, index) => (
                       <li key={item.title} className="item" onClick={() => handleFacilityClick(item)}>
                         <div className="item-title">{item.title}</div>
                         <div className="item-content">

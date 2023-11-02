@@ -4,7 +4,7 @@ import { Formik, Form, Field } from 'formik';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
-import VideoCollection, { exampleVideoData } from '../../components/VideoCollection/VideoCollection';
+import VideoCollection from '../../components/VideoCollection/VideoCollection';
 import Button, { ButtonIconPlacement } from '../../components/Button/Button';
 import { ICONS, IconSize } from '../../components/SVG/Icon';
 import Dropdown from '../../components/Dropdown/Dropdown';
@@ -12,9 +12,13 @@ import DropdownItem from '../../components/Dropdown/DropdownItem';
 import TextInput from '../../components/TextInput/TextInput';
 import CustomTable from '../../components/Table/CustomTable';
 
+import { VideoCollectionData } from '../../services/constants/constants';
+
 import './ContentView.scss';
 
 const ContentView: React.FC<{ userRole: string }> = ({ userRole }) => {
+  const isManagerial = userRole === 'admin';
+
   const columns = [
     { dataId: 'selected', label: '' },
     { dataId: 'numbering', label: '번호' },
@@ -23,7 +27,25 @@ const ContentView: React.FC<{ userRole: string }> = ({ userRole }) => {
     { dataId: 'date', label: '작성일' },
   ];
 
-  const [filteredData, setFilteredData] = useState(exampleVideoData);
+  type TableSearchColumn = 'title' | 'author';
+
+  const [filteredData, setFilteredData] = useState(VideoCollectionData);
+
+  const updateFilteredData = () => {
+    const newFilteredData = VideoCollectionData.filter((row) => {
+      const cellValue = row[selectedSearchColumn];
+      return cellValue.toLowerCase().includes(searchText.toLowerCase());
+    });
+    setFilteredData(newFilteredData);
+  };
+
+  const handleEnterKeyPress = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      updateFilteredData();
+    }
+  };
+
+  const handleDelete = () => {};
 
   const navigate = useNavigate();
   const handleCreatePost = () => {
@@ -33,9 +55,20 @@ const ContentView: React.FC<{ userRole: string }> = ({ userRole }) => {
   const { contentType } = useParams();
 
   const [selectedDropdownText, setSelectedDropdownText] = useState('제목');
+  const [searchText, setSearchText] = useState('');
+  const [selectedSearchColumn, setSelectedSearchColumn] = useState<TableSearchColumn>('title');
 
   const handleDropdownItemClick = (itemText: string) => {
-    setSelectedDropdownText(itemText);
+    if (itemText !== selectedDropdownText) {
+      setSelectedDropdownText(itemText);
+      if (itemText === '제목') {
+        setSelectedSearchColumn('title');
+      } else {
+        setSelectedSearchColumn('author');
+      }
+      setSearchText('');
+      setFilteredData(VideoCollectionData);
+    }
   };
 
   const initialValues = {
@@ -56,7 +89,7 @@ const ContentView: React.FC<{ userRole: string }> = ({ userRole }) => {
   };
 
   const handleCancel = () => {
-    const updatedData = exampleVideoData.map((item) => ({ ...item, selected: false }));
+    const updatedData = VideoCollectionData.map((item) => ({ ...item, selected: false }));
     setFilteredData(updatedData);
     window.history.back();
   };
@@ -126,12 +159,16 @@ const ContentView: React.FC<{ userRole: string }> = ({ userRole }) => {
     <div className="content-view">
       <div className="content-view__top">
         <div className="content-view__image">
-          <div className="content-view__image__overlay" />
           <img src="/content_bn.png" alt="contentBG" />
-          <div className="content-view__image__icon">
-            <img src="/icon_content.svg" alt="contentIcon" />
-            <p>깨바부의 다양한 콘텐츠를 확인해보세요.</p>
-          </div>
+          {!isManagerial && (
+            <>
+              <div className="content-view__image__overlay" />
+              <div className="content-view__image__icon">
+                <img src="/icon_content.svg" alt="contentIcon" />
+                <p>깨바부의 다양한 콘텐츠를 확인해보세요.</p>
+              </div>
+            </>
+          )}
         </div>
         <div className="content-view__content">
           <div className="content-view__table-head">
@@ -139,7 +176,7 @@ const ContentView: React.FC<{ userRole: string }> = ({ userRole }) => {
               <h2 className="gradual-color-transition">콘텐츠</h2>
             </div>
             {userRole === 'admin' && (
-              <div className="content-view__drop-down">
+              <div className="content-view__search-container">
                 <Dropdown
                   elementAction={
                     <Button icon={ICONS.ARROW_DOWN} iconPlacement={ButtonIconPlacement.Right} className="button--text-icon">
@@ -155,7 +192,13 @@ const ContentView: React.FC<{ userRole: string }> = ({ userRole }) => {
                   </DropdownItem>
                 </Dropdown>
                 <div className="content-view__search-area">
-                  <TextInput dataId="author" placeholder="공지사항 검색" />
+                  <TextInput
+                    dataId="author"
+                    placeholder="공지사항 검색"
+                    value={searchText}
+                    onChange={(e) => setSearchText(e.target.value)}
+                    onKeyDown={handleEnterKeyPress}
+                  />
                   <Button
                     icon={ICONS.MAGNIFIER}
                     iconPlacement={ButtonIconPlacement.Left}
@@ -168,15 +211,17 @@ const ContentView: React.FC<{ userRole: string }> = ({ userRole }) => {
               </div>
             )}
           </div>
-          {userRole === 'user' && <VideoCollection />}
+          {userRole === 'user' && <VideoCollection data={filteredData} />}
           {userRole === 'admin' && (
             <CustomTable
-              data={exampleVideoData}
+              data={filteredData}
               itemsPerPage={10}
-              showAdminActions={userRole === 'admin'}
+              showAdminActions={isManagerial}
               columns={columns}
               onCreateButton={handleCreatePost}
               setData={setFilteredData}
+              handleDelete={handleDelete}
+              handleEdit={() => {}}
             />
           )}
         </div>

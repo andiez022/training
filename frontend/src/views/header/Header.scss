@@ -22,7 +22,7 @@
       width: 217.293px;
       height: 40px;
     }
-  
+
     .header-img-text {
       display: flex;
       margin-left: 1em;
@@ -32,13 +32,13 @@
       margin-top: 10px;
     }
   }
-  
+
   .default-link {
     color: $color-black;
   }
 
   .active-link {
-    color: #0066C1;
+    color: #0066c1;
     font-weight: bold;
   }
 
@@ -54,7 +54,8 @@
   box-shadow: none;
   color: white;
 
-  .active-link, .default-link {
+  .active-link,
+  .default-link {
     color: white;
   }
 }
@@ -90,12 +91,26 @@
   }
 
   .active-link {
-    color: #0066C1;
+    color: #0066c1;
   }
 }
 
+.app-header.admin {
+  background-color: #155ca2;
+
+  .default-link {
+    color: #a4c6e3;
+  }
+
+  .active-link {
+    color: white;
+  }
+
+  color: white;
+}
+
 .hide-links {
-  background: linear-gradient(180deg, #0066C1 0%, #0088E3 100%);
+  background: linear-gradient(180deg, #0066c1 0%, #0088e3 100%);
 }
 
 .nav-links {
@@ -126,13 +141,15 @@
     display: flex;
   }
 
-  .header-left {
-    .header-img.small-screen {
-      margin-top: 10px;
-      background-image: url('assets/logo_small.svg');
-      background-repeat: no-repeat;
-      width: 148.422px;
-      height: 30px;
+  .app-header {
+    .header-left {
+      .header-img.small-screen {
+        margin-top: 10px;
+        background-image: url('assets/logo_small.svg');
+        background-repeat: no-repeat;
+        width: 148.422px;
+        height: 30px;
+      }
     }
   }
 }

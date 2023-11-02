@@ -18,7 +18,7 @@ const Home: React.FC = () => {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentBanner((currentBanner + 1) % banners.length);
-    }, 5000);
+    }, 6000);
 
     return () => clearInterval(timer);
   }, [currentBanner]);

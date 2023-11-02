@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
 import Icon, { ICONS, IconSize } from '../SVG/Icon';
 
+import Modal, { ModalWidth } from '../Modal/DialogModal';
+
 import './CustomTable.scss';
 
 interface TableProps {
@@ -10,12 +12,24 @@ interface TableProps {
   itemsPerPage: number;
   columns: { dataId: string; label: string }[];
   className?: string;
-  showAdminActions: boolean;
-  onCreateButton: () => void;
+  showAdminActions?: boolean;
+  onCreateButton?: () => void;
+  handleDelete?: () => void;
+  handleEdit?: (itemId: string) => void;
   setData: (newData: any[]) => void;
 }
 
-const CustomTable: React.FC<TableProps> = ({ data, setData, itemsPerPage, columns, className, showAdminActions, onCreateButton }) => {
+const CustomTable: React.FC<TableProps> = ({
+  data,
+  setData,
+  itemsPerPage,
+  columns,
+  className,
+  showAdminActions,
+  onCreateButton,
+  handleDelete,
+  handleEdit,
+}) => {
   const navigate = useNavigate();
   const handleRowClick = (itemId: any) => {
     navigate(`${itemId}`);
@@ -53,7 +67,34 @@ const CustomTable: React.FC<TableProps> = ({ data, setData, itemsPerPage, column
     const newData = [...data];
     newData[rowIndex].selected = !newData[rowIndex].selected;
     setData(newData);
-    console.log(data[rowIndex].selected);
+  };
+
+  const [editModalOpen, setEditModalOpen] = useState(false);
+
+  const handleEditAction = () => {
+    const selectedItems = data.filter((item) => item.selected);
+    if (selectedItems.length >= 2) {
+      setEditModalOpen(true);
+    }
+    if (selectedItems.length === 1) {
+      if (handleEdit) {
+        handleEdit(selectedItems[0].id);
+      }
+    }
+  };
+
+  const closeEditModal = () => {
+    setEditModalOpen(false);
+  };
+
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+
+  const openDeleteModal = () => {
+    setDeleteModalOpen(true);
+  };
+
+  const closeDeleteModal = () => {
+    setDeleteModalOpen(false);
   };
 
   const tableClasses = classNames('customized-table', { managerial: showAdminActions }, className);
@@ -137,8 +178,53 @@ const CustomTable: React.FC<TableProps> = ({ data, setData, itemsPerPage, column
         )}
         {showAdminActions && (
           <div className="admin-buttons">
-            <button className="admin-buttons__edit">수정</button>
-            <button className="admin-buttons__remove">삭제</button>
+            <button className="admin-buttons__edit" onClick={handleEditAction}>
+              수정
+            </button>
+            <Modal dataId="" isOpen={editModalOpen} onClose={closeEditModal} className="modal" width={ModalWidth.SM}>
+              <div className="message">
+                <span>한 번에 하나의 게시글만 수정가능합니다.</span>
+                <span>하나의 게시글만 선택해주세요.</span>
+              </div>
+              <div className="modal__buttons">
+                <button onClick={closeEditModal} className="cancel-button">
+                  취소
+                </button>
+                <button
+                  onClick={() => {
+                    closeEditModal();
+                  }}
+                  className="confirm-button"
+                >
+                  확인
+                </button>
+              </div>
+            </Modal>
+            <button className="admin-buttons__delete" onClick={openDeleteModal}>
+              삭제
+            </button>
+            <Modal dataId="" isOpen={deleteModalOpen} onClose={closeDeleteModal} className="modal" width={ModalWidth.SM}>
+              <div className="message">
+                <span>1건의 게시글을</span>
+                <span>삭제 하시겠습니까?</span>
+              </div>
+              <div className="modal__buttons">
+                <button onClick={closeDeleteModal} className="cancel-button">
+                  취소
+                </button>
+                <button
+                  onClick={() => {
+                    if (handleDelete) {
+                      handleDelete();
+                    }
+                    closeDeleteModal();
+                  }}
+                  className="confirm-button"
+                >
+                  확인
+                </button>
+              </div>
+            </Modal>
             <button className="admin-buttons__create" onClick={onCreateButton}>
               글쓰기
             </button>
