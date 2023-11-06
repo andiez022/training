@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { Formik, Form, Field } from 'formik';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 
-import Dropdown from '../../components/Dropdown/Dropdown';
-import DropdownItem from '../../components/Dropdown/DropdownItem';
 import Button, { ButtonIconPlacement } from '../../components/Button/Button';
 import { ICONS, IconSize } from '../../components/SVG/Icon';
+import Dropdown from '../../components/Dropdown/Dropdown';
+import DropdownItem from '../../components/Dropdown/DropdownItem';
 import TextInput from '../../components/TextInput/TextInput';
 import CustomTable from '../../components/Table/CustomTable';
 import GalleryImageDetails from '../../components/ImageGallery/GalleryImageDetails';
@@ -29,6 +30,7 @@ const CampaignView: React.FC<{ userRole: string }> = ({ userRole }) => {
   type TableSearchColumn = 'title' | 'author';
 
   const [filteredData, setFilteredData] = useState(CampaignData);
+  const [editMode, setEditMode] = useState(false);
 
   const updateFilteredData = () => {
     const newFilteredData = CampaignData.filter((row) => {
@@ -44,7 +46,15 @@ const CampaignView: React.FC<{ userRole: string }> = ({ userRole }) => {
     }
   };
 
-  const handleDelete = () => {};
+  const handleDelete = () => {
+    const dataToKeep = CampaignData.filter((item) => !item.selected);
+    setFilteredData(dataToKeep);
+  };
+
+  const handleEdit = (itemId: string) => {
+    navigate(`edit/${itemId}`);
+    setEditMode(true);
+  };
 
   const navigate = useNavigate();
   const handleCreatePost = () => {
@@ -67,7 +77,6 @@ const CampaignView: React.FC<{ userRole: string }> = ({ userRole }) => {
         setSelectedSearchColumn('author');
       }
       setSearchText('');
-      setFilteredData(CampaignData);
     }
   };
 
@@ -75,17 +84,49 @@ const CampaignView: React.FC<{ userRole: string }> = ({ userRole }) => {
     file: null,
     title: '',
     content: '',
+    link: '',
+  };
+
+  const initialEditValues = {
+    file: currentItem ? currentItem.image : '',
+    title: currentItem ? currentItem.id : '',
+    content: currentItem ? currentItem.description : '',
+    link: currentItem ? currentItem.link : '',
+  };
+
+  const toolBarOptions = [
+    [{ header: [1, 2, false] }],
+    ['bold', 'italic', 'underline'],
+    [{ align: '' }, { align: 'center' }, { align: 'right' }, { align: 'justify' }],
+    [{ list: 'bullet' }, { list: 'ordered' }, 'blockquote'],
+    ['link', 'image'],
+  ];
+
+  const modules = {
+    toolbar: toolBarOptions,
   };
 
   const handleCancel = () => {
-    const updatedData = CampaignData.map((item) => ({ ...item, selected: false }));
-    setFilteredData(updatedData);
     window.history.back();
   };
+
+  const validationSchema = Yup.object().shape({
+    title: Yup.string().required('제목을 입력하세요.'),
+    content: Yup.string().required('제내용을 입력하세요.'),
+    link: Yup.string().required('링크를 입력하세요.'),
+  });
 
   const handleSubmit = (values: any) => {
     console.log('Form values:', values);
   };
+
+  useEffect(() => {
+    if (!contentType) {
+      setEditMode(false);
+      const updatedData = CampaignData.map((item) => ({ ...item, selected: false }));
+      setFilteredData(updatedData);
+    }
+  }, [contentType]);
 
   if (!contentType) {
     return (
@@ -116,12 +157,20 @@ const CampaignView: React.FC<{ userRole: string }> = ({ userRole }) => {
                     </Button>
                   }
                 >
-                  <DropdownItem onClick={() => handleDropdownItemClick('제목')} isSelected={selectedDropdownText === '제목'}>
-                    제목
-                  </DropdownItem>
-                  <DropdownItem onClick={() => handleDropdownItemClick('작성자')} isSelected={selectedDropdownText === '작성자'}>
-                    작성자
-                  </DropdownItem>
+                  {isManagerial ? (
+                    <>
+                      <DropdownItem onClick={() => handleDropdownItemClick('제목')} isSelected={selectedDropdownText === '제목'}>
+                        제목
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleDropdownItemClick('작성자')} isSelected={selectedDropdownText === '작성자'}>
+                        작성자
+                      </DropdownItem>
+                    </>
+                  ) : (
+                    <DropdownItem onClick={() => handleDropdownItemClick('제목')} isSelected={selectedDropdownText === '제목'}>
+                      제목
+                    </DropdownItem>
+                  )}
                 </Dropdown>
                 <div className="campaign-view__search-area">
                   <TextInput
@@ -143,7 +192,7 @@ const CampaignView: React.FC<{ userRole: string }> = ({ userRole }) => {
                 </div>
               </div>
             </div>
-            {!isManagerial && <ImageGallery data={CampaignData} userRole={userRole} onCreateButton={handleCreatePost} />}
+            {!isManagerial && <ImageGallery data={filteredData} userRole={userRole} onCreateButton={handleCreatePost} />}
             {isManagerial && (
               <CustomTable
                 data={filteredData}
@@ -153,7 +202,8 @@ const CampaignView: React.FC<{ userRole: string }> = ({ userRole }) => {
                 onCreateButton={handleCreatePost}
                 setData={setFilteredData}
                 handleDelete={handleDelete}
-                handleEdit={() => {}}
+                handleEdit={handleEdit}
+                disableRowClick={isManagerial}
               />
             )}
           </div>
@@ -162,7 +212,7 @@ const CampaignView: React.FC<{ userRole: string }> = ({ userRole }) => {
     );
   }
 
-  if (currentItem) {
+  if (!editMode && currentItem) {
     return (
       <div className="campaign-view">
         <div className="campaign-view__top">
@@ -174,6 +224,7 @@ const CampaignView: React.FC<{ userRole: string }> = ({ userRole }) => {
             </div>
             <GalleryImageDetails
               id={currentItem.id}
+              selected={currentItem.selected}
               numbering={currentItem.numbering}
               image={currentItem.image}
               title={currentItem.title}
@@ -199,37 +250,97 @@ const CampaignView: React.FC<{ userRole: string }> = ({ userRole }) => {
               </div>
             </div>
             <div className="form-container">
-              <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-                <Form className="form-create">
-                  <div className="form-row">
-                    <div className="form-group">
-                      <label htmlFor="title">제목</label>
-                      <Field type="text" id="title" name="title" placeholder="제목을 입력해주세요." />
+              <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+                {({ isSubmitting }) => (
+                  <Form className="form-create">
+                    <div className="form-row">
+                      <div className="form-group">
+                        <label htmlFor="title">제목</label>
+                        <Field type="text" id="title" name="title" placeholder="제목을 입력해주세요." />
+                      </div>
                     </div>
-                  </div>
-                  <div className="form-row">
-                    <div className="form-group">
-                      <Field as="textarea" id="content" name="content" placeholder="내용을 입력하세요." className="content-area" />
+                    <ErrorMessage name="title" component="div" className="error" />
+                    <div className="form-row">
+                      <div className="form-group">
+                        <Field as="textarea" id="content" name="content" placeholder="내용을 입력하세요." className="content-area" />
+                      </div>
                     </div>
-                  </div>
-                  <div className="form-row">
-                    <div className="form-group">
-                      <label htmlFor="link">링크</label>
-                      <Field type="text" id="link" name="link" placeholder="링크를 입력해주세요." />
+                    <ErrorMessage name="content" component="div" className="error" />
+                    <div className="form-row">
+                      <div className="form-group">
+                        <label htmlFor="link">링크</label>
+                        <Field type="text" id="link" name="link" placeholder="링크를 입력해주세요." />
+                      </div>
                     </div>
-                  </div>
-                  <div>
-                    <input id="file" name="file" type="file" accept="image/*" />
-                  </div>
-                  <div className="form-button">
-                    <button type="submit" className="submit-button">
-                      등록
-                    </button>
-                    <button className="cancel-button" onClick={handleCancel}>
-                      취소
-                    </button>
-                  </div>
-                </Form>
+                    <ErrorMessage name="link" component="div" className="error" />
+                    <div>
+                      <input id="file" name="file" type="file" accept="image/*" />
+                    </div>
+                    <div className="form-button">
+                      <button type="submit" className="submit-button" disabled={isSubmitting}>
+                        등록
+                      </button>
+                      <button className="cancel-button" onClick={handleCancel}>
+                        취소
+                      </button>
+                    </div>
+                  </Form>
+                )}
+              </Formik>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (editMode) {
+    return (
+      <div className="campaign-view">
+        <div className="campaign-view__top">
+          <div className="campaign-view__content">
+            <div className="campaign-view__table-head">
+              <div className="campaign-view__title">
+                <h2 className="gradual-color-transition">공지사항 작성</h2>
+              </div>
+            </div>
+            <div className="form-container">
+              <Formik initialValues={initialEditValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+                {({ isSubmitting }) => (
+                  <Form className="form-create">
+                    <div className="form-row">
+                      <div className="form-group">
+                        <label htmlFor="title">제목</label>
+                        <Field type="text" id="title" name="title" placeholder="제목을 입력해주세요." />
+                      </div>
+                    </div>
+                    <ErrorMessage name="title" component="div" className="error" />
+                    <div className="form-row">
+                      <div className="form-group">
+                        <Field as="textarea" id="content" name="content" placeholder="내용을 입력하세요." className="content-area" />
+                      </div>
+                    </div>
+                    <ErrorMessage name="content" component="div" className="error" />
+                    <div className="form-row">
+                      <div className="form-group">
+                        <label htmlFor="link">링크</label>
+                        <Field type="text" id="link" name="link" placeholder="링크를 입력해주세요." />
+                      </div>
+                    </div>
+                    <ErrorMessage name="link" component="div" className="error" />
+                    <div>
+                      <input id="file" name="file" type="file" accept="image/*" />
+                    </div>
+                    <div className="form-button">
+                      <button type="submit" className="submit-button" disabled={isSubmitting}>
+                        등록
+                      </button>
+                      <button className="cancel-button" onClick={handleCancel}>
+                        취소
+                      </button>
+                    </div>
+                  </Form>
+                )}
               </Formik>
             </div>
           </div>

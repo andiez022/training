@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { Link } from 'react-router-dom';
+import * as Yup from 'yup';
 
 import Icon, { ICONS, IconSize } from '../../components/SVG/Icon';
 
@@ -19,6 +20,11 @@ const LoginView: React.FC = () => {
     setPasswordVisible(!passwordVisible);
   };
 
+  const validationSchema = Yup.object().shape({
+    username: Yup.string().required('아이디를 입력하세요.'),
+    password: Yup.string().required('비밀번호를 입력하세요.'),
+  });
+
   const handleSubmit = (values: any) => {
     console.log('Remember User ID:', values.rememberUserId);
     console.log('Form values:', values);
@@ -27,29 +33,33 @@ const LoginView: React.FC = () => {
   return (
     <div className="login-form">
       <h2>로그인</h2>
-      <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-        <Form>
-          <div className="form-group">
-            <label htmlFor="username">아이디</label>
-            <Field type="text" id="username" name="username" placeholder="아이디를 입력하세요." />
-            <ErrorMessage name="username" component="div" className="error" />
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">비밀번호</label>
-            <Field type={passwordVisible ? 'text' : 'password'} id="password" name="password" placeholder="비밀번호를 입력하세요." />
-            <span onClick={togglePasswordVisibility}>
-              <Icon component={passwordVisible ? ICONS.EYE_VISIBLE : ICONS.EYE_INVISIBLE} size={IconSize.LG} />
-            </span>
-            <ErrorMessage name="password" component="div" className="error" />
-          </div>
-          <div className="form-group">
-            <label>
-              <Field type="checkbox" name="rememberUserId" />
-              아이디 기억하기
-            </label>
-          </div>
-          <button type="submit">확인</button>
-        </Form>
+      <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+        {({ isSubmitting }) => (
+          <Form>
+            <div className="form-group">
+              <label htmlFor="username">아이디</label>
+              <Field type="text" id="username" name="username" placeholder="아이디를 입력하세요." />
+              <ErrorMessage name="username" component="div" className="error" />
+            </div>
+            <div className="form-group">
+              <label htmlFor="password">비밀번호</label>
+              <Field type={passwordVisible ? 'text' : 'password'} id="password" name="password" placeholder="비밀번호를 입력하세요." />
+              <span onClick={togglePasswordVisibility}>
+                <Icon component={passwordVisible ? ICONS.EYE_VISIBLE : ICONS.EYE_INVISIBLE} size={IconSize.LG} />
+              </span>
+              <ErrorMessage name="password" component="div" className="error" />
+            </div>
+            <div className="form-group">
+              <label>
+                <Field type="checkbox" name="rememberUserId" />
+                아이디 기억하기
+              </label>
+            </div>
+            <button type="submit" disabled={isSubmitting}>
+              확인
+            </button>
+          </Form>
+        )}
       </Formik>
       <Link to="/register" className="registration-button">
         리빙랩 회원가입

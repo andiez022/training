@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 
 import Icon, { ICONS, IconSize } from '../../components/SVG/Icon';
+import Dropdown from '../../components/Dropdown/Dropdown';
+import DropdownItem from '../../components/Dropdown/DropdownItem';
 
 import './Header.scss';
 
 interface NavLinkProps {
   to: string;
   text: string;
-  className?: string;
+  children?: React.ReactNode;
+  onClick?: (e: React.MouseEvent) => void;
 }
 
 const Header: React.FC<{ userRole: string }> = ({ userRole }) => {
@@ -34,13 +37,23 @@ const Header: React.FC<{ userRole: string }> = ({ userRole }) => {
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const CustomNavLink: React.FC<NavLinkProps> = ({ to, text, className }) => {
+  const CustomNavLink: React.FC<NavLinkProps> = ({ to, text, children, onClick }) => {
     return (
-      <NavLink to={to} className={(navData) => (navData.isActive ? 'active-link' : 'default-link')} onClick={() => setIsMenuOpen(false)}>
+      <NavLink
+        to={to}
+        className={(navData) => (navData.isActive ? 'active-link' : 'default-link')}
+        onClick={(e) => {
+          setIsMenuOpen(false);
+          if (onClick) onClick(e);
+        }}
+      >
         {text}
+        {children}
       </NavLink>
     );
   };
+
+  const navigate = useNavigate();
 
   const location = useLocation();
   const currentPath = location.pathname;
@@ -81,7 +94,30 @@ const Header: React.FC<{ userRole: string }> = ({ userRole }) => {
             <CustomNavLink to="/announcement" text="공지사항" />
             <CustomNavLink to="/facility" text="시설현황" />
             <CustomNavLink to="/content" text="콘텐츠" />
-            <CustomNavLink to="/lab" text="리빙랩" />
+            {isManagerial ? (
+              <Dropdown
+                elementAction={
+                  <CustomNavLink
+                    to="/lab"
+                    text="리빙랩"
+                    onClick={(e) => {
+                      e.preventDefault();
+                    }}
+                  />
+                }
+              >
+                <DropdownItem onClick={() => navigate('lab')}>게시글 관리</DropdownItem>
+                <DropdownItem
+                  onClick={() => {
+                    navigate('user-management');
+                  }}
+                >
+                  회원 관리
+                </DropdownItem>
+              </Dropdown>
+            ) : (
+              <CustomNavLink to="/lab" text="리빙랩" />
+            )}
             <CustomNavLink to="/campaign" text="캠페인" />
             <CustomNavLink to="/board" text="자유게시판" />
             {isManagerial && <CustomNavLink to="/login" text="로그아웃" />}

@@ -11,6 +11,8 @@ interface FacilityDetails {
 }
 
 export interface FacilityItem {
+  numbering: number;
+  district: string;
   title: string;
   img: string;
   location: string;

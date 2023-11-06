@@ -51,6 +51,7 @@ export const BoardData = [
 export const CampaignData: GalleryImageProps[] = [
   {
     id: 'weqweasd',
+    selected: false,
     numbering: 1,
     image: '/ctest.jpg',
     title: "The error message \"The term 'choco' is not recognized",
@@ -62,6 +63,7 @@ export const CampaignData: GalleryImageProps[] = [
   },
   {
     id: '2',
+    selected: false,
     numbering: 2,
     image: '/logo192.png',
     title: 'www',
@@ -72,6 +74,7 @@ export const CampaignData: GalleryImageProps[] = [
   },
   {
     id: '3',
+    selected: false,
     numbering: 3,
     image: '/logo192.png',
     title: 'www',
@@ -82,6 +85,7 @@ export const CampaignData: GalleryImageProps[] = [
   },
   {
     id: '4',
+    selected: false,
     numbering: 4,
     image: '/logo192.png',
     title: 'www',
@@ -92,6 +96,7 @@ export const CampaignData: GalleryImageProps[] = [
   },
   {
     id: '5',
+    selected: false,
     numbering: 5,
     image: '/logo192.png',
     title: 'www',
@@ -102,6 +107,7 @@ export const CampaignData: GalleryImageProps[] = [
   },
   {
     id: '6',
+    selected: false,
     numbering: 6,
     image: '/logo192.png',
     title: 'www',
@@ -112,6 +118,7 @@ export const CampaignData: GalleryImageProps[] = [
   },
   {
     id: '7',
+    selected: false,
     numbering: 7,
     image: '/logo192.png',
     title: 'www',
@@ -122,6 +129,7 @@ export const CampaignData: GalleryImageProps[] = [
   },
   {
     id: '8',
+    selected: false,
     numbering: 8,
     image: '/logo192.png',
     title: 'www',
@@ -132,6 +140,7 @@ export const CampaignData: GalleryImageProps[] = [
   },
   {
     id: '9',
+    selected: false,
     numbering: 9,
     image: '/logo192.png',
     title: 'www',
@@ -142,6 +151,7 @@ export const CampaignData: GalleryImageProps[] = [
   },
   {
     id: '10',
+    selected: false,
     numbering: 10,
     image: '/logo192.png',
     title: 'www',
@@ -152,6 +162,7 @@ export const CampaignData: GalleryImageProps[] = [
   },
   {
     id: '11',
+    selected: false,
     numbering: 11,
     image: '/logo192.png',
     title: 'www',
@@ -162,6 +173,7 @@ export const CampaignData: GalleryImageProps[] = [
   },
   {
     id: '12',
+    selected: false,
     numbering: 12,
     image: '/logo192.png',
     title: 'www',
@@ -172,6 +184,7 @@ export const CampaignData: GalleryImageProps[] = [
   },
   {
     id: '13',
+    selected: false,
     numbering: 13,
     image: '/logo192.png',
     title: 'www',
@@ -185,6 +198,7 @@ export const CampaignData: GalleryImageProps[] = [
 export const VideoCollectionData: VideoItemProps[] = [
   {
     id: '1',
+    selected: false,
     numbering: 1,
     image: '/logo192.png',
     title: '전영은 콘텐츠 테스트 전영은 콘텐츠 테스트 전영은 콘텐츠 테스트 전영은 콘텐츠 테스트 전영 츠 테스트 전영ㅇ',
@@ -194,6 +208,7 @@ export const VideoCollectionData: VideoItemProps[] = [
   },
   {
     id: '2',
+    selected: false,
     numbering: 2,
     video_id: 'jNQXAC9IVRw',
     image: '/logo192.png',
@@ -205,6 +220,7 @@ export const VideoCollectionData: VideoItemProps[] = [
   },
   {
     id: '3',
+    selected: false,
     numbering: 3,
     image: '/logo192.png',
     title: 'Video 3',
@@ -214,6 +230,7 @@ export const VideoCollectionData: VideoItemProps[] = [
   },
   {
     id: '4',
+    selected: false,
     numbering: 4,
     image: '/logo192.png',
     title: 'Video 4',
@@ -223,6 +240,7 @@ export const VideoCollectionData: VideoItemProps[] = [
   },
   {
     id: '5',
+    selected: false,
     numbering: 5,
     image: '/logo192.png',
     title: 'Video 5',
@@ -232,6 +250,7 @@ export const VideoCollectionData: VideoItemProps[] = [
   },
   {
     id: '6',
+    selected: false,
     numbering: 6,
     image: '/logo192.png',
     title: 'Video 6',
@@ -241,6 +260,7 @@ export const VideoCollectionData: VideoItemProps[] = [
   },
   {
     id: '7',
+    selected: false,
     numbering: 7,
     image: '/logo192.png',
     title: 'Video 7',
@@ -250,6 +270,7 @@ export const VideoCollectionData: VideoItemProps[] = [
   },
   {
     id: '8',
+    selected: false,
     numbering: 8,
     image: '/logo192.png',
     title: 'Video 8',
@@ -259,6 +280,7 @@ export const VideoCollectionData: VideoItemProps[] = [
   },
   {
     id: '9',
+    selected: false,
     numbering: 9,
     image: '/logo192.png',
     title: 'Video 9',
@@ -268,6 +290,7 @@ export const VideoCollectionData: VideoItemProps[] = [
   },
   {
     id: '10',
+    selected: false,
     numbering: 10,
     video_id: 'jNQXAC9IVRw',
     image: '/logo192.png',
@@ -278,6 +301,7 @@ export const VideoCollectionData: VideoItemProps[] = [
   },
   {
     id: '11',
+    selected: false,
     numbering: 11,
     video_id: 'jNQXAC9IVRw',
     image: '/logo192.png',
@@ -288,6 +312,7 @@ export const VideoCollectionData: VideoItemProps[] = [
   },
   {
     id: '12',
+    selected: false,
     numbering: 12,
     video_id: 'jNQXAC9IVRw',
     image: '/logo192.png',
@@ -298,6 +323,7 @@ export const VideoCollectionData: VideoItemProps[] = [
   },
   {
     id: '13',
+    selected: false,
     numbering: 13,
     video_id: 'jNQXAC9IVRw',
     image: '/logo192.png',
@@ -308,78 +334,86 @@ export const VideoCollectionData: VideoItemProps[] = [
   },
 ];
 
-interface AreaData {
-  [area: string]: FacilityItem[];
-}
-
-export const FacilityData: AreaData = {
-  부산: [
-    {
-      title: '부산국립해양대학교 진입로 방파재',
-      img: '/logo192.png',
-      location: '영도구 해양로 435',
-      dimension: '길이 590m / 폭 9m',
-      status: 'E',
-      details: [
-        { date: '2022.03.22', hour: 4, amount: 3, effort: 12 },
-        { date: '2022.05.20', hour: 3, amount: 2, effort: 15 },
-        { date: '2022.03.22', hour: 5, amount: 5, effort: 10 },
-        { date: '2022.03.22', hour: 5, amount: 5, effort: 10 },
-      ],
-    },
-    {
-      title: '부산국립해양대학교 진입로 방파재',
-      img: '/ctest.jpg',
-      location: '영도구 해양로 435',
-      dimension: '길이 590m / 폭 9m',
-      status: 'E',
-    },
-    {
-      title: '부산국립해양대학교 진입로 방파재',
-      img: '/logo192.png',
-      location: '영도구 해양로 435',
-      dimension: '길이 590m / 폭 9m',
-      status: 'E',
-    },
-    {
-      title: '부산국립해양대학교 진입로 방파재',
-      img: '/logo192.png',
-      location: '영도구 해양로 435',
-      dimension: '길이 590m / 폭 9m',
-      status: 'E',
-    },
-    {
-      title: '부산국립해양대학교 진입로 방파재',
-      img: '/logo192.png',
-      location: '영도구 해양로 435',
-      dimension: '길이 590m / 폭 9m',
-      status: 'E',
-    },
-    {
-      title: '부산국립해양대학교 진입로 방파재',
-      img: 'item1.jpg',
-      location: '영도구 해양로 435',
-      dimension: '길이 590m / 폭 9m',
-      status: 'E',
-    },
-  ],
-  기장군: [
-    {
-      title: '부산국립해양대학교 진입로 방파재',
-      img: '/logo192.png',
-      location: '영도구 해양로 435',
-      dimension: '길이 590m / 폭 9m',
-      status: 'E',
-    },
-    {
-      title: '부산국립해양대학교 진입로 방파재',
-      img: 'item1.jpg',
-      location: '영도구 해양로 435',
-      dimension: '길이 590m / 폭 9m',
-      status: 'E',
-    },
-  ],
-};
+export const FacilityData: FacilityItem[] = [
+  {
+    numbering: 1,
+    district: '부산',
+    title: '부산국립해양대학교 진입로 방파재',
+    img: '/logo192.png',
+    location: '영도구 해양로 435',
+    dimension: '길이 590m / 폭 9m',
+    status: 'E',
+    details: [
+      { date: '2022.03.22', hour: 4, amount: 3, effort: 12 },
+      { date: '2022.05.20', hour: 3, amount: 2, effort: 15 },
+      { date: '2022.03.22', hour: 5, amount: 5, effort: 10 },
+      { date: '2022.03.22', hour: 5, amount: 5, effort: 10 },
+    ],
+  },
+  {
+    numbering: 2,
+    district: '부산',
+    title: '부산국립해양대학교 진입로 방파재',
+    img: '/ctest.jpg',
+    location: '영도구 해양로 435',
+    dimension: '길이 590m / 폭 9m',
+    status: 'E',
+  },
+  {
+    numbering: 3,
+    district: '부산',
+    title: '부산국립해양대학교 진입로 방파재',
+    img: '/logo192.png',
+    location: '영도구 해양로 435',
+    dimension: '길이 590m / 폭 9m',
+    status: 'E',
+  },
+  {
+    numbering: 4,
+    district: '부산',
+    title: '부산국립해양대학교 진입로 방파재',
+    img: '/logo192.png',
+    location: '영도구 해양로 435',
+    dimension: '길이 590m / 폭 9m',
+    status: 'E',
+  },
+  {
+    numbering: 5,
+    district: '부산',
+    title: '부산국립해양대학교 진입로 방파재',
+    img: '/logo192.png',
+    location: '영도구 해양로 435',
+    dimension: '길이 590m / 폭 9m',
+    status: 'E',
+  },
+  {
+    numbering: 6,
+    district: '부산',
+    title: '부산국립해양대학교 진입로 방파재',
+    img: 'item1.jpg',
+    location: '영도구 해양로 435',
+    dimension: '길이 590m / 폭 9m',
+    status: 'E',
+  },
+  {
+    numbering: 7,
+    district: '기장군',
+    title: '부산국립해양대학교 진입로 방파재',
+    img: '/logo192.png',
+    location: '영도구 해양로 435',
+    dimension: '길이 590m / 폭 9m',
+    status: 'E',
+  },
+  {
+    numbering: 8,
+    district: '기장군',
+    title: '부산국립해양대학교 진입로 방파재',
+    img: 'item1.jpg',
+    location: '영도구 해양로 435',
+    dimension: '길이 590m / 폭 9m',
+    status: 'E',
+  },
+];
 
 export const LabData = [
   {
@@ -402,4 +436,127 @@ export const LabData = [
   { id: '10', selected: false, numbering: 10, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
   { id: '11', selected: false, numbering: 11, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
   { id: '12', selected: false, numbering: 12, title: 'Short', author: '관리자 1', date: '2023-05-05', body: '' },
+];
+
+export const UserManagementData = [
+  {
+    id: '1',
+    selected: false,
+    name: '홍길동',
+    numbering: 1,
+    username: 'hong222',
+    password: 'pw231122',
+    email: 'email@gmail.com',
+    phone: '010-5555-8888',
+  },
+  {
+    id: '2',
+    selected: false,
+    name: '홍길동',
+    numbering: 2,
+    username: 'hong222',
+    password: 'pw231122',
+    email: 'email@gmail.com',
+    phone: '010-5555-8888',
+  },
+  {
+    id: '3',
+    selected: false,
+    name: '홍길동',
+    numbering: 3,
+    username: 'hong222',
+    password: 'pw231122',
+    email: 'email@gmail.com',
+    phone: '010-5555-8888',
+  },
+  {
+    id: '4',
+    selected: false,
+    name: '홍길동',
+    numbering: 4,
+    username: 'hong222',
+    password: 'pw231122',
+    email: 'email@gmail.com',
+    phone: '010-5555-8888',
+  },
+  {
+    id: '5',
+    selected: false,
+    name: '홍길동',
+    numbering: 5,
+    username: 'hong222',
+    password: 'pw231122',
+    email: 'email@gmail.com',
+    phone: '010-5555-8888',
+  },
+  {
+    id: '6',
+    selected: false,
+    name: '홍길동',
+    numbering: 6,
+    username: 'hong222',
+    password: 'pw231122',
+    email: 'email@gmail.com',
+    phone: '010-5555-8888',
+  },
+  {
+    id: '7',
+    selected: false,
+    name: '홍길동',
+    numbering: 7,
+    username: 'hong222',
+    password: 'pw231122',
+    email: 'email@gmail.com',
+    phone: '010-5555-8888',
+  },
+  {
+    id: '8',
+    selected: false,
+    name: '홍길동',
+    numbering: 8,
+    username: 'hong222',
+    password: 'pw231122',
+    email: 'email@gmail.com',
+    phone: '010-5555-8888',
+  },
+  {
+    id: '9',
+    selected: false,
+    name: '홍길동',
+    numbering: 9,
+    username: 'hong222',
+    password: 'pw231122',
+    email: 'email@gmail.com',
+    phone: '010-5555-8888',
+  },
+  {
+    id: '10',
+    selected: false,
+    name: '홍길동',
+    numbering: 10,
+    username: 'hong222',
+    password: 'pw231122',
+    email: 'email@gmail.com',
+    phone: '010-5555-8888',
+  },
+  {
+    id: '11',
+    selected: false,
+    name: '홍길동',
+    numbering: 11,
+    username: 'hong222',
+    password: 'pw231122',
+    email: 'email@gmail.com',
+    phone: '010-5555-8888',
+  },
+  {
+    id: '12',
+    selected: false,
+    name: '홍길동',
+    numbering: 12,
+    username: 'hong222',
+    password: 'pw231122',
+    email: 'email@gmail.com',
+    phone: '010-5555-8888',
+  },
 ];

@@ -38,6 +38,26 @@
       font-size: 14px;
       font-weight: 300;
       cursor: pointer;
+
+      input {
+        width: 20px;
+        height: 20px;
+        border: 0;
+      }
+
+      img {
+        max-height: 139px;
+        width: 80%;
+        object-fit: cover;
+      }
+
+      button {
+        cursor: pointer;
+        background-color: white;
+        border: 1px solid #c0c0c0;
+        width: 50px;
+        height: 30px;
+      }
     }
 
     th:first-child,
@@ -129,6 +149,15 @@
       }
     }
   }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #d9d9d9;
+    border-radius: 6px;
+  }
 }
 
 .customized-table.managerial {
@@ -208,6 +237,7 @@
 
     .confirm-button {
       background: linear-gradient(90deg, #0367c2 0%, #009fe5 100%);
+      color: white;
     }
   }
 }

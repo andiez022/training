@@ -65,16 +65,12 @@
   &__head {
     display: flex;
     flex-direction: column;
-
-    &__title {
-      display: flex;
-      margin-bottom: 2.5rem;
-    }
   }
 
   &__table-head {
     display: flex;
     justify-content: space-between;
+    height: 40px;
     margin-bottom: 2.5rem;
   }
 
@@ -242,10 +238,54 @@
   }
 }
 
+.facility-table {
+  thead {
+    tr {
+      background-color: #d4e9fc;
+
+      th:first-child {
+        width: 6.25%;
+      }
+
+      th:nth-child(2),
+      th:nth-child(3),
+      th:nth-child(4),
+      th:nth-child(5),
+      th:nth-child(6) {
+        width: 18.75%;
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      td:first-child {
+        width: 6.25%;
+      }
+      td:nth-child(2),
+      td:nth-child(3),
+      td:nth-child(4),
+      td:nth-child(5),
+      td:nth-child(6) {
+        width: 18.75%;
+      }
+
+      td:nth-child(2) {
+        text-align: center;
+      }
+    }
+  }
+}
+
+.facility-view__title {
+  display: flex;
+}
+
 @media only screen and (max-width: $breakpoint-xl) {
   .facility-view {
     &__table-head {
       flex-direction: column;
+      gap: 1.25rem;
     }
 
     &__body {

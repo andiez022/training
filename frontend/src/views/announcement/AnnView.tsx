@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
@@ -54,7 +55,7 @@ const AnnView: React.FC<{ userRole: string }> = ({ userRole }) => {
   };
 
   const handleEdit = (itemId: string) => {
-    navigate(`${itemId}/edit`);
+    navigate(`edit/${itemId}`);
     setEditMode(true);
   };
 
@@ -107,6 +108,11 @@ const AnnView: React.FC<{ userRole: string }> = ({ userRole }) => {
   const handleCancel = () => {
     window.history.back();
   };
+
+  const validationSchema = Yup.object().shape({
+    title: Yup.string().required('제목을 입력하세요.'),
+    content: Yup.string().required('제내용을 입력하세요.'),
+  });
 
   const handleSubmit = (values: any) => {
     console.log('Form values:', values);
@@ -185,6 +191,7 @@ const AnnView: React.FC<{ userRole: string }> = ({ userRole }) => {
               setData={setFilteredData}
               handleDelete={handleDelete}
               handleEdit={handleEdit}
+              disableRowClick={isManagerial}
             />
           </div>
         </div>
@@ -228,38 +235,42 @@ const AnnView: React.FC<{ userRole: string }> = ({ userRole }) => {
               </div>
             </div>
             <div className="form-container">
-              <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-                <Form className="form-create">
-                  <div className="form-row">
-                    <div className="form-group">
-                      <label htmlFor="title">제목</label>
-                      <Field type="text" id="title" name="title" placeholder="제목을 입력해주세요." />
+              <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+                {({ isSubmitting }) => (
+                  <Form className="form-create">
+                    <div className="form-row">
+                      <div className="form-group">
+                        <label htmlFor="title">제목</label>
+                        <Field type="text" id="title" name="title" placeholder="제목을 입력해주세요." />
+                      </div>
                     </div>
-                  </div>
-                  <div className="form-row">
-                    <div className="form-group">
-                      <Field id="content" name="content">
-                        {({ field }: { field: { value: string; onChange: (e: any) => void } }) => (
-                          <ReactQuill
-                            value={field.value}
-                            onChange={(value) => field.onChange({ target: { name: 'content', value } })}
-                            placeholder="내용을 입력하세요."
-                            className="content-area"
-                            modules={modules}
-                          />
-                        )}
-                      </Field>
+                    <ErrorMessage name="title" component="div" className="error" />
+                    <div className="form-row">
+                      <div className="form-group">
+                        <Field id="content" name="content">
+                          {({ field }: { field: { value: string; onChange: (e: any) => void } }) => (
+                            <ReactQuill
+                              value={field.value}
+                              onChange={(value) => field.onChange({ target: { name: 'content', value } })}
+                              placeholder="내용을 입력하세요."
+                              className="content-area"
+                              modules={modules}
+                            />
+                          )}
+                        </Field>
+                      </div>
                     </div>
-                  </div>
-                  <div className="form-button">
-                    <button type="submit" className="submit-button">
-                      등록
-                    </button>
-                    <button type="button" className="cancel-button" onClick={handleCancel}>
-                      취소
-                    </button>
-                  </div>
-                </Form>
+                    <ErrorMessage name="content" component="div" className="error" />
+                    <div className="form-button">
+                      <button type="submit" className="submit-button" disabled={isSubmitting}>
+                        등록
+                      </button>
+                      <button type="button" className="cancel-button" onClick={handleCancel}>
+                        취소
+                      </button>
+                    </div>
+                  </Form>
+                )}
               </Formik>
             </div>
           </div>
@@ -268,7 +279,7 @@ const AnnView: React.FC<{ userRole: string }> = ({ userRole }) => {
     );
   }
 
-  if (editMode && currentItem) {
+  if (editMode) {
     return (
       <div className="ann-view">
         <div className="ann-view__top">
@@ -279,37 +290,41 @@ const AnnView: React.FC<{ userRole: string }> = ({ userRole }) => {
               </div>
             </div>
             <div className="form-container">
-              <Formik initialValues={initialEditValues} onSubmit={handleSubmit}>
-                <Form className="form-create">
-                  <div className="form-row">
-                    <div className="form-group">
-                      <label htmlFor="title">제목</label>
-                      <Field type="text" id="title" name="title" />
+              <Formik initialValues={initialEditValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+                {({ isSubmitting }) => (
+                  <Form className="form-create">
+                    <div className="form-row">
+                      <div className="form-group">
+                        <label htmlFor="title">제목</label>
+                        <Field type="text" id="title" name="title" />
+                      </div>
                     </div>
-                  </div>
-                  <div className="form-row">
-                    <div className="form-group">
-                      <Field id="content" name="content">
-                        {({ field }: { field: { value: string; onChange: (e: any) => void } }) => (
-                          <ReactQuill
-                            value={field.value}
-                            onChange={(value) => field.onChange({ target: { name: 'content', value } })}
-                            className="content-area"
-                            modules={modules}
-                          />
-                        )}
-                      </Field>
+                    <ErrorMessage name="title" component="div" className="error" />
+                    <div className="form-row">
+                      <div className="form-group">
+                        <Field id="content" name="content">
+                          {({ field }: { field: { value: string; onChange: (e: any) => void } }) => (
+                            <ReactQuill
+                              value={field.value}
+                              onChange={(value) => field.onChange({ target: { name: 'content', value } })}
+                              className="content-area"
+                              modules={modules}
+                            />
+                          )}
+                        </Field>
+                      </div>
                     </div>
-                  </div>
-                  <div className="form-button">
-                    <button type="submit" className="submit-button">
-                      등록
-                    </button>
-                    <button type="button" className="cancel-button" onClick={handleCancel}>
-                      취소
-                    </button>
-                  </div>
-                </Form>
+                    <ErrorMessage name="content" component="div" className="error" />
+                    <div className="form-button">
+                      <button type="submit" className="submit-button" disabled={isSubmitting}>
+                        등록
+                      </button>
+                      <button type="button" className="cancel-button" onClick={handleCancel}>
+                        취소
+                      </button>
+                    </div>
+                  </Form>
+                )}
               </Formik>
             </div>
           </div>

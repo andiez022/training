@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
@@ -32,6 +33,7 @@ const LabView: React.FC<{ userRole: string }> = ({ userRole }) => {
   type TableSearchColumn = 'title' | 'author';
 
   const [filteredData, setFilteredData] = useState(LabData);
+  const [editMode, setEditMode] = useState(false);
 
   const updateFilteredData = () => {
     const newFilteredData = LabData.filter((row) => {
@@ -47,7 +49,15 @@ const LabView: React.FC<{ userRole: string }> = ({ userRole }) => {
     }
   };
 
-  const handleDelete = () => {};
+  const handleDelete = () => {
+    const dataToKeep = LabData.filter((item) => !item.selected);
+    setFilteredData(dataToKeep);
+  };
+
+  const handleEdit = (itemId: string) => {
+    navigate(`edit/${itemId}`);
+    setEditMode(true);
+  };
 
   const navigate = useNavigate();
   const handleCreatePost = () => {
@@ -70,13 +80,17 @@ const LabView: React.FC<{ userRole: string }> = ({ userRole }) => {
         setSelectedSearchColumn('author');
       }
       setSearchText('');
-      setFilteredData(LabData);
     }
   };
 
   const initialValues = {
     title: '',
     content: '',
+  };
+
+  const initialEditValues = {
+    title: currentItem ? currentItem.id : '',
+    content: currentItem ? currentItem.body : '',
   };
 
   const toolBarOptions = [
@@ -92,14 +106,25 @@ const LabView: React.FC<{ userRole: string }> = ({ userRole }) => {
   };
 
   const handleCancel = () => {
-    const updatedData = LabData.map((item) => ({ ...item, selected: false }));
-    setFilteredData(updatedData);
     window.history.back();
   };
+
+  const validationSchema = Yup.object().shape({
+    title: Yup.string().required('제목을 입력하세요.'),
+    content: Yup.string().required('제내용을 입력하세요.'),
+  });
 
   const handleSubmit = (values: any) => {
     console.log(values);
   };
+
+  useEffect(() => {
+    if (!contentType) {
+      setEditMode(false);
+      const updatedData = LabData.map((item) => ({ ...item, selected: false }));
+      setFilteredData(updatedData);
+    }
+  }, [contentType]);
 
   if (!contentType) {
     return (
@@ -165,7 +190,8 @@ const LabView: React.FC<{ userRole: string }> = ({ userRole }) => {
               onCreateButton={handleCreatePost}
               setData={setFilteredData}
               handleDelete={handleDelete}
-              handleEdit={() => {}}
+              handleEdit={handleEdit}
+              disableRowClick={isManagerial}
             />
           </div>
         </div>
@@ -173,7 +199,7 @@ const LabView: React.FC<{ userRole: string }> = ({ userRole }) => {
     );
   }
 
-  if (currentItem) {
+  if (!editMode && currentItem) {
     return (
       <div className="lab-view">
         <div className="lab-view__top">
@@ -209,38 +235,96 @@ const LabView: React.FC<{ userRole: string }> = ({ userRole }) => {
               </div>
             </div>
             <div className="form-container">
-              <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-                <Form className="form-create">
-                  <div className="form-row">
-                    <div className="form-group">
-                      <label htmlFor="title">제목</label>
-                      <Field type="text" id="title" name="title" placeholder="제목을 입력해주세요." />
+              <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+                {({ isSubmitting }) => (
+                  <Form className="form-create">
+                    <div className="form-row">
+                      <div className="form-group">
+                        <label htmlFor="title">제목</label>
+                        <Field type="text" id="title" name="title" placeholder="제목을 입력해주세요." />
+                      </div>
                     </div>
-                  </div>
-                  <div className="form-row">
-                    <div className="form-group">
-                      <Field id="content" name="content">
-                        {({ field }: { field: { value: string; onChange: (e: any) => void } }) => (
-                          <ReactQuill
-                            value={field.value}
-                            onChange={(value) => field.onChange({ target: { name: 'content', value } })}
-                            placeholder="내용을 입력하세요."
-                            className="content-area"
-                            modules={modules}
-                          />
-                        )}
-                      </Field>
+                    <ErrorMessage name="title" component="div" className="error" />
+                    <div className="form-row">
+                      <div className="form-group">
+                        <Field id="content" name="content">
+                          {({ field }: { field: { value: string; onChange: (e: any) => void } }) => (
+                            <ReactQuill
+                              value={field.value}
+                              onChange={(value) => field.onChange({ target: { name: 'content', value } })}
+                              placeholder="내용을 입력하세요."
+                              className="content-area"
+                              modules={modules}
+                            />
+                          )}
+                        </Field>
+                      </div>
                     </div>
-                  </div>
-                  <div className="form-button">
-                    <button type="submit" className="submit-button">
-                      등록
-                    </button>
-                    <button type="button" className="cancel-button" onClick={handleCancel}>
-                      취소
-                    </button>
-                  </div>
-                </Form>
+                    <ErrorMessage name="content" component="div" className="error" />
+                    <div className="form-button">
+                      <button type="submit" className="submit-button" disabled={isSubmitting}>
+                        등록
+                      </button>
+                      <button type="button" className="cancel-button" onClick={handleCancel}>
+                        취소
+                      </button>
+                    </div>
+                  </Form>
+                )}
+              </Formik>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (editMode) {
+    return (
+      <div className="lab-view">
+        <div className="lab-view__top">
+          <div className="lab-view__content">
+            <div className="lab-view__table-head">
+              <div className="lab-view__title">
+                <h2 className="gradual-color-transition">공지사항 작성</h2>
+              </div>
+            </div>
+            <div className="form-container">
+              <Formik initialValues={initialEditValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+                {({ isSubmitting }) => (
+                  <Form className="form-create">
+                    <div className="form-row">
+                      <div className="form-group">
+                        <label htmlFor="title">제목</label>
+                        <Field type="text" id="title" name="title" />
+                      </div>
+                    </div>
+                    <ErrorMessage name="title" component="div" className="error" />
+                    <div className="form-row">
+                      <div className="form-group">
+                        <Field id="content" name="content">
+                          {({ field }: { field: { value: string; onChange: (e: any) => void } }) => (
+                            <ReactQuill
+                              value={field.value}
+                              onChange={(value) => field.onChange({ target: { name: 'content', value } })}
+                              className="content-area"
+                              modules={modules}
+                            />
+                          )}
+                        </Field>
+                      </div>
+                    </div>
+                    <ErrorMessage name="content" component="div" className="error" />
+                    <div className="form-button">
+                      <button type="submit" className="submit-button" disabled={isSubmitting}>
+                        등록
+                      </button>
+                      <button type="button" className="cancel-button" onClick={handleCancel}>
+                        취소
+                      </button>
+                    </div>
+                  </Form>
+                )}
               </Formik>
             </div>
           </div>

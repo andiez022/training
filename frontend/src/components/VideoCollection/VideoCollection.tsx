@@ -6,6 +6,7 @@ import VideoPlayer from './VideoPlayer';
 import './VideoCollection.scss';
 
 export interface VideoItemProps {
+  selected: boolean;
   id: any;
   numbering: number;
   video_id?: string;

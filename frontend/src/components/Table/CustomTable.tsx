@@ -17,6 +17,7 @@ interface TableProps {
   handleDelete?: () => void;
   handleEdit?: (itemId: string) => void;
   setData: (newData: any[]) => void;
+  disableRowClick?: boolean;
 }
 
 const CustomTable: React.FC<TableProps> = ({
@@ -29,6 +30,7 @@ const CustomTable: React.FC<TableProps> = ({
   onCreateButton,
   handleDelete,
   handleEdit,
+  disableRowClick,
 }) => {
   const navigate = useNavigate();
   const handleRowClick = (itemId: any) => {
@@ -128,8 +130,32 @@ const CustomTable: React.FC<TableProps> = ({
                     if (!showAdminActions && columnIndex === 0) {
                       return null;
                     }
+
+                    if (column.dataId === 'img') {
+                      return (
+                        <td key={column.dataId}>
+                          <img src={item[column.dataId]} alt="img" />
+                        </td>
+                      );
+                    }
+
+                    if (column.dataId === 'actions') {
+                      return (
+                        <td key={column.dataId}>
+                          <button
+                            onClick={() => {
+                              handleToggleSelect(index + indexOfFirstItem);
+                              if (handleDelete) handleDelete();
+                            }}
+                          >
+                            탈퇴
+                          </button>
+                        </td>
+                      );
+                    }
+
                     return (
-                      <td key={column.dataId} onClick={() => handleRowClick(item.id)}>
+                      <td key={column.dataId} onClick={!disableRowClick ? () => handleRowClick(item.id) : undefined}>
                         {item[column.dataId]}
                       </td>
                     );

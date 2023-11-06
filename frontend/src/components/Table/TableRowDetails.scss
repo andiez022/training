@@ -1,108 +1,111 @@
-@import "../../common/sass/variables";
+@import '../../common/sass/variables';
 
 .table-detail {
-	display: flex;
-	flex-direction: column;
+  display: flex;
+  flex-direction: column;
 
-	&__title {
-		display: flex;
-		background-color: #D4E9FC;
-		align-items: center;
-		text-align: left;
+  &__title {
+    display: flex;
+    background-color: #d4e9fc;
+    align-items: center;
+    text-align: left;
 
-		p {
-			padding-top: 0.625rem;
-			padding-bottom: 0.625rem;
-			padding-left: 1.25rem;
-			padding-right: 1.25rem;
-			font-size: 20px;
-			font-weight: bold;
-		}
-	}
+    p {
+      padding-top: 0.625rem;
+      padding-bottom: 0.625rem;
+      padding-left: 1.25rem;
+      padding-right: 1.25rem;
+      font-size: 20px;
+      font-weight: bold;
+    }
+  }
 
-	&__pre-body {
-		display: flex;
-		justify-content: space-evenly;
-	}
+  &__pre-body {
+    display: flex;
+    justify-content: space-evenly;
+  }
 
-	&__author, &__date {
-		min-height: 3.125rem;
-		width: 100%;
-		display: flex;
-		align-items: center;
-		border-bottom: #999999 1px solid;
+  &__author,
+  &__date {
+    min-height: 3.125rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    border-bottom: #999999 1px solid;
 
-		.label {
-			width: 30%;
-			display: flex;
+    .label {
+      width: 30%;
+      display: flex;
 
-			p {
-				font-weight: bold;
-			}
-		}
+      p {
+        font-weight: bold;
+      }
+    }
 
-		a {
-			cursor: pointer;
-			text-decoration: underline;
-			color: #06c;
-		}
+    a {
+      cursor: pointer;
+      text-decoration: underline;
+      color: #06c;
+    }
 
-		p, a {
-			margin-left: 1.25rem;
-			font-size: 14px;
-		}
-	}
+    p,
+    a {
+      margin-left: 1.25rem;
+      font-size: 14px;
+    }
+  }
 
-	&__description {
-		max-height: 100%;
-		border-bottom: #999999 0.5px solid;
-		text-align: left;
+  &__description {
+    max-height: 100%;
+    border-bottom: #999999 0.5px solid;
+    text-align: left;
 
-		p {
-			padding-top: 0.625rem;
-			padding-bottom: 0.625rem;
-			padding-left: 1.25rem;
-			padding-right: 1.25rem;
-			font-size: 14px;
-		}
-	}
+    p {
+      padding-top: 0.625rem;
+      padding-bottom: 0.625rem;
+      padding-left: 1.25rem;
+      padding-right: 1.25rem;
+      font-size: 14px;
+    }
+  }
 }
 
 .buttons-container {
-	display: flex;
-	gap: 0.625rem;
-	justify-content: flex-end;
+  display: flex;
+  gap: 0.625rem;
+  justify-content: flex-end;
 
-	.return-button {
-		cursor: pointer;
-		height: 2.5rem;
-		width: 5.5rem;
-		margin-top: 1.25rem;
-		color: white;
-		background: linear-gradient(90deg, #0367C2 0%, #009FE5 100%);
-		border: 1px solid #C0C0C0;
-		font-size: 14px;
-	}
+  .return-button {
+    cursor: pointer;
+    height: 2.5rem;
+    width: 5.5rem;
+    margin-top: 1.25rem;
+    color: white;
+    background: linear-gradient(90deg, #0367c2 0%, #009fe5 100%);
+    border: 1px solid #c0c0c0;
+    font-size: 14px;
+  }
 
-	.backward-button, .forward-button {
-		cursor: pointer;
-		height: 2.5rem;
-		width: 5.5rem;
-		margin-top: 1.25rem;
-		background: #D9D9D9;
-		border: 1px solid #C0C0C0;
-		font-size: 14px;
-	}
+  .backward-button,
+  .forward-button {
+    cursor: pointer;
+    height: 2.5rem;
+    width: 5.5rem;
+    margin-top: 1.25rem;
+    background: #d9d9d9;
+    border: 1px solid #c0c0c0;
+    font-size: 14px;
+  }
 }
 
 @media only screen and (max-width: $breakpoint-md) {
-	.table-detail {
-		&__pre-body {
-			flex-direction: column;
-		}
-	}
+  .table-detail {
+    &__pre-body {
+      flex-direction: column;
+    }
+  }
 
-	.buttons-container {
-		justify-content: center;
-	}
+  .buttons-container {
+    justify-content: center;
+  }
 }

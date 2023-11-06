@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 export interface GalleryImageProps {
   id: string;
+  selected: boolean;
   numbering: number;
   image: string;
   title: string;

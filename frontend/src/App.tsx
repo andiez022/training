@@ -23,6 +23,7 @@ const CampaignView = lazy(() => import('./views/campaign/CampaignView'));
 const BoardView = lazy(() => import('./views/board/BoardView'));
 const LoginView = lazy(() => import('./views/authentication/LoginView'));
 const RegisterView = lazy(() => import('./views/authentication/RegisterView'));
+const UserManagementView = lazy(() => import('./views/user_management/UserManagementView'));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -58,7 +59,7 @@ const App: React.FC = () => {
                     element={<PrivateRoute guards={[]} element={<AnnView userRole={userRole} />} />}
                   />
                   <Route
-                    path="/announcement/:contentType/edit"
+                    path="/announcement/edit/:contentType"
                     element={<PrivateRoute guards={[]} element={<AnnView userRole={userRole} />} />}
                   />
                   <Route path="/facility" element={<PrivateRoute guards={[]} element={<FacilityView userRole={userRole} />} />} />
@@ -67,15 +68,32 @@ const App: React.FC = () => {
                     path="/content/:contentType"
                     element={<PrivateRoute guards={[]} element={<ContentView userRole={userRole} />} />}
                   />
+                  <Route
+                    path="/content/edit/:contentType"
+                    element={<PrivateRoute guards={[]} element={<ContentView userRole={userRole} />} />}
+                  />
                   <Route path="/lab" element={<PrivateRoute guards={[]} element={<LabView userRole={userRole} />} />} />
                   <Route path="/lab/:contentType" element={<PrivateRoute guards={[]} element={<LabView userRole={userRole} />} />} />
+                  <Route path="/lab/edit/:contentType" element={<PrivateRoute guards={[]} element={<LabView userRole={userRole} />} />} />
+                  <Route
+                    path="/user-management"
+                    element={<PrivateRoute guards={[]} element={<UserManagementView userRole={userRole} />} />}
+                  />
                   <Route path="/campaign" element={<PrivateRoute guards={[]} element={<CampaignView userRole={userRole} />} />} />
                   <Route
                     path="/campaign/:contentType"
                     element={<PrivateRoute guards={[]} element={<CampaignView userRole={userRole} />} />}
                   />
+                  <Route
+                    path="/campaign/edit/:contentType"
+                    element={<PrivateRoute guards={[]} element={<CampaignView userRole={userRole} />} />}
+                  />
                   <Route path="/board" element={<PrivateRoute guards={[]} element={<BoardView userRole={userRole} />} />} />
                   <Route path="/board/:contentType" element={<PrivateRoute guards={[]} element={<BoardView userRole={userRole} />} />} />
+                  <Route
+                    path="/board/edit/:contentType"
+                    element={<PrivateRoute guards={[]} element={<BoardView userRole={userRole} />} />}
+                  />
                 </Routes>
                 <Footer />
               </div>
