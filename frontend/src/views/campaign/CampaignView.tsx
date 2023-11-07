@@ -16,9 +16,7 @@ import { CampaignData } from '../../services/constants/constants';
 
 import './CampaignView.scss';
 
-const CampaignView: React.FC<{ userRole: string }> = ({ userRole }) => {
-  const isManagerial = userRole === 'admin';
-
+const CampaignView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
   const columns = [
     { dataId: 'selected', label: '' },
     { dataId: 'numbering', label: '번호' },
@@ -134,7 +132,7 @@ const CampaignView: React.FC<{ userRole: string }> = ({ userRole }) => {
         <div className="campaign-view__top">
           <div className="campaign-view__image">
             <img src="/campaign_bn.png" alt="campaignBG" />
-            {!isManagerial && (
+            {!isLoggedIn && (
               <>
                 <div className="campaign-view__image__overlay" />
                 <div className="campaign-view__image__icon">
@@ -157,7 +155,7 @@ const CampaignView: React.FC<{ userRole: string }> = ({ userRole }) => {
                     </Button>
                   }
                 >
-                  {isManagerial ? (
+                  {isLoggedIn ? (
                     <>
                       <DropdownItem onClick={() => handleDropdownItemClick('제목')} isSelected={selectedDropdownText === '제목'}>
                         제목
@@ -192,20 +190,20 @@ const CampaignView: React.FC<{ userRole: string }> = ({ userRole }) => {
                 </div>
               </div>
             </div>
-            {!isManagerial && <ImageGallery data={filteredData} userRole={userRole} onCreateButton={handleCreatePost} />}
-            {isManagerial && (
+            {/* {!isLoggedIn && <ImageGallery data={filteredData} isLoggedIn={false} onCreateButton={handleCreatePost} />}
+            {isLoggedIn && (
               <CustomTable
                 data={filteredData}
                 itemsPerPage={10}
                 columns={columns}
-                showAdminActions={isManagerial}
+                showAdminActions={isLoggedIn}
                 onCreateButton={handleCreatePost}
                 setData={setFilteredData}
                 handleDelete={handleDelete}
                 handleEdit={handleEdit}
-                disableRowClick={isManagerial}
+                disableRowClick={isLoggedIn}
               />
-            )}
+            )} */}
           </div>
         </div>
       </div>

@@ -13,46 +13,54 @@ import TextInput from '../../components/TextInput/TextInput';
 import CustomTable from '../../components/Table/CustomTable';
 import TableRowDetails from '../../components/Table/TableRowDetails';
 
-import { AnnData } from '../../services/constants/constants';
+import api from '../../services/apiServices';
 
 import './AnnView.scss';
 
-const AnnView: React.FC<{ userRole: string }> = ({ userRole }) => {
-  const isManagerial = userRole === 'admin';
+interface DataItem {
+  author: string;
+  content: string;
+  created_at: string;
+  id: string;
+  title: string;
+  updated_at: string;
+  user_id: string;
+}
 
-  const indexes = AnnData.map((item) => item.id);
+const AnnView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
+  const [searchBy, setSearchBy] = useState('title');
+  const [searchValue, setSearchValue] = useState('');
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(10);
+  const [data, setData] = useState([]);
+  const [dataItem, setDataItem] = useState(null);
+  const [totalPageCount, setTotalPageCount] = useState(0);
 
   const columns = [
     { dataId: 'selected', label: '' },
-    { dataId: 'numbering', label: '번호' },
+    { dataId: 'index', label: '번호' },
     { dataId: 'title', label: '제목' },
     { dataId: 'author', label: '작성자' },
-    { dataId: 'date', label: '작성일' },
+    { dataId: 'created_at', label: '작성일' },
   ];
 
-  type TableSearchColumn = 'title' | 'author';
-
-  const [filteredData, setFilteredData] = useState(AnnData);
   const [editMode, setEditMode] = useState(false);
+  const [selectedDropdownText, setSelectedDropdownText] = useState('제목');
+  const [inputText, setInputText] = useState('');
 
-  const updateFilteredData = () => {
-    const newFilteredData = AnnData.filter((row) => {
-      const cellValue = row[selectedSearchColumn];
-      return cellValue.toLowerCase().includes(searchText.toLowerCase());
-    });
-    setFilteredData(newFilteredData);
-  };
-
-  const handleEnterKeyPress = (event: React.KeyboardEvent) => {
-    if (event.key === 'Enter') {
-      updateFilteredData();
+  const handleDropdownItemClick = (itemText: string) => {
+    if (itemText !== selectedDropdownText) {
+      setSelectedDropdownText(itemText);
+      if (itemText === '제목') {
+        setSearchBy('title');
+      } else {
+        setSearchBy('author');
+      }
+      setSearchValue('');
     }
   };
 
-  const handleDelete = () => {
-    const dataToKeep = AnnData.filter((item) => !item.selected);
-    setFilteredData(dataToKeep);
-  };
+  const handleDelete = () => {};
 
   const handleEdit = (itemId: string) => {
     navigate(`edit/${itemId}`);
@@ -64,33 +72,45 @@ const AnnView: React.FC<{ userRole: string }> = ({ userRole }) => {
     navigate('create');
   };
 
-  const { contentType } = useParams();
-  const currentItem = AnnData.find((item) => item.id === contentType);
-
-  const [selectedDropdownText, setSelectedDropdownText] = useState('제목');
-  const [searchText, setSearchText] = useState('');
-  const [selectedSearchColumn, setSelectedSearchColumn] = useState<TableSearchColumn>('title');
-
-  const handleDropdownItemClick = (itemText: string) => {
-    if (itemText !== selectedDropdownText) {
-      setSelectedDropdownText(itemText);
-      if (itemText === '제목') {
-        setSelectedSearchColumn('title');
-      } else {
-        setSelectedSearchColumn('author');
-      }
-      setSearchText('');
-    }
+  const handlePageChange = (page: number) => {
+    setPage(page - 1);
   };
 
+  const [hasIndexedData, setHasIndexedData] = useState(false);
+  useEffect(() => {
+    const dataService = api.data;
+    dataService
+      .fetchDataList('notice', {
+        searchBy,
+        searchValue,
+        page,
+        pageSize,
+      })
+      .then((responseData) => {
+        const newData = responseData.list.map((item: DataItem, index: number) => ({
+          ...item,
+          index: index + 1,
+        }));
+
+        setData(newData);
+
+        setTotalPageCount(Math.ceil(responseData.total / pageSize));
+      })
+      .catch((error) => {
+        console.error('Error fetching data: ', error);
+      });
+  }, [searchBy, searchValue, page, pageSize]);
+
   const initialValues = {
+    authorName: '',
+    password: '',
     title: '',
     content: '',
   };
 
   const initialEditValues = {
-    title: currentItem ? currentItem.id : '',
-    content: currentItem ? currentItem.body : '',
+    title: dataItem ? (dataItem as DataItem).id : '',
+    content: dataItem ? (dataItem as DataItem).content : '',
   };
 
   const toolBarOptions = [
@@ -115,16 +135,19 @@ const AnnView: React.FC<{ userRole: string }> = ({ userRole }) => {
   });
 
   const handleSubmit = (values: any) => {
-    console.log('Form values:', values);
+    console.log(values);
   };
 
-  useEffect(() => {
-    if (!contentType) {
-      setEditMode(false);
-      const updatedData = AnnData.map((item) => ({ ...item, selected: false }));
-      setFilteredData(updatedData);
+  const { contentType } = useParams();
+
+  const indexes = data.map((item) => (item as DataItem).id);
+
+  const handleKeyPress = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      const inputElement = event.target as HTMLInputElement;
+      setSearchValue(inputElement.value);
     }
-  }, [contentType]);
+  };
 
   if (!contentType) {
     return (
@@ -132,7 +155,7 @@ const AnnView: React.FC<{ userRole: string }> = ({ userRole }) => {
         <div className="ann-view__top">
           <div className="ann-view__image">
             <img src="/announcement_bn.png" alt="AnnBG" />
-            {!isManagerial && (
+            {!isLoggedIn && (
               <>
                 <div className="ann-view__image__overlay" />
                 <div className="ann-view__image__icon">
@@ -166,16 +189,16 @@ const AnnView: React.FC<{ userRole: string }> = ({ userRole }) => {
                   <TextInput
                     dataId=""
                     placeholder="공지사항 검색"
-                    value={searchText}
-                    onChange={(e) => setSearchText(e.target.value)}
-                    onKeyDown={handleEnterKeyPress}
+                    value={inputText}
+                    onKeyDown={handleKeyPress}
+                    onChange={(e) => setInputText(e.target.value)}
                   />
                   <Button
                     icon={ICONS.MAGNIFIER}
                     iconPlacement={ButtonIconPlacement.Left}
                     iconSize={IconSize.XL}
                     className="button--icon-text"
-                    onClick={updateFilteredData}
+                    onClick={() => setSearchValue(inputText)}
                   >
                     검색
                   </Button>
@@ -183,15 +206,18 @@ const AnnView: React.FC<{ userRole: string }> = ({ userRole }) => {
               </div>
             </div>
             <CustomTable
-              data={filteredData}
+              data={data}
+              currentPage={page + 1}
               itemsPerPage={10}
+              totalPageCount={totalPageCount}
+              onPageChange={handlePageChange}
               columns={columns}
-              showAdminActions={isManagerial}
+              showAdminActions={isLoggedIn}
               onCreateButton={handleCreateAnnouncement}
-              setData={setFilteredData}
+              setData={() => {}}
               handleDelete={handleDelete}
               handleEdit={handleEdit}
-              disableRowClick={isManagerial}
+              disableRowClick={isLoggedIn}
             />
           </div>
         </div>
@@ -199,7 +225,7 @@ const AnnView: React.FC<{ userRole: string }> = ({ userRole }) => {
     );
   }
 
-  if (!editMode && currentItem) {
+  if (!editMode && dataItem) {
     return (
       <div className="ann-view">
         <div className="ann-view__top">
@@ -210,12 +236,12 @@ const AnnView: React.FC<{ userRole: string }> = ({ userRole }) => {
               </div>
             </div>
             <TableRowDetails
-              id={currentItem.id}
-              title={currentItem.title}
-              numbering={currentItem.numbering}
-              author={currentItem.author}
-              description={currentItem.body}
-              date={currentItem.date}
+              id={(dataItem as DataItem).id}
+              title={(dataItem as DataItem).title}
+              numbering={1}
+              author={(dataItem as DataItem).author}
+              description={(dataItem as DataItem).content}
+              date={(dataItem as DataItem).created_at}
               indexes={indexes}
             />
           </div>

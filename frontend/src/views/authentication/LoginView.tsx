@@ -1,17 +1,24 @@
 import React, { useState } from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Icon, { ICONS, IconSize } from '../../components/SVG/Icon';
+
+import { routes } from '../../common/utils/routes';
+import api from '../../services/apiServices';
+import { storage } from '../../common/utils/storage';
 
 import './LoginView.scss';
 
 const LoginView: React.FC = () => {
+  const navigate = useNavigate();
+
   const initialValues = {
     username: '',
     password: '',
-    rememberUserId: false,
   };
 
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -25,9 +32,24 @@ const LoginView: React.FC = () => {
     password: Yup.string().required('비밀번호를 입력하세요.'),
   });
 
-  const handleSubmit = (values: any) => {
-    console.log('Remember User ID:', values.rememberUserId);
-    console.log('Form values:', values);
+  const handleSubmit = async (values: any) => {
+    const userService = api.user;
+
+    try {
+      const response = await userService.login(values.username, values.password);
+      storage.setToken(response.token);
+      window.location.pathname = routes.DEFAULT;
+    } catch (error) {
+      toast.error('사용자를 찾을 수 없음', {
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: 'colored',
+        className: 'toast-message',
+      });
+    }
   };
 
   return (

@@ -17,8 +17,7 @@ import { BoardData } from '../../services/constants/constants';
 
 import './BoardView.scss';
 
-const BoardView: React.FC<{ userRole: string }> = ({ userRole }) => {
-  const isManagerial = userRole === 'admin';
+const BoardView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
   const indexes = BoardData.map((item) => item.id);
 
   const columns = [
@@ -133,7 +132,7 @@ const BoardView: React.FC<{ userRole: string }> = ({ userRole }) => {
         <div className="board-view__top">
           <div className="board-view__image">
             <img src="/board_bn.png" alt="boardBG" />
-            {!isManagerial && (
+            {!isLoggedIn && (
               <>
                 <div className="board-view__image__overlay" />
                 <div className="board-view__image__icon">
@@ -183,17 +182,18 @@ const BoardView: React.FC<{ userRole: string }> = ({ userRole }) => {
                 </div>
               </div>
             </div>
+            {/*
             <CustomTable
               data={filteredData}
               itemsPerPage={10}
               columns={columns}
-              showAdminActions={isManagerial}
+              showAdminActions={isLoggedIn}
               onCreateButton={handleCreatePost}
               setData={setFilteredData}
               handleDelete={handleDelete}
               handleEdit={handleEdit}
-              disableRowClick={isManagerial}
-            />
+              disableRowClick={isLoggedIn}
+            /> */}
           </div>
         </div>
       </div>

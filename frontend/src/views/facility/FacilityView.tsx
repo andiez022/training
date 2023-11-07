@@ -11,9 +11,7 @@ import { FacilityData } from '../../services/constants/constants';
 import './FacilityView.scss';
 import CustomTable from '../../components/Table/CustomTable';
 
-const FacilityView: React.FC<{ userRole: string }> = ({ userRole }) => {
-  const isManagerial = userRole === 'admin';
-
+const FacilityView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
   const columns = [
     { dataId: 'selected', label: '' },
     { dataId: 'numbering', label: '번호' },
@@ -73,7 +71,7 @@ const FacilityView: React.FC<{ userRole: string }> = ({ userRole }) => {
     setIsOpen(false);
   };
 
-  if (isManagerial) {
+  if (isLoggedIn) {
     return (
       <div className="facility-view">
         <div className="facility-view__top">
@@ -99,7 +97,7 @@ const FacilityView: React.FC<{ userRole: string }> = ({ userRole }) => {
                 </div>
               </div>
             </div>
-            <CustomTable
+            {/* <CustomTable
               data={FacilityData}
               itemsPerPage={10}
               columns={columns}
@@ -107,7 +105,7 @@ const FacilityView: React.FC<{ userRole: string }> = ({ userRole }) => {
               showAdminActions={false}
               className="facility-table"
               disableRowClick
-            />
+            /> */}
           </div>
         </div>
       </div>

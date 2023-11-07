@@ -12,9 +12,7 @@ import { UserManagementData } from '../../services/constants/constants';
 
 import './UserManagementView.scss';
 
-const UserManagementView: React.FC<{ userRole: string }> = ({ userRole }) => {
-  const isManagerial = userRole === 'admin';
-
+const UserManagementView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
   const columns = [
     { dataId: 'selected', label: '' },
     { dataId: 'numbering', label: '번호' },
@@ -125,7 +123,7 @@ const UserManagementView: React.FC<{ userRole: string }> = ({ userRole }) => {
               </div>
             </div>
           </div>
-          <CustomTable
+          {/* <CustomTable
             data={filteredData}
             setData={setFilteredData}
             itemsPerPage={10}
@@ -134,7 +132,7 @@ const UserManagementView: React.FC<{ userRole: string }> = ({ userRole }) => {
             className="user-management-table"
             handleDelete={openDeleteModal}
             disableRowClick
-          />
+          /> */}
           <Modal dataId="" isOpen={deleteModalOpen} onClose={closeDeleteModal} className="modal" width={ModalWidth.SM}>
             <div className="message">
               {currentlySelectedItem && (

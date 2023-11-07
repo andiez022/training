@@ -7,11 +7,11 @@ import './ImageGallery.scss';
 
 interface ImageGalleryProps {
   data: GalleryImageProps[];
-  userRole: string;
+  isLoggedIn: boolean;
   onCreateButton: () => void;
 }
 
-const ImageGallery: React.FC<ImageGalleryProps> = ({ data, userRole, onCreateButton }) => {
+const ImageGallery: React.FC<ImageGalleryProps> = ({ data, isLoggedIn, onCreateButton }) => {
   const itemsPerPage = 12;
   const totalPageCount = Math.ceil(data.length / itemsPerPage);
 
@@ -89,7 +89,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ data, userRole, onCreateBut
             </button>
           </div>
         )}
-        {userRole === 'admin' && (
+        {isLoggedIn && (
           <div className="admin-buttons">
             <button className="admin-buttons__edit">수정</button>
             <button className="admin-buttons__remove">삭제</button>

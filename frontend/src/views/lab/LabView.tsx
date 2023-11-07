@@ -17,9 +17,7 @@ import { LabData } from '../../services/constants/constants';
 
 import './LabView.scss';
 
-const LabView: React.FC<{ userRole: string }> = ({ userRole }) => {
-  const isManagerial = userRole === 'admin';
-
+const LabView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
   const indexes = LabData.map((item) => item.id);
 
   const columns = [
@@ -132,7 +130,7 @@ const LabView: React.FC<{ userRole: string }> = ({ userRole }) => {
         <div className="lab-view__top">
           <div className="lab-view__image">
             <img src="/lab_bn.png" alt="labBG" />
-            {!isManagerial && (
+            {!isLoggedIn && (
               <>
                 <div className="lab-view__image__overlay" />
                 <div className="lab-view__image__icon">
@@ -182,17 +180,17 @@ const LabView: React.FC<{ userRole: string }> = ({ userRole }) => {
                 </div>
               </div>
             </div>
-            <CustomTable
+            {/* <CustomTable
               data={filteredData}
               itemsPerPage={10}
               columns={columns}
-              showAdminActions={isManagerial}
+              showAdminActions={isLoggedIn}
               onCreateButton={handleCreatePost}
               setData={setFilteredData}
               handleDelete={handleDelete}
               handleEdit={handleEdit}
-              disableRowClick={isManagerial}
-            />
+              disableRowClick={isLoggedIn}
+            /> */}
           </div>
         </div>
       </div>

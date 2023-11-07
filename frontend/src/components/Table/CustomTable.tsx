@@ -8,24 +8,30 @@ import Modal, { ModalWidth } from '../Modal/DialogModal';
 import './CustomTable.scss';
 
 interface TableProps {
-  data: any[];
-  itemsPerPage: number;
-  columns: { dataId: string; label: string }[];
   className?: string;
+  data: any[];
+  setData: (newData: any[]) => void;
+  currentPage: number;
+  itemsPerPage: number;
+  totalPageCount: number;
+  onPageChange: (page: number) => void;
+  columns: { dataId: string; label: string }[];
   showAdminActions?: boolean;
   onCreateButton?: () => void;
   handleDelete?: () => void;
   handleEdit?: (itemId: string) => void;
-  setData: (newData: any[]) => void;
   disableRowClick?: boolean;
 }
 
 const CustomTable: React.FC<TableProps> = ({
+  className,
   data,
   setData,
+  currentPage,
   itemsPerPage,
+  totalPageCount,
   columns,
-  className,
+  onPageChange,
   showAdminActions,
   onCreateButton,
   handleDelete,
@@ -33,36 +39,28 @@ const CustomTable: React.FC<TableProps> = ({
   disableRowClick,
 }) => {
   const navigate = useNavigate();
-  const handleRowClick = (itemId: any) => {
+  const handleRowClick = (itemId: string) => {
     navigate(`${itemId}`);
   };
 
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
-
-  const totalPageCount = Math.ceil(data.length / itemsPerPage);
-
   const handlePrevPage = () => {
     if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
+      onPageChange(currentPage - 1);
     }
   };
 
   const handleNextPage = () => {
     if (currentPage < totalPageCount) {
-      setCurrentPage(currentPage + 1);
+      onPageChange(currentPage + 1);
     }
   };
 
   const handleFirstPage = () => {
-    setCurrentPage(1);
+    onPageChange(1);
   };
 
   const handleLastPage = () => {
-    setCurrentPage(totalPageCount);
+    onPageChange(totalPageCount);
   };
 
   const handleToggleSelect = (rowIndex: number) => {
@@ -117,13 +115,13 @@ const CustomTable: React.FC<TableProps> = ({
         <tbody style={{ maxHeight: '600px' }}>
           {data.length !== 0 ? (
             <>
-              {currentItems.map((item, index) => (
+              {data.map((item, index) => (
                 <tr key={item.id}>
                   {columns.map((column, columnIndex) => {
                     if (columnIndex === 0 && showAdminActions) {
                       return (
                         <td key={column.dataId}>
-                          <input type="checkbox" checked={item.selected} onChange={() => handleToggleSelect(index + indexOfFirstItem)} />
+                          <input type="checkbox" checked={item.selected} onChange={() => handleToggleSelect(index)} />
                         </td>
                       );
                     }
@@ -144,7 +142,7 @@ const CustomTable: React.FC<TableProps> = ({
                         <td key={column.dataId}>
                           <button
                             onClick={() => {
-                              handleToggleSelect(index + indexOfFirstItem);
+                              handleToggleSelect(index);
                               if (handleDelete) handleDelete();
                             }}
                           >
@@ -184,7 +182,7 @@ const CustomTable: React.FC<TableProps> = ({
             <button
               key={index}
               onClick={() => {
-                setCurrentPage(index + 1);
+                onPageChange(index + 1);
               }}
               className={`button ${currentPage === index + 1 ? 'clicked' : ''}`}
             >

@@ -17,9 +17,7 @@ import { VideoCollectionData } from '../../services/constants/constants';
 
 import './ContentView.scss';
 
-const ContentView: React.FC<{ userRole: string }> = ({ userRole }) => {
-  const isManagerial = userRole === 'admin';
-
+const ContentView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
   const columns = [
     { dataId: 'selected', label: '' },
     { dataId: 'numbering', label: '번호' },
@@ -136,7 +134,7 @@ const ContentView: React.FC<{ userRole: string }> = ({ userRole }) => {
         <div className="content-view__top">
           <div className="content-view__image">
             <img src="/content_bn.png" alt="contentBG" />
-            {!isManagerial && (
+            {!isLoggedIn && (
               <>
                 <div className="content-view__image__overlay" />
                 <div className="content-view__image__icon">
@@ -151,7 +149,7 @@ const ContentView: React.FC<{ userRole: string }> = ({ userRole }) => {
               <div className="content-view__title">
                 <h2 className="gradual-color-transition">콘텐츠</h2>
               </div>
-              {userRole === 'admin' && (
+              {isLoggedIn && (
                 <div className="content-view__search-container">
                   <Dropdown
                     elementAction={
@@ -187,12 +185,11 @@ const ContentView: React.FC<{ userRole: string }> = ({ userRole }) => {
                 </div>
               )}
             </div>
-            {userRole === 'user' && <VideoCollection data={filteredData} />}
-            {userRole === 'admin' && (
+            {/* {isLoggedIn ? (
               <CustomTable
                 data={filteredData}
                 itemsPerPage={10}
-                showAdminActions={isManagerial}
+                showAdminActions={isLoggedIn}
                 columns={columns}
                 onCreateButton={handleCreatePost}
                 setData={setFilteredData}
@@ -200,7 +197,9 @@ const ContentView: React.FC<{ userRole: string }> = ({ userRole }) => {
                 handleEdit={handleEdit}
                 disableRowClick
               />
-            )}
+            ) : (
+              <VideoCollection data={filteredData} />
+            )} */}
           </div>
         </div>
       </div>

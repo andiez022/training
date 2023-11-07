@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import React, { lazy } from 'react';
+import React, { lazy, useState } from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
@@ -12,6 +12,7 @@ import store, { persistor } from './store';
 
 import Header from './views/header/Header';
 import Footer from './components/Footer/Footer';
+import { storage } from './common/utils/storage';
 
 const HomeView = lazy(() => import('./views/home/HomeView'));
 const IntroView = lazy(() => import('./views/intro/IntroView'));
@@ -36,7 +37,7 @@ const queryClient = new QueryClient({
 const App: React.FC = () => {
   console.log('start');
 
-  const userRole = 'admin';
+  const isLoggedIn = storage.getToken() !== null;
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -47,52 +48,58 @@ const App: React.FC = () => {
               <ToastContainer />
               <LoadingView />
               <div className="container">
-                <Header userRole={userRole} />
+                <Header isLoggedIn={isLoggedIn} />
                 <Routes>
                   <Route path="/login" element={<PrivateRoute guards={[unAuthGuard]} element={<LoginView />} />} />
-                  <Route path="/register" element={<PrivateRoute guards={[]} element={<RegisterView />} />} />
+                  <Route path="/register" element={<PrivateRoute guards={[unAuthGuard]} element={<RegisterView />} />} />
                   <Route path="/" element={<PrivateRoute guards={[]} element={<HomeView />} />} />
                   <Route path="/intro" element={<PrivateRoute guards={[]} element={<IntroView />} />} />
-                  <Route path="/announcement" element={<PrivateRoute guards={[]} element={<AnnView userRole={userRole} />} />} />
+                  <Route path="/announcement" element={<PrivateRoute guards={[]} element={<AnnView isLoggedIn={isLoggedIn} />} />} />
                   <Route
                     path="/announcement/:contentType"
-                    element={<PrivateRoute guards={[]} element={<AnnView userRole={userRole} />} />}
+                    element={<PrivateRoute guards={[]} element={<AnnView isLoggedIn={isLoggedIn} />} />}
                   />
                   <Route
                     path="/announcement/edit/:contentType"
-                    element={<PrivateRoute guards={[]} element={<AnnView userRole={userRole} />} />}
+                    element={<PrivateRoute guards={[]} element={<AnnView isLoggedIn={isLoggedIn} />} />}
                   />
-                  <Route path="/facility" element={<PrivateRoute guards={[]} element={<FacilityView userRole={userRole} />} />} />
-                  <Route path="/content" element={<PrivateRoute guards={[]} element={<ContentView userRole={userRole} />} />} />
+                  <Route path="/facility" element={<PrivateRoute guards={[]} element={<FacilityView isLoggedIn={isLoggedIn} />} />} />
+                  <Route path="/content" element={<PrivateRoute guards={[]} element={<ContentView isLoggedIn={isLoggedIn} />} />} />
                   <Route
                     path="/content/:contentType"
-                    element={<PrivateRoute guards={[]} element={<ContentView userRole={userRole} />} />}
+                    element={<PrivateRoute guards={[]} element={<ContentView isLoggedIn={isLoggedIn} />} />}
                   />
                   <Route
                     path="/content/edit/:contentType"
-                    element={<PrivateRoute guards={[]} element={<ContentView userRole={userRole} />} />}
+                    element={<PrivateRoute guards={[]} element={<ContentView isLoggedIn={isLoggedIn} />} />}
                   />
-                  <Route path="/lab" element={<PrivateRoute guards={[]} element={<LabView userRole={userRole} />} />} />
-                  <Route path="/lab/:contentType" element={<PrivateRoute guards={[]} element={<LabView userRole={userRole} />} />} />
-                  <Route path="/lab/edit/:contentType" element={<PrivateRoute guards={[]} element={<LabView userRole={userRole} />} />} />
+                  <Route path="/lab" element={<PrivateRoute guards={[]} element={<LabView isLoggedIn={isLoggedIn} />} />} />
+                  <Route path="/lab/:contentType" element={<PrivateRoute guards={[]} element={<LabView isLoggedIn={isLoggedIn} />} />} />
+                  <Route
+                    path="/lab/edit/:contentType"
+                    element={<PrivateRoute guards={[]} element={<LabView isLoggedIn={isLoggedIn} />} />}
+                  />
                   <Route
                     path="/user-management"
-                    element={<PrivateRoute guards={[]} element={<UserManagementView userRole={userRole} />} />}
+                    element={<PrivateRoute guards={[]} element={<UserManagementView isLoggedIn={isLoggedIn} />} />}
                   />
-                  <Route path="/campaign" element={<PrivateRoute guards={[]} element={<CampaignView userRole={userRole} />} />} />
+                  <Route path="/campaign" element={<PrivateRoute guards={[]} element={<CampaignView isLoggedIn={isLoggedIn} />} />} />
                   <Route
                     path="/campaign/:contentType"
-                    element={<PrivateRoute guards={[]} element={<CampaignView userRole={userRole} />} />}
+                    element={<PrivateRoute guards={[]} element={<CampaignView isLoggedIn={isLoggedIn} />} />}
                   />
                   <Route
                     path="/campaign/edit/:contentType"
-                    element={<PrivateRoute guards={[]} element={<CampaignView userRole={userRole} />} />}
+                    element={<PrivateRoute guards={[]} element={<CampaignView isLoggedIn={isLoggedIn} />} />}
                   />
-                  <Route path="/board" element={<PrivateRoute guards={[]} element={<BoardView userRole={userRole} />} />} />
-                  <Route path="/board/:contentType" element={<PrivateRoute guards={[]} element={<BoardView userRole={userRole} />} />} />
+                  <Route path="/board" element={<PrivateRoute guards={[]} element={<BoardView isLoggedIn={isLoggedIn} />} />} />
+                  <Route
+                    path="/board/:contentType"
+                    element={<PrivateRoute guards={[]} element={<BoardView isLoggedIn={isLoggedIn} />} />}
+                  />
                   <Route
                     path="/board/edit/:contentType"
-                    element={<PrivateRoute guards={[]} element={<BoardView userRole={userRole} />} />}
+                    element={<PrivateRoute guards={[]} element={<BoardView isLoggedIn={isLoggedIn} />} />}
                   />
                 </Routes>
                 <Footer />

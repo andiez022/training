@@ -5,6 +5,9 @@ import Icon, { ICONS, IconSize } from '../../components/SVG/Icon';
 import Dropdown from '../../components/Dropdown/Dropdown';
 import DropdownItem from '../../components/Dropdown/DropdownItem';
 
+import { routes } from '../../common/utils/routes';
+import { storage } from '../../common/utils/storage';
+
 import './Header.scss';
 
 interface NavLinkProps {
@@ -14,7 +17,7 @@ interface NavLinkProps {
   onClick?: (e: React.MouseEvent) => void;
 }
 
-const Header: React.FC<{ userRole: string }> = ({ userRole }) => {
+const Header: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
   const [isTransparent, setIsTransparent] = useState(false);
 
   useEffect(() => {
@@ -60,11 +63,10 @@ const Header: React.FC<{ userRole: string }> = ({ userRole }) => {
 
   const showLinks = currentPath !== '/login' && currentPath !== '/register';
   const isHomePage = currentPath === '/';
-  const isManagerial = userRole === 'admin';
 
   const headerClasses = `app-header ${isMenuOpen ? 'show-menu' : ''} ${!showLinks ? 'hide-links' : ''} ${
     isHomePage && isTransparent ? 'transparent' : ''
-  } ${isManagerial ? 'admin' : ''}`;
+  } ${isLoggedIn ? 'admin' : ''}`;
 
   const isSmallerScreen = window.innerWidth <= 768;
 
@@ -73,7 +75,7 @@ const Header: React.FC<{ userRole: string }> = ({ userRole }) => {
       <div className="header-left">
         <NavLink to="/" className={`header-img ${isSmallerScreen ? 'small-screen' : ''}`} />
         {!showLinks ||
-          (isManagerial && (
+          (isLoggedIn && (
             <div className="header-img-text">
               <p>[ 관리자 ]</p>
             </div>
@@ -85,7 +87,7 @@ const Header: React.FC<{ userRole: string }> = ({ userRole }) => {
             <Icon className="menu-icon" component={isMenuOpen ? ICONS.CLOSE : ICONS.MENU} size={isMenuOpen ? IconSize.LG : IconSize.XL} />
           </div>
           <nav className={`nav-links ${isMenuOpen ? 'show-menu' : ''}`}>
-            {!isManagerial && (
+            {!isLoggedIn && (
               <>
                 <CustomNavLink to="/" text="홈" />
                 <CustomNavLink to="/intro" text="소개" />
@@ -94,7 +96,7 @@ const Header: React.FC<{ userRole: string }> = ({ userRole }) => {
             <CustomNavLink to="/announcement" text="공지사항" />
             <CustomNavLink to="/facility" text="시설현황" />
             <CustomNavLink to="/content" text="콘텐츠" />
-            {isManagerial ? (
+            {isLoggedIn ? (
               <Dropdown
                 elementAction={
                   <CustomNavLink
@@ -120,7 +122,16 @@ const Header: React.FC<{ userRole: string }> = ({ userRole }) => {
             )}
             <CustomNavLink to="/campaign" text="캠페인" />
             <CustomNavLink to="/board" text="자유게시판" />
-            {isManagerial && <CustomNavLink to="/login" text="로그아웃" />}
+            {isLoggedIn && (
+              <CustomNavLink
+                to="/login"
+                text="로그아웃"
+                onClick={() => {
+                  storage.removeToken();
+                  window.location.pathname = routes.LOGIN;
+                }}
+              />
+            )}
           </nav>
         </div>
       )}
