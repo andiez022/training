@@ -14,6 +14,6 @@ export default class UserService {
       username,
       password,
     });
-    return response.data;
+    return response.data.user;
   };
 }

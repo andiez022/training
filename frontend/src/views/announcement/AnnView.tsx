@@ -13,36 +13,19 @@ import TextInput from '../../components/TextInput/TextInput';
 import CustomTable from '../../components/Table/CustomTable';
 import TableRowDetails from '../../components/Table/TableRowDetails';
 
+import { DataItem, columns, CheckboxState } from '../../services/types/common';
 import api from '../../services/apiServices';
 
 import './AnnView.scss';
-
-interface DataItem {
-  author: string;
-  content: string;
-  created_at: string;
-  id: string;
-  title: string;
-  updated_at: string;
-  user_id: string;
-}
 
 const AnnView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
   const [searchBy, setSearchBy] = useState('title');
   const [searchValue, setSearchValue] = useState('');
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
-  const [data, setData] = useState([]);
-  const [dataItem, setDataItem] = useState(null);
+  const [pageData, setPageData] = useState([]);
+  const [dataItem, setDataItem] = useState<DataItem | null>(null);
   const [totalPageCount, setTotalPageCount] = useState(0);
-
-  const columns = [
-    { dataId: 'selected', label: '' },
-    { dataId: 'index', label: '번호' },
-    { dataId: 'title', label: '제목' },
-    { dataId: 'author', label: '작성자' },
-    { dataId: 'created_at', label: '작성일' },
-  ];
 
   const [editMode, setEditMode] = useState(false);
   const [selectedDropdownText, setSelectedDropdownText] = useState('제목');
@@ -60,23 +43,59 @@ const AnnView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
     }
   };
 
-  const handleDelete = () => {};
+  const navigate = useNavigate();
 
-  const handleEdit = (itemId: string) => {
-    navigate(`edit/${itemId}`);
-    setEditMode(true);
+  const [checkboxState, setCheckboxState] = useState<CheckboxState>({});
+
+  const handleCheckboxChange = (itemId: string) => {
+    setCheckboxState((prevCheckboxState) => ({
+      ...prevCheckboxState,
+      [itemId]: !prevCheckboxState[itemId],
+    }));
   };
 
-  const navigate = useNavigate();
+  const handleDelete = async () => {
+    const itemsToDelete = Object.keys(checkboxState).filter((key) => checkboxState[key] === true);
+    try {
+      await api.data.deleteData('notice', itemsToDelete);
+      window.location.reload();
+    } catch (error) {
+      console.error('Error deleting data: ', error);
+    }
+  };
+
+  const handleEdit = async (itemId: string) => {
+    try {
+      await handleFetchItem(itemId);
+      setEditMode(true);
+      navigate(`edit/${itemId}`);
+    } catch (error) {
+      console.error('Error attempting to edit data: ', error);
+    }
+  };
+
   const handleCreateAnnouncement = () => {
     navigate('create');
+  };
+
+  const handleFetchItem = async (itemId: string) => {
+    try {
+      const responseData = await api.data.fetchDataById('notice', itemId);
+      setDataItem(responseData);
+    } catch (error) {
+      console.error('Error fetching data: ', error);
+    }
+  };
+
+  const handleDisplayItem = (itemId: string) => {
+    handleFetchItem(itemId);
+    navigate(`/announcement/${itemId}`);
   };
 
   const handlePageChange = (page: number) => {
     setPage(page - 1);
   };
 
-  const [hasIndexedData, setHasIndexedData] = useState(false);
   useEffect(() => {
     const dataService = api.data;
     dataService
@@ -89,10 +108,10 @@ const AnnView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
       .then((responseData) => {
         const newData = responseData.list.map((item: DataItem, index: number) => ({
           ...item,
-          index: index + 1,
+          index: page * pageSize + (index + 1),
         }));
 
-        setData(newData);
+        setPageData(newData);
 
         setTotalPageCount(Math.ceil(responseData.total / pageSize));
       })
@@ -102,15 +121,14 @@ const AnnView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
   }, [searchBy, searchValue, page, pageSize]);
 
   const initialValues = {
-    authorName: '',
-    password: '',
     title: '',
     content: '',
   };
 
   const initialEditValues = {
-    title: dataItem ? (dataItem as DataItem).id : '',
-    content: dataItem ? (dataItem as DataItem).content : '',
+    id: dataItem?.id,
+    title: dataItem?.title,
+    content: dataItem?.content,
   };
 
   const toolBarOptions = [
@@ -134,13 +152,27 @@ const AnnView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
     content: Yup.string().required('제내용을 입력하세요.'),
   });
 
-  const handleSubmit = (values: any) => {
-    console.log(values);
+  const handleSubmit = async (values: any) => {
+    try {
+      await api.data.postData('notice', values);
+
+      window.location.pathname = 'announcement';
+    } catch (error) {
+      console.error('Error posting data: ', error);
+    }
+  };
+
+  const handleModify = async (values: any) => {
+    try {
+      await api.data.editData('notice', values);
+
+      window.location.pathname = 'announcement';
+    } catch (error) {
+      console.error('Error posting data: ', error);
+    }
   };
 
   const { contentType } = useParams();
-
-  const indexes = data.map((item) => (item as DataItem).id);
 
   const handleKeyPress = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter') {
@@ -206,43 +238,19 @@ const AnnView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
               </div>
             </div>
             <CustomTable
-              data={data}
+              data={pageData}
               currentPage={page + 1}
-              itemsPerPage={10}
               totalPageCount={totalPageCount}
               onPageChange={handlePageChange}
               columns={columns}
               showAdminActions={isLoggedIn}
               onCreateButton={handleCreateAnnouncement}
-              setData={() => {}}
               handleDelete={handleDelete}
               handleEdit={handleEdit}
+              onRowClick={handleDisplayItem}
               disableRowClick={isLoggedIn}
-            />
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (!editMode && dataItem) {
-    return (
-      <div className="ann-view">
-        <div className="ann-view__top">
-          <div className="ann-view__content">
-            <div className="ann-view__table-head">
-              <div className="ann-view__title">
-                <h2 className="gradual-color-transition">공지사항</h2>
-              </div>
-            </div>
-            <TableRowDetails
-              id={(dataItem as DataItem).id}
-              title={(dataItem as DataItem).title}
-              numbering={1}
-              author={(dataItem as DataItem).author}
-              description={(dataItem as DataItem).content}
-              date={(dataItem as DataItem).created_at}
-              indexes={indexes}
+              checkboxState={checkboxState}
+              onCheckboxChange={handleCheckboxChange}
             />
           </div>
         </div>
@@ -305,6 +313,37 @@ const AnnView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
     );
   }
 
+  if (!editMode && contentType) {
+    return (
+      <div className="ann-view">
+        <div className="ann-view__top">
+          <div className="ann-view__content">
+            <div className="ann-view__table-head">
+              <div className="ann-view__title">
+                <h2 className="gradual-color-transition">공지사항</h2>
+              </div>
+            </div>
+            {dataItem && (
+              <TableRowDetails
+                author={dataItem.author}
+                content={dataItem.content}
+                createdAt={dataItem.created_at}
+                id={dataItem.id}
+                title={dataItem.title}
+                updatedAt={dataItem.updated_at}
+                userId={dataItem.user_id}
+                onNextItem={() => handleDisplayItem(dataItem.next ?? '')}
+                onPrevItem={() => handleDisplayItem(dataItem.previous ?? '')}
+                hasNext={!!dataItem.next}
+                hasPrev={!!dataItem.previous}
+              />
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   if (editMode) {
     return (
       <div className="ann-view">
@@ -312,11 +351,11 @@ const AnnView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
           <div className="ann-view__content">
             <div className="ann-view__table-head">
               <div className="ann-view__title">
-                <h2 className="gradual-color-transition">공지사항 작성</h2>
+                <h2 className="gradual-color-transition">공지사항 수정</h2>
               </div>
             </div>
             <div className="form-container">
-              <Formik initialValues={initialEditValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+              <Formik initialValues={initialEditValues} validationSchema={validationSchema} onSubmit={handleModify}>
                 {({ isSubmitting }) => (
                   <Form className="form-create">
                     <div className="form-row">

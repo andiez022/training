@@ -13,84 +13,120 @@ import TextInput from '../../components/TextInput/TextInput';
 import CustomTable from '../../components/Table/CustomTable';
 import TableRowDetails from '../../components/Table/TableRowDetails';
 
-import { BoardData } from '../../services/constants/constants';
-
+import { DataItem, columns, CheckboxState } from '../../services/types/common';
+import api from '../../services/apiServices';
 import './BoardView.scss';
 
 const BoardView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
-  const indexes = BoardData.map((item) => item.id);
+  const [searchBy, setSearchBy] = useState('title');
+  const [searchValue, setSearchValue] = useState('');
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(10);
+  const [pageData, setPageData] = useState([]);
+  const [dataItem, setDataItem] = useState<DataItem | null>(null);
+  const [totalPageCount, setTotalPageCount] = useState(0);
 
-  const columns = [
-    { dataId: 'selected', label: '' },
-    { dataId: 'numbering', label: '번호' },
-    { dataId: 'title', label: '제목' },
-    { dataId: 'author', label: '작성자' },
-    { dataId: 'date', label: '작성일' },
-  ];
-
-  type TableSearchColumn = 'title' | 'author';
-
-  const [filteredData, setFilteredData] = useState(BoardData);
   const [editMode, setEditMode] = useState(false);
-
-  const updateFilteredData = () => {
-    const newFilteredData = BoardData.filter((row) => {
-      const cellValue = row[selectedSearchColumn];
-      return cellValue.toLowerCase().includes(searchText.toLowerCase());
-    });
-    setFilteredData(newFilteredData);
-  };
-
-  const handleEnterKeyPress = (event: React.KeyboardEvent) => {
-    if (event.key === 'Enter') {
-      updateFilteredData();
-    }
-  };
-
-  const handleDelete = () => {
-    const dataToKeep = BoardData.filter((item) => !item.selected);
-    setFilteredData(dataToKeep);
-  };
-
-  const handleEdit = (itemId: string) => {
-    navigate(`edit/${itemId}`);
-    setEditMode(true);
-  };
-
-  const navigate = useNavigate();
-  const handleCreatePost = () => {
-    navigate('create');
-  };
-
-  const { contentType } = useParams();
-  const currentItem = BoardData.find((item) => item.id === contentType);
-
   const [selectedDropdownText, setSelectedDropdownText] = useState('제목');
-  const [searchText, setSearchText] = useState('');
-  const [selectedSearchColumn, setSelectedSearchColumn] = useState<TableSearchColumn>('title');
+  const [inputText, setInputText] = useState('');
 
   const handleDropdownItemClick = (itemText: string) => {
     if (itemText !== selectedDropdownText) {
       setSelectedDropdownText(itemText);
       if (itemText === '제목') {
-        setSelectedSearchColumn('title');
+        setSearchBy('title');
       } else {
-        setSelectedSearchColumn('author');
+        setSearchBy('author');
       }
-      setSearchText('');
+      setSearchValue('');
     }
   };
 
+  const navigate = useNavigate();
+
+  const [checkboxState, setCheckboxState] = useState<CheckboxState>({});
+
+  const handleCheckboxChange = (itemId: string) => {
+    setCheckboxState((prevCheckboxState) => ({
+      ...prevCheckboxState,
+      [itemId]: !prevCheckboxState[itemId],
+    }));
+  };
+
+  const handleDelete = async () => {
+    const itemsToDelete = Object.keys(checkboxState).filter((key) => checkboxState[key] === true);
+    try {
+      await api.data.deleteData('free-board', itemsToDelete);
+      window.location.reload();
+    } catch (error) {
+      console.error('Error deleting data: ', error);
+    }
+  };
+
+  const handleEdit = async (itemId: string) => {
+    try {
+      await handleFetchItem(itemId);
+      setEditMode(true);
+      navigate(`edit/${itemId}`);
+    } catch (error) {
+      console.error('Error attempting to edit data: ', error);
+    }
+  };
+
+  const handleCreatePost = () => {
+    navigate('create');
+  };
+
+  const handleFetchItem = async (itemId: string) => {
+    try {
+      const responseData = await api.data.fetchDataById('free-board', itemId);
+      setDataItem(responseData);
+    } catch (error) {
+      console.error('Error fetching data: ', error);
+    }
+  };
+
+  const handleDisplayItem = (itemId: string) => {
+    handleFetchItem(itemId);
+    navigate(`/board/${itemId}`);
+  };
+
+  const handlePageChange = (page: number) => {
+    setPage(page - 1);
+  };
+
+  useEffect(() => {
+    const dataService = api.data;
+    dataService
+      .fetchDataList('free-board', {
+        searchBy,
+        searchValue,
+        page,
+        pageSize,
+      })
+      .then((responseData) => {
+        const newData = responseData.list.map((item: DataItem, index: number) => ({
+          ...item,
+          index: page * pageSize + (index + 1),
+        }));
+
+        setPageData(newData);
+
+        setTotalPageCount(Math.ceil(responseData.total / pageSize));
+      })
+      .catch((error) => {
+        console.error('Error fetching data: ', error);
+      });
+  }, [searchBy, searchValue, page, pageSize]);
+
   const initialValues = {
-    authorName: '',
-    password: '',
     title: '',
     content: '',
   };
 
   const initialEditValues = {
-    title: currentItem ? currentItem.id : '',
-    content: currentItem ? currentItem.body : '',
+    title: dataItem?.title,
+    content: dataItem?.content,
   };
 
   const toolBarOptions = [
@@ -114,17 +150,34 @@ const BoardView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
     content: Yup.string().required('제내용을 입력하세요.'),
   });
 
-  const handleSubmit = (values: any) => {
-    console.log(values);
+  const handleSubmit = async (values: any) => {
+    try {
+      await api.data.postData('free-board/admin', values);
+
+      window.location.pathname = 'board';
+    } catch (error) {
+      console.error('Error posting data: ', error);
+    }
   };
 
-  useEffect(() => {
-    if (!contentType) {
-      setEditMode(false);
-      const updatedData = BoardData.map((item) => ({ ...item, selected: false }));
-      setFilteredData(updatedData);
+  const handleModify = async (values: any) => {
+    try {
+      await api.data.editAdminData('free-board/admin', dataItem?.id ?? '', values);
+
+      window.location.pathname = 'board';
+    } catch (error) {
+      console.error('Error posting data: ', error);
     }
-  }, [contentType]);
+  };
+
+  const { contentType } = useParams();
+
+  const handleKeyPress = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      const inputElement = event.target as HTMLInputElement;
+      setSearchValue(inputElement.value);
+    }
+  };
 
   if (!contentType) {
     return (
@@ -166,58 +219,36 @@ const BoardView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
                   <TextInput
                     dataId="author"
                     placeholder="자유게시판 검색"
-                    value={searchText}
-                    onChange={(e) => setSearchText(e.target.value)}
-                    onKeyDown={handleEnterKeyPress}
+                    value={inputText}
+                    onKeyDown={handleKeyPress}
+                    onChange={(e) => setInputText(e.target.value)}
                   />
                   <Button
                     icon={ICONS.MAGNIFIER}
                     iconPlacement={ButtonIconPlacement.Left}
                     iconSize={IconSize.XL}
                     className="button--icon-text"
-                    onClick={updateFilteredData}
+                    onClick={() => setSearchValue(inputText)}
                   >
                     검색
                   </Button>
                 </div>
               </div>
             </div>
-            {/*
             <CustomTable
-              data={filteredData}
-              itemsPerPage={10}
+              data={pageData}
+              currentPage={page + 1}
+              totalPageCount={totalPageCount}
+              onPageChange={handlePageChange}
               columns={columns}
               showAdminActions={isLoggedIn}
               onCreateButton={handleCreatePost}
-              setData={setFilteredData}
               handleDelete={handleDelete}
               handleEdit={handleEdit}
+              onRowClick={handleDisplayItem}
               disableRowClick={isLoggedIn}
-            /> */}
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (!editMode && currentItem) {
-    return (
-      <div className="board-view">
-        <div className="board-view__top">
-          <div className="board-view__content">
-            <div className="board-view__table-head">
-              <div className="board-view__title">
-                <h2 className="gradual-color-transition">자유게시판</h2>
-              </div>
-            </div>
-            <TableRowDetails
-              id={currentItem.id}
-              title={currentItem.title}
-              numbering={currentItem.numbering}
-              author={currentItem.author}
-              description={currentItem.body}
-              date={currentItem.date}
-              indexes={indexes}
+              checkboxState={checkboxState}
+              onCheckboxChange={handleCheckboxChange}
             />
           </div>
         </div>
@@ -239,14 +270,16 @@ const BoardView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
               <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
                 {({ isSubmitting }) => (
                   <Form className="form-create">
-                    <div className="form-row">
-                      <div className="form-group">
-                        <label htmlFor="authorName">작성자 이름</label>
-                        <Field type="text" id="authorName" name="authorName" placeholder="이름을 입력하세요." />
-                        <label htmlFor="password">비밀번호</label>
-                        <Field type="password" id="password" name="password" placeholder="비밀번호를 입력하세요." />
+                    {!isLoggedIn && (
+                      <div className="form-row">
+                        <div className="form-group">
+                          <label htmlFor="authorName">작성자 이름</label>
+                          <Field type="text" id="authorName" name="authorName" placeholder="이름을 입력하세요." />
+                          <label htmlFor="password">비밀번호</label>
+                          <Field type="password" id="password" name="password" placeholder="비밀번호를 입력하세요." />
+                        </div>
                       </div>
-                    </div>
+                    )}
                     <div className="form-row">
                       <div className="form-group">
                         <label htmlFor="title">제목</label>
@@ -288,6 +321,37 @@ const BoardView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
     );
   }
 
+  if (!editMode && contentType) {
+    return (
+      <div className="board-view">
+        <div className="board-view__top">
+          <div className="board-view__content">
+            <div className="board-view__table-head">
+              <div className="board-view__title">
+                <h2 className="gradual-color-transition">자유게시판</h2>
+              </div>
+            </div>
+            {dataItem && (
+              <TableRowDetails
+                author={dataItem.author ?? ''}
+                content={dataItem.content ?? ''}
+                createdAt={dataItem.created_at ?? ''}
+                id={dataItem.id ?? ''}
+                title={dataItem.title ?? ''}
+                updatedAt={dataItem.updated_at ?? ''}
+                userId={dataItem.user_id ?? ''}
+                onNextItem={() => handleDisplayItem(dataItem.next ?? '')}
+                onPrevItem={() => handleDisplayItem(dataItem.previous ?? '')}
+                hasNext={!!dataItem.next}
+                hasPrev={!!dataItem.previous}
+              />
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   if (editMode) {
     return (
       <div className="board-view">
@@ -295,11 +359,11 @@ const BoardView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
           <div className="board-view__content">
             <div className="board-view__table-head">
               <div className="board-view__title">
-                <h2 className="gradual-color-transition">공지사항 작성</h2>
+                <h2 className="gradual-color-transition">공지사항 수정</h2>
               </div>
             </div>
             <div className="form-container">
-              <Formik initialValues={initialEditValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+              <Formik initialValues={initialEditValues} validationSchema={validationSchema} onSubmit={handleModify}>
                 {({ isSubmitting }) => (
                   <Form className="form-create">
                     <div className="form-row">

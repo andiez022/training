@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
 import Icon, { ICONS, IconSize } from '../SVG/Icon';
 
@@ -10,9 +9,7 @@ import './CustomTable.scss';
 interface TableProps {
   className?: string;
   data: any[];
-  setData: (newData: any[]) => void;
   currentPage: number;
-  itemsPerPage: number;
   totalPageCount: number;
   onPageChange: (page: number) => void;
   columns: { dataId: string; label: string }[];
@@ -20,15 +17,16 @@ interface TableProps {
   onCreateButton?: () => void;
   handleDelete?: () => void;
   handleEdit?: (itemId: string) => void;
+  onRowClick: (itemId: string) => void;
   disableRowClick?: boolean;
+  checkboxState: { [key: string]: boolean };
+  onCheckboxChange: (itemId: string) => void;
 }
 
 const CustomTable: React.FC<TableProps> = ({
   className,
   data,
-  setData,
   currentPage,
-  itemsPerPage,
   totalPageCount,
   columns,
   onPageChange,
@@ -36,13 +34,11 @@ const CustomTable: React.FC<TableProps> = ({
   onCreateButton,
   handleDelete,
   handleEdit,
+  onRowClick,
   disableRowClick,
+  checkboxState,
+  onCheckboxChange,
 }) => {
-  const navigate = useNavigate();
-  const handleRowClick = (itemId: string) => {
-    navigate(`${itemId}`);
-  };
-
   const handlePrevPage = () => {
     if (currentPage > 1) {
       onPageChange(currentPage - 1);
@@ -63,22 +59,17 @@ const CustomTable: React.FC<TableProps> = ({
     onPageChange(totalPageCount);
   };
 
-  const handleToggleSelect = (rowIndex: number) => {
-    const newData = [...data];
-    newData[rowIndex].selected = !newData[rowIndex].selected;
-    setData(newData);
-  };
-
   const [editModalOpen, setEditModalOpen] = useState(false);
 
   const handleEditAction = () => {
-    const selectedItems = data.filter((item) => item.selected);
-    if (selectedItems.length >= 2) {
+    if (checkedNumber >= 2) {
       setEditModalOpen(true);
     }
-    if (selectedItems.length === 1) {
+
+    const editId = Object.keys(checkboxState).find((key) => checkboxState[key] === true);
+    if (checkedNumber === 1 && editId) {
       if (handleEdit) {
-        handleEdit(selectedItems[0].id);
+        handleEdit(editId);
       }
     }
   };
@@ -87,10 +78,12 @@ const CustomTable: React.FC<TableProps> = ({
     setEditModalOpen(false);
   };
 
+  const checkedNumber = Object.values(checkboxState).filter((value) => value === true).length;
+
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
   const openDeleteModal = () => {
-    setDeleteModalOpen(true);
+    if (checkedNumber > 0) setDeleteModalOpen(true);
   };
 
   const closeDeleteModal = () => {
@@ -121,7 +114,13 @@ const CustomTable: React.FC<TableProps> = ({
                     if (columnIndex === 0 && showAdminActions) {
                       return (
                         <td key={column.dataId}>
-                          <input type="checkbox" checked={item.selected} onChange={() => handleToggleSelect(index)} />
+                          <input
+                            type="checkbox"
+                            checked={checkboxState[item.id]}
+                            onChange={() => {
+                              onCheckboxChange(item.id);
+                            }}
+                          />
                         </td>
                       );
                     }
@@ -142,7 +141,7 @@ const CustomTable: React.FC<TableProps> = ({
                         <td key={column.dataId}>
                           <button
                             onClick={() => {
-                              handleToggleSelect(index);
+                              openDeleteModal();
                               if (handleDelete) handleDelete();
                             }}
                           >
@@ -153,7 +152,7 @@ const CustomTable: React.FC<TableProps> = ({
                     }
 
                     return (
-                      <td key={column.dataId} onClick={!disableRowClick ? () => handleRowClick(item.id) : undefined}>
+                      <td key={column.dataId} onClick={!disableRowClick ? () => onRowClick(item.id) : undefined}>
                         {item[column.dataId]}
                       </td>
                     );
@@ -229,7 +228,7 @@ const CustomTable: React.FC<TableProps> = ({
             </button>
             <Modal dataId="" isOpen={deleteModalOpen} onClose={closeDeleteModal} className="modal" width={ModalWidth.SM}>
               <div className="message">
-                <span>1건의 게시글을</span>
+                <span>{checkedNumber}건의 게시글을</span>
                 <span>삭제 하시겠습니까?</span>
               </div>
               <div className="modal__buttons">

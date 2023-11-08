@@ -74,7 +74,8 @@
       }
 
       td:nth-child(5) {
-        width: 21%;
+        max-width: 21%;
+        overflow-wrap: break-word;
       }
 
       td:nth-child(7) {

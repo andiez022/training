@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Button, { ButtonIconPlacement } from '../../components/Button/Button';
 import { ICONS, IconSize } from '../../components/SVG/Icon';
@@ -8,76 +8,101 @@ import TextInput from '../../components/TextInput/TextInput';
 import CustomTable from '../../components/Table/CustomTable';
 import Modal, { ModalWidth } from '../../components/Modal/DialogModal';
 
-import { UserManagementData } from '../../services/constants/constants';
+import { UserInfo } from '../../services/types/common';
+import api from '../../services/apiServices';
 
 import './UserManagementView.scss';
 
 const UserManagementView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
   const columns = [
     { dataId: 'selected', label: '' },
-    { dataId: 'numbering', label: '번호' },
-    { dataId: 'name', label: '이름' },
+    { dataId: 'index', label: '번호' },
+    { dataId: 'full_name', label: '이름' },
     { dataId: 'username', label: '아이디' },
     { dataId: 'password', label: '비밀번호' },
     { dataId: 'email', label: '이메일' },
-    { dataId: 'phone', label: '휴대폰 번호' },
+    { dataId: 'phone_number', label: '휴대폰 번호' },
     { dataId: 'actions', label: '' },
   ];
 
-  type TableSearchColumn = 'name' | 'email';
+  const [searchBy, setSearchBy] = useState('name');
+  const [searchValue, setSearchValue] = useState('');
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(10);
+  const [pageData, setPageData] = useState([]);
+  const [dataItem, setDataItem] = useState<UserInfo | null>(null);
+  const [totalPageCount, setTotalPageCount] = useState(0);
 
-  const [filteredData, setFilteredData] = useState(UserManagementData);
-
-  const updateFilteredData = () => {
-    const newFilteredData = UserManagementData.filter((row) => {
-      const cellValue = row[selectedSearchColumn];
-      return cellValue.toLowerCase().includes(searchText.toLowerCase());
-    });
-    setFilteredData(newFilteredData);
-  };
-
-  const handleEnterKeyPress = (event: React.KeyboardEvent) => {
-    if (event.key === 'Enter') {
-      updateFilteredData();
-    }
-  };
-
-  const currentlySelectedItem = filteredData.filter((item) => item.selected)[0];
-
+  const [editMode, setEditMode] = useState(false);
   const [selectedDropdownText, setSelectedDropdownText] = useState('이름');
-  const [searchText, setSearchText] = useState('');
-  const [selectedSearchColumn, setSelectedSearchColumn] = useState<TableSearchColumn>('name');
+  const [inputText, setInputText] = useState('');
 
   const handleDropdownItemClick = (itemText: string) => {
     if (itemText !== selectedDropdownText) {
       setSelectedDropdownText(itemText);
       if (itemText === '이름') {
-        setSelectedSearchColumn('name');
+        setSearchBy('name');
       } else {
-        setSelectedSearchColumn('email');
+        setSearchBy('email');
       }
-      setSearchText('');
+      setSearchValue('');
     }
   };
 
-  const handleDelete = () => {
-    const dataToKeep = filteredData.filter((item) => !item.selected);
-    setFilteredData(dataToKeep);
-  };
-
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+
+  const closeDeleteModal = () => {
+    setDeleteModalOpen(false);
+  };
 
   const openDeleteModal = () => {
     setDeleteModalOpen(true);
   };
 
-  const closeDeleteModal = () => {
-    setDeleteModalOpen(false);
-    const unselectedData = filteredData.map((item) => ({
-      ...item,
-      selected: false,
-    }));
-    setFilteredData(unselectedData);
+  const handleDelete = () => {};
+
+  const handleFetchItem = async (itemId: string) => {
+    try {
+      const responseData = await api.data.fetchDataById('user', itemId);
+      setDataItem(responseData);
+    } catch (error) {
+      console.error('Error fetching data: ', error);
+    }
+  };
+
+  const handlePageChange = (page: number) => {
+    setPage(page - 1);
+  };
+
+  useEffect(() => {
+    const dataService = api.data;
+    dataService
+      .fetchDataList('user', {
+        searchBy,
+        searchValue,
+        page,
+        pageSize,
+      })
+      .then((responseData) => {
+        const newData = responseData.list.map((item: UserInfo, index: number) => ({
+          ...item,
+          index: page * pageSize + (index + 1),
+        }));
+
+        setPageData(newData);
+
+        setTotalPageCount(Math.ceil(responseData.total / pageSize));
+      })
+      .catch((error) => {
+        console.error('Error fetching data: ', error);
+      });
+  }, [searchBy, searchValue, page, pageSize]);
+
+  const handleKeyPress = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      const inputElement = event.target as HTMLInputElement;
+      setSearchValue(inputElement.value);
+    }
   };
 
   return (
@@ -107,37 +132,41 @@ const UserManagementView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) =
                 <TextInput
                   dataId=""
                   placeholder="리빙랩 회원 검색"
-                  value={searchText}
-                  onChange={(e) => setSearchText(e.target.value)}
-                  onKeyDown={handleEnterKeyPress}
+                  value={inputText}
+                  onKeyDown={handleKeyPress}
+                  onChange={(e) => setInputText(e.target.value)}
                 />
                 <Button
                   icon={ICONS.MAGNIFIER}
                   iconPlacement={ButtonIconPlacement.Left}
                   iconSize={IconSize.XL}
                   className="button--icon-text"
-                  onClick={updateFilteredData}
+                  onClick={() => setSearchValue(inputText)}
                 >
                   검색
                 </Button>
               </div>
             </div>
           </div>
-          {/* <CustomTable
-            data={filteredData}
-            setData={setFilteredData}
-            itemsPerPage={10}
+          <CustomTable
+            data={pageData}
+            currentPage={page + 1}
+            totalPageCount={totalPageCount}
+            onPageChange={handlePageChange}
             columns={columns}
             showAdminActions={false}
-            className="user-management-table"
             handleDelete={openDeleteModal}
-            disableRowClick
-          /> */}
+            onRowClick={() => {}}
+            disableRowClick={isLoggedIn}
+            onCheckboxChange={() => {}}
+            checkboxState={{}}
+            className="user-management-table"
+          />
           <Modal dataId="" isOpen={deleteModalOpen} onClose={closeDeleteModal} className="modal" width={ModalWidth.SM}>
             <div className="message">
-              {currentlySelectedItem && (
+              {dataItem && (
                 <span>
-                  {currentlySelectedItem.name} ({currentlySelectedItem.username}) 님을
+                  {dataItem.full_name} ({dataItem.username}) 님을
                 </span>
               )}
               <span>탈퇴시키겠습니까?</span>

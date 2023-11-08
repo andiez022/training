@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 import Button, { ButtonIconPlacement } from '../../components/Button/Button';
 import { ICONS, IconSize } from '../../components/SVG/Icon';
@@ -12,84 +14,125 @@ import CustomTable from '../../components/Table/CustomTable';
 import GalleryImageDetails from '../../components/ImageGallery/GalleryImageDetails';
 import ImageGallery from '../../components/ImageGallery/ImageGallery';
 
-import { CampaignData } from '../../services/constants/constants';
+import { DataItem, columns, CheckboxState } from '../../services/types/common';
+import api from '../../services/apiServices';
 
 import './CampaignView.scss';
 
 const CampaignView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
-  const columns = [
-    { dataId: 'selected', label: '' },
-    { dataId: 'numbering', label: '번호' },
-    { dataId: 'title', label: '제목' },
-    { dataId: 'author', label: '작성자' },
-    { dataId: 'date', label: '작성일' },
-  ];
+  const [searchBy, setSearchBy] = useState('title');
+  const [searchValue, setSearchValue] = useState('');
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(10);
+  const [pageData, setPageData] = useState([]);
+  const [dataItem, setDataItem] = useState<DataItem | null>(null);
+  const [totalPageCount, setTotalPageCount] = useState(0);
 
-  type TableSearchColumn = 'title' | 'author';
-
-  const [filteredData, setFilteredData] = useState(CampaignData);
   const [editMode, setEditMode] = useState(false);
-
-  const updateFilteredData = () => {
-    const newFilteredData = CampaignData.filter((row) => {
-      const cellValue = row[selectedSearchColumn];
-      return cellValue.toLowerCase().includes(searchText.toLowerCase());
-    });
-    setFilteredData(newFilteredData);
-  };
-
-  const handleEnterKeyPress = (event: React.KeyboardEvent) => {
-    if (event.key === 'Enter') {
-      updateFilteredData();
-    }
-  };
-
-  const handleDelete = () => {
-    const dataToKeep = CampaignData.filter((item) => !item.selected);
-    setFilteredData(dataToKeep);
-  };
-
-  const handleEdit = (itemId: string) => {
-    navigate(`edit/${itemId}`);
-    setEditMode(true);
-  };
-
-  const navigate = useNavigate();
-  const handleCreatePost = () => {
-    navigate('create');
-  };
-
-  const { contentType } = useParams();
-  const currentItem = CampaignData.find((item) => item.id === contentType);
-
   const [selectedDropdownText, setSelectedDropdownText] = useState('제목');
-  const [searchText, setSearchText] = useState('');
-  const [selectedSearchColumn, setSelectedSearchColumn] = useState<TableSearchColumn>('title');
+  const [inputText, setInputText] = useState('');
 
   const handleDropdownItemClick = (itemText: string) => {
     if (itemText !== selectedDropdownText) {
       setSelectedDropdownText(itemText);
       if (itemText === '제목') {
-        setSelectedSearchColumn('title');
+        setSearchBy('title');
       } else {
-        setSelectedSearchColumn('author');
+        setSearchBy('author');
       }
-      setSearchText('');
+      setSearchValue('');
     }
   };
 
+  const navigate = useNavigate();
+
+  const [checkboxState, setCheckboxState] = useState<CheckboxState>({});
+
+  const handleCheckboxChange = (itemId: string) => {
+    setCheckboxState((prevCheckboxState) => ({
+      ...prevCheckboxState,
+      [itemId]: !prevCheckboxState[itemId],
+    }));
+  };
+
+  const handleDelete = async () => {
+    const itemsToDelete = Object.keys(checkboxState).filter((key) => checkboxState[key] === true);
+    try {
+      await api.data.deleteData('campaign', itemsToDelete);
+      window.location.reload();
+    } catch (error) {
+      console.error('Error deleting data: ', error);
+    }
+  };
+
+  const handleEdit = async (itemId: string) => {
+    try {
+      await handleFetchItem(itemId);
+      setEditMode(true);
+      navigate(`edit/${itemId}`);
+    } catch (error) {
+      console.error('Error attempting to edit data: ', error);
+    }
+  };
+
+  const handleCreatePost = () => {
+    navigate('create');
+  };
+
+  const handleFetchItem = async (itemId: string) => {
+    try {
+      const responseData = await api.data.fetchDataById('campaign', itemId);
+      setDataItem(responseData);
+    } catch (error) {
+      console.error('Error fetching data: ', error);
+    }
+  };
+
+  const handleDisplayItem = (itemId: string) => {
+    handleFetchItem(itemId);
+    navigate(`/campaign/${itemId}`);
+  };
+
+  const handlePageChange = (page: number) => {
+    setPage(page - 1);
+  };
+
+  useEffect(() => {
+    const dataService = api.data;
+    dataService
+      .fetchDataList('campaign', {
+        searchBy,
+        searchValue,
+        page,
+        pageSize,
+      })
+      .then((responseData) => {
+        const newData = responseData.list.map((item: DataItem, index: number) => ({
+          ...item,
+          index: page * pageSize + (index + 1),
+        }));
+
+        setPageData(newData);
+
+        setTotalPageCount(Math.ceil(responseData.total / pageSize));
+      })
+      .catch((error) => {
+        console.error('Error fetching data: ', error);
+      });
+  }, [searchBy, searchValue, page, pageSize]);
+
   const initialValues = {
-    file: null,
     title: '',
     content: '',
     link: '',
+    image: null,
+    image_name: '',
   };
 
   const initialEditValues = {
-    file: currentItem ? currentItem.image : '',
-    title: currentItem ? currentItem.id : '',
-    content: currentItem ? currentItem.description : '',
-    link: currentItem ? currentItem.link : '',
+    title: dataItem?.title,
+    content: dataItem?.content,
+    link: dataItem?.link,
   };
 
   const toolBarOptions = [
@@ -111,20 +154,37 @@ const CampaignView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
   const validationSchema = Yup.object().shape({
     title: Yup.string().required('제목을 입력하세요.'),
     content: Yup.string().required('제내용을 입력하세요.'),
-    link: Yup.string().required('링크를 입력하세요.'),
   });
 
-  const handleSubmit = (values: any) => {
-    console.log('Form values:', values);
+  const handleSubmit = async (values: any) => {
+    values.image_name = 'asdasd';
+    try {
+      await api.data.postData('campaign', values);
+
+      window.location.pathname = 'campaign';
+    } catch (error) {
+      console.error('Error posting data: ', error);
+    }
   };
 
-  useEffect(() => {
-    if (!contentType) {
-      setEditMode(false);
-      const updatedData = CampaignData.map((item) => ({ ...item, selected: false }));
-      setFilteredData(updatedData);
+  const handleModify = async (values: any) => {
+    try {
+      await api.data.editData('campaign', values);
+
+      window.location.pathname = 'campaign';
+    } catch (error) {
+      console.error('Error posting data: ', error);
     }
-  }, [contentType]);
+  };
+
+  const { contentType } = useParams();
+
+  const handleKeyPress = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      const inputElement = event.target as HTMLInputElement;
+      setSearchValue(inputElement.value);
+    }
+  };
 
   if (!contentType) {
     return (
@@ -174,63 +234,40 @@ const CampaignView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
                   <TextInput
                     dataId="author"
                     placeholder="캠페인 검색"
-                    value={searchText}
-                    onChange={(e) => setSearchText(e.target.value)}
-                    onKeyDown={handleEnterKeyPress}
+                    value={inputText}
+                    onKeyDown={handleKeyPress}
+                    onChange={(e) => setInputText(e.target.value)}
                   />
                   <Button
                     icon={ICONS.MAGNIFIER}
                     iconPlacement={ButtonIconPlacement.Left}
                     iconSize={IconSize.XL}
                     className="button--icon-text"
-                    onClick={updateFilteredData}
+                    onClick={() => setSearchValue(inputText)}
                   >
                     검색
                   </Button>
                 </div>
               </div>
             </div>
-            {/* {!isLoggedIn && <ImageGallery data={filteredData} isLoggedIn={false} onCreateButton={handleCreatePost} />}
+            {/* {{!isLoggedIn && <ImageGallery data={filteredData} isLoggedIn={false} onCreateButton={handleCreatePost} />} */}
             {isLoggedIn && (
               <CustomTable
-                data={filteredData}
-                itemsPerPage={10}
+                data={pageData}
+                currentPage={page + 1}
+                totalPageCount={totalPageCount}
+                onPageChange={handlePageChange}
                 columns={columns}
                 showAdminActions={isLoggedIn}
                 onCreateButton={handleCreatePost}
-                setData={setFilteredData}
                 handleDelete={handleDelete}
                 handleEdit={handleEdit}
+                onRowClick={handleDisplayItem}
                 disableRowClick={isLoggedIn}
+                checkboxState={checkboxState}
+                onCheckboxChange={handleCheckboxChange}
               />
-            )} */}
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (!editMode && currentItem) {
-    return (
-      <div className="campaign-view">
-        <div className="campaign-view__top">
-          <div className="campaign-view__content">
-            <div className="campaign-view__grid-head">
-              <div className="campaign-view__title">
-                <h2 className="gradual-color-transition">캠페인</h2>
-              </div>
-            </div>
-            <GalleryImageDetails
-              id={currentItem.id}
-              selected={currentItem.selected}
-              numbering={currentItem.numbering}
-              image={currentItem.image}
-              title={currentItem.title}
-              author={currentItem.author}
-              date={currentItem.date}
-              link={currentItem.link}
-              description={currentItem.description}
-            />
+            )}
           </div>
         </div>
       </div>
@@ -260,7 +297,17 @@ const CampaignView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
                     <ErrorMessage name="title" component="div" className="error" />
                     <div className="form-row">
                       <div className="form-group">
-                        <Field as="textarea" id="content" name="content" placeholder="내용을 입력하세요." className="content-area" />
+                        <Field id="content" name="content">
+                          {({ field }: { field: { value: string; onChange: (e: any) => void } }) => (
+                            <ReactQuill
+                              value={field.value}
+                              onChange={(value) => field.onChange({ target: { name: 'content', value } })}
+                              placeholder="내용을 입력하세요."
+                              className="content-area"
+                              modules={modules}
+                            />
+                          )}
+                        </Field>
                       </div>
                     </div>
                     <ErrorMessage name="content" component="div" className="error" />
@@ -272,7 +319,7 @@ const CampaignView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
                     </div>
                     <ErrorMessage name="link" component="div" className="error" />
                     <div>
-                      <input id="file" name="file" type="file" accept="image/*" />
+                      <Field type="file" name="image" accept="image/*" />
                     </div>
                     <div className="form-button">
                       <button type="submit" className="submit-button" disabled={isSubmitting}>
@@ -292,14 +339,40 @@ const CampaignView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
     );
   }
 
+  if (!editMode && contentType) {
+    return (
+      <div className="campaign-view">
+        <div className="campaign-view__top">
+          <div className="campaign-view__content">
+            <div className="campaign-view__grid-head">
+              <div className="campaign-view__title">
+                <h2 className="gradual-color-transition">캠페인</h2>
+              </div>
+            </div>
+            {dataItem && (
+              <GalleryImageDetails
+                id={dataItem.id}
+                image={dataItem.image}
+                title={dataItem.title}
+                author={dataItem.author}
+                link={dataItem.link}
+                description={dataItem.content}
+              />
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   if (editMode) {
     return (
       <div className="campaign-view">
         <div className="campaign-view__top">
           <div className="campaign-view__content">
-            <div className="campaign-view__table-head">
+            <div className="campaign-view__grid-head">
               <div className="campaign-view__title">
-                <h2 className="gradual-color-transition">공지사항 작성</h2>
+                <h2 className="gradual-color-transition">캠페인 작성</h2>
               </div>
             </div>
             <div className="form-container">
@@ -315,7 +388,16 @@ const CampaignView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
                     <ErrorMessage name="title" component="div" className="error" />
                     <div className="form-row">
                       <div className="form-group">
-                        <Field as="textarea" id="content" name="content" placeholder="내용을 입력하세요." className="content-area" />
+                        <Field id="content" name="content">
+                          {({ field }: { field: { value: string; onChange: (e: any) => void } }) => (
+                            <ReactQuill
+                              value={field.value}
+                              onChange={(value) => field.onChange({ target: { name: 'content', value } })}
+                              className="content-area"
+                              modules={modules}
+                            />
+                          )}
+                        </Field>
                       </div>
                     </div>
                     <ErrorMessage name="content" component="div" className="error" />
@@ -327,13 +409,13 @@ const CampaignView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
                     </div>
                     <ErrorMessage name="link" component="div" className="error" />
                     <div>
-                      <input id="file" name="file" type="file" accept="image/*" />
+                      <Field type="file" name="image" accept="image/*" />
                     </div>
                     <div className="form-button">
                       <button type="submit" className="submit-button" disabled={isSubmitting}>
                         등록
                       </button>
-                      <button className="cancel-button" onClick={handleCancel}>
+                      <button type="button" className="cancel-button" onClick={handleCancel}>
                         취소
                       </button>
                     </div>

@@ -27,7 +27,7 @@
 
   &__author,
   &__date {
-    min-height: 3.125rem;
+    height: 3.125rem;
     width: 100%;
     display: flex;
     align-items: center;
@@ -56,17 +56,13 @@
   }
 
   &__description {
-    max-height: 100%;
     border-bottom: #999999 0.5px solid;
     text-align: left;
-
-    p {
-      padding-top: 0.625rem;
-      padding-bottom: 0.625rem;
-      padding-left: 1.25rem;
-      padding-right: 1.25rem;
-      font-size: 14px;
-    }
+    padding-top: 0.625rem;
+    padding-bottom: 0.625rem;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    font-size: 14px;
   }
 }
 
@@ -74,6 +70,7 @@
   display: flex;
   gap: 0.625rem;
   justify-content: flex-end;
+  margin-bottom: 55px;
 
   .return-button {
     cursor: pointer;
