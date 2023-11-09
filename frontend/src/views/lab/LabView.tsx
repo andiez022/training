@@ -325,13 +325,13 @@ const LabView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
             </div>
             {dataItem && (
               <TableRowDetails
-                author={dataItem.author ?? ''}
-                content={dataItem.content ?? ''}
-                createdAt={dataItem.created_at ?? ''}
-                id={dataItem.id ?? ''}
-                title={dataItem.title ?? ''}
-                updatedAt={dataItem.updated_at ?? ''}
-                userId={dataItem.user_id ?? ''}
+                author={dataItem.author}
+                content={dataItem.content}
+                createdAt={dataItem.created_at}
+                id={dataItem.id}
+                title={dataItem.title}
+                updatedAt={dataItem.updated_at}
+                userId={dataItem.user_id}
                 onNextItem={() => handleDisplayItem(dataItem.next ?? '')}
                 onPrevItem={() => handleDisplayItem(dataItem.previous ?? '')}
                 hasNext={!!dataItem.next}

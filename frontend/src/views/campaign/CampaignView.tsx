@@ -23,7 +23,7 @@ const CampaignView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
   const [searchBy, setSearchBy] = useState('title');
   const [searchValue, setSearchValue] = useState('');
   const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(isLoggedIn ? 10 : 12);
   const [pageData, setPageData] = useState([]);
   const [dataItem, setDataItem] = useState<DataItem | null>(null);
   const [totalPageCount, setTotalPageCount] = useState(0);
@@ -133,6 +133,7 @@ const CampaignView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
     title: dataItem?.title,
     content: dataItem?.content,
     link: dataItem?.link,
+    image: '',
   };
 
   const toolBarOptions = [
@@ -250,7 +251,15 @@ const CampaignView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
                 </div>
               </div>
             </div>
-            {/* {{!isLoggedIn && <ImageGallery data={filteredData} isLoggedIn={false} onCreateButton={handleCreatePost} />} */}
+            {!isLoggedIn && (
+              <ImageGallery
+                data={pageData}
+                onImageClick={handleDisplayItem}
+                currentPage={page + 1}
+                totalPageCount={totalPageCount}
+                onPageChange={handlePageChange}
+              />
+            )}
             {isLoggedIn && (
               <CustomTable
                 data={pageData}
@@ -376,7 +385,7 @@ const CampaignView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
               </div>
             </div>
             <div className="form-container">
-              <Formik initialValues={initialEditValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+              <Formik initialValues={initialEditValues} validationSchema={validationSchema} onSubmit={handleModify}>
                 {({ isSubmitting }) => (
                   <Form className="form-create">
                     <div className="form-row">

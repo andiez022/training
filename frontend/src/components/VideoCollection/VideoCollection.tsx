@@ -6,47 +6,38 @@ import VideoPlayer from './VideoPlayer';
 import './VideoCollection.scss';
 
 export interface VideoItemProps {
-  selected: boolean;
-  id: any;
-  numbering: number;
-  video_id?: string;
-  image: string;
-  title: string;
-  description: string;
   author: string;
-  date: string;
+  created_at: string;
+  description: string;
+  id: string;
+  title: string;
+  updated_at: string;
+  user_id: string;
+  video: string;
 }
 
 interface VideoCollectionProps {
   data: VideoItemProps[];
+  currentPage: number;
+  totalPageCount: number;
+  onPageChange: (page: number) => void;
 }
 
-const VideoCollection: React.FC<VideoCollectionProps> = ({ data }) => {
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const itemsPerPage = 10;
-
-  const totalPageCount = Math.ceil(data.length / itemsPerPage);
-
-  const renderVideoItems = (page: number) => {
-    const startIdx = (page - 1) * itemsPerPage;
-    const endIdx = startIdx + itemsPerPage;
-    const itemsToDisplay = data.slice(startIdx, endIdx);
-
-    return itemsToDisplay.map((video) => (
+const VideoCollection: React.FC<VideoCollectionProps> = ({ data, currentPage, totalPageCount, onPageChange }) => {
+  const renderVideoItems = () => {
+    return data.map((video) => (
       <div key={video.id} className="video">
         <div className="video__thumbnail">
-          <VideoPlayer videoId={video.video_id} />
+          <VideoPlayer videoId={video.video} />
         </div>
         <div className="video__info">
           <div className="video__info__header">
             <div className="video__info__header__title">
               <h3>{video.title}</h3>
             </div>
-            <p>{video.date}</p>
+            <p>{video.updated_at}</p>
           </div>
-          <div className="video__info__desc">
-            <p>{video.description}</p>
-          </div>
+          <div className="video__info__desc" dangerouslySetInnerHTML={{ __html: video.description }} />
         </div>
       </div>
     ));
@@ -54,27 +45,27 @@ const VideoCollection: React.FC<VideoCollectionProps> = ({ data }) => {
 
   const handlePrevPage = () => {
     if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
+      onPageChange(currentPage - 1);
     }
   };
 
   const handleNextPage = () => {
     if (currentPage < totalPageCount) {
-      setCurrentPage(currentPage + 1);
+      onPageChange(currentPage + 1);
     }
   };
 
   const handleFirstPage = () => {
-    setCurrentPage(1);
+    onPageChange(1);
   };
 
   const handleLastPage = () => {
-    setCurrentPage(totalPageCount);
+    onPageChange(totalPageCount);
   };
 
   return (
     <div>
-      <div className="video-collection">{renderVideoItems(currentPage)}</div>
+      <div className="video-collection">{renderVideoItems()}</div>
       <div className="pagination">
         {currentPage > 1 && (
           <div className="icon-nav">
@@ -91,7 +82,7 @@ const VideoCollection: React.FC<VideoCollectionProps> = ({ data }) => {
             <button
               key={index}
               onClick={() => {
-                setCurrentPage(index + 1);
+                onPageChange(index + 1);
               }}
               className={`button ${currentPage === index + 1 ? 'clicked' : ''}`}
             >

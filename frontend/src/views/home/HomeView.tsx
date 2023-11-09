@@ -6,7 +6,31 @@ import Card from '../../components/Card/Card';
 import './HomeView.scss';
 import Icon, { ICONS, IconSize } from '../../components/SVG/Icon';
 
+import api from '../../services/apiServices';
+import { DataItem } from '../../services/types/common';
+
 const Home: React.FC = () => {
+  const [lists, setLists] = useState<{
+    notice: DataItem[];
+    content: DataItem[];
+    'living-lab': DataItem[];
+    campaign: DataItem[];
+    'free-board': DataItem[];
+  }>({
+    notice: [],
+    content: [],
+    'living-lab': [],
+    campaign: [],
+    'free-board': [],
+  });
+
+  const listNames = Object.keys(lists);
+
+  const searchBy = 'title';
+  const searchValue = '';
+  const page = 0;
+  const pageSize = 4;
+
   const banners = [
     { id: 1, imgSrc: '/home_bn1.png' },
     { id: 2, imgSrc: '/home_bn2.png' },
@@ -23,36 +47,36 @@ const Home: React.FC = () => {
     return () => clearInterval(timer);
   }, [currentBanner]);
 
-  const items = [
-    { id: 1, title: '콘텐츠 제목' },
-    { id: 2, title: '콘텐츠 제목 콘텐츠 제목 콘텐츠 제목 콘...' },
-    { id: 3, title: '콘텐츠 제목' },
-    { id: 4, title: '콘텐츠 제목' },
-  ];
+  useEffect(() => {
+    const fetchDataForList = async (listName: string) => {
+      try {
+        const responseData = await api.data.fetchDataList(listName, {
+          searchBy,
+          searchValue,
+          page,
+          pageSize,
+        });
 
-  const card1Info = {
-    title: '공지사항 입니다. 공지사항 입니다. 공지사항 입니...',
-    content: 'This is the content of Card 1.',
-    date: '2023-05-05',
+        setLists((prevLists) => ({
+          ...prevLists,
+          [listName]: responseData.list,
+        }));
+      } catch (error) {
+        console.error(`Error fetching ${listName} data:`, error);
+      }
+    };
+
+    listNames.forEach((listName) => {
+      fetchDataForList(listName);
+    });
+  }, [searchBy, searchValue, page, pageSize]);
+
+  const displayItem = (pageType: string, itemId: string) => {
+    window.location.pathname = `${pageType}/${itemId}`;
   };
 
-  const card2Info = {
-    title: '공지사항 입니다.',
-    content:
-      '튼튼하며, 천지는 곳이 광야에서 천하를 말이다. 불러 청춘의 바이며, 있는 못할 석가는 끓는 생의 찾아다녀도, 사막이다. 크고 두손을 원대하고, 인간의 봄바람이 ...',
-    date: '2023-05-05',
-  };
-
-  const card3Info = {
-    title: '공지사항 입니다.',
-    content: 'This is the content of Card 3.',
-    date: '2023-05-05',
-  };
-
-  const card4Info = {
-    title: '공지사항 입니다.',
-    content: 'This is the content of Card 4.',
-    date: '2023-05-05',
+  const goToPage = (pageType: string) => {
+    window.location.pathname = `${pageType}`;
   };
 
   return (
@@ -79,10 +103,15 @@ const Home: React.FC = () => {
               </button>
             </div>
             <div className="announcement-card">
-              <Card title={card1Info.title} content={card1Info.content} date={card1Info.date} />
-              <Card title={card2Info.title} content={card2Info.content} date={card2Info.date} />
-              <Card title={card3Info.title} content={card3Info.content} date={card3Info.date} />
-              <Card title={card4Info.title} content={card4Info.content} date={card4Info.date} />
+              {lists.notice.map((item, _) => (
+                <Card
+                  key={item.id}
+                  title={item.title}
+                  content={item.content}
+                  date={item.updated_at}
+                  onClick={() => displayItem('announcement', item.id)}
+                />
+              ))}
             </div>
           </div>
         </RevealOnScroll>
@@ -95,8 +124,8 @@ const Home: React.FC = () => {
               </button>
             </div>
             <ul className="list-body">
-              {items.map((item) => (
-                <li key={item.id} className="list-item">
+              {lists.content.map((item) => (
+                <li key={item.id} className="list-item" onClick={() => goToPage('content')}>
                   <div className="item-title">
                     <span className="icon-span" />
                     <span className="title-span">{item.title}</span>
@@ -114,8 +143,8 @@ const Home: React.FC = () => {
               </button>
             </div>
             <ul className="list-body">
-              {items.map((item) => (
-                <li key={item.id} className="list-item">
+              {lists['living-lab'].map((item) => (
+                <li key={item.id} className="list-item" onClick={() => displayItem('lab', item.id)}>
                   <div className="item-title">
                     <span className="icon-span" />
                     <span className="title-span">{item.title}</span>
@@ -133,8 +162,8 @@ const Home: React.FC = () => {
               </button>
             </div>
             <ul className="list-body">
-              {items.map((item) => (
-                <li key={item.id} className="list-item">
+              {lists.campaign.map((item) => (
+                <li key={item.id} className="list-item" onClick={() => displayItem('campaign', item.id)}>
                   <div className="item-title">
                     <span className="icon-span" />
                     <span className="title-span">{item.title}</span>
@@ -152,8 +181,8 @@ const Home: React.FC = () => {
               </button>
             </div>
             <ul className="list-body">
-              {items.map((item) => (
-                <li key={item.id} className="list-item">
+              {lists['free-board'].map((item) => (
+                <li key={item.id} className="list-item" onClick={() => displayItem('board', item.id)}>
                   <div className="item-title">
                     <span className="icon-span" />
                     <span className="title-span">{item.title}</span>

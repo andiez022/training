@@ -69,12 +69,21 @@ export default class DataService {
     }
   }
 
+  async deleteDataById(pageType: string, id: string) {
+    const apiUrl = `${pageType}/${id}`;
+    try {
+      const response = await this.axios.delete(apiUrl);
+      return response.data;
+    } catch (error) {
+      console.error('Error deleting data: ', error);
+      throw error;
+    }
+  }
+
   async editData(
     pageType: string,
     updatedData: {
-      title?: string;
-      content?: string;
-      id: string;
+      any: [];
     },
   ) {
     const apiUrl = `${pageType}`;

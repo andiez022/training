@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import classNames from 'classnames';
-import Icon, { ICONS, IconSize } from '../SVG/Icon';
 
+import Icon, { ICONS, IconSize } from '../SVG/Icon';
+import DateTimeDisplay from '../DateTimeDisplay/DateTimeDisplay';
 import Modal, { ModalWidth } from '../Modal/DialogModal';
 
 import './CustomTable.scss';
@@ -21,6 +22,7 @@ interface TableProps {
   disableRowClick?: boolean;
   checkboxState: { [key: string]: boolean };
   onCheckboxChange: (itemId: string) => void;
+  userDelete?: (itemId: string) => void;
 }
 
 const CustomTable: React.FC<TableProps> = ({
@@ -38,6 +40,7 @@ const CustomTable: React.FC<TableProps> = ({
   disableRowClick,
   checkboxState,
   onCheckboxChange,
+  userDelete,
 }) => {
   const handlePrevPage = () => {
     if (currentPage > 1) {
@@ -136,13 +139,20 @@ const CustomTable: React.FC<TableProps> = ({
                       );
                     }
 
+                    if (column.dataId === 'updated_at') {
+                      return (
+                        <td key={column.dataId}>
+                          <DateTimeDisplay timestamp={item.updated_at} />
+                        </td>
+                      );
+                    }
+
                     if (column.dataId === 'actions') {
                       return (
                         <td key={column.dataId}>
                           <button
                             onClick={() => {
-                              openDeleteModal();
-                              if (handleDelete) handleDelete();
+                              if (userDelete) userDelete(item.id);
                             }}
                           >
                             탈퇴

@@ -17,6 +17,9 @@ import { storage } from './common/utils/storage';
 const HomeView = lazy(() => import('./views/home/HomeView'));
 const IntroView = lazy(() => import('./views/intro/IntroView'));
 const AnnView = lazy(() => import('./views/announcement/AnnView'));
+const AnnItem = lazy(() => import('./views/announcement/AnnItem'));
+const AnnCreate = lazy(() => import('./views/announcement/AnnCreate'));
+const AnnEdit = lazy(() => import('./views/announcement/AnnEdit'));
 const FacilityView = lazy(() => import('./views/facility/FacilityView'));
 const ContentView = lazy(() => import('./views/contents/ContentView'));
 const LabView = lazy(() => import('./views/lab/LabView'));
@@ -55,14 +58,9 @@ const App: React.FC = () => {
                   <Route path="/" element={<PrivateRoute guards={[]} element={<HomeView />} />} />
                   <Route path="/intro" element={<PrivateRoute guards={[]} element={<IntroView />} />} />
                   <Route path="/announcement" element={<PrivateRoute guards={[]} element={<AnnView isLoggedIn={isLoggedIn} />} />} />
-                  <Route
-                    path="/announcement/:contentType"
-                    element={<PrivateRoute guards={[]} element={<AnnView isLoggedIn={isLoggedIn} />} />}
-                  />
-                  <Route
-                    path="/announcement/edit/:contentType"
-                    element={<PrivateRoute guards={[]} element={<AnnView isLoggedIn={isLoggedIn} />} />}
-                  />
+                  <Route path="/announcement/create" element={<PrivateRoute guards={[]} element={<AnnCreate />} />} />
+                  <Route path="/announcement/:id" element={<PrivateRoute guards={[]} element={<AnnItem />} />} />
+                  <Route path="/announcement/edit/:id" element={<PrivateRoute guards={[]} element={<AnnEdit />} />} />
                   <Route path="/facility" element={<PrivateRoute guards={[]} element={<FacilityView isLoggedIn={isLoggedIn} />} />} />
                   <Route path="/content" element={<PrivateRoute guards={[]} element={<ContentView isLoggedIn={isLoggedIn} />} />} />
                   <Route

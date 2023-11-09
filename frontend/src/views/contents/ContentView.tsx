@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
 
 import VideoCollection from '../../components/VideoCollection/VideoCollection';
 import Button, { ButtonIconPlacement } from '../../components/Button/Button';
@@ -13,120 +11,159 @@ import DropdownItem from '../../components/Dropdown/DropdownItem';
 import TextInput from '../../components/TextInput/TextInput';
 import CustomTable from '../../components/Table/CustomTable';
 
-import { VideoCollectionData } from '../../services/constants/constants';
+import { DataItem, CheckboxState, columns } from '../../services/types/common';
+import api from '../../services/apiServices';
 
 import './ContentView.scss';
 
 const ContentView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
-  const columns = [
-    { dataId: 'selected', label: '' },
-    { dataId: 'numbering', label: '번호' },
-    { dataId: 'title', label: '제목' },
-    { dataId: 'author', label: '작성자' },
-    { dataId: 'date', label: '작성일' },
-  ];
+  const [searchBy, setSearchBy] = useState('title');
+  const [searchValue, setSearchValue] = useState('');
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(10);
+  const [pageData, setPageData] = useState([]);
+  const [dataItem, setDataItem] = useState<DataItem | null>(null);
+  const [totalPageCount, setTotalPageCount] = useState(0);
 
-  type TableSearchColumn = 'title' | 'author';
-
-  const [filteredData, setFilteredData] = useState(VideoCollectionData);
   const [editMode, setEditMode] = useState(false);
-
-  const updateFilteredData = () => {
-    const newFilteredData = VideoCollectionData.filter((row) => {
-      const cellValue = row[selectedSearchColumn];
-      return cellValue.toLowerCase().includes(searchText.toLowerCase());
-    });
-    setFilteredData(newFilteredData);
-  };
-
-  const handleEnterKeyPress = (event: React.KeyboardEvent) => {
-    if (event.key === 'Enter') {
-      updateFilteredData();
-    }
-  };
-
-  const handleDelete = () => {
-    const dataToKeep = VideoCollectionData.filter((item) => !item.selected);
-    setFilteredData(dataToKeep);
-  };
-
-  const handleEdit = (itemId: string) => {
-    navigate(`edit/${itemId}`);
-    setEditMode(true);
-  };
-
-  const navigate = useNavigate();
-  const handleCreatePost = () => {
-    navigate('create');
-  };
-
-  const { contentType } = useParams();
-  const currentItem = VideoCollectionData.find((item) => item.id === contentType);
-
   const [selectedDropdownText, setSelectedDropdownText] = useState('제목');
-  const [searchText, setSearchText] = useState('');
-  const [selectedSearchColumn, setSelectedSearchColumn] = useState<TableSearchColumn>('title');
+  const [inputText, setInputText] = useState('');
 
   const handleDropdownItemClick = (itemText: string) => {
     if (itemText !== selectedDropdownText) {
       setSelectedDropdownText(itemText);
       if (itemText === '제목') {
-        setSelectedSearchColumn('title');
+        setSearchBy('title');
       } else {
-        setSelectedSearchColumn('author');
+        setSearchBy('author');
       }
-      setSearchText('');
-      setFilteredData(VideoCollectionData);
+      setSearchValue('');
     }
   };
 
+  const handleKeyPress = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      const inputElement = event.target as HTMLInputElement;
+      setSearchValue(inputElement.value);
+    }
+  };
+
+  const navigate = useNavigate();
+
+  const [checkboxState, setCheckboxState] = useState<CheckboxState>({});
+
+  const handleCheckboxChange = (itemId: string) => {
+    setCheckboxState((prevCheckboxState) => ({
+      ...prevCheckboxState,
+      [itemId]: !prevCheckboxState[itemId],
+    }));
+  };
+
+  const handleDelete = async () => {
+    const itemsToDelete = Object.keys(checkboxState).filter((key) => checkboxState[key] === true);
+    try {
+      await api.data.deleteData('content', itemsToDelete);
+      window.location.reload();
+    } catch (error) {
+      console.error('Error deleting data: ', error);
+    }
+  };
+
+  const handleEdit = async (itemId: string) => {
+    try {
+      await handleFetchItem(itemId);
+      setEditMode(true);
+      navigate(`edit/${itemId}`);
+    } catch (error) {
+      console.error('Error attempting to edit data: ', error);
+    }
+  };
+
+  const handleCreatePost = () => {
+    navigate('create');
+  };
+
+  const handleFetchItem = async (itemId: string) => {
+    try {
+      const responseData = await api.data.fetchDataById('content', itemId);
+      setDataItem(responseData);
+    } catch (error) {
+      console.error('Error fetching data: ', error);
+    }
+  };
+
+  const handlePageChange = (page: number) => {
+    setPage(page - 1);
+  };
+
+  useEffect(() => {
+    const dataService = api.data;
+    dataService
+      .fetchDataList('content', {
+        searchBy,
+        searchValue,
+        page,
+        pageSize,
+      })
+      .then((responseData) => {
+        const newData = responseData.list.map((item: DataItem, index: number) => ({
+          ...item,
+          index: page * pageSize + (index + 1),
+        }));
+
+        setPageData(newData);
+
+        setTotalPageCount(Math.ceil(responseData.total / pageSize));
+      })
+      .catch((error) => {
+        console.error('Error fetching data: ', error);
+      });
+  }, [searchBy, searchValue, page, pageSize]);
+
   const initialValues = {
-    link: '',
+    video: '',
     title: '',
-    content: '',
+    description: '',
   };
 
   const initialEditValues = {
-    title: currentItem ? currentItem.title : '',
-    link: currentItem ? currentItem.video_id : '',
-    content: currentItem ? currentItem.description : '',
-  };
-
-  const toolBarOptions = [
-    [{ header: [1, 2, false] }],
-    ['bold', 'italic', 'underline'],
-    [{ align: '' }, { align: 'center' }, { align: 'right' }, { align: 'justify' }],
-    [{ list: 'bullet' }, { list: 'ordered' }, 'blockquote'],
-    ['link', 'image'],
-  ];
-
-  const modules = {
-    toolbar: toolBarOptions,
+    id: dataItem?.id,
+    title: dataItem?.title,
+    video: dataItem?.video,
+    description: dataItem?.description,
   };
 
   const handleCancel = () => {
-    const updatedData = VideoCollectionData.map((item) => ({ ...item, selected: false }));
-    setFilteredData(updatedData);
     window.history.back();
   };
 
   const validationSchema = Yup.object().shape({
-    link: Yup.string().required('링크를 입력하세요.'),
+    video: Yup.string().required('링크를 입력하세요.'),
     title: Yup.string().required('제목을 입력하세요.'),
-    content: Yup.string().required('제내용을 입력하세요.'),
+    description: Yup.string().required('제내용을 입력하세요.'),
   });
 
-  const handleSubmit = (values: any) => {
-    console.log('Form values:', values);
+  const handleSubmit = async (values: any) => {
+    try {
+      await api.data.postData('content', values);
+
+      window.location.pathname = 'content';
+    } catch (error) {
+      console.error('Error posting data: ', error);
+    }
   };
 
-  useEffect(() => {
-    if (!contentType) {
-      setEditMode(false);
-      const updatedData = VideoCollectionData.map((item) => ({ ...item, selected: false }));
-      setFilteredData(updatedData);
+  const handleModify = async (values: any) => {
+    try {
+      await api.data.editData('content', values);
+
+      window.location.pathname = 'content';
+    } catch (error) {
+      console.error('Error posting data: ', error);
     }
-  }, [contentType]);
+  };
+
+  const { contentType } = useParams();
 
   if (!contentType) {
     return (
@@ -169,15 +206,16 @@ const ContentView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
                     <TextInput
                       dataId="author"
                       placeholder="공지사항 검색"
-                      value={searchText}
-                      onChange={(e) => setSearchText(e.target.value)}
-                      onKeyDown={handleEnterKeyPress}
+                      value={inputText}
+                      onKeyDown={handleKeyPress}
+                      onChange={(e) => setInputText(e.target.value)}
                     />
                     <Button
                       icon={ICONS.MAGNIFIER}
                       iconPlacement={ButtonIconPlacement.Left}
                       iconSize={IconSize.XL}
                       className="button--icon-text"
+                      onClick={() => setSearchValue(inputText)}
                     >
                       검색
                     </Button>
@@ -185,21 +223,25 @@ const ContentView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
                 </div>
               )}
             </div>
-            {/* {isLoggedIn ? (
+            {isLoggedIn ? (
               <CustomTable
-                data={filteredData}
-                itemsPerPage={10}
-                showAdminActions={isLoggedIn}
+                data={pageData}
+                currentPage={page + 1}
+                totalPageCount={totalPageCount}
+                onPageChange={handlePageChange}
                 columns={columns}
+                showAdminActions={isLoggedIn}
                 onCreateButton={handleCreatePost}
-                setData={setFilteredData}
                 handleDelete={handleDelete}
                 handleEdit={handleEdit}
-                disableRowClick
+                onRowClick={() => {}}
+                disableRowClick={isLoggedIn}
+                checkboxState={checkboxState}
+                onCheckboxChange={handleCheckboxChange}
               />
             ) : (
-              <VideoCollection data={filteredData} />
-            )} */}
+              <VideoCollection data={pageData} currentPage={page + 1} totalPageCount={totalPageCount} onPageChange={handlePageChange} />
+            )}
           </div>
         </div>
       </div>
@@ -222,39 +264,35 @@ const ContentView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
                   <Form className="form-create">
                     <div className="form-row">
                       <div className="form-group">
-                        <label htmlFor="link">링크</label>
-                        <Field type="text" id="link" name="link" placeholder="링크를 입력해주세요." />
-                      </div>
-                    </div>
-                    <ErrorMessage name="link" component="div" className="error" />
-                    <div className="form-row">
-                      <div className="form-group">
                         <label htmlFor="title">제목</label>
-                        <Field type="text" id="title" name="title" placeholder="제목을 입력해주세요." />
+                        <Field type="text" id="title" name="title" placeholder="제목을 입력하세요. (공백포함 50자이내)" />
                       </div>
                     </div>
                     <ErrorMessage name="title" component="div" className="error" />
                     <div className="form-row">
                       <div className="form-group">
-                        <Field id="content" name="content">
-                          {({ field }: { field: { value: string; onChange: (e: any) => void } }) => (
-                            <ReactQuill
-                              value={field.value}
-                              onChange={(value) => field.onChange({ target: { name: 'content', value } })}
-                              placeholder="내용을 입력하세요."
-                              className="content-area"
-                              modules={modules}
-                            />
-                          )}
-                        </Field>
+                        <label htmlFor="video">링크</label>
+                        <Field type="text" id="video" name="video" placeholder="링크를 입력해주세요." />
                       </div>
                     </div>
-                    <ErrorMessage name="content" component="div" className="error" />
+                    <ErrorMessage name="video" component="div" className="error" />
+                    <div className="form-row">
+                      <div className="form-group">
+                        <Field
+                          as="textarea"
+                          id="description"
+                          name="description"
+                          className="content-area"
+                          placeholder="내용을 입력하세요."
+                        />
+                      </div>
+                    </div>
+                    <ErrorMessage name="description" component="div" className="error" />
                     <div className="form-button">
                       <button type="submit" className="submit-button" disabled={isSubmitting}>
                         등록
                       </button>
-                      <button className="cancel-button" onClick={handleCancel}>
+                      <button type="button" className="cancel-button" onClick={handleCancel}>
                         취소
                       </button>
                     </div>
@@ -279,16 +317,9 @@ const ContentView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
               </div>
             </div>
             <div className="form-container">
-              <Formik initialValues={initialEditValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+              <Formik initialValues={initialEditValues} validationSchema={validationSchema} onSubmit={handleModify}>
                 {({ isSubmitting }) => (
                   <Form className="form-create">
-                    <div className="form-row">
-                      <div className="form-group">
-                        <label htmlFor="link">링크</label>
-                        <Field type="text" id="link" name="link" placeholder="링크를 입력해주세요." />
-                      </div>
-                    </div>
-                    <ErrorMessage name="link" component="div" className="error" />
                     <div className="form-row">
                       <div className="form-group">
                         <label htmlFor="title">제목</label>
@@ -298,19 +329,17 @@ const ContentView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
                     <ErrorMessage name="title" component="div" className="error" />
                     <div className="form-row">
                       <div className="form-group">
-                        <Field id="content" name="content">
-                          {({ field }: { field: { value: string; onChange: (e: any) => void } }) => (
-                            <ReactQuill
-                              value={field.value}
-                              onChange={(value) => field.onChange({ target: { name: 'content', value } })}
-                              className="content-area"
-                              modules={modules}
-                            />
-                          )}
-                        </Field>
+                        <label htmlFor="video">링크</label>
+                        <Field type="text" id="video" name="video" placeholder="링크를 입력해주세요." />
                       </div>
                     </div>
-                    <ErrorMessage name="content" component="div" className="error" />
+                    <ErrorMessage name="video" component="div" className="error" />
+                    <div className="form-row">
+                      <div className="form-group">
+                        <Field as="textarea" id="description" name="description" className="content-area" />
+                      </div>
+                    </div>
+                    <ErrorMessage name="description" component="div" className="error" />
                     <div className="form-button">
                       <button type="submit" className="submit-button" disabled={isSubmitting}>
                         등록

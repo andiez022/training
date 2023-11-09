@@ -1,7 +1,6 @@
 import React from 'react';
 
 import './GalleryImageDetails.scss';
-import { useNavigate } from 'react-router-dom';
 
 export interface GalleryImageProps {
   id: string;
@@ -13,8 +12,6 @@ export interface GalleryImageProps {
 }
 
 const GalleryImageDetails: React.FC<GalleryImageProps> = ({ id, image, title, author, link, description }) => {
-  const navigate = useNavigate();
-
   return (
     <div className="image-view">
       <div className="item-wrapper">
@@ -35,14 +32,12 @@ const GalleryImageDetails: React.FC<GalleryImageProps> = ({ id, image, title, au
             </div>
             <a href={link}>{link}</a>
           </div>
-          <div className="item-body__description">
-            <p>{description}</p>
-          </div>
+          <div className="item-body__content" dangerouslySetInnerHTML={{ __html: description }} />
         </div>
       </div>
       <button
         onClick={() => {
-          navigate('/campaign');
+          window.location.pathname = 'campaign';
         }}
       >
         목록으로

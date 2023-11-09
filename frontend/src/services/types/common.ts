@@ -45,6 +45,7 @@ export interface DataItem {
   author: string;
   content: string;
   created_at: string;
+  description?: string;
   id: string;
   image: string;
   image_name: string;
@@ -54,6 +55,7 @@ export interface DataItem {
   user_id: string;
   next?: string;
   previous?: string;
+  video?: string;
 }
 
 export interface UserInfo {
@@ -72,7 +74,7 @@ export const columns = [
   { dataId: 'index', label: '번호' },
   { dataId: 'title', label: '제목' },
   { dataId: 'author', label: '작성자' },
-  { dataId: 'created_at', label: '작성일' },
+  { dataId: 'updated_at', label: '작성일' },
 ];
 
 export type CheckboxState = Record<string, boolean>;

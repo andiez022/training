@@ -33,7 +33,6 @@ const UserManagementView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) =
   const [dataItem, setDataItem] = useState<UserInfo | null>(null);
   const [totalPageCount, setTotalPageCount] = useState(0);
 
-  const [editMode, setEditMode] = useState(false);
   const [selectedDropdownText, setSelectedDropdownText] = useState('이름');
   const [inputText, setInputText] = useState('');
 
@@ -49,22 +48,34 @@ const UserManagementView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) =
     }
   };
 
+  const handleFetchItem = async (itemId: string) => {
+    try {
+      const responseData = await api.data.fetchDataById('user', itemId);
+      setDataItem(responseData);
+    } catch (error) {
+      console.error('Error fetching data: ', error);
+    }
+  };
+
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
   const closeDeleteModal = () => {
     setDeleteModalOpen(false);
   };
 
-  const openDeleteModal = () => {
-    setDeleteModalOpen(true);
+  const openDeleteModal = async (itemId: string) => {
+    try {
+      await handleFetchItem(itemId);
+      setDeleteModalOpen(true);
+    } catch (error) {
+      console.error('Error attempting to edit data: ', error);
+    }
   };
 
-  const handleDelete = () => {};
-
-  const handleFetchItem = async (itemId: string) => {
+  const handleDelete = async (itemId: string) => {
     try {
-      const responseData = await api.data.fetchDataById('user', itemId);
-      setDataItem(responseData);
+      await api.data.deleteDataById('user', itemId);
+      window.location.reload();
     } catch (error) {
       console.error('Error fetching data: ', error);
     }
@@ -155,12 +166,12 @@ const UserManagementView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) =
             onPageChange={handlePageChange}
             columns={columns}
             showAdminActions={false}
-            handleDelete={openDeleteModal}
             onRowClick={() => {}}
             disableRowClick={isLoggedIn}
             onCheckboxChange={() => {}}
             checkboxState={{}}
             className="user-management-table"
+            userDelete={openDeleteModal}
           />
           <Modal dataId="" isOpen={deleteModalOpen} onClose={closeDeleteModal} className="modal" width={ModalWidth.SM}>
             <div className="message">
@@ -177,7 +188,7 @@ const UserManagementView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) =
               </button>
               <button
                 onClick={() => {
-                  handleDelete();
+                  handleDelete(dataItem?.id ?? '');
                   setDeleteModalOpen(false);
                 }}
                 className="confirm-button"

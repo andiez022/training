@@ -1,6 +1,8 @@
 import classNames from 'classnames';
 import React from 'react';
 
+import DateTimeDisplay from '../DateTimeDisplay/DateTimeDisplay';
+
 import './Card.scss';
 
 export interface CardProps {
@@ -9,8 +11,8 @@ export interface CardProps {
   header?: React.ReactElement;
   footer?: React.ReactElement;
   title?: string;
-  content?: string;
-  date?: string;
+  content: string;
+  date: string;
   onClick?: () => void;
 }
 
@@ -21,9 +23,11 @@ const Card = ({ children, className, header, footer, title, content, date, onCli
 
   return (
     <div onClick={onClick} className={classes}>
-      <span className="card-title">{title}</span>
-      <span className="card-content">{content}</span>
-      <span className="card-date">{date}</span>
+      <div className="card-title">{title}</div>
+      <div className="card-content" dangerouslySetInnerHTML={{ __html: content }} />
+      <div className="card-date">
+        <DateTimeDisplay timestamp={date} />
+      </div>
       {children}
       {footer}
     </div>

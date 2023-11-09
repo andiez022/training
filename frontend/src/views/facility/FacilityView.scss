@@ -239,12 +239,13 @@
 }
 
 .facility-table {
+  text-align: center;
   thead {
     tr {
       background-color: #d4e9fc;
 
       th:first-child {
-        width: 6.25%;
+        width: 10%;
       }
 
       th:nth-child(2),
@@ -252,7 +253,7 @@
       th:nth-child(4),
       th:nth-child(5),
       th:nth-child(6) {
-        width: 18.75%;
+        width: 18%;
       }
     }
   }
@@ -260,14 +261,14 @@
   tbody {
     tr {
       td:first-child {
-        width: 6.25%;
+        width: 10%;
       }
       td:nth-child(2),
       td:nth-child(3),
       td:nth-child(4),
       td:nth-child(5),
       td:nth-child(6) {
-        width: 18.75%;
+        width: 18%;
       }
 
       td:nth-child(2) {

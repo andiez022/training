@@ -99,6 +99,14 @@
       flex-direction: column;
       gap: 1.25rem;
     }
+
+    &__search-container {
+      justify-content: normal;
+    }
+  }
+
+  .user-management-table {
+    margin-top: 5.5rem;
   }
 }
 
@@ -106,6 +114,14 @@
   .user-management-view {
     &__table-head {
       flex-direction: column;
+    }
+
+    &__search-container {
+      flex-direction: column;
+    }
+
+    .user-management-table {
+      margin-top: 7.5rem;
     }
 
     &__content {

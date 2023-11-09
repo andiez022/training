@@ -7,54 +7,45 @@ import './ImageGallery.scss';
 
 interface ImageGalleryProps {
   data: GalleryImageProps[];
-  isLoggedIn: boolean;
-  onCreateButton: () => void;
+  onImageClick: (itemId: string) => void;
+  currentPage: number;
+  totalPageCount: number;
+  onPageChange: (page: number) => void;
 }
 
-const ImageGallery: React.FC<ImageGalleryProps> = ({ data, isLoggedIn, onCreateButton }) => {
-  const itemsPerPage = 12;
-  const totalPageCount = Math.ceil(data.length / itemsPerPage);
-
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
-
+const ImageGallery: React.FC<ImageGalleryProps> = ({ data, onImageClick, currentPage, totalPageCount, onPageChange }) => {
   const handlePrevPage = () => {
     if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
+      onPageChange(currentPage - 1);
     }
   };
 
   const handleNextPage = () => {
     if (currentPage < totalPageCount) {
-      setCurrentPage(currentPage + 1);
+      onPageChange(currentPage + 1);
     }
   };
 
   const handleFirstPage = () => {
-    setCurrentPage(1);
+    onPageChange(1);
   };
 
   const handleLastPage = () => {
-    setCurrentPage(totalPageCount);
+    onPageChange(totalPageCount);
   };
 
   return (
     <div className="gallery-container">
-      {Array.from({ length: itemsPerPage }, (_, itemIndex) => (
-        <div key={itemIndex} className="grid-row">
-          {currentItems.slice(itemIndex * itemsPerPage, (itemIndex + 1) * itemsPerPage).map((item) => (
-            <Link to={`/campaign/${item.id}`} key={item.id}>
-              <figure>
-                <img src={item.image} alt={item.description} />
-                <figcaption>{item.title}</figcaption>
-              </figure>
-            </Link>
-          ))}
-        </div>
-      ))}
+      <div className="grid-row">
+        {data.map((item, _) => (
+          <Link to={`/campaign/${item.id}`} key={item.id}>
+            <figure onClick={() => onImageClick(item.id)}>
+              <img src={item.image} alt={item.description} />
+              <figcaption>{item.title}</figcaption>
+            </figure>
+          </Link>
+        ))}
+      </div>
       <div className="pagination">
         {currentPage > 1 && (
           <div className="icon-nav">
@@ -71,7 +62,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ data, isLoggedIn, onCreateB
             <button
               key={index}
               onClick={() => {
-                setCurrentPage(index + 1);
+                onPageChange(index + 1);
               }}
               className={`button ${currentPage === index + 1 ? 'clicked' : ''}`}
             >
@@ -86,15 +77,6 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ data, isLoggedIn, onCreateB
             </button>
             <button onClick={handleLastPage} className="button-nav">
               <Icon component={ICONS.LAST} size={IconSize.XXL} />
-            </button>
-          </div>
-        )}
-        {isLoggedIn && (
-          <div className="admin-buttons">
-            <button className="admin-buttons__edit">수정</button>
-            <button className="admin-buttons__remove">삭제</button>
-            <button className="admin-buttons__create" onClick={onCreateButton}>
-              글쓰기
             </button>
           </div>
         )}

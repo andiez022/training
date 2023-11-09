@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 
 import Icon, { ICONS, IconSize } from '../../components/SVG/Icon';
 import Dropdown from '../../components/Dropdown/Dropdown';
@@ -56,8 +56,6 @@ const Header: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
     );
   };
 
-  const navigate = useNavigate();
-
   const location = useLocation();
   const currentPath = location.pathname;
 
@@ -108,10 +106,10 @@ const Header: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
                   />
                 }
               >
-                <DropdownItem onClick={() => navigate('lab')}>게시글 관리</DropdownItem>
+                <DropdownItem onClick={() => window.location.assign('lab')}>게시글 관리</DropdownItem>
                 <DropdownItem
                   onClick={() => {
-                    navigate('user-management');
+                    window.location.assign('user-management');
                   }}
                 >
                   회원 관리

@@ -1,19 +1,112 @@
-import React, { useState } from 'react';
-import { ReactComponent as MyMap } from '../../components/SVG/map.svg';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
+import { ReactComponent as MyMap } from '../../components/SVG/map.svg';
 import Button, { ButtonIconPlacement } from '../../components/Button/Button';
 import TextInput from '../../components/TextInput/TextInput';
 import { ICONS, IconSize } from '../../components/SVG/Icon';
 import ItemModal, { FacilityItem } from './ItemModal';
-
+import CustomTable from '../../components/Table/CustomTable';
 import { FacilityData } from '../../services/constants/constants';
 
+import { CheckboxState } from '../../services/types/common';
+import api from '../../services/apiServices';
+
 import './FacilityView.scss';
-import CustomTable from '../../components/Table/CustomTable';
 
 const FacilityView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
+  const navigate = useNavigate();
+
+  const [searchBy, setSearchBy] = useState('title');
+  const [searchValue, setSearchValue] = useState('');
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(10);
+  const [pageData, setPageData] = useState([]);
+  const [dataItem, setDataItem] = useState<FacilityItem | null>(null);
+  const [totalPageCount, setTotalPageCount] = useState(0);
+
+  const [editMode, setEditMode] = useState(false);
+  const [inputText, setInputText] = useState('');
+
+  const handleKeyPress = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      const inputElement = event.target as HTMLInputElement;
+      setSearchValue(inputElement.value);
+    }
+  };
+
+  const [checkboxState, setCheckboxState] = useState<CheckboxState>({});
+
+  const handleCheckboxChange = (itemId: string) => {
+    setCheckboxState((prevCheckboxState) => ({
+      ...prevCheckboxState,
+      [itemId]: !prevCheckboxState[itemId],
+    }));
+  };
+
+  const handleDelete = async () => {
+    const itemsToDelete = Object.keys(checkboxState).filter((key) => checkboxState[key] === true);
+    try {
+      await api.data.deleteData('facility', itemsToDelete);
+      window.location.reload();
+    } catch (error) {
+      console.error('Error deleting data: ', error);
+    }
+  };
+
+  const handleEdit = async (itemId: string) => {
+    try {
+      await handleFetchItem(itemId);
+      setEditMode(true);
+      navigate(`edit/${itemId}`);
+    } catch (error) {
+      console.error('Error attempting to edit data: ', error);
+    }
+  };
+
+  const handleCreatePost = () => {
+    navigate('create');
+  };
+
+  const handleFetchItem = async (itemId: string) => {
+    try {
+      const responseData = await api.data.fetchDataById('facility', itemId);
+      setDataItem(responseData);
+    } catch (error) {
+      console.error('Error fetching data: ', error);
+    }
+  };
+
+  const handlePageChange = (page: number) => {
+    setPage(page - 1);
+  };
+
+  useEffect(() => {
+    const dataService = api.data;
+    dataService
+      .fetchDataList('facility', {
+        searchBy,
+        searchValue,
+        page,
+        pageSize,
+      })
+      .then((responseData) => {
+        const newData = responseData.list.map((item: FacilityItem, index: number) => ({
+          ...item,
+          index: page * pageSize + (index + 1),
+        }));
+
+        setPageData(newData);
+
+        setTotalPageCount(Math.ceil(responseData.total / pageSize));
+      })
+      .catch((error) => {
+        console.error('Error fetching data: ', error);
+      });
+  }, [searchBy, searchValue, page, pageSize]);
+
   const columns = [
-    { dataId: 'selected', label: '' },
+    { dataId: 'placeholder', label: '' },
     { dataId: 'numbering', label: '번호' },
     { dataId: 'district', label: '행정구역' },
     { dataId: 'location', label: '지대종류' },
@@ -60,15 +153,15 @@ const FacilityView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
   };
 
   const [selectedItem, setSelectedItem] = useState<FacilityItem | null>(null);
-  const [isOpen, setIsOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const handleFacilityClick = (item: FacilityItem) => {
     setSelectedItem(item);
-    setIsOpen(true);
+    setModalOpen(true);
   };
 
   const handleClose = () => {
-    setIsOpen(false);
+    setModalOpen(false);
   };
 
   if (isLoggedIn) {
@@ -97,15 +190,22 @@ const FacilityView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
                 </div>
               </div>
             </div>
-            {/* <CustomTable
-              data={FacilityData}
-              itemsPerPage={10}
+            <CustomTable
+              data={pageData}
+              currentPage={page + 1}
+              totalPageCount={totalPageCount}
+              onPageChange={handlePageChange}
               columns={columns}
-              setData={() => {}}
               showAdminActions={false}
+              onCreateButton={handleCreatePost}
+              handleDelete={handleDelete}
+              handleEdit={handleEdit}
+              onRowClick={() => {}}
+              disableRowClick={isLoggedIn}
+              checkboxState={checkboxState}
+              onCheckboxChange={handleCheckboxChange}
               className="facility-table"
-              disableRowClick
-            /> */}
+            />
           </div>
         </div>
       </div>
@@ -169,7 +269,7 @@ const FacilityView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
                 )}
               </ul>
             </div>
-            {selectedItem && <ItemModal facilityItem={selectedItem} isOpen={isOpen} onClose={handleClose} />}
+            {selectedItem && <ItemModal facilityItem={selectedItem} isOpen={modalOpen} onClose={handleClose} />}
           </div>
         </div>
       </div>
