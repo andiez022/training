@@ -8,20 +8,19 @@ import 'react-quill/dist/quill.snow.css';
 import { DataItem } from '../../services/types/common';
 import api from '../../services/apiServices';
 
-import './AnnView.scss';
+import './BoardView.scss';
 
-const AnnEdit: React.FC = () => {
+const BoardEdit: React.FC = () => {
   const { id } = useParams();
   const [dataItem, setDataItem] = useState<DataItem | null>(null);
   const [initialEditValues, setInitialEditValues] = useState({
-    id: '',
     title: '',
     content: '',
   });
 
   const handleFetchItem = async (itemId: string) => {
     try {
-      const responseData = await api.data.fetchDataById('notice', itemId);
+      const responseData = await api.data.fetchDataById('free-board', itemId);
       setDataItem(responseData);
     } catch (error) {
       console.error('Error fetching data: ', error);
@@ -37,27 +36,11 @@ const AnnEdit: React.FC = () => {
   useEffect(() => {
     if (dataItem) {
       setInitialEditValues({
-        id: dataItem.id,
         title: dataItem.title,
         content: dataItem.content,
       });
     }
   }, [dataItem]);
-
-  const validationSchema = Yup.object().shape({
-    title: Yup.string().required('제목을 입력하세요.'),
-    content: Yup.string().required('제내용을 입력하세요.'),
-  });
-
-  const handleModify = async (values: any) => {
-    try {
-      await api.data.editData('notice', values);
-
-      window.location.pathname = 'announcement';
-    } catch (error) {
-      console.error('Error posting data: ', error);
-    }
-  };
 
   const toolBarOptions = [
     [{ header: [1, 2, false] }],
@@ -71,12 +54,27 @@ const AnnEdit: React.FC = () => {
     toolbar: toolBarOptions,
   };
 
+  const validationSchema = Yup.object().shape({
+    title: Yup.string().required('제목을 입력하세요.'),
+    content: Yup.string().required('제내용을 입력하세요.'),
+  });
+
+  const handleModify = async (values: any) => {
+    try {
+      await api.data.editAdminData('free-board/admin', dataItem?.id ?? '', values);
+
+      window.location.pathname = 'board';
+    } catch (error) {
+      console.error('Error posting data: ', error);
+    }
+  };
+
   return (
-    <div className="ann-view">
-      <div className="ann-view__top">
-        <div className="ann-view__content">
-          <div className="ann-view__table-head">
-            <div className="ann-view__title">
+    <div className="board-view">
+      <div className="board-view__top">
+        <div className="board-view__content">
+          <div className="board-view__table-head">
+            <div className="board-view__title">
               <h2 className="gradual-color-transition">공지사항 수정</h2>
             </div>
           </div>
@@ -110,7 +108,7 @@ const AnnEdit: React.FC = () => {
                     <button type="submit" className="submit-button" disabled={isSubmitting}>
                       등록
                     </button>
-                    <button type="button" className="cancel-button" onClick={() => window.location.assign('/announcement')}>
+                    <button type="button" className="cancel-button" onClick={() => window.location.assign('/board')}>
                       취소
                     </button>
                   </div>
@@ -124,4 +122,4 @@ const AnnEdit: React.FC = () => {
   );
 };
 
-export default AnnEdit;
+export default BoardEdit;

@@ -45,7 +45,7 @@ export interface DataItem {
   author: string;
   content: string;
   created_at: string;
-  description?: string;
+  description: string;
   id: string;
   image: string;
   image_name: string;
@@ -55,7 +55,7 @@ export interface DataItem {
   user_id: string;
   next?: string;
   previous?: string;
-  video?: string;
+  video: string;
 }
 
 export interface UserInfo {

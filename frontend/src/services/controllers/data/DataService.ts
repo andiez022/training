@@ -42,6 +42,20 @@ export default class DataService {
     }
   }
 
+  async postAssets(file: File) {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const apiUrl = `assets`;
+    try {
+      const response = await this.axios.post(apiUrl, formData);
+      return response.data;
+    } catch (error) {
+      console.error('Error posting data: ', error);
+      throw error;
+    }
+  }
+
   async postData(
     pageType: string,
     data: {

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { toast } from 'react-toastify';
+
 import Button, { ButtonIconPlacement } from '../../components/Button/Button';
 import { ICONS, IconSize } from '../../components/SVG/Icon';
 import Dropdown from '../../components/Dropdown/Dropdown';
@@ -51,6 +53,14 @@ const AnnView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
     const itemsToDelete = Object.keys(checkboxState).filter((key) => checkboxState[key] === true);
     try {
       await api.data.deleteData('notice', itemsToDelete);
+      toast.success('성공적으로 삭제되었습니다.', {
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: 'colored',
+      });
       window.location.reload();
     } catch (error) {
       console.error('Error deleting data: ', error);

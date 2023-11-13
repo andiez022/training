@@ -8,9 +8,9 @@ import 'react-quill/dist/quill.snow.css';
 import { DataItem } from '../../services/types/common';
 import api from '../../services/apiServices';
 
-import './AnnView.scss';
+import './LabView.scss';
 
-const AnnEdit: React.FC = () => {
+const LabEdit: React.FC = () => {
   const { id } = useParams();
   const [dataItem, setDataItem] = useState<DataItem | null>(null);
   const [initialEditValues, setInitialEditValues] = useState({
@@ -21,7 +21,7 @@ const AnnEdit: React.FC = () => {
 
   const handleFetchItem = async (itemId: string) => {
     try {
-      const responseData = await api.data.fetchDataById('notice', itemId);
+      const responseData = await api.data.fetchDataById('living-lab', itemId);
       setDataItem(responseData);
     } catch (error) {
       console.error('Error fetching data: ', error);
@@ -51,9 +51,9 @@ const AnnEdit: React.FC = () => {
 
   const handleModify = async (values: any) => {
     try {
-      await api.data.editData('notice', values);
+      await api.data.editData('living-lab', values);
 
-      window.location.pathname = 'announcement';
+      window.location.pathname = 'lab';
     } catch (error) {
       console.error('Error posting data: ', error);
     }
@@ -72,12 +72,12 @@ const AnnEdit: React.FC = () => {
   };
 
   return (
-    <div className="ann-view">
-      <div className="ann-view__top">
-        <div className="ann-view__content">
-          <div className="ann-view__table-head">
-            <div className="ann-view__title">
-              <h2 className="gradual-color-transition">공지사항 수정</h2>
+    <div className="lab-view">
+      <div className="lab-view__top">
+        <div className="lab-view__content">
+          <div className="lab-view__table-head">
+            <div className="lab-view__title">
+              <h2 className="gradual-color-transition">리빙랩 수정</h2>
             </div>
           </div>
           <div className="form-container">
@@ -110,7 +110,7 @@ const AnnEdit: React.FC = () => {
                     <button type="submit" className="submit-button" disabled={isSubmitting}>
                       등록
                     </button>
-                    <button type="button" className="cancel-button" onClick={() => window.location.assign('/announcement')}>
+                    <button type="button" className="cancel-button" onClick={() => window.location.assign('/lab')}>
                       취소
                     </button>
                   </div>
@@ -124,4 +124,4 @@ const AnnEdit: React.FC = () => {
   );
 };
 
-export default AnnEdit;
+export default LabEdit;

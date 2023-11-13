@@ -2,26 +2,25 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
 
 import { DataItem } from '../../services/types/common';
 import api from '../../services/apiServices';
 
-import './AnnView.scss';
+import './ContentView.scss';
 
-const AnnEdit: React.FC = () => {
+const ContentEdit: React.FC = () => {
   const { id } = useParams();
   const [dataItem, setDataItem] = useState<DataItem | null>(null);
   const [initialEditValues, setInitialEditValues] = useState({
     id: '',
     title: '',
-    content: '',
+    video: '',
+    description: '',
   });
 
   const handleFetchItem = async (itemId: string) => {
     try {
-      const responseData = await api.data.fetchDataById('notice', itemId);
+      const responseData = await api.data.fetchDataById('content', itemId);
       setDataItem(responseData);
     } catch (error) {
       console.error('Error fetching data: ', error);
@@ -39,45 +38,34 @@ const AnnEdit: React.FC = () => {
       setInitialEditValues({
         id: dataItem.id,
         title: dataItem.title,
-        content: dataItem.content,
+        video: dataItem.video,
+        description: dataItem.description,
       });
     }
   }, [dataItem]);
 
   const validationSchema = Yup.object().shape({
     title: Yup.string().required('제목을 입력하세요.'),
-    content: Yup.string().required('제내용을 입력하세요.'),
+    description: Yup.string().required('제내용을 입력하세요.'),
   });
 
   const handleModify = async (values: any) => {
     try {
-      await api.data.editData('notice', values);
+      await api.data.editData('content', values);
 
-      window.location.pathname = 'announcement';
+      window.location.pathname = 'content';
     } catch (error) {
       console.error('Error posting data: ', error);
     }
   };
 
-  const toolBarOptions = [
-    [{ header: [1, 2, false] }],
-    ['bold', 'italic', 'underline'],
-    [{ align: '' }, { align: 'center' }, { align: 'right' }, { align: 'justify' }],
-    [{ list: 'bullet' }, { list: 'ordered' }, 'blockquote'],
-    ['link', 'image'],
-  ];
-
-  const modules = {
-    toolbar: toolBarOptions,
-  };
-
   return (
-    <div className="ann-view">
-      <div className="ann-view__top">
-        <div className="ann-view__content">
-          <div className="ann-view__table-head">
-            <div className="ann-view__title">
-              <h2 className="gradual-color-transition">공지사항 수정</h2>
+    <div className="content-view">
+      <div className="content-view__top">
+        <div className="content-view__content">
+          <div className="content-view__table-head">
+            <div className="content-view__title">
+              <h2 className="gradual-color-transition">공지사항 작성</h2>
             </div>
           </div>
           <div className="form-container">
@@ -87,30 +75,28 @@ const AnnEdit: React.FC = () => {
                   <div className="form-row">
                     <div className="form-group">
                       <label htmlFor="title">제목</label>
-                      <Field type="text" id="title" name="title" />
+                      <Field type="text" id="title" name="title" placeholder="제목을 입력해주세요." />
                     </div>
                   </div>
                   <ErrorMessage name="title" component="div" className="error" />
                   <div className="form-row">
                     <div className="form-group">
-                      <Field id="content" name="content">
-                        {({ field }: { field: { value: string; onChange: (e: any) => void } }) => (
-                          <ReactQuill
-                            value={field.value}
-                            onChange={(value) => field.onChange({ target: { name: 'content', value } })}
-                            className="content-area"
-                            modules={modules}
-                          />
-                        )}
-                      </Field>
+                      <label htmlFor="video">링크</label>
+                      <Field type="text" id="video" name="video" placeholder="링크를 입력해주세요." />
                     </div>
                   </div>
-                  <ErrorMessage name="content" component="div" className="error" />
+                  <ErrorMessage name="video" component="div" className="error" />
+                  <div className="form-row">
+                    <div className="form-group">
+                      <Field as="textarea" id="description" name="description" className="content-area" />
+                    </div>
+                  </div>
+                  <ErrorMessage name="description" component="div" className="error" />
                   <div className="form-button">
                     <button type="submit" className="submit-button" disabled={isSubmitting}>
                       등록
                     </button>
-                    <button type="button" className="cancel-button" onClick={() => window.location.assign('/announcement')}>
+                    <button type="button" className="cancel-button" onClick={() => window.location.assign('/content')}>
                       취소
                     </button>
                   </div>
@@ -124,4 +110,4 @@ const AnnEdit: React.FC = () => {
   );
 };
 
-export default AnnEdit;
+export default ContentEdit;

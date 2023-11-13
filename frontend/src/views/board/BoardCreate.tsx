@@ -1,59 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
-import { DataItem } from '../../services/types/common';
 import api from '../../services/apiServices';
 
-import './AnnView.scss';
+import './BoardView.scss';
 
-const AnnEdit: React.FC = () => {
-  const { id } = useParams();
-  const [dataItem, setDataItem] = useState<DataItem | null>(null);
-  const [initialEditValues, setInitialEditValues] = useState({
-    id: '',
+const BoardCreate: React.FC<{ isLoggedIn: boolean }> = (isLoggedIn) => {
+  const initialValues = {
     title: '',
     content: '',
-  });
-
-  const handleFetchItem = async (itemId: string) => {
-    try {
-      const responseData = await api.data.fetchDataById('notice', itemId);
-      setDataItem(responseData);
-    } catch (error) {
-      console.error('Error fetching data: ', error);
-    }
   };
-
-  useEffect(() => {
-    if (id) {
-      handleFetchItem(id);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (dataItem) {
-      setInitialEditValues({
-        id: dataItem.id,
-        title: dataItem.title,
-        content: dataItem.content,
-      });
-    }
-  }, [dataItem]);
 
   const validationSchema = Yup.object().shape({
     title: Yup.string().required('제목을 입력하세요.'),
     content: Yup.string().required('제내용을 입력하세요.'),
   });
 
-  const handleModify = async (values: any) => {
+  const handleSubmit = async (values: any) => {
     try {
-      await api.data.editData('notice', values);
+      await api.data.postData('free-board/admin', values);
 
-      window.location.pathname = 'announcement';
+      window.location.pathname = 'board';
     } catch (error) {
       console.error('Error posting data: ', error);
     }
@@ -72,22 +42,32 @@ const AnnEdit: React.FC = () => {
   };
 
   return (
-    <div className="ann-view">
-      <div className="ann-view__top">
-        <div className="ann-view__content">
-          <div className="ann-view__table-head">
-            <div className="ann-view__title">
-              <h2 className="gradual-color-transition">공지사항 수정</h2>
+    <div className="board-view">
+      <div className="board-view__top">
+        <div className="board-view__content">
+          <div className="board-view__table-head">
+            <div className="board-view__title">
+              <h2 className="gradual-color-transition">자유게시판 작성</h2>
             </div>
           </div>
           <div className="form-container">
-            <Formik enableReinitialize initialValues={initialEditValues} validationSchema={validationSchema} onSubmit={handleModify}>
+            <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
               {({ isSubmitting }) => (
                 <Form className="form-create">
+                  {!isLoggedIn && (
+                    <div className="form-row">
+                      <div className="form-group">
+                        <label htmlFor="authorName">작성자 이름</label>
+                        <Field type="text" id="authorName" name="authorName" placeholder="이름을 입력하세요." />
+                        <label htmlFor="password">비밀번호</label>
+                        <Field type="password" id="password" name="password" placeholder="비밀번호를 입력하세요." />
+                      </div>
+                    </div>
+                  )}
                   <div className="form-row">
                     <div className="form-group">
                       <label htmlFor="title">제목</label>
-                      <Field type="text" id="title" name="title" />
+                      <Field type="text" id="title" name="title" placeholder="제목을 입력해주세요." />
                     </div>
                   </div>
                   <ErrorMessage name="title" component="div" className="error" />
@@ -98,6 +78,7 @@ const AnnEdit: React.FC = () => {
                           <ReactQuill
                             value={field.value}
                             onChange={(value) => field.onChange({ target: { name: 'content', value } })}
+                            placeholder="내용을 입력하세요."
                             className="content-area"
                             modules={modules}
                           />
@@ -110,7 +91,7 @@ const AnnEdit: React.FC = () => {
                     <button type="submit" className="submit-button" disabled={isSubmitting}>
                       등록
                     </button>
-                    <button type="button" className="cancel-button" onClick={() => window.location.assign('/announcement')}>
+                    <button type="button" className="cancel-button" onClick={() => window.location.assign('/board')}>
                       취소
                     </button>
                   </div>
@@ -124,4 +105,4 @@ const AnnEdit: React.FC = () => {
   );
 };
 
-export default AnnEdit;
+export default BoardCreate;

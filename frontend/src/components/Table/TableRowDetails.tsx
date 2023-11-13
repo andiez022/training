@@ -1,6 +1,8 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+import DateTimeDisplay from '../DateTimeDisplay/DateTimeDisplay';
+
 import './TableRowDetails.scss';
 
 export interface TableRowProps {
@@ -54,7 +56,9 @@ const TableRowDetails: React.FC<TableRowProps> = ({
           <div className="label">
             <p>작성일</p>
           </div>
-          <p>{createdAt}</p>
+          <p>
+            <DateTimeDisplay timestamp={createdAt} />
+          </p>
         </div>
       </div>
       <div className="table-detail__description" dangerouslySetInnerHTML={{ __html: content }} />

@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import Icon, { ICONS, IconSize } from '../SVG/Icon';
 import VideoPlayer from './VideoPlayer';
+import DateTimeDisplay from '../DateTimeDisplay/DateTimeDisplay';
 
 import './VideoCollection.scss';
 
@@ -27,15 +28,15 @@ const VideoCollection: React.FC<VideoCollectionProps> = ({ data, currentPage, to
   const renderVideoItems = () => {
     return data.map((video) => (
       <div key={video.id} className="video">
-        <div className="video__thumbnail">
-          <VideoPlayer videoId={video.video} />
-        </div>
+        <VideoPlayer videoId={video.video} />
         <div className="video__info">
           <div className="video__info__header">
             <div className="video__info__header__title">
               <h3>{video.title}</h3>
             </div>
-            <p>{video.updated_at}</p>
+            <p>
+              <DateTimeDisplay timestamp={video.updated_at} />
+            </p>
           </div>
           <div className="video__info__desc" dangerouslySetInnerHTML={{ __html: video.description }} />
         </div>

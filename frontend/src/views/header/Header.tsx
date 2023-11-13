@@ -66,7 +66,17 @@ const Header: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
     isHomePage && isTransparent ? 'transparent' : ''
   } ${isLoggedIn ? 'admin' : ''}`;
 
-  const isSmallerScreen = window.innerWidth <= 768;
+  const [isSmallerScreen, setIsSmallerScreen] = useState(false);
+  const [isMediumScreen, setIsMediumScreen] = useState(false);
+
+  useEffect(() => {
+    if (window.innerWidth <= 768) setIsSmallerScreen(true);
+    else setIsSmallerScreen(false);
+    if (window.innerWidth <= 1200) setIsMediumScreen(true);
+    else setIsMediumScreen(false);
+
+    return () => {};
+  }, [window.innerWidth]);
 
   return (
     <header className={headerClasses}>
@@ -94,7 +104,8 @@ const Header: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
             <CustomNavLink to="/announcement" text="공지사항" />
             <CustomNavLink to="/facility" text="시설현황" />
             <CustomNavLink to="/content" text="콘텐츠" />
-            {isLoggedIn ? (
+            {!isLoggedIn && <CustomNavLink to="/lab" text="리빙랩" />}
+            {isLoggedIn && !isMediumScreen ? (
               <Dropdown
                 elementAction={
                   <CustomNavLink
@@ -106,18 +117,22 @@ const Header: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
                   />
                 }
               >
-                <DropdownItem onClick={() => window.location.assign('lab')}>게시글 관리</DropdownItem>
+                <DropdownItem onClick={() => window.location.assign('/lab')}>게시글 관리</DropdownItem>
                 <DropdownItem
                   onClick={() => {
-                    window.location.assign('user-management');
+                    window.location.assign('/user-management');
                   }}
                 >
                   회원 관리
                 </DropdownItem>
               </Dropdown>
             ) : (
-              <CustomNavLink to="/lab" text="리빙랩" />
+              <>
+                <CustomNavLink to="/lab" text="리빙랩" />
+                <CustomNavLink to="/user-management" text="회원 관리" />
+              </>
             )}
+
             <CustomNavLink to="/campaign" text="캠페인" />
             <CustomNavLink to="/board" text="자유게시판" />
             {isLoggedIn && (

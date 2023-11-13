@@ -98,7 +98,7 @@ const Home: React.FC = () => {
           <div className="announcement-container">
             <div className="announcement-title">
               <h2 className="gradual-color-transition">공지사항</h2>
-              <button>
+              <button onClick={() => window.location.assign('announcement')}>
                 <Icon component={ICONS.PLUS} size={IconSize.XXL} />
               </button>
             </div>
@@ -119,7 +119,7 @@ const Home: React.FC = () => {
           <RevealOnScroll className="list-container">
             <div className="list-header">
               <h2 className="gradual-color-transition">콘텐츠</h2>
-              <button>
+              <button onClick={() => window.location.assign('content')}>
                 <Icon component={ICONS.PLUS} size={IconSize.XXL} />
               </button>
             </div>
@@ -138,7 +138,7 @@ const Home: React.FC = () => {
           <RevealOnScroll className="list-container" style={{ transitionDelay: '0.25s' }}>
             <div className="list-header">
               <h2 className="gradual-color-transition">리빙랩</h2>
-              <button>
+              <button onClick={() => window.location.assign('lab')}>
                 <Icon component={ICONS.PLUS} size={IconSize.XXL} />
               </button>
             </div>
@@ -157,7 +157,7 @@ const Home: React.FC = () => {
           <RevealOnScroll className="list-container" style={{ transitionDelay: '0.5s' }}>
             <div className="list-header">
               <h2 className="gradual-color-transition">캠페인</h2>
-              <button>
+              <button onClick={() => window.location.assign('campaign')}>
                 <Icon component={ICONS.PLUS} size={IconSize.XXL} />
               </button>
             </div>
@@ -176,7 +176,7 @@ const Home: React.FC = () => {
           <RevealOnScroll className="list-container" style={{ transitionDelay: '0.75s' }}>
             <div className="list-header">
               <h2 className="gradual-color-transition">자유게시판</h2>
-              <button>
+              <button onClick={() => window.location.assign('board')}>
                 <Icon component={ICONS.PLUS} size={IconSize.XXL} />
               </button>
             </div>

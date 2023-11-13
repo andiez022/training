@@ -138,10 +138,11 @@
       }
     }
   }
-}
 
-button {
-  border: none;
+  button {
+    border: none;
+    cursor: pointer;
+  }
 }
 
 @keyframes scaleZ {

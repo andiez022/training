@@ -1,62 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
-import { DataItem } from '../../services/types/common';
 import api from '../../services/apiServices';
 
-import './AnnView.scss';
+import './CampaignView.scss';
 
-const AnnEdit: React.FC = () => {
-  const { id } = useParams();
-  const [dataItem, setDataItem] = useState<DataItem | null>(null);
-  const [initialEditValues, setInitialEditValues] = useState({
-    id: '',
+const CampaignCreate: React.FC = () => {
+  const initialValues = {
     title: '',
     content: '',
-  });
-
-  const handleFetchItem = async (itemId: string) => {
-    try {
-      const responseData = await api.data.fetchDataById('notice', itemId);
-      setDataItem(responseData);
-    } catch (error) {
-      console.error('Error fetching data: ', error);
-    }
-  };
-
-  useEffect(() => {
-    if (id) {
-      handleFetchItem(id);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (dataItem) {
-      setInitialEditValues({
-        id: dataItem.id,
-        title: dataItem.title,
-        content: dataItem.content,
-      });
-    }
-  }, [dataItem]);
-
-  const validationSchema = Yup.object().shape({
-    title: Yup.string().required('제목을 입력하세요.'),
-    content: Yup.string().required('제내용을 입력하세요.'),
-  });
-
-  const handleModify = async (values: any) => {
-    try {
-      await api.data.editData('notice', values);
-
-      window.location.pathname = 'announcement';
-    } catch (error) {
-      console.error('Error posting data: ', error);
-    }
+    link: '',
+    image: null,
+    image_name: '',
   };
 
   const toolBarOptions = [
@@ -71,23 +29,41 @@ const AnnEdit: React.FC = () => {
     toolbar: toolBarOptions,
   };
 
+  const validationSchema = Yup.object().shape({
+    title: Yup.string().required('제목을 입력하세요.'),
+    content: Yup.string().required('제내용을 입력하세요.'),
+    link: Yup.string().required('링크를 입력해주세요.'),
+    image: Yup.string().required('링크를 입력해주세요.'),
+  });
+
+  const handleSubmit = async (values: any) => {
+    try {
+      await api.data.postAssets(values.image);
+      await api.data.postData('campaign', values);
+
+      window.location.pathname = 'campaign';
+    } catch (error) {
+      console.error('Error posting data: ', error);
+    }
+  };
+
   return (
-    <div className="ann-view">
-      <div className="ann-view__top">
-        <div className="ann-view__content">
-          <div className="ann-view__table-head">
-            <div className="ann-view__title">
-              <h2 className="gradual-color-transition">공지사항 수정</h2>
+    <div className="campaign-view">
+      <div className="campaign-view__top">
+        <div className="campaign-view__content">
+          <div className="campaign-view__grid-head">
+            <div className="campaign-view__title">
+              <h2 className="gradual-color-transition">캠페인 작성</h2>
             </div>
           </div>
           <div className="form-container">
-            <Formik enableReinitialize initialValues={initialEditValues} validationSchema={validationSchema} onSubmit={handleModify}>
+            <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
               {({ isSubmitting }) => (
                 <Form className="form-create">
                   <div className="form-row">
                     <div className="form-group">
                       <label htmlFor="title">제목</label>
-                      <Field type="text" id="title" name="title" />
+                      <Field type="text" id="title" name="title" placeholder="제목을 입력해주세요." />
                     </div>
                   </div>
                   <ErrorMessage name="title" component="div" className="error" />
@@ -98,6 +74,7 @@ const AnnEdit: React.FC = () => {
                           <ReactQuill
                             value={field.value}
                             onChange={(value) => field.onChange({ target: { name: 'content', value } })}
+                            placeholder="내용을 입력하세요."
                             className="content-area"
                             modules={modules}
                           />
@@ -106,11 +83,21 @@ const AnnEdit: React.FC = () => {
                     </div>
                   </div>
                   <ErrorMessage name="content" component="div" className="error" />
+                  <div className="form-row">
+                    <div className="form-group">
+                      <label htmlFor="link">링크</label>
+                      <Field type="text" id="link" name="link" placeholder="링크를 입력해주세요." />
+                    </div>
+                  </div>
+                  <ErrorMessage name="link" component="div" className="error" />
+                  <div>
+                    <Field type="file" name="image" accept="image/*" />
+                  </div>
                   <div className="form-button">
                     <button type="submit" className="submit-button" disabled={isSubmitting}>
                       등록
                     </button>
-                    <button type="button" className="cancel-button" onClick={() => window.location.assign('/announcement')}>
+                    <button className="cancel-button" onClick={() => window.location.assign('/campaign')}>
                       취소
                     </button>
                   </div>
@@ -124,4 +111,4 @@ const AnnEdit: React.FC = () => {
   );
 };
 
-export default AnnEdit;
+export default CampaignCreate;

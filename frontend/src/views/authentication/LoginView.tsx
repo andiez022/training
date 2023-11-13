@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -14,8 +14,6 @@ import { storage } from '../../common/utils/storage';
 import './LoginView.scss';
 
 const LoginView: React.FC = () => {
-  const navigate = useNavigate();
-
   const initialValues = {
     username: '',
     password: '',

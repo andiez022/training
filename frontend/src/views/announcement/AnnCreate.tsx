@@ -4,6 +4,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { toast } from 'react-toastify';
 
 import api from '../../services/apiServices';
 
@@ -25,8 +26,16 @@ const AnnCreate: React.FC = () => {
   const handleSubmit = async (values: any) => {
     try {
       await api.data.postData('notice', values);
+      toast.success('성공적으로 삭제되었습니다.', {
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: 'colored',
+      });
 
-      window.location.assign('/announcement');
+      navigate('/announcement');
     } catch (error) {
       console.error('Error posting data: ', error);
     }
