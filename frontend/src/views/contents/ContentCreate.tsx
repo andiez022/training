@@ -1,6 +1,8 @@
 import React from 'react';
+import { useMutation } from '@tanstack/react-query';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { toast } from 'react-toastify';
 
 import api from '../../services/apiServices';
 
@@ -19,14 +21,30 @@ const ContentCreate: React.FC = () => {
     description: Yup.string().required('제내용을 입력하세요.'),
   });
 
-  const handleSubmit = async (values: any) => {
-    try {
-      await api.data.postData('content', values);
+  const createDataMutation = useMutation((values: any) => api.data.postData('content', values), {
+    onSuccess: () => {
+      toast.success('성공적으로 삭제되었습니다.', {
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: 'colored',
+      });
+      window.location.assign('/content');
+    },
+  });
 
-      window.location.pathname = 'content';
-    } catch (error) {
-      console.error('Error posting data: ', error);
-    }
+  const toolBarOptions = [
+    [{ header: [1, 2, false] }],
+    ['bold', 'italic', 'underline'],
+    [{ align: '' }, { align: 'center' }, { align: 'right' }, { align: 'justify' }],
+    [{ list: 'bullet' }, { list: 'ordered' }, 'blockquote'],
+    ['link', 'image'],
+  ];
+
+  const modules = {
+    toolbar: toolBarOptions,
   };
 
   return (
@@ -39,7 +57,11 @@ const ContentCreate: React.FC = () => {
             </div>
           </div>
           <div className="form-container">
-            <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+            <Formik
+              initialValues={initialValues}
+              validationSchema={validationSchema}
+              onSubmit={(values) => createDataMutation.mutate(values)}
+            >
               {({ isSubmitting }) => (
                 <Form className="form-create">
                   <div className="form-row">

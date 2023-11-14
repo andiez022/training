@@ -10,6 +10,7 @@ export default class DataService {
       searchValue: string;
       page: number;
       pageSize: number;
+      userId?: string;
     },
   ) {
     const apiSearchParams = {
@@ -17,6 +18,7 @@ export default class DataService {
       search_value: searchOptions.searchValue,
       page: searchOptions.page,
       page_size: searchOptions.pageSize,
+      user_id: searchOptions.userId,
     };
 
     const apiUrl = `${pageType}`;

@@ -36,7 +36,8 @@ const LoginView: React.FC = () => {
     try {
       const response = await userService.login(values.username, values.password);
       storage.setToken(response.token);
-      window.location.pathname = routes.DEFAULT;
+      if (response.role === 'Normal') window.location.pathname = '/lab';
+      else window.location.pathname = routes.DEFAULT;
     } catch (error) {
       toast.error('사용자를 찾을 수 없음', {
         autoClose: 5000,

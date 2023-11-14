@@ -1,4 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useQuery, useMutation } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
+
+import { toast } from 'react-toastify';
 
 import Button, { ButtonIconPlacement } from '../../components/Button/Button';
 import { ICONS, IconSize } from '../../components/SVG/Icon';
@@ -14,6 +18,8 @@ import api from '../../services/apiServices';
 import './UserManagementView.scss';
 
 const UserManagementView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
+  const pageSize = 10;
+
   const columns = [
     { dataId: 'selected', label: '' },
     { dataId: 'index', label: '번호' },
@@ -28,10 +34,9 @@ const UserManagementView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) =
   const [searchBy, setSearchBy] = useState('name');
   const [searchValue, setSearchValue] = useState('');
   const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
-  const [pageData, setPageData] = useState([]);
-  const [dataItem, setDataItem] = useState<UserInfo | null>(null);
-  const [totalPageCount, setTotalPageCount] = useState(0);
+  const [itemId, setItemId] = useState<string>('');
+  const [fullname, setFullname] = useState<string>('');
+  const [username, setUsername] = useState<string>('');
 
   const [selectedDropdownText, setSelectedDropdownText] = useState('이름');
   const [inputText, setInputText] = useState('');
@@ -48,36 +53,42 @@ const UserManagementView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) =
     }
   };
 
-  const handleFetchItem = async (itemId: string) => {
-    try {
-      const responseData = await api.data.fetchDataById('user', itemId);
-      setDataItem(responseData);
-    } catch (error) {
-      console.error('Error fetching data: ', error);
-    }
-  };
-
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
   const closeDeleteModal = () => {
     setDeleteModalOpen(false);
   };
 
-  const openDeleteModal = async (itemId: string) => {
+  const openDeleteModal = (itemId: string, fullname: string, username: string) => {
     try {
-      await handleFetchItem(itemId);
       setDeleteModalOpen(true);
+      setItemId(itemId);
+      setFullname(fullname);
+      setUsername(username);
     } catch (error) {
-      console.error('Error attempting to edit data: ', error);
+      console.error('Error attempting to fetch user data: ', error);
     }
   };
 
-  const handleDelete = async (itemId: string) => {
-    try {
-      await api.data.deleteDataById('user', itemId);
+  const deleteDataMutation = useMutation((itemId: string) => api.data.deleteDataById('user', itemId), {
+    onSuccess: () => {
+      toast.success('성공적으로 삭제되었습니다.', {
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: 'colored',
+      });
       window.location.reload();
+    },
+  });
+
+  const handleDelete = () => {
+    try {
+      deleteDataMutation.mutate(itemId);
     } catch (error) {
-      console.error('Error fetching data: ', error);
+      console.error('Error deleting data: ', error);
     }
   };
 
@@ -85,29 +96,31 @@ const UserManagementView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) =
     setPage(page - 1);
   };
 
-  useEffect(() => {
-    const dataService = api.data;
-    dataService
-      .fetchDataList('user', {
+  const { data: responseData, error } = useQuery(
+    ['labUserList', searchBy, searchValue, page, pageSize],
+    () =>
+      api.data.fetchDataList('user', {
         searchBy,
         searchValue,
         page,
         pageSize,
-      })
-      .then((responseData) => {
-        const newData = responseData.list.map((item: UserInfo, index: number) => ({
-          ...item,
-          index: page * pageSize + (index + 1),
-        }));
+      }),
+    {
+      enabled: searchBy !== undefined && searchValue !== undefined,
+    },
+  );
 
-        setPageData(newData);
+  if (error) {
+    console.log(error);
+  }
 
-        setTotalPageCount(Math.ceil(responseData.total / pageSize));
-      })
-      .catch((error) => {
-        console.error('Error fetching data: ', error);
-      });
-  }, [searchBy, searchValue, page, pageSize]);
+  const pageData =
+    responseData?.list?.map((item: UserInfo, index: number) => ({
+      ...item,
+      index: page * pageSize + (index + 1),
+    })) || [];
+
+  const totalPageCount = responseData ? Math.ceil(responseData.total / pageSize) : 0;
 
   const handleKeyPress = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter') {
@@ -175,11 +188,9 @@ const UserManagementView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) =
           />
           <Modal dataId="" isOpen={deleteModalOpen} onClose={closeDeleteModal} className="modal" width={ModalWidth.SM}>
             <div className="message">
-              {dataItem && (
-                <span>
-                  {dataItem.full_name} ({dataItem.username}) 님을
-                </span>
-              )}
+              <span>
+                {fullname} ({username}) 님을
+              </span>
               <span>탈퇴시키겠습니까?</span>
             </div>
             <div className="modal__buttons">
@@ -188,7 +199,7 @@ const UserManagementView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) =
               </button>
               <button
                 onClick={() => {
-                  handleDelete(dataItem?.id ?? '');
+                  handleDelete();
                   setDeleteModalOpen(false);
                 }}
                 className="confirm-button"

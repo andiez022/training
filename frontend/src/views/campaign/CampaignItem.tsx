@@ -1,31 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import GalleryImageDetails from '../../components/ImageGallery/GalleryImageDetails';
 
-import { DataItem } from '../../services/types/common';
 import api from '../../services/apiServices';
 
 import './CampaignView.scss';
 
 const CampaignItem: React.FunctionComponent = () => {
   const { id } = useParams();
-  const [dataItem, setDataItem] = useState<DataItem | null>(null);
+  const navigate = useNavigate();
 
-  const handleFetchItem = async (itemId: string) => {
-    try {
-      const responseData = await api.data.fetchDataById('campaign', itemId);
-      setDataItem(responseData);
-    } catch (error) {
-      console.error('Error fetching data: ', error);
-    }
-  };
+  const { data: dataItem, error } = useQuery(['campaignItem', id], () => api.data.fetchDataById('campaign', id || ''));
 
-  useEffect(() => {
-    if (id) {
-      handleFetchItem(id);
-    }
-  }, [id]);
+  if (error) {
+    console.log(error);
+  }
 
   return (
     <div className="campaign-view">

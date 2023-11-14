@@ -1,109 +1,28 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
 
 import { ReactComponent as MyMap } from '../../components/SVG/map.svg';
 import Button, { ButtonIconPlacement } from '../../components/Button/Button';
 import TextInput from '../../components/TextInput/TextInput';
 import { ICONS, IconSize } from '../../components/SVG/Icon';
 import ItemModal, { FacilityItem } from './ItemModal';
+import Dropdown from '../../components/Dropdown/Dropdown';
+import DropdownItem from '../../components/Dropdown/DropdownItem';
 import CustomTable from '../../components/Table/CustomTable';
 import { FacilityData } from '../../services/constants/constants';
-
-import { CheckboxState } from '../../services/types/common';
-import api from '../../services/apiServices';
 
 import './FacilityView.scss';
 
 const FacilityView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
-  const navigate = useNavigate();
+  const pageSize = 10;
 
-  const [searchBy, setSearchBy] = useState('title');
-  const [searchValue, setSearchValue] = useState('');
   const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
+
   const [pageData, setPageData] = useState([]);
-  const [dataItem, setDataItem] = useState<FacilityItem | null>(null);
   const [totalPageCount, setTotalPageCount] = useState(0);
-
-  const [editMode, setEditMode] = useState(false);
-  const [inputText, setInputText] = useState('');
-
-  const handleKeyPress = (event: React.KeyboardEvent) => {
-    if (event.key === 'Enter') {
-      const inputElement = event.target as HTMLInputElement;
-      setSearchValue(inputElement.value);
-    }
-  };
-
-  const [checkboxState, setCheckboxState] = useState<CheckboxState>({});
-
-  const handleCheckboxChange = (itemId: string) => {
-    setCheckboxState((prevCheckboxState) => ({
-      ...prevCheckboxState,
-      [itemId]: !prevCheckboxState[itemId],
-    }));
-  };
-
-  const handleDelete = async () => {
-    const itemsToDelete = Object.keys(checkboxState).filter((key) => checkboxState[key] === true);
-    try {
-      await api.data.deleteData('facility', itemsToDelete);
-      window.location.reload();
-    } catch (error) {
-      console.error('Error deleting data: ', error);
-    }
-  };
-
-  const handleEdit = async (itemId: string) => {
-    try {
-      await handleFetchItem(itemId);
-      setEditMode(true);
-      navigate(`edit/${itemId}`);
-    } catch (error) {
-      console.error('Error attempting to edit data: ', error);
-    }
-  };
-
-  const handleCreatePost = () => {
-    navigate('create');
-  };
-
-  const handleFetchItem = async (itemId: string) => {
-    try {
-      const responseData = await api.data.fetchDataById('facility', itemId);
-      setDataItem(responseData);
-    } catch (error) {
-      console.error('Error fetching data: ', error);
-    }
-  };
 
   const handlePageChange = (page: number) => {
     setPage(page - 1);
   };
-
-  useEffect(() => {
-    const dataService = api.data;
-    dataService
-      .fetchDataList('facility', {
-        searchBy,
-        searchValue,
-        page,
-        pageSize,
-      })
-      .then((responseData) => {
-        const newData = responseData.list.map((item: FacilityItem, index: number) => ({
-          ...item,
-          index: page * pageSize + (index + 1),
-        }));
-
-        setPageData(newData);
-
-        setTotalPageCount(Math.ceil(responseData.total / pageSize));
-      })
-      .catch((error) => {
-        console.error('Error fetching data: ', error);
-      });
-  }, [searchBy, searchValue, page, pageSize]);
 
   const columns = [
     { dataId: 'placeholder', label: '' },
@@ -117,6 +36,15 @@ const FacilityView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
 
   const [area, setSelectedArea] = useState('부산');
 
+  const handleDropdownItemClick = (itemText: string) => {
+    const animationElement = document.querySelector(`.animation-g path#${itemText}`);
+    console.log(animationElement);
+
+    if (itemText !== area) {
+      setSelectedArea(itemText);
+    }
+  };
+
   const handleMapClick = () => {
     const animationElements = document.querySelectorAll('.animation-g');
 
@@ -127,7 +55,7 @@ const FacilityView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
         if (pathElement) {
           const clickedId = pathElement.id;
 
-          const koreanForm = clickedId.replace(/\\u([\dA-Fa-f]{4})/g, (match, grp) => {
+          const koreanForm = clickedId.replace(/\\u([\dA-Fa-f]{4})/g, (_, grp) => {
             return String.fromCharCode(parseInt(grp, 16));
           });
 
@@ -197,13 +125,10 @@ const FacilityView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
               onPageChange={handlePageChange}
               columns={columns}
               showAdminActions={false}
-              onCreateButton={handleCreatePost}
-              handleDelete={handleDelete}
-              handleEdit={handleEdit}
               onRowClick={() => {}}
               disableRowClick={isLoggedIn}
-              checkboxState={checkboxState}
-              onCheckboxChange={handleCheckboxChange}
+              checkboxState={{}}
+              onCheckboxChange={() => {}}
               className="facility-table"
             />
           </div>
@@ -236,13 +161,76 @@ const FacilityView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
               </button>
               <MyMap className="my-map" onClick={handleMapClick} />
             </div>
+            <div className="facility-view__map-dropdown">
+              <Dropdown
+                elementAction={
+                  <Button icon={ICONS.ARROW_DOWN} iconPlacement={ButtonIconPlacement.Right} className="button--text-icon">
+                    {area || '부산전체'}
+                  </Button>
+                }
+              >
+                <DropdownItem onClick={() => handleDropdownItemClick('부산전체')} isSelected={area === '부산전체'}>
+                  부산전체
+                </DropdownItem>
+                <DropdownItem onClick={() => handleDropdownItemClick('기장군')} isSelected={area === '기장군'}>
+                  기장군
+                </DropdownItem>
+                <DropdownItem onClick={() => handleDropdownItemClick('금정구')} isSelected={area === '금정구'}>
+                  금정구
+                </DropdownItem>
+                <DropdownItem onClick={() => handleDropdownItemClick('해운대구')} isSelected={area === '해운대구'}>
+                  해운대구
+                </DropdownItem>
+                <DropdownItem onClick={() => handleDropdownItemClick('북구')} isSelected={area === '북구'}>
+                  북구
+                </DropdownItem>
+                <DropdownItem onClick={() => handleDropdownItemClick('동래구')} isSelected={area === '동래구'}>
+                  동래구
+                </DropdownItem>
+                <DropdownItem onClick={() => handleDropdownItemClick('연제구')} isSelected={area === '연제구'}>
+                  연제구
+                </DropdownItem>
+                <DropdownItem onClick={() => handleDropdownItemClick('수영구')} isSelected={area === '수영구'}>
+                  수영구
+                </DropdownItem>
+                <DropdownItem onClick={() => handleDropdownItemClick('부산진구')} isSelected={area === '부산진구'}>
+                  부산진구
+                </DropdownItem>
+                <DropdownItem onClick={() => handleDropdownItemClick('사상구')} isSelected={area === '사상구'}>
+                  사상구
+                </DropdownItem>
+                <DropdownItem onClick={() => handleDropdownItemClick('동구')} isSelected={area === '동구'}>
+                  동구
+                </DropdownItem>
+                <DropdownItem onClick={() => handleDropdownItemClick('남구')} isSelected={area === '남구'}>
+                  남구
+                </DropdownItem>
+                <DropdownItem onClick={() => handleDropdownItemClick('서구')} isSelected={area === '서구'}>
+                  서구
+                </DropdownItem>
+                <DropdownItem onClick={() => handleDropdownItemClick('중구')} isSelected={area === '중구'}>
+                  중구
+                </DropdownItem>
+                <DropdownItem onClick={() => handleDropdownItemClick('영도구')} isSelected={area === '영도구'}>
+                  영도구
+                </DropdownItem>
+                <DropdownItem onClick={() => handleDropdownItemClick('사하구')} isSelected={area === '사하구'}>
+                  사하구
+                </DropdownItem>
+                <DropdownItem onClick={() => handleDropdownItemClick('강서구')} isSelected={area === '강서구'}>
+                  강서구
+                </DropdownItem>
+              </Dropdown>
+            </div>
             <div className="facility-view__scroll">
               <div className="facility-view__scroll__title">
-                <span>{area}</span> 수거사각지대
+                <p>
+                  <span>{area}</span> 수거사각지대
+                </p>
               </div>
               <ul className="item-list">
                 {FacilityData.filter((entry) => entry.district === area).length !== 0 ? (
-                  FacilityData.filter((entry) => entry.district === area).map((item, index) => (
+                  FacilityData.filter((entry) => entry.district === area).map((item, _) => (
                     <li key={item.title} className="item" onClick={() => handleFacilityClick(item)}>
                       <div className="item-title">{item.title}</div>
                       <div className="item-content">
@@ -256,7 +244,7 @@ const FacilityView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
                             <span className="icon-span" />
                             규모 : {item.dimension}
                           </li>
-                          <li>
+                          <li className="item-status">
                             <span className="icon-span" />
                             쓰레기현황등급 : {item.status}
                           </li>

@@ -1,5 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useQuery, useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
+
+import { toast } from 'react-toastify';
 
 import Button, { ButtonIconPlacement } from '../../components/Button/Button';
 import { ICONS, IconSize } from '../../components/SVG/Icon';
@@ -13,13 +16,11 @@ import api from '../../services/apiServices';
 
 import './LabView.scss';
 
-const LabView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
+const LabView: React.FC<{ isLoggedIn: boolean; userId: string }> = ({ isLoggedIn, userId }) => {
+  const pageSize = 10;
   const [searchBy, setSearchBy] = useState('title');
   const [searchValue, setSearchValue] = useState('');
   const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
-  const [pageData, setPageData] = useState([]);
-  const [totalPageCount, setTotalPageCount] = useState(0);
 
   const [selectedDropdownText, setSelectedDropdownText] = useState('제목');
   const [inputText, setInputText] = useState('');
@@ -47,55 +48,71 @@ const LabView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
     }));
   };
 
-  const handleDelete = async () => {
-    const itemsToDelete = Object.keys(checkboxState).filter((key) => checkboxState[key] === true);
-    try {
-      await api.data.deleteData('living-lab', itemsToDelete);
+  const deleteDataMutation = useMutation((itemsToDelete: string[]) => api.data.deleteData('living-lab', itemsToDelete), {
+    onSuccess: () => {
+      toast.success('성공적으로 삭제되었습니다.', {
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: 'colored',
+      });
       window.location.reload();
+    },
+  });
+
+  const handleDelete = () => {
+    const itemsToDelete = Object.keys(checkboxState).filter((key) => checkboxState[key] === true);
+
+    try {
+      deleteDataMutation.mutate(itemsToDelete);
     } catch (error) {
       console.error('Error deleting data: ', error);
     }
   };
 
-  const handleEdit = async (itemId: string) => {
+  const handleEdit = (itemId: string) => {
     navigate(`edit/${itemId}`);
   };
 
-  const handleCreatelab = () => {
+  const handleCreatePost = () => {
     navigate('create');
   };
 
   const handleDisplayItem = (itemId: string) => {
-    navigate(`/lab/${itemId}`);
+    navigate(`${itemId}`);
   };
 
   const handlePageChange = (page: number) => {
     setPage(page - 1);
   };
 
-  useEffect(() => {
-    const dataService = api.data;
-    dataService
-      .fetchDataList('living-lab', {
+  const { data: responseData, error } = useQuery(
+    ['labDataList', searchBy, searchValue, page, pageSize],
+    () =>
+      api.data.fetchDataList('living-lab', {
         searchBy,
         searchValue,
         page,
         pageSize,
-      })
-      .then((responseData) => {
-        const newData = responseData.list.map((item: DataItem, index: number) => ({
-          ...item,
-          index: page * pageSize + (index + 1),
-        }));
+      }),
+    {
+      enabled: searchBy !== undefined && searchValue !== undefined,
+    },
+  );
 
-        setPageData(newData);
+  if (error) {
+    console.log(error);
+  }
 
-        setTotalPageCount(Math.ceil(responseData.total / pageSize));
-      })
-      .catch((error) => {
-        console.error('Error fetching data: ', error);
-      });
-  }, [searchBy, searchValue, page, pageSize]);
+  const pageData =
+    responseData?.list?.map((item: DataItem, index: number) => ({
+      ...item,
+      index: page * pageSize + (index + 1),
+    })) || [];
+
+  const totalPageCount = responseData ? Math.ceil(responseData.total / pageSize) : 0;
 
   const handleKeyPress = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter') {
@@ -166,7 +183,7 @@ const LabView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
             onPageChange={handlePageChange}
             columns={columns}
             showAdminActions={isLoggedIn}
-            onCreateButton={handleCreatelab}
+            onCreateButton={handleCreatePost}
             handleDelete={handleDelete}
             handleEdit={handleEdit}
             onRowClick={handleDisplayItem}

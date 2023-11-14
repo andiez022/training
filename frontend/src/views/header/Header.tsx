@@ -17,7 +17,7 @@ interface NavLinkProps {
   onClick?: (e: React.MouseEvent) => void;
 }
 
-const Header: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
+const Header: React.FC<{ isLoggedIn: boolean; isAdmin: boolean }> = ({ isLoggedIn, isAdmin }) => {
   const [isTransparent, setIsTransparent] = useState(false);
 
   useEffect(() => {
@@ -64,7 +64,7 @@ const Header: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
 
   const headerClasses = `app-header ${isMenuOpen ? 'show-menu' : ''} ${!showLinks ? 'hide-links' : ''} ${
     isHomePage && isTransparent ? 'transparent' : ''
-  } ${isLoggedIn ? 'admin' : ''}`;
+  } ${isLoggedIn ? (isAdmin ? 'admin' : 'user') : ''}`;
 
   const [isSmallerScreen, setIsSmallerScreen] = useState(false);
   const [isMediumScreen, setIsMediumScreen] = useState(false);
@@ -82,12 +82,7 @@ const Header: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
     <header className={headerClasses}>
       <div className="header-left">
         <NavLink to="/" className={`header-img ${isSmallerScreen ? 'small-screen' : ''}`} />
-        {!showLinks ||
-          (isLoggedIn && (
-            <div className="header-img-text">
-              <p>[ 관리자 ]</p>
-            </div>
-          ))}
+        {!showLinks || (isLoggedIn && <div className="header-img-text">{isAdmin ? <p>[ 관리자 ]</p> : <p>[ 리빙랩 관리자 ]</p>}</div>)}
       </div>
       {showLinks && (
         <div className="header-right">
@@ -101,11 +96,16 @@ const Header: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
                 <CustomNavLink to="/intro" text="소개" />
               </>
             )}
-            <CustomNavLink to="/announcement" text="공지사항" />
-            <CustomNavLink to="/facility" text="시설현황" />
-            <CustomNavLink to="/content" text="콘텐츠" />
+            {isAdmin || !isLoggedIn ? (
+              <>
+                <CustomNavLink to="/announcement" text="공지사항" />
+                <CustomNavLink to="/facility" text="시설현황" />
+                <CustomNavLink to="/content" text="콘텐츠" />
+              </>
+            ) : null}
+
             {!isLoggedIn && <CustomNavLink to="/lab" text="리빙랩" />}
-            {isLoggedIn && !isMediumScreen ? (
+            {isAdmin && !isMediumScreen && (
               <Dropdown
                 elementAction={
                   <CustomNavLink
@@ -126,15 +126,20 @@ const Header: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
                   회원 관리
                 </DropdownItem>
               </Dropdown>
-            ) : (
+            )}
+            {isAdmin && isMediumScreen && (
               <>
                 <CustomNavLink to="/lab" text="리빙랩" />
                 <CustomNavLink to="/user-management" text="회원 관리" />
               </>
             )}
+            {isAdmin || !isLoggedIn ? (
+              <>
+                <CustomNavLink to="/campaign" text="캠페인" />
+                <CustomNavLink to="/board" text="자유게시판" />
+              </>
+            ) : null}
 
-            <CustomNavLink to="/campaign" text="캠페인" />
-            <CustomNavLink to="/board" text="자유게시판" />
             {isLoggedIn && (
               <CustomNavLink
                 to="/login"

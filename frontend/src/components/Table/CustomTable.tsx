@@ -22,7 +22,7 @@ interface TableProps {
   disableRowClick?: boolean;
   checkboxState: { [key: string]: boolean };
   onCheckboxChange: (itemId: string) => void;
-  userDelete?: (itemId: string) => void;
+  userDelete?: (itemId: string, fullname: string, username: string) => void;
 }
 
 const CustomTable: React.FC<TableProps> = ({
@@ -152,7 +152,7 @@ const CustomTable: React.FC<TableProps> = ({
                         <td key={column.dataId}>
                           <button
                             onClick={() => {
-                              if (userDelete) userDelete(item.id);
+                              if (userDelete) userDelete(item.id, item.full_name, item.username);
                             }}
                           >
                             탈퇴

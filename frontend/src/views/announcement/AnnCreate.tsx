@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import ReactQuill from 'react-quill';
@@ -11,8 +11,6 @@ import api from '../../services/apiServices';
 import './AnnView.scss';
 
 const AnnCreate: React.FC = () => {
-  const navigate = useNavigate();
-
   const initialValues = {
     title: '',
     content: '',
@@ -23,9 +21,8 @@ const AnnCreate: React.FC = () => {
     content: Yup.string().required('제내용을 입력하세요.'),
   });
 
-  const handleSubmit = async (values: any) => {
-    try {
-      await api.data.postData('notice', values);
+  const createDataMutation = useMutation((values: any) => api.data.postData('notice', values), {
+    onSuccess: () => {
       toast.success('성공적으로 삭제되었습니다.', {
         autoClose: 5000,
         hideProgressBar: true,
@@ -34,12 +31,9 @@ const AnnCreate: React.FC = () => {
         draggable: true,
         theme: 'colored',
       });
-
-      navigate('/announcement');
-    } catch (error) {
-      console.error('Error posting data: ', error);
-    }
-  };
+      window.location.assign('/announcement');
+    },
+  });
 
   const toolBarOptions = [
     [{ header: [1, 2, false] }],
@@ -63,7 +57,11 @@ const AnnCreate: React.FC = () => {
             </div>
           </div>
           <div className="form-container">
-            <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+            <Formik
+              initialValues={initialValues}
+              validationSchema={validationSchema}
+              onSubmit={(values) => createDataMutation.mutate(values)}
+            >
               {({ isSubmitting }) => (
                 <Form className="form-create">
                   <div className="form-row">

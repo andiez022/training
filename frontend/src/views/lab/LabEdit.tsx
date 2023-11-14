@@ -1,63 +1,36 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useQuery, useMutation } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
-import { DataItem } from '../../services/types/common';
 import api from '../../services/apiServices';
 
 import './LabView.scss';
 
 const LabEdit: React.FC = () => {
   const { id } = useParams();
-  const [dataItem, setDataItem] = useState<DataItem | null>(null);
-  const [initialEditValues, setInitialEditValues] = useState({
-    id: '',
-    title: '',
-    content: '',
-  });
 
-  const handleFetchItem = async (itemId: string) => {
-    try {
-      const responseData = await api.data.fetchDataById('living-lab', itemId);
-      setDataItem(responseData);
-    } catch (error) {
-      console.error('Error fetching data: ', error);
-    }
+  const { data: dataItem } = useQuery(['labItem', id], () => api.data.fetchDataById('living-lab', id || ''));
+
+  const initialEditValues = {
+    id: dataItem?.id,
+    title: dataItem?.title,
+    content: dataItem?.content,
   };
-
-  useEffect(() => {
-    if (id) {
-      handleFetchItem(id);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (dataItem) {
-      setInitialEditValues({
-        id: dataItem.id,
-        title: dataItem.title,
-        content: dataItem.content,
-      });
-    }
-  }, [dataItem]);
 
   const validationSchema = Yup.object().shape({
     title: Yup.string().required('제목을 입력하세요.'),
     content: Yup.string().required('제내용을 입력하세요.'),
   });
 
-  const handleModify = async (values: any) => {
-    try {
-      await api.data.editData('living-lab', values);
-
-      window.location.pathname = 'lab';
-    } catch (error) {
-      console.error('Error posting data: ', error);
-    }
-  };
+  const editDataMutation = useMutation((values: any) => api.data.editData('living-lab', values), {
+    onSuccess: () => {
+      window.location.pathname = '/lab';
+    },
+  });
 
   const toolBarOptions = [
     [{ header: [1, 2, false] }],
@@ -81,7 +54,18 @@ const LabEdit: React.FC = () => {
             </div>
           </div>
           <div className="form-container">
-            <Formik enableReinitialize initialValues={initialEditValues} validationSchema={validationSchema} onSubmit={handleModify}>
+            <Formik
+              enableReinitialize
+              initialValues={initialEditValues}
+              validationSchema={validationSchema}
+              onSubmit={(values, { setSubmitting }) => {
+                editDataMutation.mutate(values, {
+                  onSuccess: () => {
+                    setSubmitting(false);
+                  },
+                });
+              }}
+            >
               {({ isSubmitting }) => (
                 <Form className="form-create">
                   <div className="form-row">

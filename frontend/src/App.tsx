@@ -52,7 +52,20 @@ const queryClient = new QueryClient({
 const App: React.FC = () => {
   console.log('start');
 
-  const isLoggedIn = storage.getToken() !== null;
+  const token = storage.getToken();
+  const isLoggedIn = token !== null;
+  let isAdmin = false;
+  let userId;
+
+  if (token) {
+    const decodedToken = JSON.parse(atob(token.split('.')[1]));
+
+    if (decodedToken.role === 'Admin') {
+      isAdmin = true;
+    } else {
+      userId = decodedToken.id;
+    }
+  }
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -63,7 +76,7 @@ const App: React.FC = () => {
               <ToastContainer />
               <LoadingView />
               <div className="container">
-                <Header isLoggedIn={isLoggedIn} />
+                <Header isLoggedIn={isLoggedIn} isAdmin={isAdmin} />
                 <Routes>
                   <Route path="/login" element={<PrivateRoute guards={[unAuthGuard]} element={<LoginView />} />} />
                   <Route path="/register" element={<PrivateRoute guards={[unAuthGuard]} element={<RegisterView />} />} />
@@ -78,7 +91,7 @@ const App: React.FC = () => {
                   <Route path="/content/create" element={<PrivateRoute guards={[]} element={<ContentCreate />} />} />
                   <Route path="/content/:id" element={<PrivateRoute guards={[]} element={<ContentItem />} />} />
                   <Route path="/content/edit/:id" element={<PrivateRoute guards={[]} element={<ContentEdit />} />} />
-                  <Route path="/lab" element={<PrivateRoute guards={[]} element={<LabView isLoggedIn={isLoggedIn} />} />} />
+                  <Route path="/lab" element={<PrivateRoute guards={[]} element={<LabView isLoggedIn={isLoggedIn} userId={userId} />} />} />
                   <Route path="/lab/create" element={<PrivateRoute guards={[]} element={<LabCreate />} />} />
                   <Route path="/lab/:id" element={<PrivateRoute guards={[]} element={<LabItem />} />} />
                   <Route path="/lab/edit/:id" element={<PrivateRoute guards={[]} element={<LabEdit />} />} />

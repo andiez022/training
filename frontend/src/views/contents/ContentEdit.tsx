@@ -1,62 +1,46 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useQuery, useMutation } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
-import { DataItem } from '../../services/types/common';
 import api from '../../services/apiServices';
 
 import './ContentView.scss';
 
 const ContentEdit: React.FC = () => {
   const { id } = useParams();
-  const [dataItem, setDataItem] = useState<DataItem | null>(null);
-  const [initialEditValues, setInitialEditValues] = useState({
-    id: '',
-    title: '',
-    video: '',
-    description: '',
-  });
 
-  const handleFetchItem = async (itemId: string) => {
-    try {
-      const responseData = await api.data.fetchDataById('content', itemId);
-      setDataItem(responseData);
-    } catch (error) {
-      console.error('Error fetching data: ', error);
-    }
+  const { data: dataItem } = useQuery(['contentItem', id], () => api.data.fetchDataById('content', id || ''));
+
+  const initialEditValues = {
+    id: dataItem?.id,
+    title: dataItem?.title,
+    video: dataItem?.video,
+    description: dataItem?.description,
   };
-
-  useEffect(() => {
-    if (id) {
-      handleFetchItem(id);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (dataItem) {
-      setInitialEditValues({
-        id: dataItem.id,
-        title: dataItem.title,
-        video: dataItem.video,
-        description: dataItem.description,
-      });
-    }
-  }, [dataItem]);
 
   const validationSchema = Yup.object().shape({
     title: Yup.string().required('제목을 입력하세요.'),
     description: Yup.string().required('제내용을 입력하세요.'),
   });
 
-  const handleModify = async (values: any) => {
-    try {
-      await api.data.editData('content', values);
+  const editDataMutation = useMutation((values: any) => api.data.editData('content', values), {
+    onSuccess: () => {
+      window.location.pathname = '/content';
+    },
+  });
 
-      window.location.pathname = 'content';
-    } catch (error) {
-      console.error('Error posting data: ', error);
-    }
+  const toolBarOptions = [
+    [{ header: [1, 2, false] }],
+    ['bold', 'italic', 'underline'],
+    [{ align: '' }, { align: 'center' }, { align: 'right' }, { align: 'justify' }],
+    [{ list: 'bullet' }, { list: 'ordered' }, 'blockquote'],
+    ['link', 'image'],
+  ];
+
+  const modules = {
+    toolbar: toolBarOptions,
   };
 
   return (
@@ -69,7 +53,18 @@ const ContentEdit: React.FC = () => {
             </div>
           </div>
           <div className="form-container">
-            <Formik enableReinitialize initialValues={initialEditValues} validationSchema={validationSchema} onSubmit={handleModify}>
+            <Formik
+              enableReinitialize
+              initialValues={initialEditValues}
+              validationSchema={validationSchema}
+              onSubmit={(values, { setSubmitting }) => {
+                editDataMutation.mutate(values, {
+                  onSuccess: () => {
+                    setSubmitting(false);
+                  },
+                });
+              }}
+            >
               {({ isSubmitting }) => (
                 <Form className="form-create">
                   <div className="form-row">

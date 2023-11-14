@@ -109,6 +109,16 @@
   color: white;
 }
 
+.app-header.user {
+  background: linear-gradient(180deg, #008dcc 0%, #008e86 100%);
+
+  .default-link {
+    color: white;
+  }
+
+  color: white;
+}
+
 .hide-links {
   background: linear-gradient(180deg, #0066c1 0%, #0088e3 100%);
 }

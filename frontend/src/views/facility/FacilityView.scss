@@ -87,6 +87,7 @@
   &__body {
     display: flex;
     justify-content: space-between;
+    margin-top: 1.5rem;
   }
 
   &__map-area {
@@ -137,6 +138,11 @@
         font-weight: bold;
       }
     }
+  }
+
+  &__map-dropdown {
+    display: none;
+    margin-bottom: 1.25rem;
   }
 
   &__scroll {
@@ -294,13 +300,25 @@
     }
 
     &__map-area {
+      button {
+        display: none;
+      }
+
       .my-map {
         width: 40.625rem;
         height: 40.625rem;
       }
     }
 
+    &__map-dropdown {
+      display: flex;
+    }
+
     &__scroll {
+      p {
+        display: none;
+      }
+
       .item-list {
         width: 40.625rem;
       }
@@ -324,6 +342,16 @@
     &__scroll {
       .item-list {
         width: 21.875rem;
+
+        .item {
+          .item-content {
+            .item-data {
+              .item-status {
+                display: none;
+              }
+            }
+          }
+        }
       }
     }
 

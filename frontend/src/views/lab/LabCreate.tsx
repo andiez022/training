@@ -1,8 +1,10 @@
 import React from 'react';
+import { useMutation } from '@tanstack/react-query';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { toast } from 'react-toastify';
 
 import api from '../../services/apiServices';
 
@@ -19,15 +21,19 @@ const LabCreate: React.FC = () => {
     content: Yup.string().required('제내용을 입력하세요.'),
   });
 
-  const handleSubmit = async (values: any) => {
-    try {
-      await api.data.postData('living-lab', values);
-
-      window.location.pathname = 'lab';
-    } catch (error) {
-      console.error('Error posting data: ', error);
-    }
-  };
+  const createDataMutation = useMutation((values: any) => api.data.postData('living-lab', values), {
+    onSuccess: () => {
+      toast.success('성공적으로 삭제되었습니다.', {
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: 'colored',
+      });
+      window.location.assign('/lab');
+    },
+  });
 
   const toolBarOptions = [
     [{ header: [1, 2, false] }],
@@ -51,7 +57,11 @@ const LabCreate: React.FC = () => {
             </div>
           </div>
           <div className="form-container">
-            <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+            <Formik
+              initialValues={initialValues}
+              validationSchema={validationSchema}
+              onSubmit={(values) => createDataMutation.mutate(values)}
+            >
               {({ isSubmitting }) => (
                 <Form className="form-create">
                   <div className="form-row">

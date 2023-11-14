@@ -1,8 +1,10 @@
 import React from 'react';
+import { useMutation } from '@tanstack/react-query';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { toast } from 'react-toastify';
 
 import api from '../../services/apiServices';
 
@@ -17,6 +19,26 @@ const CampaignCreate: React.FC = () => {
     image_name: '',
   };
 
+  const validationSchema = Yup.object().shape({
+    title: Yup.string().required('제목을 입력하세요.'),
+    content: Yup.string().required('제내용을 입력하세요.'),
+    link: Yup.string().required('링크를 입력해주세요.'),
+    image: Yup.string().required('링크를 입력해주세요.'),
+  });
+  const createDataMutation = useMutation((values: any) => api.data.postData('campaign', values), {
+    onSuccess: () => {
+      toast.success('성공적으로 삭제되었습니다.', {
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: 'colored',
+      });
+      window.location.assign('/campaign');
+    },
+  });
+
   const toolBarOptions = [
     [{ header: [1, 2, false] }],
     ['bold', 'italic', 'underline'],
@@ -29,24 +51,6 @@ const CampaignCreate: React.FC = () => {
     toolbar: toolBarOptions,
   };
 
-  const validationSchema = Yup.object().shape({
-    title: Yup.string().required('제목을 입력하세요.'),
-    content: Yup.string().required('제내용을 입력하세요.'),
-    link: Yup.string().required('링크를 입력해주세요.'),
-    image: Yup.string().required('링크를 입력해주세요.'),
-  });
-
-  const handleSubmit = async (values: any) => {
-    try {
-      await api.data.postAssets(values.image);
-      await api.data.postData('campaign', values);
-
-      window.location.pathname = 'campaign';
-    } catch (error) {
-      console.error('Error posting data: ', error);
-    }
-  };
-
   return (
     <div className="campaign-view">
       <div className="campaign-view__top">
@@ -57,7 +61,11 @@ const CampaignCreate: React.FC = () => {
             </div>
           </div>
           <div className="form-container">
-            <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+            <Formik
+              initialValues={initialValues}
+              validationSchema={validationSchema}
+              onSubmit={(values) => createDataMutation.mutate(values)}
+            >
               {({ isSubmitting }) => (
                 <Form className="form-create">
                   <div className="form-row">
