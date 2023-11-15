@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-
+import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
 import Button, { ButtonIconPlacement } from '../../components/Button/Button';
@@ -12,11 +12,14 @@ import TextInput from '../../components/TextInput/TextInput';
 import CustomTable from '../../components/Table/CustomTable';
 
 import { DataItem, columns, CheckboxState } from '../../services/types/common';
+import { selectToken } from '../../services/controllers/common/UserSelector';
 import api from '../../services/apiServices';
 
 import './AnnView.scss';
 
-const AnnView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
+const AnnView: React.FC = () => {
+  const isLoggedIn = useSelector(selectToken) !== null;
+
   const pageSize = 10;
 
   const [searchBy, setSearchBy] = useState('title');

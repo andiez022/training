@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import { toast } from 'react-toastify';
 
@@ -12,12 +12,15 @@ import TextInput from '../../components/TextInput/TextInput';
 import CustomTable from '../../components/Table/CustomTable';
 import Modal, { ModalWidth } from '../../components/Modal/DialogModal';
 
+import { selectToken } from '../../services/controllers/common/UserSelector';
 import { UserInfo } from '../../services/types/common';
 import api from '../../services/apiServices';
 
 import './UserManagementView.scss';
 
-const UserManagementView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
+const UserManagementView: React.FC = () => {
+  const isLoggedIn = useSelector(selectToken) !== null;
+
   const pageSize = 10;
 
   const columns = [

@@ -55,7 +55,7 @@ const RegisterView: React.FC = () => {
         values.phoneNumber,
         values.username,
       );
-      window.location.pathname = routes.LOGIN;
+      window.location.assign(routes.LOGIN);
     } catch (error) {
       console.log(error);
     }

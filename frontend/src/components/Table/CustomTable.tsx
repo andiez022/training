@@ -23,6 +23,7 @@ interface TableProps {
   checkboxState: { [key: string]: boolean };
   onCheckboxChange: (itemId: string) => void;
   userDelete?: (itemId: string, fullname: string, username: string) => void;
+  onFreeBoard?: boolean;
 }
 
 const CustomTable: React.FC<TableProps> = ({
@@ -41,6 +42,7 @@ const CustomTable: React.FC<TableProps> = ({
   checkboxState,
   onCheckboxChange,
   userDelete,
+  onFreeBoard,
 }) => {
   const handlePrevPage = () => {
     if (currentPage > 1) {
@@ -129,6 +131,17 @@ const CustomTable: React.FC<TableProps> = ({
                     }
                     if (!showAdminActions && columnIndex === 0) {
                       return null;
+                    }
+
+                    if (column.dataId === 'title') {
+                      return (
+                        <td key={column.dataId} className="title-column" onClick={!disableRowClick ? () => onRowClick(item.id) : undefined}>
+                          {item[column.dataId]}
+                          <p>
+                            <DateTimeDisplay timestamp={item.updated_at} />
+                          </p>
+                        </td>
+                      );
                     }
 
                     if (column.dataId === 'img') {
@@ -258,6 +271,13 @@ const CustomTable: React.FC<TableProps> = ({
                 </button>
               </div>
             </Modal>
+            <button className="admin-buttons__create" onClick={onCreateButton}>
+              글쓰기
+            </button>
+          </div>
+        )}
+        {onFreeBoard && (
+          <div className="admin-buttons">
             <button className="admin-buttons__create" onClick={onCreateButton}>
               글쓰기
             </button>

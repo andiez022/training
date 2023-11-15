@@ -28,7 +28,7 @@ const VideoCollection: React.FC<VideoCollectionProps> = ({ data, currentPage, to
   const renderVideoItems = () => {
     return data.map((video) => (
       <div key={video.id} className="video">
-        <VideoPlayer videoId={video.video} />
+        <VideoPlayer videoUrl={video.video} />
         <div className="video__info">
           <div className="video__info__header">
             <div className="video__info__header__title">

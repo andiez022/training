@@ -34,6 +34,12 @@
     height: 4.2em;
   }
 
+  .card-content * {
+    font-size: 14px;
+    font-weight: 300;
+    color: #606a74;
+  }
+
   .card-date {
     font-size: 12px;
     font-weight: 300;
@@ -48,6 +54,7 @@
 
     .card-title,
     .card-content,
+    .card-content *,
     .card-date {
       color: white;
     }

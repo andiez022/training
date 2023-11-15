@@ -1,35 +1,67 @@
 import React, { useState, useEffect } from 'react';
-
+import { useQuery } from '@tanstack/react-query';
 import RevealOnScroll from '../../components/RevealOnScroll/RevealOnScroll';
 import Card from '../../components/Card/Card';
 
 import './HomeView.scss';
 import Icon, { ICONS, IconSize } from '../../components/SVG/Icon';
 
-import api from '../../services/apiServices';
 import { DataItem } from '../../services/types/common';
 
+import api from '../../services/apiServices';
+
 const Home: React.FC = () => {
-  const [lists, setLists] = useState<{
-    notice: DataItem[];
-    content: DataItem[];
-    'living-lab': DataItem[];
-    campaign: DataItem[];
-    'free-board': DataItem[];
-  }>({
-    notice: [],
-    content: [],
-    'living-lab': [],
-    campaign: [],
-    'free-board': [],
-  });
-
-  const listNames = Object.keys(lists);
-
   const searchBy = 'title';
   const searchValue = '';
   const page = 0;
   const pageSize = 4;
+
+  const listNames = ['notice', 'content', 'living-lab', 'campaign', 'free-board'];
+
+  const { data: annResponse } = useQuery(['annDataShort', searchBy, searchValue, page, pageSize], () =>
+    api.data.fetchDataList('notice', {
+      searchBy,
+      searchValue,
+      page,
+      pageSize,
+    }),
+  );
+
+  const { data: contentResponse } = useQuery(['contentDataShort', searchBy, searchValue, page, pageSize], () =>
+    api.data.fetchDataList('content', {
+      searchBy,
+      searchValue,
+      page,
+      pageSize,
+    }),
+  );
+
+  const { data: labResponse } = useQuery(['labDataShort', searchBy, searchValue, page, pageSize], () =>
+    api.data.fetchDataList('living-lab', {
+      searchBy,
+      searchValue,
+      page,
+      pageSize,
+    }),
+  );
+
+  const { data: campaignResponse } = useQuery(['campaignDataShort', searchBy, searchValue, page, pageSize], () =>
+    api.data.fetchDataList('campaign', {
+      searchBy,
+      searchValue,
+      page,
+      pageSize,
+    }),
+  );
+
+  const { data: boardResponse } = useQuery(['boardDataShort', searchBy, searchValue, page, pageSize], () =>
+    api.data.fetchDataList('free-board', {
+      searchBy,
+      searchValue,
+      page,
+      pageSize,
+    }),
+  );
 
   const banners = [
     { id: 1, imgSrc: '/home_bn1.png' },
@@ -46,30 +78,6 @@ const Home: React.FC = () => {
 
     return () => clearInterval(timer);
   }, [currentBanner]);
-
-  useEffect(() => {
-    const fetchDataForList = async (listName: string) => {
-      try {
-        const responseData = await api.data.fetchDataList(listName, {
-          searchBy,
-          searchValue,
-          page,
-          pageSize,
-        });
-
-        setLists((prevLists) => ({
-          ...prevLists,
-          [listName]: responseData.list,
-        }));
-      } catch (error) {
-        console.error(`Error fetching ${listName} data:`, error);
-      }
-    };
-
-    listNames.forEach((listName) => {
-      fetchDataForList(listName);
-    });
-  }, [searchBy, searchValue, page, pageSize]);
 
   const displayItem = (pageType: string, itemId: string) => {
     window.location.pathname = `${pageType}/${itemId}`;
@@ -103,7 +111,7 @@ const Home: React.FC = () => {
               </button>
             </div>
             <div className="announcement-card">
-              {lists.notice.map((item, _) => (
+              {annResponse?.list.map((item: DataItem) => (
                 <Card
                   key={item.id}
                   title={item.title}
@@ -124,7 +132,7 @@ const Home: React.FC = () => {
               </button>
             </div>
             <ul className="list-body">
-              {lists.content.map((item) => (
+              {contentResponse?.list.map((item: DataItem) => (
                 <li key={item.id} className="list-item" onClick={() => goToPage('content')}>
                   <div className="item-title">
                     <span className="icon-span" />
@@ -143,7 +151,7 @@ const Home: React.FC = () => {
               </button>
             </div>
             <ul className="list-body">
-              {lists['living-lab'].map((item) => (
+              {labResponse?.list.map((item: DataItem) => (
                 <li key={item.id} className="list-item" onClick={() => displayItem('lab', item.id)}>
                   <div className="item-title">
                     <span className="icon-span" />
@@ -162,7 +170,7 @@ const Home: React.FC = () => {
               </button>
             </div>
             <ul className="list-body">
-              {lists.campaign.map((item) => (
+              {campaignResponse?.list.map((item: DataItem) => (
                 <li key={item.id} className="list-item" onClick={() => displayItem('campaign', item.id)}>
                   <div className="item-title">
                     <span className="icon-span" />
@@ -181,7 +189,7 @@ const Home: React.FC = () => {
               </button>
             </div>
             <ul className="list-body">
-              {lists['free-board'].map((item) => (
+              {boardResponse?.list.map((item: DataItem) => (
                 <li key={item.id} className="list-item" onClick={() => displayItem('board', item.id)}>
                   <div className="item-title">
                     <span className="icon-span" />

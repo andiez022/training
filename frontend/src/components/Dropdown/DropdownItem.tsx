@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { delay } from 'lodash';
-import React, { useState } from 'react';
+import React from 'react';
 import './Dropdown.scss';
 
 export interface DropdownItemProps {
@@ -24,7 +24,7 @@ export const DropdownItem: React.FunctionComponent<DropdownItemProps> = ({
 
   const handleClick = async (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
     if (toggleMenu) toggleMenu(e);
-    if (onClick) delay(onClick, 50);
+    if (onClick) onClick();
   };
 
   return (

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import { ReactComponent as MyMap } from '../../components/SVG/map.svg';
 import Button, { ButtonIconPlacement } from '../../components/Button/Button';
@@ -10,9 +11,41 @@ import DropdownItem from '../../components/Dropdown/DropdownItem';
 import CustomTable from '../../components/Table/CustomTable';
 import { FacilityData } from '../../services/constants/constants';
 
+import { selectToken } from '../../services/controllers/common/UserSelector';
+
 import './FacilityView.scss';
 
-const FacilityView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
+const FacilityView: React.FC = () => {
+  const isLoggedIn = useSelector(selectToken) !== null;
+
+  const areas = [
+    '부산전체',
+    '기장군',
+    '금정구',
+    '해운대구',
+    '북구',
+    '동래구',
+    '연제구',
+    '수영구',
+    '부산진구',
+    '사상구',
+    '동구',
+    '남구',
+    '서구',
+    '중구',
+    '영도구',
+    '사하구',
+    '강서구',
+  ];
+
+  const renderDropdownItems = () => {
+    return areas.map((item) => (
+      <DropdownItem key={item} onClick={() => handleDropdownItemClick(item)} isSelected={area === item}>
+        {item}
+      </DropdownItem>
+    ));
+  };
+
   const pageSize = 10;
 
   const [page, setPage] = useState(0);
@@ -162,64 +195,8 @@ const FacilityView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
               <MyMap className="my-map" onClick={handleMapClick} />
             </div>
             <div className="facility-view__map-dropdown">
-              <Dropdown
-                elementAction={
-                  <Button icon={ICONS.ARROW_DOWN} iconPlacement={ButtonIconPlacement.Right} className="button--text-icon">
-                    {area || '부산전체'}
-                  </Button>
-                }
-              >
-                <DropdownItem onClick={() => handleDropdownItemClick('부산전체')} isSelected={area === '부산전체'}>
-                  부산전체
-                </DropdownItem>
-                <DropdownItem onClick={() => handleDropdownItemClick('기장군')} isSelected={area === '기장군'}>
-                  기장군
-                </DropdownItem>
-                <DropdownItem onClick={() => handleDropdownItemClick('금정구')} isSelected={area === '금정구'}>
-                  금정구
-                </DropdownItem>
-                <DropdownItem onClick={() => handleDropdownItemClick('해운대구')} isSelected={area === '해운대구'}>
-                  해운대구
-                </DropdownItem>
-                <DropdownItem onClick={() => handleDropdownItemClick('북구')} isSelected={area === '북구'}>
-                  북구
-                </DropdownItem>
-                <DropdownItem onClick={() => handleDropdownItemClick('동래구')} isSelected={area === '동래구'}>
-                  동래구
-                </DropdownItem>
-                <DropdownItem onClick={() => handleDropdownItemClick('연제구')} isSelected={area === '연제구'}>
-                  연제구
-                </DropdownItem>
-                <DropdownItem onClick={() => handleDropdownItemClick('수영구')} isSelected={area === '수영구'}>
-                  수영구
-                </DropdownItem>
-                <DropdownItem onClick={() => handleDropdownItemClick('부산진구')} isSelected={area === '부산진구'}>
-                  부산진구
-                </DropdownItem>
-                <DropdownItem onClick={() => handleDropdownItemClick('사상구')} isSelected={area === '사상구'}>
-                  사상구
-                </DropdownItem>
-                <DropdownItem onClick={() => handleDropdownItemClick('동구')} isSelected={area === '동구'}>
-                  동구
-                </DropdownItem>
-                <DropdownItem onClick={() => handleDropdownItemClick('남구')} isSelected={area === '남구'}>
-                  남구
-                </DropdownItem>
-                <DropdownItem onClick={() => handleDropdownItemClick('서구')} isSelected={area === '서구'}>
-                  서구
-                </DropdownItem>
-                <DropdownItem onClick={() => handleDropdownItemClick('중구')} isSelected={area === '중구'}>
-                  중구
-                </DropdownItem>
-                <DropdownItem onClick={() => handleDropdownItemClick('영도구')} isSelected={area === '영도구'}>
-                  영도구
-                </DropdownItem>
-                <DropdownItem onClick={() => handleDropdownItemClick('사하구')} isSelected={area === '사하구'}>
-                  사하구
-                </DropdownItem>
-                <DropdownItem onClick={() => handleDropdownItemClick('강서구')} isSelected={area === '강서구'}>
-                  강서구
-                </DropdownItem>
+              <Dropdown elementAction={<button className="dropdown-button">{area || '부산전체'}</button>} dropdownClassName="dropdown">
+                {renderDropdownItems()}
               </Dropdown>
             </div>
             <div className="facility-view__scroll">

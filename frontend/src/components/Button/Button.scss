@@ -338,7 +338,7 @@
     &--right {
       margin-left: 70px;
       position: absolute;
-    } 
+    }
   }
 
   &--fullWidth {
@@ -383,7 +383,7 @@
     width: 90px;
     height: 20px;
     background: white;
-    border: 1px solid #C0C0C0;
+    border: 1px solid #c0c0c0;
     border-radius: 0px;
     color: black;
     text-indent: 10px;
@@ -406,17 +406,17 @@
     gap: 10px;
     width: 88px;
     height: 40px;
-    background: linear-gradient(90deg, #0367C2 0%, #009FE5 100%);
-    border: 1px solid #C0C0C0;
+    background: linear-gradient(90deg, #0367c2 0%, #009fe5 100%);
+    border: 1px solid #c0c0c0;
     border-radius: 0px;
-    color: #FFFFFF;
+    color: #ffffff;
     text-indent: 10px;
     font-size: 14px;
     font-weight: 300;
     overflow: hidden;
 
     &:hover {
-      background: linear-gradient(90deg, #0367C2 0%, #009FE5 100%);
+      background: linear-gradient(90deg, #0367c2 0%, #009fe5 100%);
     }
   }
 

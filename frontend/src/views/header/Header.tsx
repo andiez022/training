@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { NavLink, useLocation } from 'react-router-dom';
 
 import Icon, { ICONS, IconSize } from '../../components/SVG/Icon';
@@ -7,8 +8,10 @@ import DropdownItem from '../../components/Dropdown/DropdownItem';
 
 import { routes } from '../../common/utils/routes';
 import { storage } from '../../common/utils/storage';
+import { selectUserRole, selectToken } from '../../services/controllers/common/UserSelector';
 
 import './Header.scss';
+import { logout } from '../../services/controllers/common/UserSlice';
 
 interface NavLinkProps {
   to: string;
@@ -17,7 +20,11 @@ interface NavLinkProps {
   onClick?: (e: React.MouseEvent) => void;
 }
 
-const Header: React.FC<{ isLoggedIn: boolean; isAdmin: boolean }> = ({ isLoggedIn, isAdmin }) => {
+const Header: React.FC = () => {
+  const dispatch = useDispatch();
+
+  const isLoggedIn = useSelector(selectToken) !== null;
+
   const [isTransparent, setIsTransparent] = useState(false);
 
   useEffect(() => {
@@ -61,6 +68,7 @@ const Header: React.FC<{ isLoggedIn: boolean; isAdmin: boolean }> = ({ isLoggedI
 
   const showLinks = currentPath !== '/login' && currentPath !== '/register';
   const isHomePage = currentPath === '/';
+  const isAdmin = useSelector(selectUserRole) === 'Admin';
 
   const headerClasses = `app-header ${isMenuOpen ? 'show-menu' : ''} ${!showLinks ? 'hide-links' : ''} ${
     isHomePage && isTransparent ? 'transparent' : ''
@@ -146,6 +154,7 @@ const Header: React.FC<{ isLoggedIn: boolean; isAdmin: boolean }> = ({ isLoggedI
                 text="로그아웃"
                 onClick={() => {
                   storage.removeToken();
+                  dispatch(logout());
                   window.location.pathname = routes.LOGIN;
                 }}
               />

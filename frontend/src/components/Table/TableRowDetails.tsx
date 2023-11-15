@@ -17,6 +17,9 @@ export interface TableRowProps {
   hasPrev: boolean;
   onNextItem: () => void;
   onPrevItem: () => void;
+  onDelete?: () => void;
+  onEdit?: () => void;
+  onFreeBoard?: boolean;
 }
 
 const TableRowDetails: React.FC<TableRowProps> = ({
@@ -31,6 +34,9 @@ const TableRowDetails: React.FC<TableRowProps> = ({
   hasPrev,
   onNextItem,
   onPrevItem,
+  onDelete,
+  onEdit,
+  onFreeBoard,
 }) => {
   const navigate = useNavigate();
   const location = useLocation().pathname.split('/');
@@ -62,21 +68,52 @@ const TableRowDetails: React.FC<TableRowProps> = ({
         </div>
       </div>
       <div className="table-detail__description" dangerouslySetInnerHTML={{ __html: content }} />
-      <div className="buttons-container">
-        {hasPrev && (
-          <button onClick={onPrevItem} className="backward-button">
-            이전 글
+
+      {onFreeBoard && (
+        <div className="buttons-container">
+          <div className="buttons-left">
+            <button onClick={onEdit} className="edit-button">
+              수정
+            </button>
+
+            <button onClick={onDelete} className="delete-button">
+              삭제
+            </button>
+          </div>
+          <div className="buttons-right">
+            {hasPrev && (
+              <button onClick={onPrevItem} className="backward-button">
+                이전 글
+              </button>
+            )}
+            <button onClick={handleGoBack} className="return-button">
+              목록으로
+            </button>
+            {hasNext && (
+              <button onClick={onNextItem} className="forward-button">
+                다음 글
+              </button>
+            )}
+          </div>
+        </div>
+      )}
+      {!onFreeBoard && (
+        <div className="buttons-right">
+          {hasPrev && (
+            <button onClick={onPrevItem} className="backward-button">
+              이전 글
+            </button>
+          )}
+          <button onClick={handleGoBack} className="return-button">
+            목록으로
           </button>
-        )}
-        <button onClick={handleGoBack} className="return-button">
-          목록으로
-        </button>
-        {hasNext && (
-          <button onClick={onNextItem} className="forward-button">
-            다음 글
-          </button>
-        )}
-      </div>
+          {hasNext && (
+            <button onClick={onNextItem} className="forward-button">
+              다음 글
+            </button>
+          )}
+        </div>
+      )}
     </div>
   );
 };

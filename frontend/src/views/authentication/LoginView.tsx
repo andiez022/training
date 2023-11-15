@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
@@ -7,6 +8,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import Icon, { ICONS, IconSize } from '../../components/SVG/Icon';
 
+import { loginSuccess } from '../../services/controllers/common/UserSlice';
+
 import { routes } from '../../common/utils/routes';
 import api from '../../services/apiServices';
 import { storage } from '../../common/utils/storage';
@@ -14,6 +17,8 @@ import { storage } from '../../common/utils/storage';
 import './LoginView.scss';
 
 const LoginView: React.FC = () => {
+  const dispatch = useDispatch();
+
   const initialValues = {
     username: '',
     password: '',
@@ -36,6 +41,9 @@ const LoginView: React.FC = () => {
     try {
       const response = await userService.login(values.username, values.password);
       storage.setToken(response.token);
+
+      dispatch(loginSuccess({ id: response.id, role: response.role, token: response.token }));
+
       if (response.role === 'Normal') window.location.pathname = '/lab';
       else window.location.pathname = routes.DEFAULT;
     } catch (error) {

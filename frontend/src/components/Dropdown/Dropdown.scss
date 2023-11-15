@@ -12,6 +12,7 @@
   }
 
   &__item {
+    display: flex;
     padding: var(--sp-4) var(--sp-6);
     text-align: center;
 

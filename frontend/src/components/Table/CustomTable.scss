@@ -12,6 +12,15 @@
     tr {
       padding-top: 15px;
       padding-bottom: 15px;
+
+      .title-column {
+        p {
+          display: none;
+          color: #989898;
+          font-size: 13px;
+          letter-spacing: -0.39px;
+        }
+      }
     }
   }
 
@@ -261,6 +270,19 @@
     .pagination {
       .admin-buttons {
         margin-top: 75px;
+      }
+    }
+
+    tbody {
+      tr {
+        .title-column {
+          display: flex;
+          flex-direction: column;
+          gap: 1.25rem;
+          p {
+            display: block;
+          }
+        }
       }
     }
   }

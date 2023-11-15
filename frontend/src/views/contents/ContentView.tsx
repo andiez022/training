@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import { toast } from 'react-toastify';
 import VideoCollection from '../../components/VideoCollection/VideoCollection';
@@ -11,12 +12,15 @@ import DropdownItem from '../../components/Dropdown/DropdownItem';
 import TextInput from '../../components/TextInput/TextInput';
 import CustomTable from '../../components/Table/CustomTable';
 
+import { selectToken } from '../../services/controllers/common/UserSelector';
 import { DataItem, columns, CheckboxState } from '../../services/types/common';
 import api from '../../services/apiServices';
 
 import './ContentView.scss';
 
-const ContentView: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
+const ContentView: React.FC = () => {
+  const isLoggedIn = useSelector(selectToken) !== null;
+
   const pageSize = 10;
   const [searchBy, setSearchBy] = useState('title');
   const [searchValue, setSearchValue] = useState('');

@@ -10,7 +10,7 @@ export default class DataService {
       searchValue: string;
       page: number;
       pageSize: number;
-      userId?: string;
+      userId?: string | null;
     },
   ) {
     const apiSearchParams = {

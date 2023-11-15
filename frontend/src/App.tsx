@@ -11,8 +11,7 @@ import PrivateRoute from './components/Route/PrivateRoute';
 import store, { persistor } from './store';
 
 import Header from './views/header/Header';
-import Footer from './components/Footer/Footer';
-import { storage } from './common/utils/storage';
+import Footer from './views/Footer/Footer';
 
 const HomeView = lazy(() => import('./views/home/HomeView'));
 const IntroView = lazy(() => import('./views/intro/IntroView'));
@@ -52,21 +51,6 @@ const queryClient = new QueryClient({
 const App: React.FC = () => {
   console.log('start');
 
-  const token = storage.getToken();
-  const isLoggedIn = token !== null;
-  let isAdmin = false;
-  let userId;
-
-  if (token) {
-    const decodedToken = JSON.parse(atob(token.split('.')[1]));
-
-    if (decodedToken.role === 'Admin') {
-      isAdmin = true;
-    } else {
-      userId = decodedToken.id;
-    }
-  }
-
   return (
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
@@ -76,35 +60,32 @@ const App: React.FC = () => {
               <ToastContainer />
               <LoadingView />
               <div className="container">
-                <Header isLoggedIn={isLoggedIn} isAdmin={isAdmin} />
+                <Header />
                 <Routes>
                   <Route path="/login" element={<PrivateRoute guards={[unAuthGuard]} element={<LoginView />} />} />
                   <Route path="/register" element={<PrivateRoute guards={[unAuthGuard]} element={<RegisterView />} />} />
                   <Route path="/" element={<PrivateRoute guards={[]} element={<HomeView />} />} />
                   <Route path="/intro" element={<PrivateRoute guards={[]} element={<IntroView />} />} />
-                  <Route path="/announcement" element={<PrivateRoute guards={[]} element={<AnnView isLoggedIn={isLoggedIn} />} />} />
+                  <Route path="/announcement" element={<PrivateRoute guards={[]} element={<AnnView />} />} />
                   <Route path="/announcement/create" element={<PrivateRoute guards={[]} element={<AnnCreate />} />} />
                   <Route path="/announcement/:id" element={<PrivateRoute guards={[]} element={<AnnItem />} />} />
                   <Route path="/announcement/edit/:id" element={<PrivateRoute guards={[]} element={<AnnEdit />} />} />
-                  <Route path="/facility" element={<PrivateRoute guards={[]} element={<FacilityView isLoggedIn={isLoggedIn} />} />} />
-                  <Route path="/content" element={<PrivateRoute guards={[]} element={<ContentView isLoggedIn={isLoggedIn} />} />} />
+                  <Route path="/facility" element={<PrivateRoute guards={[]} element={<FacilityView />} />} />
+                  <Route path="/content" element={<PrivateRoute guards={[]} element={<ContentView />} />} />
                   <Route path="/content/create" element={<PrivateRoute guards={[]} element={<ContentCreate />} />} />
                   <Route path="/content/:id" element={<PrivateRoute guards={[]} element={<ContentItem />} />} />
                   <Route path="/content/edit/:id" element={<PrivateRoute guards={[]} element={<ContentEdit />} />} />
-                  <Route path="/lab" element={<PrivateRoute guards={[]} element={<LabView isLoggedIn={isLoggedIn} userId={userId} />} />} />
+                  <Route path="/lab" element={<PrivateRoute guards={[]} element={<LabView />} />} />
                   <Route path="/lab/create" element={<PrivateRoute guards={[]} element={<LabCreate />} />} />
                   <Route path="/lab/:id" element={<PrivateRoute guards={[]} element={<LabItem />} />} />
                   <Route path="/lab/edit/:id" element={<PrivateRoute guards={[]} element={<LabEdit />} />} />
-                  <Route
-                    path="/user-management"
-                    element={<PrivateRoute guards={[]} element={<UserManagementView isLoggedIn={isLoggedIn} />} />}
-                  />
-                  <Route path="/campaign" element={<PrivateRoute guards={[]} element={<CampaignView isLoggedIn={isLoggedIn} />} />} />
+                  <Route path="/user-management" element={<PrivateRoute guards={[]} element={<UserManagementView />} />} />
+                  <Route path="/campaign" element={<PrivateRoute guards={[]} element={<CampaignView />} />} />
                   <Route path="/campaign/create" element={<PrivateRoute guards={[]} element={<CampaignCreate />} />} />
                   <Route path="/campaign/:id" element={<PrivateRoute guards={[]} element={<CampaignItem />} />} />
                   <Route path="/campaign/edit/:id" element={<PrivateRoute guards={[]} element={<CampaignEdit />} />} />
-                  <Route path="/board" element={<PrivateRoute guards={[]} element={<BoardView isLoggedIn={isLoggedIn} />} />} />
-                  <Route path="/board/create" element={<PrivateRoute guards={[]} element={<BoardCreate isLoggedIn={isLoggedIn} />} />} />
+                  <Route path="/board" element={<PrivateRoute guards={[]} element={<BoardView />} />} />
+                  <Route path="/board/create" element={<PrivateRoute guards={[]} element={<BoardCreate />} />} />
                   <Route path="/board/:id" element={<PrivateRoute guards={[]} element={<BoardItem />} />} />
                   <Route path="/board/edit/:id" element={<PrivateRoute guards={[]} element={<BoardEdit />} />} />
                 </Routes>

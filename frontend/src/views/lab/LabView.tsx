@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,10 +14,14 @@ import CustomTable from '../../components/Table/CustomTable';
 
 import { DataItem, columns, CheckboxState } from '../../services/types/common';
 import api from '../../services/apiServices';
+import { selectUserId, selectToken } from '../../services/controllers/common/UserSelector';
 
 import './LabView.scss';
 
-const LabView: React.FC<{ isLoggedIn: boolean; userId: string }> = ({ isLoggedIn, userId }) => {
+const LabView: React.FC = () => {
+  const isLoggedIn = useSelector(selectToken) !== null;
+  const userId = useSelector(selectUserId);
+
   const pageSize = 10;
   const [searchBy, setSearchBy] = useState('title');
   const [searchValue, setSearchValue] = useState('');
@@ -96,6 +101,7 @@ const LabView: React.FC<{ isLoggedIn: boolean; userId: string }> = ({ isLoggedIn
         searchValue,
         page,
         pageSize,
+        userId,
       }),
     {
       enabled: searchBy !== undefined && searchValue !== undefined,
