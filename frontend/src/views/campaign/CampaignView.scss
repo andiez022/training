@@ -108,6 +108,27 @@
           }
         }
 
+        .file-input-container {
+          display: flex;
+
+          .hidden-file {
+            opacity: 0;
+            height: 40px;
+            width: 180px;
+            z-index: 1;
+          }
+
+          button {
+            position: absolute;
+            z-index: -1;
+            background: linear-gradient(90deg, #0066c1 0%, #009fe5 100%);
+            color: $color-white;
+            cursor: pointer;
+            border: none;
+            padding: 10px 40px;
+          }
+        }
+
         .error {
           text-align: left;
           color: red;
@@ -134,8 +155,8 @@
         }
 
         .submit-button {
-          background: linear-gradient(90deg, #0367c2 0%, #009fe5 100%);
-          color: white;
+          background: $gradient-primary;
+          color: $color-white;
         }
       }
     }

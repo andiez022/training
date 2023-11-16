@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation } from '@tanstack/react-query';
 import { useNavigate, useParams } from 'react-router-dom';
-
-import TableRowDetails from '../../components/Table/TableRowDetails';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+import { toast } from 'react-toastify';
 
 import Modal, { ModalWidth } from '../../components/Modal/DialogModal';
+import Icon, { ICONS, IconSize } from '../../components/SVG/Icon';
+import TableRowDetails from '../../components/Table/TableRowDetails';
+
 import api from '../../services/apiServices';
 
 import './BoardView.scss';
@@ -23,9 +27,13 @@ const BoardItem: React.FunctionComponent = () => {
     navigate(`/board/${itemId}`);
   };
 
+  const [modalAction, setModalAction] = useState<string>();
+
   const [passwordModalOpen, setPasswordModalOpen] = useState(false);
 
-  const openPasswordModal = () => {
+  const openPasswordModal = (actionType: string) => {
+    if (actionType === 'edit') setModalAction('edit');
+    if (actionType === 'delete') setModalAction('delete');
     setPasswordModalOpen(true);
   };
 
@@ -33,15 +41,19 @@ const BoardItem: React.FunctionComponent = () => {
     setPasswordModalOpen(false);
   };
 
-  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
-  const openEditModal = () => {
-    setEditModalOpen(true);
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
   };
 
-  const closeEditModal = () => {
-    setEditModalOpen(false);
+  const initialValues = {
+    password: '',
   };
+
+  const validationSchema = Yup.object().shape({
+    password: Yup.string().required('비밀번호를 입력하세요.'),
+  });
 
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
@@ -53,9 +65,51 @@ const BoardItem: React.FunctionComponent = () => {
     setDeleteModalOpen(false);
   };
 
-  const handleEdit = () => {};
+  const dataMutation = useMutation((values: any) => api.user.boardLogin(id ?? '', values.password), {
+    onSuccess: () => {
+      if (modalAction === 'edit') {
+        closePasswordModal();
+        window.location.assign(`/board/edit/${id}`);
+      }
+      if (modalAction === 'delete') {
+        closePasswordModal();
+        openDeleteModal();
+      }
+    },
+    onError: () => {
+      toast.error('권한 거부됨', {
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: 'colored',
+        className: 'toast-message',
+      });
+    },
+  });
 
-  const handleDelete = () => {};
+  const deleteDataMutation = useMutation((itemId: string) => api.data.deleteDataById('free-board', itemId), {
+    onSuccess: () => {
+      toast.success('성공적으로 삭제되었습니다.', {
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: 'colored',
+      });
+      window.location.assign('/board');
+    },
+  });
+
+  const handleDelete = () => {
+    try {
+      deleteDataMutation.mutate(id ?? '');
+    } catch (error) {
+      console.error('Error deleting data: ', error);
+    }
+  };
 
   return (
     <div className="board-view">
@@ -77,46 +131,45 @@ const BoardItem: React.FunctionComponent = () => {
               userId={dataItem.user_id}
               onNextItem={() => handleDisplayItem(dataItem.next ?? '')}
               onPrevItem={() => handleDisplayItem(dataItem.previous ?? '')}
-              onEdit={openEditModal}
-              onDelete={openDeleteModal}
+              onAction={openPasswordModal}
               hasNext={!!dataItem.next}
               hasPrev={!!dataItem.previous}
               onFreeBoard
             />
           )}
-          <Modal dataId="" isOpen={editModalOpen} onClose={closeEditModal} className="modal" width={ModalWidth.SM}>
-            <div className="message">
-              <span>한 번에 하나의 게시글만 수정가능합니다.</span>
-              <span>하나의 게시글만 선택해주세요.</span>
-            </div>
-            <div className="modal__buttons">
-              <button onClick={closeEditModal} className="cancel-button">
-                취소
-              </button>
-              <button
-                onClick={() => {
-                  closeEditModal();
-                }}
-                className="confirm-button"
-              >
-                확인
-              </button>
-            </div>
+          <Modal dataId="" isOpen={passwordModalOpen} onClose={closePasswordModal} className="password-modal" width={ModalWidth.SM}>
+            <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={(values) => dataMutation.mutate(values)}>
+              <Form className="form-password">
+                <div className="form-group">
+                  <label htmlFor="password">비밀번호를 입력하세요.</label>
+                  <div>
+                    <Field type={passwordVisible ? 'text' : 'password'} id="password" name="password" />
+                    <span onClick={togglePasswordVisibility}>
+                      <Icon component={passwordVisible ? ICONS.EYE_VISIBLE : ICONS.EYE_INVISIBLE} size={IconSize.LG} />
+                    </span>
+                  </div>
+                  <ErrorMessage name="password" component="div" className="error" />
+                </div>
+                <div className="password-modal__buttons">
+                  <button type="button" className="cancel-button" onClick={closePasswordModal}>
+                    취소
+                  </button>
+                  <button type="submit" className="confirm-button">
+                    확인
+                  </button>
+                </div>
+              </Form>
+            </Formik>
           </Modal>
-          <Modal dataId="" isOpen={deleteModalOpen} onClose={closeDeleteModal} className="modal" width={ModalWidth.SM}>
-            <div className="message">
-              <span>건의 게시글을</span>
-              <span>삭제 하시겠습니까?</span>
-            </div>
-            <div className="modal__buttons">
+          <Modal dataId="" isOpen={deleteModalOpen} onClose={closeDeleteModal} className="delete-modal" width={ModalWidth.SM}>
+            <span>건의 게시글을 삭제 하시겠습니까?</span>
+            <div className="delete-modal__buttons">
               <button onClick={closeDeleteModal} className="cancel-button">
                 취소
               </button>
               <button
                 onClick={() => {
-                  if (handleDelete) {
-                    handleDelete();
-                  }
+                  handleDelete();
                   closeDeleteModal();
                 }}
                 className="confirm-button"

@@ -385,7 +385,7 @@
     background: white;
     border: 1px solid #c0c0c0;
     border-radius: 0px;
-    color: black;
+    color: $color-black;
     text-indent: 10px;
     font-size: 14px;
     font-weight: 400;
@@ -406,7 +406,7 @@
     gap: 10px;
     width: 88px;
     height: 40px;
-    background: linear-gradient(90deg, #0367c2 0%, #009fe5 100%);
+    background: $gradient-primary;
     border: 1px solid #c0c0c0;
     border-radius: 0px;
     color: #ffffff;
@@ -416,7 +416,7 @@
     overflow: hidden;
 
     &:hover {
-      background: linear-gradient(90deg, #0367c2 0%, #009fe5 100%);
+      background: $gradient-primary;
     }
   }
 

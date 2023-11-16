@@ -1,3 +1,5 @@
+@import '../../common/sass/variables.scss';
+
 .login-form {
   margin: 10rem auto 3rem;
   max-width: 30rem;
@@ -68,7 +70,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: black;
+    color: $color-black;
   }
 }
 

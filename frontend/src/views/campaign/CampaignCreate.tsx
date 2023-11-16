@@ -4,7 +4,6 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { toast } from 'react-toastify';
 
 import api from '../../services/apiServices';
 
@@ -15,7 +14,7 @@ const CampaignCreate: React.FC = () => {
     title: '',
     content: '',
     link: '',
-    image: null,
+    image: undefined,
     image_name: '',
   };
 
@@ -23,18 +22,11 @@ const CampaignCreate: React.FC = () => {
     title: Yup.string().required('제목을 입력하세요.'),
     content: Yup.string().required('제내용을 입력하세요.'),
     link: Yup.string().required('링크를 입력해주세요.'),
-    image: Yup.string().required('링크를 입력해주세요.'),
+    image: Yup.mixed().required('입력하세요.'),
   });
+
   const createDataMutation = useMutation((values: any) => api.data.postData('campaign', values), {
     onSuccess: () => {
-      toast.success('성공적으로 삭제되었습니다.', {
-        autoClose: 5000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        theme: 'colored',
-      });
       window.location.assign('/campaign');
     },
   });
@@ -98,9 +90,11 @@ const CampaignCreate: React.FC = () => {
                     </div>
                   </div>
                   <ErrorMessage name="link" component="div" className="error" />
-                  <div>
-                    <Field type="file" name="image" accept="image/*" />
+                  <div className="file-input-container">
+                    <Field type="file" name="image" accept="image/*" className="hidden-file" />
+                    <button className="">대표이미지 첨부</button>
                   </div>
+                  <ErrorMessage name="image" component="div" className="error" />
                   <div className="form-button">
                     <button type="submit" className="submit-button" disabled={isSubmitting}>
                       등록

@@ -27,4 +27,14 @@ export default class UserService {
     });
     return response.data.user;
   };
+
+  async boardLogin(id: string, password: string) {
+    try {
+      const response = await this.axios.post(`free-board/${id}`, { password });
+      return response;
+    } catch (error) {
+      console.error('Error during board login: ', error);
+      throw error;
+    }
+  }
 }

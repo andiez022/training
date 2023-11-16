@@ -67,7 +67,7 @@
 
       button {
         cursor: pointer;
-        background-color: white;
+        background-color: $color-white;
         border: 1px solid #c0c0c0;
         width: 50px;
         height: 30px;
@@ -120,15 +120,15 @@
       gap: 4px;
 
       button {
-        background-color: white;
+        background-color: $color-white;
         border: 1px solid #cccccc;
         width: 2rem;
         height: 2rem;
       }
 
       button.clicked {
-        background: linear-gradient(90deg, #0367c2 0%, #009fe5 100%);
-        color: white;
+        background: $gradient-primary;
+        color: $color-white;
       }
     }
 
@@ -158,8 +158,8 @@
 
       &__create {
         width: 6.25rem;
-        color: white;
-        background: linear-gradient(90deg, #0367c2 0%, #009fe5 100%);
+        color: $color-white;
+        background: $gradient-primary;
       }
     }
   }
@@ -223,7 +223,9 @@
   }
 }
 
-.modal {
+.dialog {
+  border-radius: 0px;
+
   .message {
     display: flex;
     flex-direction: column;
@@ -235,7 +237,7 @@
 
   &__buttons {
     display: flex;
-    align-self: flex-end;
+    width: 100%;
 
     button {
       cursor: pointer;
@@ -250,9 +252,13 @@
     }
 
     .confirm-button {
-      background: linear-gradient(90deg, #0367c2 0%, #009fe5 100%);
-      color: white;
+      background: $gradient-primary;
+      color: $color-white;
     }
+  }
+
+  @media only screen and (max-width: $breakpoint-xxl) {
+    padding: 0px;
   }
 }
 
@@ -326,7 +332,6 @@
           width: 100%;
           padding: 0 10px;
           display: flex;
-          align-items: center;
         }
 
         td:nth-child(4),

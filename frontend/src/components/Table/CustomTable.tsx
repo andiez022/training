@@ -113,7 +113,7 @@ const CustomTable: React.FC<TableProps> = ({
         <tbody style={{ maxHeight: '600px' }}>
           {data.length !== 0 ? (
             <>
-              {data.map((item, index) => (
+              {data.map((item, _) => (
                 <tr key={item.id}>
                   {columns.map((column, columnIndex) => {
                     if (columnIndex === 0 && showAdminActions) {
@@ -227,12 +227,12 @@ const CustomTable: React.FC<TableProps> = ({
             <button className="admin-buttons__edit" onClick={handleEditAction}>
               수정
             </button>
-            <Modal dataId="" isOpen={editModalOpen} onClose={closeEditModal} className="modal" width={ModalWidth.SM}>
+            <Modal dataId="" isOpen={editModalOpen} onClose={closeEditModal} className="dialog" width={ModalWidth.SM}>
               <div className="message">
                 <span>한 번에 하나의 게시글만 수정가능합니다.</span>
                 <span>하나의 게시글만 선택해주세요.</span>
               </div>
-              <div className="modal__buttons">
+              <div className="dialog__buttons">
                 <button onClick={closeEditModal} className="cancel-button">
                   취소
                 </button>
@@ -249,12 +249,12 @@ const CustomTable: React.FC<TableProps> = ({
             <button className="admin-buttons__delete" onClick={openDeleteModal}>
               삭제
             </button>
-            <Modal dataId="" isOpen={deleteModalOpen} onClose={closeDeleteModal} className="modal" width={ModalWidth.SM}>
+            <Modal dataId="" isOpen={deleteModalOpen} onClose={closeDeleteModal} className="dialog" width={ModalWidth.SM}>
               <div className="message">
                 <span>{checkedNumber}건의 게시글을</span>
                 <span>삭제 하시겠습니까?</span>
               </div>
-              <div className="modal__buttons">
+              <div className="dialog__buttons">
                 <button onClick={closeDeleteModal} className="cancel-button">
                   취소
                 </button>

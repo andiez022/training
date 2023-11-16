@@ -73,15 +73,15 @@
     gap: 4px;
 
     button {
-      background-color: white;
+      background-color: $color-white;
       border: 1px solid #cccccc;
       width: 2rem;
       height: 2rem;
     }
 
     button.clicked {
-      background: linear-gradient(90deg, #0367c2 0%, #009fe5 100%);
-      color: white;
+      background: $gradient-primary;
+      color: $color-white;
     }
   }
 }

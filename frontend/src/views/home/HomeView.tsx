@@ -101,105 +101,108 @@ const Home: React.FC = () => {
           <p>깨바부는 부산지역 내 테트라포드와 습지 현황에 대한 정보를 제공하고 있습니다.</p>
         </div>
       </div>
+      <div className="h-screen" />
       <div className="context-container">
-        <RevealOnScroll>
-          <div className="announcement-container">
-            <div className="announcement-title">
-              <h2 className="gradual-color-transition">공지사항</h2>
-              <button onClick={() => window.location.assign('announcement')}>
-                <Icon component={ICONS.PLUS} size={IconSize.XXL} />
-              </button>
+        <div className="home-body">
+          <RevealOnScroll>
+            <div className="announcement-container">
+              <div className="announcement-title">
+                <h2 className="gradual-color-transition">공지사항</h2>
+                <button onClick={() => window.location.assign('announcement')}>
+                  <Icon component={ICONS.PLUS} size={IconSize.XXL} />
+                </button>
+              </div>
+              <div className="announcement-card">
+                {annResponse?.list.map((item: DataItem) => (
+                  <Card
+                    key={item.id}
+                    title={item.title}
+                    content={item.content}
+                    date={item.updated_at}
+                    onClick={() => displayItem('announcement', item.id)}
+                  />
+                ))}
+              </div>
             </div>
-            <div className="announcement-card">
-              {annResponse?.list.map((item: DataItem) => (
-                <Card
-                  key={item.id}
-                  title={item.title}
-                  content={item.content}
-                  date={item.updated_at}
-                  onClick={() => displayItem('announcement', item.id)}
-                />
-              ))}
-            </div>
+          </RevealOnScroll>
+          <div className="highlights-container">
+            <RevealOnScroll className="list-container">
+              <div className="list-header">
+                <h2 className="gradual-color-transition">콘텐츠</h2>
+                <button onClick={() => window.location.assign('content')}>
+                  <Icon component={ICONS.PLUS} size={IconSize.XXL} />
+                </button>
+              </div>
+              <ul className="list-body">
+                {contentResponse?.list.map((item: DataItem) => (
+                  <li key={item.id} className="list-item" onClick={() => goToPage('content')}>
+                    <div className="item-title">
+                      <span className="icon-span" />
+                      <span className="title-span">{item.title}</span>
+                    </div>
+                    <Icon component={ICONS.ARROW_RIGHT} />
+                  </li>
+                ))}
+              </ul>
+            </RevealOnScroll>
+            <RevealOnScroll className="list-container" style={{ transitionDelay: '0.25s' }}>
+              <div className="list-header">
+                <h2 className="gradual-color-transition">리빙랩</h2>
+                <button onClick={() => window.location.assign('lab')}>
+                  <Icon component={ICONS.PLUS} size={IconSize.XXL} />
+                </button>
+              </div>
+              <ul className="list-body">
+                {labResponse?.list.map((item: DataItem) => (
+                  <li key={item.id} className="list-item" onClick={() => displayItem('lab', item.id)}>
+                    <div className="item-title">
+                      <span className="icon-span" />
+                      <span className="title-span">{item.title}</span>
+                    </div>
+                    <Icon component={ICONS.ARROW_RIGHT} />
+                  </li>
+                ))}
+              </ul>
+            </RevealOnScroll>
+            <RevealOnScroll className="list-container" style={{ transitionDelay: '0.5s' }}>
+              <div className="list-header">
+                <h2 className="gradual-color-transition">캠페인</h2>
+                <button onClick={() => window.location.assign('campaign')}>
+                  <Icon component={ICONS.PLUS} size={IconSize.XXL} />
+                </button>
+              </div>
+              <ul className="list-body">
+                {campaignResponse?.list.map((item: DataItem) => (
+                  <li key={item.id} className="list-item" onClick={() => displayItem('campaign', item.id)}>
+                    <div className="item-title">
+                      <span className="icon-span" />
+                      <span className="title-span">{item.title}</span>
+                    </div>
+                    <Icon component={ICONS.ARROW_RIGHT} />
+                  </li>
+                ))}
+              </ul>
+            </RevealOnScroll>
+            <RevealOnScroll className="list-container" style={{ transitionDelay: '0.75s' }}>
+              <div className="list-header">
+                <h2 className="gradual-color-transition">자유게시판</h2>
+                <button onClick={() => window.location.assign('board')}>
+                  <Icon component={ICONS.PLUS} size={IconSize.XXL} />
+                </button>
+              </div>
+              <ul className="list-body">
+                {boardResponse?.list.map((item: DataItem) => (
+                  <li key={item.id} className="list-item" onClick={() => displayItem('board', item.id)}>
+                    <div className="item-title">
+                      <span className="icon-span" />
+                      <span className="title-span">{item.title}</span>
+                    </div>
+                    <Icon component={ICONS.ARROW_RIGHT} />
+                  </li>
+                ))}
+              </ul>
+            </RevealOnScroll>
           </div>
-        </RevealOnScroll>
-        <div className="highlights-container">
-          <RevealOnScroll className="list-container">
-            <div className="list-header">
-              <h2 className="gradual-color-transition">콘텐츠</h2>
-              <button onClick={() => window.location.assign('content')}>
-                <Icon component={ICONS.PLUS} size={IconSize.XXL} />
-              </button>
-            </div>
-            <ul className="list-body">
-              {contentResponse?.list.map((item: DataItem) => (
-                <li key={item.id} className="list-item" onClick={() => goToPage('content')}>
-                  <div className="item-title">
-                    <span className="icon-span" />
-                    <span className="title-span">{item.title}</span>
-                  </div>
-                  <Icon component={ICONS.ARROW_RIGHT} />
-                </li>
-              ))}
-            </ul>
-          </RevealOnScroll>
-          <RevealOnScroll className="list-container" style={{ transitionDelay: '0.25s' }}>
-            <div className="list-header">
-              <h2 className="gradual-color-transition">리빙랩</h2>
-              <button onClick={() => window.location.assign('lab')}>
-                <Icon component={ICONS.PLUS} size={IconSize.XXL} />
-              </button>
-            </div>
-            <ul className="list-body">
-              {labResponse?.list.map((item: DataItem) => (
-                <li key={item.id} className="list-item" onClick={() => displayItem('lab', item.id)}>
-                  <div className="item-title">
-                    <span className="icon-span" />
-                    <span className="title-span">{item.title}</span>
-                  </div>
-                  <Icon component={ICONS.ARROW_RIGHT} />
-                </li>
-              ))}
-            </ul>
-          </RevealOnScroll>
-          <RevealOnScroll className="list-container" style={{ transitionDelay: '0.5s' }}>
-            <div className="list-header">
-              <h2 className="gradual-color-transition">캠페인</h2>
-              <button onClick={() => window.location.assign('campaign')}>
-                <Icon component={ICONS.PLUS} size={IconSize.XXL} />
-              </button>
-            </div>
-            <ul className="list-body">
-              {campaignResponse?.list.map((item: DataItem) => (
-                <li key={item.id} className="list-item" onClick={() => displayItem('campaign', item.id)}>
-                  <div className="item-title">
-                    <span className="icon-span" />
-                    <span className="title-span">{item.title}</span>
-                  </div>
-                  <Icon component={ICONS.ARROW_RIGHT} />
-                </li>
-              ))}
-            </ul>
-          </RevealOnScroll>
-          <RevealOnScroll className="list-container" style={{ transitionDelay: '0.75s' }}>
-            <div className="list-header">
-              <h2 className="gradual-color-transition">자유게시판</h2>
-              <button onClick={() => window.location.assign('board')}>
-                <Icon component={ICONS.PLUS} size={IconSize.XXL} />
-              </button>
-            </div>
-            <ul className="list-body">
-              {boardResponse?.list.map((item: DataItem) => (
-                <li key={item.id} className="list-item" onClick={() => displayItem('board', item.id)}>
-                  <div className="item-title">
-                    <span className="icon-span" />
-                    <span className="title-span">{item.title}</span>
-                  </div>
-                  <Icon component={ICONS.ARROW_RIGHT} />
-                </li>
-              ))}
-            </ul>
-          </RevealOnScroll>
         </div>
       </div>
     </div>

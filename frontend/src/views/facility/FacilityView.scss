@@ -98,7 +98,7 @@
       cursor: pointer;
       width: 8em;
       height: 40px;
-      background-color: white;
+      background-color: $color-white;
       color: #0069c3;
       border: 1px solid #006ac3;
       border-radius: 10px;
@@ -112,7 +112,7 @@
 
     .button.selected {
       background: linear-gradient(to right, #0066c1 25%, #009fe5);
-      color: white;
+      color: $color-white;
     }
 
     .my-map {

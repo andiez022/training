@@ -1,7 +1,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import React, { lazy } from 'react';
 import { Provider } from 'react-redux';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { PersistGate } from 'redux-persist/integration/react';
 
@@ -39,6 +39,7 @@ const BoardEdit = lazy(() => import('./views/board/BoardEdit'));
 const LoginView = lazy(() => import('./views/authentication/LoginView'));
 const RegisterView = lazy(() => import('./views/authentication/RegisterView'));
 const UserManagementView = lazy(() => import('./views/user_management/UserManagementView'));
+const NotFoundView = lazy(() => import('./views/404/NotFoundView'));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -88,6 +89,8 @@ const App: React.FC = () => {
                   <Route path="/board/create" element={<PrivateRoute guards={[]} element={<BoardCreate />} />} />
                   <Route path="/board/:id" element={<PrivateRoute guards={[]} element={<BoardItem />} />} />
                   <Route path="/board/edit/:id" element={<PrivateRoute guards={[]} element={<BoardEdit />} />} />
+                  <Route path="*" element={<Navigate to="/404" />} />
+                  <Route path="/404" element={<NotFoundView />} />
                 </Routes>
                 <Footer />
               </div>

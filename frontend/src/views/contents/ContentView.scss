@@ -138,8 +138,8 @@
         }
 
         .submit-button {
-          background: linear-gradient(90deg, #0367c2 0%, #009fe5 100%);
-          color: white;
+          background: $gradient-primary;
+          color: $color-white;
         }
       }
     }
