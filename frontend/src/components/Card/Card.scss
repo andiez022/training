@@ -1,4 +1,5 @@
 @import '../../common/sass/variables';
+@import '../../common/sass/font';
 
 .card {
   display: flex;
@@ -13,7 +14,8 @@
 
   .card-title {
     font-size: 15px;
-    font-weight: bold;
+    font-family: 'Noto Sans KR';
+    font-weight: 700;
     color: #3b4650;
     display: -webkit-box;
     -webkit-line-clamp: 1;
@@ -24,7 +26,8 @@
 
   .card-content {
     font-size: 14px;
-    font-weight: 300;
+    font-family: 'Noto Sans KR';
+    font-weight: normal;
     color: #606a74;
     display: -webkit-box;
     -webkit-line-clamp: 3;
@@ -36,12 +39,16 @@
 
   .card-content * {
     font-size: 14px;
+    font-family: 'Noto Sans KR';
+    font-weight: normal;
     font-weight: 300;
     color: #606a74;
   }
 
   .card-date {
     font-size: 12px;
+    font-family: 'Noto Sans KR';
+    font-weight: normal;
     font-weight: 300;
     color: #3b4650;
   }

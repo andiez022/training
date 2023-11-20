@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
@@ -9,13 +10,19 @@ import Modal, { ModalWidth } from '../../components/Modal/DialogModal';
 import Icon, { ICONS, IconSize } from '../../components/SVG/Icon';
 import TableRowDetails from '../../components/Table/TableRowDetails';
 
+import { postLoginSuccess, postLogout } from '../../services/controllers/common/PostSlice';
+
 import api from '../../services/apiServices';
 
 import './BoardView.scss';
 
 const BoardItem: React.FunctionComponent = () => {
+  const dispatch = useDispatch();
+
   const { id } = useParams();
   const navigate = useNavigate();
+
+  const [passPhrase, setPassPhrase] = useState('');
 
   const { data: dataItem, error } = useQuery(['boardItem', id], () => api.data.fetchDataById('free-board', id || ''));
 
@@ -89,7 +96,7 @@ const BoardItem: React.FunctionComponent = () => {
     },
   });
 
-  const deleteDataMutation = useMutation((itemId: string) => api.data.deleteDataById('free-board', itemId), {
+  const deleteDataMutation = useMutation((itemId: string) => api.data.deleteBoardData(itemId, { password: passPhrase }), {
     onSuccess: () => {
       toast.success('성공적으로 삭제되었습니다.', {
         autoClose: 5000,
@@ -106,6 +113,7 @@ const BoardItem: React.FunctionComponent = () => {
   const handleDelete = () => {
     try {
       deleteDataMutation.mutate(id ?? '');
+      dispatch(postLogout());
     } catch (error) {
       console.error('Error deleting data: ', error);
     }
@@ -138,7 +146,15 @@ const BoardItem: React.FunctionComponent = () => {
             />
           )}
           <Modal dataId="" isOpen={passwordModalOpen} onClose={closePasswordModal} className="password-modal" width={ModalWidth.SM}>
-            <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={(values) => dataMutation.mutate(values)}>
+            <Formik
+              initialValues={initialValues}
+              validationSchema={validationSchema}
+              onSubmit={(values) => {
+                dataMutation.mutate(values);
+                setPassPhrase(values.password);
+                dispatch(postLoginSuccess({ password: values.password }));
+              }}
+            >
               <Form className="form-password">
                 <div className="form-group">
                   <label htmlFor="password">비밀번호를 입력하세요.</label>

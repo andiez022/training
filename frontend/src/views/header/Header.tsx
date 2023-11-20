@@ -39,6 +39,7 @@ const Header: React.FC = () => {
     window.addEventListener('scroll', handleScroll);
 
     handleScroll();
+    console.log(window.scrollY);
 
     return () => {
       window.removeEventListener('scroll', handleScroll);

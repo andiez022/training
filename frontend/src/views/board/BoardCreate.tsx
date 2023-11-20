@@ -124,12 +124,18 @@ const BoardCreate: React.FC = () => {
                 {({ isSubmitting }) => (
                   <Form className="form-create">
                     <div className="form-row">
-                      <div className="form-group">
-                        <label htmlFor="author">작성자 이름</label>
-                        <Field type="text" id="author" name="author" placeholder="이름을 입력하세요." />
+                      <div className="form-column">
+                        <div className="form-group">
+                          <label htmlFor="author">작성자 이름</label>
+                          <Field type="text" id="author" name="author" placeholder="이름을 입력하세요." />
+                        </div>
                         <ErrorMessage name="author" component="div" className="error" />
-                        <label htmlFor="password">비밀번호</label>
-                        <Field type="password" id="password" name="password" placeholder="비밀번호를 입력하세요." />
+                      </div>
+                      <div className="form-column">
+                        <div className="form-group">
+                          <label htmlFor="password">비밀번호</label>
+                          <Field type="password" id="password" name="password" placeholder="비밀번호를 입력하세요." />
+                        </div>
                         <ErrorMessage name="password" component="div" className="error" />
                       </div>
                     </div>

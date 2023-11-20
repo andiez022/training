@@ -72,6 +72,13 @@
         .form-row {
           display: flex;
 
+          .form-column {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            width: 100%;
+          }
+
           .form-group {
             display: flex;
             min-height: 3.125rem;

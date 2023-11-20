@@ -137,7 +137,7 @@ const BoardView: React.FC = () => {
               <div className="board-view__image__overlay" />
               <div className="board-view__image__icon">
                 <img src="icon_board.svg" alt="BoardIcon" />
-                <p>깨바부의 새로운 소식을 전합니다.</p>
+                <p>깨끗한 바다 부산을 위한 시민들의 다양한 의견과 정보를 공유합니다.</p>
               </div>
             </>
           )}

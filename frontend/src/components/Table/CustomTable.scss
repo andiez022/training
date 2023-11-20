@@ -76,7 +76,7 @@
 
     th:first-child,
     td:first-child {
-      width: 15%;
+      width: 10%;
     }
 
     th:nth-child(2),
@@ -93,7 +93,7 @@
     td:nth-child(3),
     th:nth-child(4),
     td:nth-child(4) {
-      width: 12.5%;
+      width: 15%;
     }
   }
 
@@ -264,7 +264,7 @@
 
 @media only screen and (max-width: $breakpoint-xl) {
   .customized-table {
-    margin-top: 2.5rem;
+    margin-top: 3.5rem;
 
     th:nth-child(3),
     td:nth-child(3),
@@ -289,6 +289,18 @@
             display: block;
           }
         }
+      }
+    }
+
+    tr {
+      th:first-child,
+      td:first-child {
+        width: 8%;
+      }
+
+      th:nth-child(2),
+      td:nth-child(2) {
+        width: 92%;
       }
     }
   }
@@ -345,6 +357,18 @@
 
 @media only screen and (max-width: $breakpoint-md) {
   .customized-table {
-    margin-top: 5rem;
+    margin-top: 6.5rem;
+
+    tr {
+      th:first-child,
+      td:first-child {
+        width: 15%;
+      }
+
+      th:nth-child(2),
+      td:nth-child(2) {
+        width: 85%;
+      }
+    }
   }
 }

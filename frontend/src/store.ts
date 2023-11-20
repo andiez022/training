@@ -3,6 +3,7 @@ import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 import commonSlice from './services/controllers/common/CommonSlice';
 import userSlice from './services/controllers/common/UserSlice';
+import postSlice from './services/controllers/common/PostSlice';
 
 const persistConfig = {
   key: 'root',
@@ -15,6 +16,7 @@ const persistedReducer = persistReducer(
   combineReducers({
     common: commonSlice,
     user: userSlice,
+    post: postSlice,
   }),
 );
 

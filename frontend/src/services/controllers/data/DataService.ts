@@ -96,6 +96,16 @@ export default class DataService {
     }
   }
 
+  async deleteBoardData(id: string, password: { password: string }) {
+    try {
+      const response = await this.axios.delete(`free-board/${id}`, { data: password });
+      return response.data;
+    } catch (error) {
+      console.error('Error deleting data: ', error);
+      throw error;
+    }
+  }
+
   async editData(
     pageType: string,
     updatedData: {
@@ -112,12 +122,13 @@ export default class DataService {
     }
   }
 
-  async editAdminData(
+  async editdataById(
     pageType: string,
     id: string,
     updatedData: {
-      title?: string;
-      content?: string;
+      content: string;
+      title: string;
+      password?: string;
     },
   ) {
     const apiUrl = `${pageType}/${id}`;

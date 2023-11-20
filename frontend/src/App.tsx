@@ -11,7 +11,7 @@ import PrivateRoute from './components/Route/PrivateRoute';
 import store, { persistor } from './store';
 
 import Header from './views/header/Header';
-import Footer from './views/Footer/Footer';
+import Footer from './views/footer/Footer';
 
 const HomeView = lazy(() => import('./views/home/HomeView'));
 const IntroView = lazy(() => import('./views/intro/IntroView'));

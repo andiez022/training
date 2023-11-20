@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
@@ -6,22 +7,26 @@ import * as Yup from 'yup';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
-import { useSelector } from 'react-redux';
 import { selectToken } from '../../services/controllers/common/UserSelector';
 
+import { selectPostPassword } from '../../services/controllers/common/PostSelector';
 import api from '../../services/apiServices';
 
 import './BoardView.scss';
+import { postLogout } from '../../services/controllers/common/PostSlice';
 
 const BoardEdit: React.FC = () => {
+  const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectToken) !== null;
   const { id } = useParams();
+
+  const postPassword = useSelector(selectPostPassword);
 
   const { data: dataItem } = useQuery(['boardItem', id], () => api.data.fetchDataById('free-board', id || ''));
 
   const userInitialEditValues = {
     author: dataItem?.author,
-    password: dataItem?.password,
+    password: postPassword,
     title: dataItem?.title,
     content: dataItem?.content,
   };
@@ -32,7 +37,6 @@ const BoardEdit: React.FC = () => {
   };
 
   const userFormValidation = Yup.object().shape({
-    author: Yup.string().required('입력하세요.'),
     password: Yup.string().required('비밀번호를 입력하세요.'),
     title: Yup.string().required('제목을 입력하세요.'),
     content: Yup.string().required('제내용을 입력하세요.'),
@@ -43,13 +47,18 @@ const BoardEdit: React.FC = () => {
     content: Yup.string().required('제내용을 입력하세요.'),
   });
 
-  const editUserDataMutation = useMutation((values: any) => api.data.editAdminData('free-board', id || '', values), {
-    onSuccess: () => {
-      window.location.pathname = '/board';
+  const editUserDataMutation = useMutation(
+    (values: any) =>
+      api.data.editdataById('free-board', id || '', { content: values.content, title: values.title, password: values.password }),
+    {
+      onSuccess: () => {
+        dispatch(postLogout());
+        window.location.pathname = '/board';
+      },
     },
-  });
+  );
 
-  const editAdminDataMutation = useMutation((values: any) => api.data.editAdminData('free-board/admin', id || '', values), {
+  const editdataByIdMutation = useMutation((values: any) => api.data.editdataById('free-board/admin', id || '', values), {
     onSuccess: () => {
       window.location.pathname = '/board';
     },
@@ -83,7 +92,7 @@ const BoardEdit: React.FC = () => {
                 initialValues={adminInitialEditValues}
                 validationSchema={adminFormValidation}
                 onSubmit={(values, { setSubmitting }) => {
-                  editAdminDataMutation.mutate(values, {
+                  editdataByIdMutation.mutate(values, {
                     onSuccess: () => {
                       setSubmitting(false);
                     },
@@ -141,12 +150,18 @@ const BoardEdit: React.FC = () => {
                 {({ isSubmitting }) => (
                   <Form className="form-create">
                     <div className="form-row">
-                      <div className="form-group">
-                        <label htmlFor="author">작성자 이름</label>
-                        <Field type="text" id="author" name="author" disabled />
+                      <div className="form-column">
+                        <div className="form-group">
+                          <label htmlFor="author">작성자 이름</label>
+                          <Field type="text" id="author" name="author" disabled />
+                        </div>
                         <ErrorMessage name="author" component="div" className="error" />
-                        <label htmlFor="password">비밀번호</label>
-                        <Field type="password" id="password" name="password" disabled />
+                      </div>
+                      <div className="form-column">
+                        <div className="form-group">
+                          <label htmlFor="password">비밀번호</label>
+                          <Field type="password" id="password" name="password" disabled />
+                        </div>
                         <ErrorMessage name="password" component="div" className="error" />
                       </div>
                     </div>
