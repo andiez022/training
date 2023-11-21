@@ -16,6 +16,9 @@ import { selectToken } from '../../services/controllers/common/UserSelector';
 import { DataItem, columns, CheckboxState } from '../../services/types/common';
 import api from '../../services/apiServices';
 
+import contentBanner from '../../common/assets/images/content_bn.png';
+import contentBannerIcon from '../../common/assets/images/icon_content.svg';
+
 import './ContentView.scss';
 
 const ContentView: React.FC = () => {
@@ -124,12 +127,12 @@ const ContentView: React.FC = () => {
     <div className="content-view">
       <div className="content-view__top">
         <div className="content-view__image">
-          <img src="/content_bn.png" alt="contentBG" />
+          <img src={contentBanner} alt="contentBG" />
           {!isLoggedIn && (
             <>
               <div className="content-view__image__overlay" />
               <div className="content-view__image__icon">
-                <img src="/icon_content.svg" alt="contentIcon" />
+                <img src={contentBannerIcon} alt="contentIcon" />
                 <p>깨바부의 다양한 콘텐츠를 확인해보세요.</p>
               </div>
             </>

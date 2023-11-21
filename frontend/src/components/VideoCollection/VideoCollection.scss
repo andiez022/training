@@ -1,4 +1,5 @@
 @import '../../common/sass/variables';
+@import '../../common/sass/font';
 
 .video-collection {
   display: flex;
@@ -26,26 +27,33 @@
       }
 
       p {
+        font-family: 'Noto Sans KR';
         font-size: 14px;
+        font-weight: normal;
         color: #555555;
       }
 
       h3 {
+        font-family: 'Noto Sans KR';
         font-size: 16px;
-        font-weight: bold;
+        font-weight: 700;
       }
     }
 
     &__desc {
-      max-width: 700px;
       height: 100%;
       margin-top: 0.625rem;
       background-color: #f9f9f9;
-      display: flex;
-      align-items: center;
       color: #676767;
+      padding: 2rem 1.5rem;
+      font-family: 'Noto Sans KR';
+      font-weight: normal;
       font-size: 15px;
-      padding: 0 1.5rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 }

@@ -15,6 +15,9 @@ import { DataItem, columns, CheckboxState } from '../../services/types/common';
 import { selectToken } from '../../services/controllers/common/UserSelector';
 import api from '../../services/apiServices';
 
+import annBanner from '../../common/assets/images/announcement_bn.png';
+import annBannerIcon from '../../common/assets/images/icon_announcement.svg';
+
 import './AnnView.scss';
 
 const AnnView: React.FC = () => {
@@ -129,12 +132,12 @@ const AnnView: React.FC = () => {
     <div className="ann-view">
       <div className="ann-view__top">
         <div className="ann-view__image">
-          <img src="/announcement_bn.png" alt="AnnBG" />
+          <img src={annBanner} alt="AnnBanner" />
           {!isLoggedIn && (
             <>
               <div className="ann-view__image__overlay" />
               <div className="ann-view__image__icon">
-                <img src="icon_announcement.svg" alt="AnnIcon" />
+                <img src={annBannerIcon} alt="AnnBannerIcon" />
                 <p>깨바부의 새로운 소식을 전합니다.</p>
               </div>
             </>

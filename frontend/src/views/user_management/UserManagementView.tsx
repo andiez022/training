@@ -189,14 +189,14 @@ const UserManagementView: React.FC = () => {
             className="user-management-table"
             userDelete={openDeleteModal}
           />
-          <Modal dataId="" isOpen={deleteModalOpen} onClose={closeDeleteModal} className="modal" width={ModalWidth.SM}>
+          <Modal dataId="" isOpen={deleteModalOpen} onClose={closeDeleteModal} className="dialog" width={ModalWidth.SM}>
             <div className="message">
               <span>
                 {fullname} ({username}) 님을
               </span>
               <span>탈퇴시키겠습니까?</span>
             </div>
-            <div className="modal__buttons">
+            <div className="dialog__buttons">
               <button onClick={closeDeleteModal} className="cancel-button">
                 취소
               </button>

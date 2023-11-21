@@ -17,6 +17,9 @@ import { DataItem, columns, CheckboxState } from '../../services/types/common';
 import { selectToken } from '../../services/controllers/common/UserSelector';
 import api from '../../services/apiServices';
 
+import boardBanner from '../../common/assets/images/board_bn.png';
+import boardBannerIcon from '../../common/assets/images/icon_board.svg';
+
 import './BoardView.scss';
 
 const BoardView: React.FC = () => {
@@ -131,12 +134,12 @@ const BoardView: React.FC = () => {
     <div className="board-view">
       <div className="board-view__top">
         <div className="board-view__image">
-          <img src="/board_bn.png" alt="boardBG" />
+          <img src={boardBanner} alt="boardBanner" />
           {!isLoggedIn && (
             <>
               <div className="board-view__image__overlay" />
               <div className="board-view__image__icon">
-                <img src="icon_board.svg" alt="BoardIcon" />
+                <img src={boardBannerIcon} alt="BoardBannerIcon" />
                 <p>깨끗한 바다 부산을 위한 시민들의 다양한 의견과 정보를 공유합니다.</p>
               </div>
             </>

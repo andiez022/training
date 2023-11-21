@@ -1,5 +1,7 @@
 import React from 'react';
 
+import footerLogo from '../../common/assets/images/footer.svg';
+
 import './Footer.scss';
 
 interface FooterProps {}
@@ -8,7 +10,7 @@ const Footer: React.FC<FooterProps> = () => {
   return (
     <footer className="footer">
       <div className="footer__left">
-        <img src="/footer.svg" alt="footerLogo" />
+        <img src={footerLogo} alt="footerLogo" />
       </div>
       <div className="footer__right">
         <div className="footer__right__contact">

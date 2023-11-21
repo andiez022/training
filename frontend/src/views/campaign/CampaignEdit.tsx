@@ -20,7 +20,6 @@ const CampaignEdit: React.FC = () => {
     title: dataItem?.title,
     content: dataItem?.content,
     link: dataItem?.link,
-    image: '',
     image_name: dataItem?.image_name,
   };
 

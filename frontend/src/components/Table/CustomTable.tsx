@@ -110,7 +110,7 @@ const CustomTable: React.FC<TableProps> = ({
             })}
           </tr>
         </thead>
-        <tbody style={{ maxHeight: '600px' }}>
+        <tbody>
           {data.length !== 0 ? (
             <>
               {data.map((item, _) => (

@@ -18,7 +18,7 @@
     margin-left: 9.25%;
 
     .header-img {
-      background-image: url('assets/logo_medium.svg');
+      background-image: url('../../common/assets/images/logo_medium.svg');
       background-repeat: no-repeat;
       width: 217.293px;
       height: 40px;
@@ -28,9 +28,10 @@
       display: flex;
       margin-left: 1em;
       color: $color-white;
-      font-size: 12px;
-      font-weight: bold;
       margin-top: 10px;
+      font-family: 'Noto Sans KR';
+      font-size: 16px;
+      font-weight: 700;
     }
   }
 
@@ -131,7 +132,7 @@
 
 .nav-links {
   display: flex;
-  gap: 3.125rem;
+  gap: 3.5rem;
 }
 
 .menu-icon {
@@ -161,7 +162,7 @@
     .header-left {
       .header-img.small-screen {
         margin-top: 10px;
-        background-image: url('assets/logo_small.svg');
+        background-image: url('../../common/assets/images/logo_small.svg');
         background-repeat: no-repeat;
         width: 148.422px;
         height: 30px;

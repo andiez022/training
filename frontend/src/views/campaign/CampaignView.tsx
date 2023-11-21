@@ -16,6 +16,9 @@ import { DataItem, columns, CheckboxState } from '../../services/types/common';
 import { selectToken } from '../../services/controllers/common/UserSelector';
 import api from '../../services/apiServices';
 
+import campaignBanner from '../../common/assets/images/campaign_bn.png';
+import campaignBannerIcon from '../../common/assets/images/icon_campaign.svg';
+
 import './CampaignView.scss';
 
 const CampaignView: React.FC = () => {
@@ -129,12 +132,12 @@ const CampaignView: React.FC = () => {
     <div className="campaign-view">
       <div className="campaign-view__top">
         <div className="campaign-view__image">
-          <img src="/campaign_bn.png" alt="campaignBG" />
+          <img src={campaignBanner} alt="campaignBanner" />
           {!isLoggedIn && (
             <>
               <div className="campaign-view__image__overlay" />
               <div className="campaign-view__image__icon">
-                <img src="/icon_campaign.svg" alt="campaignIcon" />
+                <img src={campaignBannerIcon} alt="campaignBannerIcon" />
                 <p>깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.</p>
               </div>
             </>

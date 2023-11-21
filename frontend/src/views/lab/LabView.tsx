@@ -16,6 +16,9 @@ import { DataItem, columns, CheckboxState } from '../../services/types/common';
 import api from '../../services/apiServices';
 import { selectUserId, selectToken } from '../../services/controllers/common/UserSelector';
 
+import labBanner from '../../common/assets/images/lab_bn.png';
+import labBannerIcon from '../../common/assets/images/icon_lab.svg';
+
 import './LabView.scss';
 
 const LabView: React.FC = () => {
@@ -131,12 +134,12 @@ const LabView: React.FC = () => {
     <div className="lab-view">
       <div className="lab-view__top">
         <div className="lab-view__image">
-          <img src="/lab_bn.png" alt="labBG" />
+          <img src={labBanner} alt="labBanner" />
           {!isLoggedIn && (
             <>
               <div className="lab-view__image__overlay" />
               <div className="lab-view__image__icon">
-                <img src="icon_lab.svg" alt="labIcon" />
+                <img src={labBannerIcon} alt="labBannerIcon" />
                 <p>깨끗한 바다 부산을 위해 시민들이 직접 참여 중인 프로젝트를 소개합니다.</p>
               </div>
             </>

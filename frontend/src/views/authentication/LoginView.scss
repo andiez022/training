@@ -1,4 +1,5 @@
-@import '../../common/sass/variables.scss';
+@import '../../common/sass/variables';
+@import '../../common/sass/font';
 
 .login-form {
   margin: 10rem auto 3rem;
@@ -8,6 +9,7 @@
   border: 1px solid #999999;
 
   h2 {
+    font-family: 'Noto Sans KR';
     text-align: center;
     margin: 1.5rem;
   }
@@ -20,12 +22,17 @@
       font-size: 16px;
       margin-bottom: 0.625em;
       align-items: center;
+      font-family: 'Noto Sans KR';
+      font-weight: normal;
     }
 
     input {
       width: 100%;
       padding: 15px;
       border: 1px solid #acacac;
+      font-family: 'Noto Sans KR';
+      font-weight: normal;
+      font-size: 16px;
 
       &::placeholder {
         color: #acacac;
@@ -71,6 +78,9 @@
     align-items: center;
     justify-content: center;
     color: $color-black;
+    font-family: 'Noto Sans KR';
+    font-weight: normal;
+    font-size: 16px;
   }
 }
 

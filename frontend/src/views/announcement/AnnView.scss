@@ -1,4 +1,5 @@
-@import '../../common/sass/variables.scss';
+@import '../../common/sass/variables';
+@import '../../common/sass/font';
 
 .ann-view {
   text-align: center;
@@ -43,8 +44,9 @@
       p {
         margin-left: 30px;
         margin-right: 30px;
+        font-family: 'S-Core Dream';
         font-size: 20px;
-        font-weight: 500;
+        font-weight: 300;
         text-shadow: 2px 2px 4px #00000033;
         letter-spacing: -0.6px;
         color: $color-white;
@@ -84,13 +86,18 @@
               justify-content: center;
               align-items: center;
               width: 12.5rem;
+              font-family: 'Noto Sans KR';
+              font-weight: 700;
+              font-size: 16px;
             }
 
             input {
               flex: 1;
               padding-left: 1.25rem;
               border: 1px solid #e5e7eb;
-              font-size: 20px;
+              font-family: 'Noto Sans KR';
+              font-weight: normal;
+              font-size: 16px;
 
               &::placeholder {
                 color: #b2b2b2;
@@ -108,9 +115,11 @@
         }
 
         .error {
+          font-family: 'S-Core Dream';
+          font-size: 14px;
+          font-weight: 200;
           text-align: left;
           color: red;
-          font-size: 14px;
         }
       }
 
@@ -124,17 +133,18 @@
           cursor: pointer;
           height: 2.5rem;
           width: 5.5rem;
-          border: 1px solid #c0c0c0;
           font-weight: bold;
         }
 
         .cancel-button {
           background-color: #d9d9d9;
+          border: 1px solid #c0c0c0;
         }
 
         .submit-button {
           background: $gradient-primary;
           color: $color-white;
+          border: none;
         }
       }
     }
@@ -160,6 +170,12 @@
 
 .ann-view__title {
   display: flex;
+
+  h2 {
+    font-family: 'S-Core Dream';
+    font-size: 24px;
+    font-weight: 900;
+  }
 }
 
 @media only screen and (max-width: $breakpoint-xl) {

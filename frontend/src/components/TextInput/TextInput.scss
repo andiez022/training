@@ -1,13 +1,16 @@
 @import '../../common/sass/variables';
+@import '../../common/sass/font';
 
 .text-input__input {
   $root: &;
+  font-family: 'Noto Sans KR';
   font-size: 14px;
+  font-weight: normal;
   line-height: 19px;
   width: 100%;
   height: 50px;
   color: $color-black;
-  border: 1px solid #C0C0C0;
+  border: 1px solid #c0c0c0;
   padding: 0 8px;
 
   &:focus {

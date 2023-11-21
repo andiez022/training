@@ -1,3 +1,6 @@
+@import '../../common/sass/variables';
+@import '../../common/sass/font';
+
 .registration-form {
   margin: 10rem auto 3rem;
   max-width: 860px;
@@ -6,6 +9,7 @@
   border: 1px solid #999999;
 
   h2 {
+    font-family: 'Noto Sans KR';
     text-align: center;
     margin: 1.5rem;
   }
@@ -21,12 +25,17 @@
         font-size: 16px;
         margin-bottom: 0.625em;
         align-items: center;
+        font-family: 'Noto Sans KR';
+        font-weight: normal;
       }
 
       input {
         width: 25rem;
         padding: 15px;
         border: 1px solid #acacac;
+        font-family: 'Noto Sans KR';
+        font-weight: normal;
+        font-size: 16px;
 
         &::placeholder {
           color: #acacac;
@@ -38,6 +47,12 @@
         width: 1.875rem;
         height: 1.875rem;
         border: 1px solid #363636;
+      }
+
+      .checkbox-label {
+        font-family: 'Noto Sans KR';
+        font-weight: 500;
+        font-size: 14px;
       }
 
       .error {
@@ -61,5 +76,8 @@
     margin-bottom: 0.625rem;
     width: 100%;
     cursor: pointer;
+    font-family: 'Noto Sans KR';
+    font-weight: normal;
+    font-size: 16px;
   }
 }

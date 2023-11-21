@@ -1,4 +1,5 @@
-@import '../../common/sass/variables.scss';
+@import '../../common/sass/variables';
+@import '../../common/sass/font';
 
 .user-management-view {
   text-align: center;
@@ -91,6 +92,12 @@
 
 .user-management-view__title {
   display: flex;
+
+  h2 {
+    font-family: 'S-Core Dream';
+    font-size: 24px;
+    font-weight: 900;
+  }
 }
 
 @media only screen and (max-width: $breakpoint-xl) {

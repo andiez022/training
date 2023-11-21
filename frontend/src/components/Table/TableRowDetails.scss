@@ -1,4 +1,5 @@
 @import '../../common/sass/variables';
+@import '../../common/sass/font';
 
 .table-detail {
   display: flex;
@@ -15,8 +16,9 @@
       padding-bottom: 0.625rem;
       padding-left: 1.25rem;
       padding-right: 1.25rem;
-      font-size: 20px;
-      font-weight: bold;
+      font-family: 'S-Core Dream';
+      font-size: 16px;
+      font-weight: 700;
     }
   }
 
@@ -38,7 +40,9 @@
       display: flex;
 
       p {
-        font-weight: bold;
+        font-family: 'S-Core Dream';
+        font-size: 14px;
+        font-weight: 700;
       }
     }
 
@@ -51,6 +55,8 @@
     p,
     a {
       margin-left: 1.25rem;
+      font-family: 'Noto Sans KR';
+      font-weight: normal;
       font-size: 14px;
     }
   }
@@ -62,6 +68,8 @@
     padding-bottom: 0.625rem;
     padding-left: 1.25rem;
     padding-right: 1.25rem;
+    font-family: 'S-Core Dream';
+    font-weight: 500;
     font-size: 14px;
   }
 }
@@ -81,7 +89,9 @@
       width: 3.75rem;
       margin-top: 1.25rem;
       border: 1px solid #c0c0c0;
+      font-family: 'S-Core Dream';
       font-size: 14px;
+      font-weight: 300;
     }
 
     .delete-button {
@@ -99,6 +109,14 @@
   gap: 0.625rem;
   justify-content: flex-end;
   margin-bottom: 55px;
+
+  .return-button,
+  .backward-button,
+  .forward-button {
+    font-family: 'S-Core Dream';
+    font-size: 14px;
+    font-weight: 300;
+  }
 
   .return-button {
     cursor: pointer;

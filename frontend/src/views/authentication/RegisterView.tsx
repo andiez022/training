@@ -117,7 +117,7 @@ const RegisterView: React.FC = () => {
 
             <div className="form-row">
               <div className="form-group">
-                <label>
+                <label className="checkbox-label">
                   <Field type="checkbox" name="termAgreement" />
                   개인정보 수집 및 이용에 동의합니다.
                 </label>

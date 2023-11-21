@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import { ReactComponent as MyMap } from '../../components/SVG/map.svg';
+import { ReactComponent as MyMap } from '../../common/assets/images/map.svg';
 import Button, { ButtonIconPlacement } from '../../components/Button/Button';
 import TextInput from '../../components/TextInput/TextInput';
 import { ICONS, IconSize } from '../../components/SVG/Icon';
@@ -12,6 +12,9 @@ import CustomTable from '../../components/Table/CustomTable';
 import { FacilityData } from '../../services/constants/constants';
 
 import { selectToken } from '../../services/controllers/common/UserSelector';
+
+import facilityBanner from '../../common/assets/images/facility_bn.png';
+import facilityBannerIcon from '../../common/assets/images/icon_facility.svg';
 
 import './FacilityView.scss';
 
@@ -46,12 +49,10 @@ const FacilityView: React.FC = () => {
     ));
   };
 
-  const pageSize = 10;
-
   const [page, setPage] = useState(0);
 
   const [pageData, setPageData] = useState([]);
-  const [totalPageCount, setTotalPageCount] = useState(0);
+  const totalPageCount = 0;
 
   const handlePageChange = (page: number) => {
     setPage(page - 1);
@@ -130,7 +131,7 @@ const FacilityView: React.FC = () => {
       <div className="facility-view">
         <div className="facility-view__top">
           <div className="facility-view__image">
-            <img src="/facility_bn.png" alt="facilityBG" />
+            <img src={facilityBanner} alt="facilityBanner" />
           </div>
           <div className="facility-view__content">
             <div className="facility-view__table-head">
@@ -175,9 +176,9 @@ const FacilityView: React.FC = () => {
       <div className="facility-view__top">
         <div className="facility-view__image">
           <div className="facility-view__image__overlay" />
-          <img src="/facility_bn.png" alt="facilityBG" />
+          <img src={facilityBanner} alt="facilityBG" />
           <div className="facility-view__image__icon">
-            <img src="icon_facility.svg" alt="facilityIcon" />
+            <img src={facilityBannerIcon} alt="facilityIcon" />
             <p>깨끗한 바다 산을 위해 각 지역별 쓰레기 수거현황을 전합니다.</p>
           </div>
         </div>

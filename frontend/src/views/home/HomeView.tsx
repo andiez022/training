@@ -3,20 +3,23 @@ import { useQuery } from '@tanstack/react-query';
 import RevealOnScroll from '../../components/RevealOnScroll/RevealOnScroll';
 import Card from '../../components/Card/Card';
 
-import './HomeView.scss';
 import Icon, { ICONS, IconSize } from '../../components/SVG/Icon';
 
 import { DataItem } from '../../services/types/common';
 
 import api from '../../services/apiServices';
 
+import banner1 from '../../common/assets/images/home_bn1.png';
+import banner2 from '../../common/assets/images/home_bn2.png';
+import banner3 from '../../common/assets/images/home_bn3.png';
+
+import './HomeView.scss';
+
 const Home: React.FC = () => {
   const searchBy = 'title';
   const searchValue = '';
   const page = 0;
   const pageSize = 4;
-
-  const listNames = ['notice', 'content', 'living-lab', 'campaign', 'free-board'];
 
   const { data: annResponse } = useQuery(['annDataShort', searchBy, searchValue, page, pageSize], () =>
     api.data.fetchDataList('notice', {
@@ -64,9 +67,9 @@ const Home: React.FC = () => {
   );
 
   const banners = [
-    { id: 1, imgSrc: '/home_bn1.png' },
-    { id: 2, imgSrc: '/home_bn2.png' },
-    { id: 3, imgSrc: '/home_bn3.png' },
+    { id: 1, imgSrc: banner1 },
+    { id: 2, imgSrc: banner2 },
+    { id: 3, imgSrc: banner3 },
   ];
 
   const [currentBanner, setCurrentBanner] = useState(0);

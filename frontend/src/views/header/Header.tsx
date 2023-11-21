@@ -9,9 +9,9 @@ import DropdownItem from '../../components/Dropdown/DropdownItem';
 import { routes } from '../../common/utils/routes';
 import { storage } from '../../common/utils/storage';
 import { selectUserRole, selectToken } from '../../services/controllers/common/UserSelector';
+import { logout } from '../../services/controllers/common/UserSlice';
 
 import './Header.scss';
-import { logout } from '../../services/controllers/common/UserSlice';
 
 interface NavLinkProps {
   to: string;
@@ -29,7 +29,7 @@ const Header: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY <= 200) {
+      if (window.scrollY <= 150) {
         setIsTransparent(true);
       } else {
         setIsTransparent(false);
@@ -39,7 +39,6 @@ const Header: React.FC = () => {
     window.addEventListener('scroll', handleScroll);
 
     handleScroll();
-    console.log(window.scrollY);
 
     return () => {
       window.removeEventListener('scroll', handleScroll);

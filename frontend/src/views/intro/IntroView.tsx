@@ -1,6 +1,13 @@
 import React from 'react';
 import RevealOnScroll from '../../components/RevealOnScroll/RevealOnScroll';
 
+import oceanIcon from '../../common/assets/images/ocean (1).png';
+import logo from '../../common/assets/images/logo.svg';
+import about1 from '../../common/assets/images/about1.svg';
+import about1Vert from '../../common/assets/images/about1_vertical.svg';
+import about2 from '../../common/assets/images/about2.svg';
+import about2Vert from '../../common/assets/images/about2_vertical.svg';
+
 import './IntroView.scss';
 
 const Intro: React.FC = () => {
@@ -11,14 +18,14 @@ const Intro: React.FC = () => {
           <RevealOnScroll>
             <div className="intro-view__logo">
               <img
-                src="/ocean (1).png"
+                src={oceanIcon}
                 alt="Ocean"
                 style={{
                   marginBottom: 30,
                 }}
               />
               <img
-                src="logo.svg"
+                src={logo}
                 alt="Logo"
                 style={{
                   marginBottom: 12.1,
@@ -39,9 +46,9 @@ const Intro: React.FC = () => {
           </RevealOnScroll>
           <RevealOnScroll>
             <picture className="intro-view__image-1">
-              <source media="(max-width: 767px)" srcSet="/about1_vertical.svg" />
-              <source media="(min-width: 768px)" srcSet="/about1.svg" />
-              <img src="about1.svg" alt="Process 1" />
+              <source media="(max-width: 767px)" srcSet={about1Vert} />
+              <source media="(min-width: 768px)" srcSet={about1} />
+              <img src={about1} alt="Process 1" />
             </picture>
           </RevealOnScroll>
           <RevealOnScroll>
@@ -84,9 +91,9 @@ const Intro: React.FC = () => {
           </RevealOnScroll>
           <RevealOnScroll>
             <picture className="intro-view__image-2">
-              <source media="(max-width: 767px)" srcSet="/about2_vertical.svg" />
-              <source media="(min-width: 768px)" srcSet="/about2.svg" />
-              <img src="about2.svg" alt="Process 2" />
+              <source media="(max-width: 767px)" srcSet={about2Vert} />
+              <source media="(min-width: 768px)" srcSet={about2} />
+              <img src={about2} alt="Process 2" />
             </picture>
           </RevealOnScroll>
           <RevealOnScroll>
