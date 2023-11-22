@@ -147,6 +147,15 @@ $bg-noti: #eefcf8;
   --width-lg: 300px;
   --width-xl: 360px;
   --width-xxl: 400px;
+
+  /* font */
+  --font-size-sm: clamp(0.8rem, -0.02vw + 0.8rem, 0.75rem);
+  --font-size-base: clamp(1rem, 0vw + 1rem, 1rem);
+  --font-size-md: clamp(1.25rem, 0.04vw + 1.24rem, 1.33rem);
+  --font-size-lg: clamp(1.56rem, 0.1vw + 1.55rem, 1.78rem);
+  --font-size-xl: clamp(1.95rem, 0.19vw + 1.92rem, 2.37rem);
+  --font-size-xxl: clamp(2.44rem, 0.32vw + 2.39rem, 3.16rem);
+  --font-size-xxxl: clamp(3.05rem, 0.52vw + 2.96rem, 4.21rem);
 }
 
 $color-ui-bg: #f3f6f8;

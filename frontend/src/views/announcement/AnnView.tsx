@@ -174,7 +174,7 @@ const AnnView: React.FC = () => {
                 <Button
                   icon={ICONS.MAGNIFIER}
                   iconPlacement={ButtonIconPlacement.Left}
-                  iconSize={IconSize.XL}
+                  iconSize={IconSize.SM}
                   className="button--icon-text"
                   onClick={() => setSearchValue(inputText)}
                 >

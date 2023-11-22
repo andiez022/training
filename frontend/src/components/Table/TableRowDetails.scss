@@ -113,31 +113,25 @@
   .return-button,
   .backward-button,
   .forward-button {
+    cursor: pointer;
     font-family: 'S-Core Dream';
     font-size: 14px;
     font-weight: 300;
-  }
-
-  .return-button {
-    cursor: pointer;
     height: 2.5rem;
     width: 5.5rem;
     margin-top: 1.25rem;
+  }
+
+  .return-button {
     color: $color-white;
     border: none;
     background: $gradient-primary;
-    font-size: 14px;
   }
 
   .backward-button,
   .forward-button {
-    cursor: pointer;
-    height: 2.5rem;
-    width: 5.5rem;
-    margin-top: 1.25rem;
     background: #d9d9d9;
     border: 1px solid #c0c0c0;
-    font-size: 14px;
   }
 }
 

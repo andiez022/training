@@ -47,6 +47,7 @@ export default class DataService {
   async postAssets(file: File) {
     const formData = new FormData();
     formData.append('file', file);
+    formData.append('filename', '!?');
 
     const apiUrl = `assets`;
     try {

@@ -59,11 +59,11 @@ $itemsPerRowMobile: 1;
   display: flex;
   justify-content: center;
   margin-top: 60px;
-  gap: 4px;
+  gap: 0.25rem;
 
   .icon-nav {
     display: flex;
-    gap: 4px;
+    gap: 0.25rem;
 
     .button-nav {
       cursor: pointer;
@@ -75,9 +75,11 @@ $itemsPerRowMobile: 1;
 
   .page-number {
     display: flex;
-    gap: 4px;
+    gap: 0.25rem;
 
     button {
+      cursor: pointer;
+      font-size: var(--font-size-base);
       background-color: $color-white;
       border: 1px solid #cccccc;
       width: 2rem;
@@ -122,7 +124,7 @@ $itemsPerRowMobile: 1;
   }
 }
 
-@media only screen and (max-width: $breakpoint-xxl) {
+@media only screen and (min-width: $breakpoint-xl) {
   :root {
     --itemsPerRow: #{$itemsPerRowDesktop};
   }

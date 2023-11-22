@@ -12,6 +12,9 @@ import api from '../../services/apiServices';
 import banner1 from '../../common/assets/images/home_bn1.png';
 import banner2 from '../../common/assets/images/home_bn2.png';
 import banner3 from '../../common/assets/images/home_bn3.png';
+import banner1UW from '../../common/assets/images/home_bn1@x2.png';
+import banner2UW from '../../common/assets/images/home_bn2@x2.png';
+import banner3UW from '../../common/assets/images/home_bn3@x2.png';
 
 import './HomeView.scss';
 
@@ -67,9 +70,9 @@ const Home: React.FC = () => {
   );
 
   const banners = [
-    { id: 1, imgSrc: banner1 },
-    { id: 2, imgSrc: banner2 },
-    { id: 3, imgSrc: banner3 },
+    { id: 1, imgSrc: banner1, imgUWSrc: banner1UW },
+    { id: 2, imgSrc: banner2, imgUWSrc: banner2UW },
+    { id: 3, imgSrc: banner3, imgUWSrc: banner3UW },
   ];
 
   const [currentBanner, setCurrentBanner] = useState(0);
@@ -95,7 +98,10 @@ const Home: React.FC = () => {
       <div className="banner-container">
         {banners.map((banner, index) => (
           <div key={banner.id} className={`banner-item ${index === currentBanner ? 'active' : ''}`}>
-            <img src={banner.imgSrc} alt={`Home banner ${banner.id}`} />
+            <picture>
+              <source media="(min-width: 1921px)" srcSet={banner.imgUWSrc} />
+              <img src={banner.imgSrc} alt={`Home banner ${banner.id}`} />
+            </picture>
           </div>
         ))}
         <div className="text-overlay">

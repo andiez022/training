@@ -31,6 +31,12 @@ const CampaignCreate: React.FC = () => {
     },
   });
 
+  const assetMutation = useMutation((values: any) => api.data.postAssets(values.image), {
+    onSuccess: () => {
+      console.log('Asset posted successfully');
+    },
+  });
+
   const toolBarOptions = [
     [{ header: [1, 2, false] }],
     ['bold', 'italic', 'underline'],
@@ -56,7 +62,10 @@ const CampaignCreate: React.FC = () => {
             <Formik
               initialValues={initialValues}
               validationSchema={validationSchema}
-              onSubmit={(values) => createDataMutation.mutate(values)}
+              onSubmit={(values) => {
+                createDataMutation.mutate(values);
+                assetMutation.mutate(values);
+              }}
             >
               {({ isSubmitting }) => (
                 <Form className="form-create">

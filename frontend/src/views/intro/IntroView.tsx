@@ -47,7 +47,6 @@ const Intro: React.FC = () => {
           <RevealOnScroll>
             <picture className="intro-view__image-1">
               <source media="(max-width: 767px)" srcSet={about1Vert} />
-              <source media="(min-width: 768px)" srcSet={about1} />
               <img src={about1} alt="Process 1" />
             </picture>
           </RevealOnScroll>
@@ -92,7 +91,6 @@ const Intro: React.FC = () => {
           <RevealOnScroll>
             <picture className="intro-view__image-2">
               <source media="(max-width: 767px)" srcSet={about2Vert} />
-              <source media="(min-width: 768px)" srcSet={about2} />
               <img src={about2} alt="Process 2" />
             </picture>
           </RevealOnScroll>

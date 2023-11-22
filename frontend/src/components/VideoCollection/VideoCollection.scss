@@ -16,7 +16,7 @@
     flex-direction: column;
     width: 100%;
     text-align: left;
-    height: 12.5rem;
+    height: 200px;
 
     &__header {
       display: flex;
@@ -62,11 +62,11 @@
   display: flex;
   justify-content: center;
   margin-top: 60px;
-  gap: 4px;
+  gap: 0.25rem;
 
   .icon-nav {
     display: flex;
-    gap: 4px;
+    gap: 0.25rem;
 
     .button-nav {
       cursor: pointer;
@@ -78,9 +78,11 @@
 
   .page-number {
     display: flex;
-    gap: 4px;
+    gap: 0.25rem;
 
     button {
+      cursor: pointer;
+      font-size: var(--font-size-base);
       background-color: $color-white;
       border: 1px solid #cccccc;
       width: 2rem;
@@ -96,6 +98,13 @@
 
 iframe {
   border: none;
+}
+
+@media only screen and (min-width: $breakpoint-xxl) {
+  iframe {
+    width: 300px;
+    height: 200px;
+  }
 }
 
 @media only screen and (max-width: $breakpoint-xl) {

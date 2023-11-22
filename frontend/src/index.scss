@@ -27,6 +27,8 @@ body {
 }
 
 .container {
+  display: flex;
+  flex-direction: column;
   position: relative;
   flex-grow: 1;
   width: calc(100% - 200px);
@@ -65,5 +67,11 @@ img {
   to {
     top: 50%;
     opacity: 1;
+  }
+}
+
+@media only screen and (min-width: $breakpoint-xxl) {
+  html {
+    font-size: 1vw;
   }
 }

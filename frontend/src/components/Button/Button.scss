@@ -336,9 +336,9 @@
   }
 
   &__icon {
+    margin-left: 10px;
     &--right {
-      margin-left: 70px;
-      position: absolute;
+      margin-left: 20px;
     }
   }
 
@@ -382,7 +382,6 @@
 
   &--text-icon {
     width: 90px;
-    height: 20px;
     background: white;
     border: 1px solid #c0c0c0;
     border-radius: 0px;
@@ -394,31 +393,29 @@
     overflow: hidden;
 
     &:hover {
-      border: 1px solid;
+      border: 1px solid #c0c0c0;
       background-color: $color-white;
     }
 
     &:focus {
-      border: 1px solid;
+      border: 1px solid #2684ff;
       background-color: $color-white;
     }
   }
 
   &--icon-text {
-    gap: 10px;
-    width: 88px;
-    height: 40px;
+    width: 90px;
     background: $gradient-primary;
     border: none;
     border-radius: 0px;
     color: #ffffff;
-    text-indent: 10px;
     font-family: 'Noto Sans KR';
     font-size: 14px;
     font-weight: normal;
     overflow: hidden;
 
     &:hover {
+      border: none;
       background: $gradient-primary;
     }
   }
@@ -450,6 +447,19 @@
       &:hover {
         max-width: 200px;
       }
+    }
+  }
+
+  @media only screen and (min-width: $breakpoint-xxl) {
+    height: 2rem;
+
+    &--text-icon,
+    &--icon-text {
+      width: 3.25rem;
+    }
+
+    &__icon {
+      margin-left: 20px;
     }
   }
 }

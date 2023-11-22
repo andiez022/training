@@ -167,3 +167,13 @@
     width: 11rem;
   }
 }
+
+@media only screen and (min-width: $breakpoint-xxl) {
+  .text-input__input {
+    width: 11rem;
+
+    &:focus {
+      border-color: #f1dbb1;
+    }
+  }
+}
