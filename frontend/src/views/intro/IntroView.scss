@@ -8,7 +8,7 @@
   }
 
   &__content {
-    margin-top: 100px;
+    margin-top: 6.25rem;
   }
 
   &__logo {
@@ -19,7 +19,7 @@
     &__span {
       font-family: 'S-Core Dream';
       font-weight: 700;
-      font-size: 24px;
+      font-size: var(--font-size-lg);
     }
   }
 
@@ -30,7 +30,7 @@
 
     p {
       font-family: 'S-Core Dream';
-      font-size: 17px;
+      font-size: 1.063rem;
       font-weight: 500;
     }
   }
@@ -42,7 +42,7 @@
 
     p {
       font-family: 'S-Core Dream';
-      font-size: 17px;
+      font-size: 1.063rem;
       font-weight: 500;
     }
   }
@@ -52,7 +52,7 @@
 
     p {
       font-family: 'S-Core Dream';
-      font-size: 17px;
+      font-size: 1.063rem;
       font-weight: 500;
     }
   }
@@ -62,7 +62,7 @@
 
     p {
       font-family: 'S-Core Dream';
-      font-size: 20px;
+      font-size: var(--font-size-md);
       font-weight: 500;
       letter-spacing: -0.6px;
       color: #4d4d4d;
@@ -72,8 +72,8 @@
   &__paragraph-5 {
     margin-top: 100px;
     margin-bottom: 75px;
-    margin-left: 130px;
-    margin-right: 130px;
+    margin-left: 8.125rem;
+    margin-right: 8.125rem;
     border: 1px solid #cccccc;
     min-height: 80px;
     background-color: #f9f9f9;
@@ -83,7 +83,7 @@
 
     p {
       font-family: 'S-Core Dream';
-      font-size: 16px;
+      font-size: 1.063rem;
       font-weight: 500;
       letter-spacing: -0.48px;
       color: #4d4d4d;
@@ -95,9 +95,9 @@
     display: flex;
     justify-content: center;
     border: 1px solid #cccccc;
-    min-height: 200px;
-    margin-left: 140px;
-    margin-right: 140px;
+    min-height: 12.5rem;
+    margin-left: 8.75rem;
+    margin-right: 8.75rem;
   }
 
   &__image-2 {
@@ -105,16 +105,16 @@
     display: flex;
     justify-content: center;
     border: 1px solid #cccccc;
-    min-height: 200px;
-    margin-left: 140px;
-    margin-right: 140px;
+    min-height: 12.5rem;
+    margin-left: 8.75rem;
+    margin-right: 8.75rem;
   }
 }
 
 .span-black,
 .span-blue {
   font-family: 'S-Core Dream';
-  font-size: 17px;
+  font-size: 1.063rem;
   font-weight: 800;
   letter-spacing: -0.51px;
 }

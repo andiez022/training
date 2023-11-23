@@ -2,7 +2,7 @@
 @import '../../common/sass/font';
 
 .dropdown {
-  font-size: 14px;
+  font-size: 0.875rem;
   background: $color-white;
   width: max-content;
   color: $color-black;
@@ -10,14 +10,16 @@
 
   &-elm {
     cursor: pointer;
+    width: fit-content;
+    height: fit-content;
   }
 
   &__item {
     display: flex;
-    padding: var(--sp-4) var(--sp-6);
+    padding: 0.75rem 1.5rem;
     text-align: center;
     font-family: 'Noto Sans KR';
-    font-size: 16px;
+    font-size: var(--font-size-base);
     font-weight: normal;
 
     &:hover {

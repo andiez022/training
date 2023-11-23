@@ -10,7 +10,9 @@ const Footer: React.FC<FooterProps> = () => {
   return (
     <footer className="footer">
       <div className="footer__left">
-        <img src={footerLogo} alt="footerLogo" />
+        <svg className="responsive-svg">
+          <image xlinkHref={footerLogo} />
+        </svg>
       </div>
       <div className="footer__right">
         <div className="footer__right__contact">

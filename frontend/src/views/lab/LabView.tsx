@@ -139,7 +139,9 @@ const LabView: React.FC = () => {
             <>
               <div className="lab-view__image__overlay" />
               <div className="lab-view__image__icon">
-                <img src={labBannerIcon} alt="labBannerIcon" />
+                <svg className="responsive-svg">
+                  <image xlinkHref={labBannerIcon} />
+                </svg>
                 <p>깨끗한 바다 부산을 위해 시민들이 직접 참여 중인 프로젝트를 소개합니다.</p>
               </div>
             </>
@@ -176,7 +178,7 @@ const LabView: React.FC = () => {
                 <Button
                   icon={ICONS.MAGNIFIER}
                   iconPlacement={ButtonIconPlacement.Left}
-                  iconSize={IconSize.SM}
+                  iconSize={IconSize.XL}
                   className="button--icon-text"
                   onClick={() => setSearchValue(inputText)}
                 >

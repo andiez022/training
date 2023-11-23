@@ -166,7 +166,7 @@ const UserManagementView: React.FC = () => {
                 <Button
                   icon={ICONS.MAGNIFIER}
                   iconPlacement={ButtonIconPlacement.Left}
-                  iconSize={IconSize.SM}
+                  iconSize={IconSize.XL}
                   className="button--icon-text"
                   onClick={() => setSearchValue(inputText)}
                 >

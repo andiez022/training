@@ -137,7 +137,9 @@ const CampaignView: React.FC = () => {
             <>
               <div className="campaign-view__image__overlay" />
               <div className="campaign-view__image__icon">
-                <img src={campaignBannerIcon} alt="campaignBannerIcon" />
+                <svg className="responsive-svg">
+                  <image xlinkHref={campaignBannerIcon} />
+                </svg>
                 <p>깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.</p>
               </div>
             </>
@@ -182,7 +184,7 @@ const CampaignView: React.FC = () => {
                 <Button
                   icon={ICONS.MAGNIFIER}
                   iconPlacement={ButtonIconPlacement.Left}
-                  iconSize={IconSize.SM}
+                  iconSize={IconSize.XL}
                   className="button--icon-text"
                   onClick={() => setSearchValue(inputText)}
                 >

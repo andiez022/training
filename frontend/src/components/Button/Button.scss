@@ -4,7 +4,7 @@
 .button {
   $root: &;
   cursor: pointer;
-  height: 50px;
+  height: 3.125rem;
 
   &:focus-visible {
     outline: none;
@@ -336,9 +336,10 @@
   }
 
   &__icon {
-    margin-left: 10px;
+    margin-left: 0.625rem;
     &--right {
-      margin-left: 20px;
+      margin-left: auto;
+      margin-right: 0.5rem;
     }
   }
 
@@ -366,7 +367,7 @@
       font-size: 18px;
       font-family: sans-serif;
       white-space: nowrap;
-      padding-left: 20px;
+      padding-left: 1.25rem;
     }
 
     &:hover {
@@ -388,7 +389,7 @@
     color: $color-black;
     text-indent: 10px;
     font-family: 'Noto Sans KR';
-    font-size: 14px;
+    font-size: 0.875rem;
     font-weight: normal;
     overflow: hidden;
 
@@ -410,7 +411,7 @@
     border-radius: 0px;
     color: #ffffff;
     font-family: 'Noto Sans KR';
-    font-size: 14px;
+    font-size: 0.875rem;
     font-weight: normal;
     overflow: hidden;
 
@@ -425,7 +426,7 @@
     padding: 0;
 
     &__content {
-      font-size: 16px;
+      font-size: var(--font-size-base);
     }
 
     &--icon {
@@ -451,15 +452,15 @@
   }
 
   @media only screen and (min-width: $breakpoint-xxl) {
-    height: 2rem;
-
     &--text-icon,
     &--icon-text {
-      width: 3.25rem;
+      width: 6.875rem;
     }
 
     &__icon {
-      margin-left: 20px;
+      &--right {
+        margin-left: auto;
+      }
     }
   }
 }

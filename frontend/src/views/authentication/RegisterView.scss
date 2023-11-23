@@ -3,26 +3,26 @@
 
 .registration-form {
   margin: 10rem auto 3rem;
-  max-width: 860px;
-  padding: 20px;
+  padding: 1.25rem;
   background-color: #ffffff;
   border: 1px solid #999999;
 
   h2 {
     font-family: 'Noto Sans KR';
+    font-size: var(--font-size-lg);
     text-align: center;
     margin: 1.5rem;
   }
 
   .form-row {
     display: flex;
-    justify-content: space-between;
+    gap: 20px;
     margin-bottom: 1.25rem;
 
     .form-group {
       label {
         display: flex;
-        font-size: 16px;
+        font-size: var(--font-size-base);
         margin-bottom: 0.625em;
         align-items: center;
         font-family: 'Noto Sans KR';
@@ -30,12 +30,12 @@
       }
 
       input {
-        width: 25rem;
-        padding: 15px;
+        width: 100%;
+        padding: 0.938rem;
         border: 1px solid #acacac;
         font-family: 'Noto Sans KR';
         font-weight: normal;
-        font-size: 16px;
+        font-size: var(--font-size-base);
 
         &::placeholder {
           color: #acacac;
@@ -52,18 +52,20 @@
       .checkbox-label {
         font-family: 'Noto Sans KR';
         font-weight: 500;
-        font-size: 14px;
+        font-size: var(--font-size-sm);
       }
 
       .error {
         color: red;
-        font-size: 14px;
+        font-size: var(--font-size-sm);
         margin-top: 0.5rem;
       }
 
       span {
         cursor: pointer;
-        margin-left: -40px;
+        margin-top: 1rem;
+        margin-left: -2.5rem;
+        position: absolute;
       }
     }
   }
@@ -78,6 +80,22 @@
     cursor: pointer;
     font-family: 'Noto Sans KR';
     font-weight: normal;
-    font-size: 16px;
+    font-size: var(--font-size-base);
+  }
+
+  @media only screen and (min-width: $breakpoint-xxl) {
+    .form-row {
+      .form-group {
+        input {
+          width: 25rem;
+        }
+      }
+    }
+  }
+
+  @media only screen and (max-width: $breakpoint-md) {
+    .form-row {
+      flex-direction: column;
+    }
   }
 }

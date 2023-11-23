@@ -14,7 +14,7 @@ const CampaignCreate: React.FC = () => {
     title: '',
     content: '',
     link: '',
-    image: undefined,
+    image: null,
     image_name: '',
   };
 
@@ -25,15 +25,9 @@ const CampaignCreate: React.FC = () => {
     image: Yup.mixed().required('입력하세요.'),
   });
 
-  const createDataMutation = useMutation((values: any) => api.data.postData('campaign', values), {
+  const createDataMutation = useMutation((values: any) => api.data.postCampaignData('campaign', values), {
     onSuccess: () => {
       window.location.assign('/campaign');
-    },
-  });
-
-  const assetMutation = useMutation((values: any) => api.data.postAssets(values.image), {
-    onSuccess: () => {
-      console.log('Asset posted successfully');
     },
   });
 
@@ -63,11 +57,11 @@ const CampaignCreate: React.FC = () => {
               initialValues={initialValues}
               validationSchema={validationSchema}
               onSubmit={(values) => {
+                console.log(values);
                 createDataMutation.mutate(values);
-                assetMutation.mutate(values);
               }}
             >
-              {({ isSubmitting }) => (
+              {({ isSubmitting, setFieldValue }) => (
                 <Form className="form-create">
                   <div className="form-row">
                     <div className="form-group">
@@ -100,8 +94,15 @@ const CampaignCreate: React.FC = () => {
                   </div>
                   <ErrorMessage name="link" component="div" className="error" />
                   <div className="file-input-container">
-                    <Field type="file" name="image" accept="image/*" className="hidden-file" />
-                    <button className="">대표이미지 첨부</button>
+                    <input
+                      type="file"
+                      name="image"
+                      accept="image/*"
+                      onChange={(event: any) => {
+                        setFieldValue('image', event.target.files[0]);
+                      }}
+                    />
+                    <button>대표이미지 첨부</button>
                   </div>
                   <ErrorMessage name="image" component="div" className="error" />
                   <div className="form-button">

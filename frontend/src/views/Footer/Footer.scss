@@ -8,11 +8,21 @@
   color: $color-grey;
   margin-top: auto;
   width: 100%;
-  padding-top: 50px;
-  padding-bottom: 50px;
+  padding-top: 3.125rem;
+  padding-bottom: 3.125rem;
 
   &__left {
     margin-left: 9.25%;
+
+    .responsive-svg {
+      width: 11.25rem;
+      height: 3.625rem;
+
+      image {
+        width: 11.25rem;
+        height: 3.625rem;
+      }
+    }
   }
 
   &__right {
@@ -32,7 +42,7 @@
     }
 
     p {
-      font-size: 14px;
+      font-size: var(--font-size-sm);
       font-family: 'Noto Sans KR';
       font-weight: normal;
     }

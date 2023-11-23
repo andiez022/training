@@ -178,7 +178,9 @@ const FacilityView: React.FC = () => {
           <div className="facility-view__image__overlay" />
           <img src={facilityBanner} alt="facilityBG" />
           <div className="facility-view__image__icon">
-            <img src={facilityBannerIcon} alt="facilityIcon" />
+            <svg className="responsive-svg">
+              <image xlinkHref={facilityBannerIcon} />
+            </svg>
             <p>깨끗한 바다 산을 위해 각 지역별 쓰레기 수거현황을 전합니다.</p>
           </div>
         </div>

@@ -137,7 +137,9 @@ const AnnView: React.FC = () => {
             <>
               <div className="ann-view__image__overlay" />
               <div className="ann-view__image__icon">
-                <img src={annBannerIcon} alt="AnnBannerIcon" />
+                <svg className="responsive-svg">
+                  <image xlinkHref={annBannerIcon} />
+                </svg>
                 <p>깨바부의 새로운 소식을 전합니다.</p>
               </div>
             </>
@@ -174,7 +176,7 @@ const AnnView: React.FC = () => {
                 <Button
                   icon={ICONS.MAGNIFIER}
                   iconPlacement={ButtonIconPlacement.Left}
-                  iconSize={IconSize.SM}
+                  iconSize={IconSize.XL}
                   className="button--icon-text"
                   onClick={() => setSearchValue(inputText)}
                 >

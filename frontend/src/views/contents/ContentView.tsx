@@ -132,7 +132,9 @@ const ContentView: React.FC = () => {
             <>
               <div className="content-view__image__overlay" />
               <div className="content-view__image__icon">
-                <img src={contentBannerIcon} alt="contentIcon" />
+                <svg className="responsive-svg">
+                  <image xlinkHref={contentBannerIcon} />
+                </svg>
                 <p>깨바부의 다양한 콘텐츠를 확인해보세요.</p>
               </div>
             </>

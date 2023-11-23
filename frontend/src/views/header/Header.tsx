@@ -11,6 +11,8 @@ import { storage } from '../../common/utils/storage';
 import { selectUserRole, selectToken } from '../../services/controllers/common/UserSelector';
 import { logout } from '../../services/controllers/common/UserSlice';
 
+import headerLogo from '../../common/assets/images/logo_medium.svg';
+
 import './Header.scss';
 
 interface NavLinkProps {
@@ -89,13 +91,20 @@ const Header: React.FC = () => {
   return (
     <header className={headerClasses}>
       <div className="header-left">
-        <NavLink to="/" className={`header-img ${isSmallerScreen ? 'small-screen' : ''}`} />
+        <svg
+          className={`header-logo ${isSmallerScreen ? 'small-screen' : ''}`}
+          onClick={() => {
+            if (window.location.pathname !== '/') window.location.assign('/');
+          }}
+        >
+          <image xlinkHref={headerLogo} />
+        </svg>
         {!showLinks || (isLoggedIn && <div className="header-img-text">{isAdmin ? <p>[ 관리자 ]</p> : <p>[ 리빙랩 관리자 ]</p>}</div>)}
       </div>
       {showLinks && (
         <div className="header-right">
           <div className="menu-container" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-            <Icon className="menu-icon" component={isMenuOpen ? ICONS.CLOSE : ICONS.MENU} size={isMenuOpen ? IconSize.LG : IconSize.XL} />
+            <Icon className="menu-icon" component={isMenuOpen ? ICONS.CLOSE : ICONS.MENU} size={IconSize.LG} />
           </div>
           <nav className={`nav-links ${isMenuOpen ? 'show-menu' : ''}`}>
             {!isLoggedIn && (

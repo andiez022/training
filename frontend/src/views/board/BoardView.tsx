@@ -139,7 +139,9 @@ const BoardView: React.FC = () => {
             <>
               <div className="board-view__image__overlay" />
               <div className="board-view__image__icon">
-                <img src={boardBannerIcon} alt="BoardBannerIcon" />
+                <svg className="responsive-svg">
+                  <image xlinkHref={boardBannerIcon} />
+                </svg>
                 <p>깨끗한 바다 부산을 위한 시민들의 다양한 의견과 정보를 공유합니다.</p>
               </div>
             </>
@@ -176,7 +178,7 @@ const BoardView: React.FC = () => {
                 <Button
                   icon={ICONS.MAGNIFIER}
                   iconPlacement={ButtonIconPlacement.Left}
-                  iconSize={IconSize.SM}
+                  iconSize={IconSize.XL}
                   className="button--icon-text"
                   onClick={() => setSearchValue(inputText)}
                 >

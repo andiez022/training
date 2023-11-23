@@ -44,15 +44,33 @@ export default class DataService {
     }
   }
 
-  async postAssets(file: File) {
+  async postCampaignData(
+    pageType: string,
+    data: {
+      title: string;
+      content: string;
+      link: string;
+      image: File;
+      image_name: string;
+    },
+  ) {
     const formData = new FormData();
-    formData.append('file', file);
-    formData.append('filename', '!?');
-
-    const apiUrl = `assets`;
+    formData.append('file', data.image, data.image.name);
+    const apiUrl = `${pageType}`;
     try {
-      const response = await this.axios.post(apiUrl, formData);
-      return response.data;
+      const assetResponse = await this.axios.post('assets', formData);
+
+      const mainData = {
+        title: data.title,
+        content: data.content,
+        link: data.link,
+        image: assetResponse.data.filename,
+        image_name: assetResponse.data.original_name,
+      };
+
+      const response = await this.axios.post(apiUrl, mainData);
+
+      return { assetResponse: assetResponse.data, mainResponse: response.data };
     } catch (error) {
       console.error('Error posting data: ', error);
       throw error;
@@ -119,6 +137,41 @@ export default class DataService {
       return response.data;
     } catch (error) {
       console.error('Error editing data: ', error);
+      throw error;
+    }
+  }
+
+  async editCampaignData(
+    pageType: string,
+    data: {
+      id: string;
+      title: string;
+      content: string;
+      link: string;
+      image: File;
+      image_name: string;
+    },
+  ) {
+    const formData = new FormData();
+    formData.append('file', data.image, data.image.name);
+    const apiUrl = `${pageType}`;
+    try {
+      const assetResponse = await this.axios.post('assets', formData);
+
+      const mainData = {
+        id: data.id,
+        title: data.title,
+        content: data.content,
+        link: data.link,
+        image: assetResponse.data.filename,
+        image_name: assetResponse.data.original_name,
+      };
+
+      const response = await this.axios.put(apiUrl, mainData);
+
+      return { assetResponse: assetResponse.data, mainResponse: response.data };
+    } catch (error) {
+      console.error('Error posting data: ', error);
       throw error;
     }
   }

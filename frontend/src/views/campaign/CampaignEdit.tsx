@@ -21,6 +21,7 @@ const CampaignEdit: React.FC = () => {
     content: dataItem?.content,
     link: dataItem?.link,
     image_name: dataItem?.image_name,
+    image: dataItem?.image,
   };
 
   const validationSchema = Yup.object().shape({
@@ -28,7 +29,7 @@ const CampaignEdit: React.FC = () => {
     content: Yup.string().required('제내용을 입력하세요.'),
   });
 
-  const editDataMutation = useMutation((values: any) => api.data.editData('campaign', values), {
+  const editDataMutation = useMutation((values: any) => api.data.editCampaignData('campaign', values), {
     onSuccess: () => {
       window.location.pathname = '/campaign';
     },
@@ -68,7 +69,7 @@ const CampaignEdit: React.FC = () => {
                 });
               }}
             >
-              {({ isSubmitting }) => (
+              {({ isSubmitting, setFieldValue }) => (
                 <Form className="form-create">
                   <div className="form-row">
                     <div className="form-group">
@@ -99,8 +100,16 @@ const CampaignEdit: React.FC = () => {
                     </div>
                   </div>
                   <ErrorMessage name="link" component="div" className="error" />
-                  <div>
-                    <Field type="file" name="image" accept="image/*" />
+                  <div className="file-input-container">
+                    <input
+                      type="file"
+                      name="image"
+                      accept="image/*"
+                      onChange={(event: any) => {
+                        setFieldValue('image', event.target.files[0]);
+                      }}
+                    />
+                    <button>대표이미지 첨부</button>
                   </div>
                   <div className="form-button">
                     <button type="submit" className="submit-button" disabled={isSubmitting}>

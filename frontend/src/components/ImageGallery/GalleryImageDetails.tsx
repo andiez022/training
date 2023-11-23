@@ -30,7 +30,9 @@ const GalleryImageDetails: React.FC<GalleryImageProps> = ({ id, image, title, au
             <div className="label">
               <p>링크</p>
             </div>
-            <a href={link}>{link}</a>
+            <a href={link} target="_blank" rel="noopener noreferrer">
+              {link}
+            </a>
           </div>
           <div className="item-body__content" dangerouslySetInnerHTML={{ __html: description }} />
         </div>

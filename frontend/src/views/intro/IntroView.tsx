@@ -46,8 +46,8 @@ const Intro: React.FC = () => {
           </RevealOnScroll>
           <RevealOnScroll>
             <picture className="intro-view__image-1">
-              <source media="(max-width: 767px)" srcSet={about1Vert} />
-              <img src={about1} alt="Process 1" />
+              <source media="(max-width: 767px)" srcSet={about1Vert} className="responsive-svg" />
+              <img src={about1} alt="Process 1" className="responsive-svg" />
             </picture>
           </RevealOnScroll>
           <RevealOnScroll>
