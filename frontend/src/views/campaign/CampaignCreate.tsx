@@ -1,15 +1,25 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
+import Icon, { IconSize, ICONS } from '../../components/SVG/Icon';
+
 import api from '../../services/apiServices';
 
 import './CampaignView.scss';
 
 const CampaignCreate: React.FC = () => {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileInput = () => {
+    fileInputRef.current?.click();
+  };
+
+  const [imageName, setImageName] = useState('');
+
   const initialValues = {
     title: '',
     content: '',
@@ -57,7 +67,6 @@ const CampaignCreate: React.FC = () => {
               initialValues={initialValues}
               validationSchema={validationSchema}
               onSubmit={(values) => {
-                console.log(values);
                 createDataMutation.mutate(values);
               }}
             >
@@ -100,16 +109,35 @@ const CampaignCreate: React.FC = () => {
                       accept="image/*"
                       onChange={(event: any) => {
                         setFieldValue('image', event.target.files[0]);
+                        setImageName(event.target.files[0]?.name);
                       }}
+                      ref={fileInputRef}
                     />
-                    <button>대표이미지 첨부</button>
+                    <button type="button" onClick={handleFileInput} className="inputButton">
+                      대표이미지 첨부
+                    </button>
+                    {imageName && (
+                      <div className="inputLabel">
+                        <label>{imageName}</label>
+                        <button
+                          type="button"
+                          className="removeInputButton"
+                          onClick={() => {
+                            setFieldValue('image', null);
+                            setImageName('');
+                          }}
+                        >
+                          <Icon component={ICONS.SQUARE_X} size={IconSize.MD} />
+                        </button>
+                      </div>
+                    )}
                   </div>
                   <ErrorMessage name="image" component="div" className="error" />
                   <div className="form-button">
                     <button type="submit" className="submit-button" disabled={isSubmitting}>
                       등록
                     </button>
-                    <button className="cancel-button" onClick={() => window.location.assign('/campaign')}>
+                    <button type="button" className="cancel-button" onClick={() => window.location.assign('/campaign')}>
                       취소
                     </button>
                   </div>

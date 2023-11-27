@@ -36,6 +36,7 @@ import { ReactComponent as InfoCircle } from './icons/info-circle.svg';
 import { ReactComponent as Last } from './icons/last.svg';
 import { ReactComponent as Sort } from './icons/sort.svg';
 import { ReactComponent as SuccessCircle } from './icons/success-circle.svg';
+import { ReactComponent as SquareX } from './icons/square-x.svg';
 import { ReactComponent as Times } from './icons/times.svg';
 import { ReactComponent as WarningCircle } from './icons/warning-circle.svg';
 import { ReactComponent as RadioDefault } from './icons/radio-default.svg';
@@ -83,6 +84,7 @@ export const ICONS = {
   LAST: Last,
   EYE_INVISIBLE: EyeInvisible,
   EYE_VISIBLE: EyeVisible,
+  SQUARE_X: SquareX,
 };
 
 export interface IconProps {

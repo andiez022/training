@@ -152,9 +152,10 @@ export default class DataService {
       image_name: string;
     },
   ) {
+    const apiUrl = `${pageType}`;
     const formData = new FormData();
     formData.append('file', data.image, data.image.name);
-    const apiUrl = `${pageType}`;
+
     try {
       const assetResponse = await this.axios.post('assets', formData);
 
@@ -171,7 +172,7 @@ export default class DataService {
 
       return { assetResponse: assetResponse.data, mainResponse: response.data };
     } catch (error) {
-      console.error('Error posting data: ', error);
+      console.error('Error putting data: ', error);
       throw error;
     }
   }

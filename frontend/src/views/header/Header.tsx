@@ -31,19 +31,19 @@ const Header: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY <= 150) {
-        setIsTransparent(true);
-      } else {
-        setIsTransparent(false);
-      }
+      const scrollPosition = document.querySelector('.container')?.scrollTop;
+      if (scrollPosition)
+        if (scrollPosition < 150) {
+          setIsTransparent(true);
+        } else {
+          setIsTransparent(false);
+        }
     };
 
-    window.addEventListener('scroll', handleScroll);
-
-    handleScroll();
+    document.querySelector('.container')?.addEventListener('scroll', handleScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      document.querySelector('.container')?.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
@@ -73,7 +73,7 @@ const Header: React.FC = () => {
   const isAdmin = useSelector(selectUserRole) === 'Admin';
 
   const headerClasses = `app-header ${isMenuOpen ? 'show-menu' : ''} ${!showLinks ? 'hide-links' : ''} ${
-    isHomePage && isTransparent ? 'transparent' : ''
+    isHomePage && (isTransparent ? 'transparent' : 'nav-fade-in')
   } ${isLoggedIn ? (isAdmin ? 'admin' : 'user') : ''}`;
 
   const [isSmallerScreen, setIsSmallerScreen] = useState(false);

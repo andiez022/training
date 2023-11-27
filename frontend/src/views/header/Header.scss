@@ -71,6 +71,10 @@
   }
 }
 
+.app-header.nav-fade-in {
+  animation: navFadeIn ease 0.5s forwards;
+}
+
 .app-header.show-menu {
   background-color: $color-white;
   color: $color-black;
@@ -173,5 +177,15 @@
         }
       }
     }
+  }
+}
+
+@keyframes navFadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
   }
 }

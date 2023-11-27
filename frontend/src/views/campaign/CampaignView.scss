@@ -126,26 +126,40 @@
 
         .file-input-container {
           display: flex;
+          align-items: center;
+          margin: 1.25rem 0;
 
           input[type='file'] {
+            display: none;
             cursor: pointer;
-            opacity: 0;
+            opacity: 1;
             height: 2.5rem;
-            width: 11.25rem;
+            width: 10rem;
             z-index: 1;
           }
 
-          button {
+          .inputButton {
             cursor: pointer;
             position: absolute;
             background: linear-gradient(90deg, #0066c1 0%, #009fe5 100%);
             color: $color-white;
             border: none;
-            padding: 0.625rem 2.5rem;
             font-family: 'Noto Sans KR';
             font-size: var(--font-size-sm);
             height: 2.5rem;
-            width: 11.25rem;
+            width: 10rem;
+          }
+
+          .inputLabel {
+            display: flex;
+            gap: 0.5rem;
+            margin-left: 12.5rem;
+            font-size: var(--font-size-base);
+
+            .removeInputButton {
+              cursor: pointer;
+              border: none;
+            }
           }
         }
 
