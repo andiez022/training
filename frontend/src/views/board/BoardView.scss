@@ -52,11 +52,12 @@
       }
 
       p {
+        margin-top: 0.625rem;
         margin-left: 30px;
         margin-right: 30px;
         font-family: 'S-Core Dream';
-        font-size: var(--font-size-md);
-        font-weight: 300;
+        font-size: 1.25rem;
+        font-weight: 500;
         text-shadow: 2px 2px 4px #00000033;
         letter-spacing: -0.6px;
         color: $color-white;
@@ -200,6 +201,7 @@
 
       label {
         align-self: center;
+        font-family: 'Noto Sans KR';
         font-weight: bold;
         font-size: 0.938rem;
       }
@@ -208,7 +210,8 @@
         align-self: center;
         padding: 0 0.938rem;
         border: 1px solid #e5e7eb;
-        font-size: var(--font-size-md);
+        font-family: 'Noto Sans KR';
+        font-size: var(--font-size-base);
         width: 13.75rem;
         height: 3.125rem;
 
@@ -239,7 +242,9 @@
       height: 2.5rem;
       border: none;
       margin-top: 4.188rem;
-      font-size: var(--font-size-sm);
+      font-family: 'Noto Sans KR';
+      font-size: var(--font-size-base);
+      font-weight: normal;
     }
 
     .cancel-button {
@@ -273,7 +278,9 @@
       height: 2.5rem;
       border: none;
       margin-top: 4.188rem;
-      font-size: var(--font-size-sm);
+      font-family: 'Noto Sans KR';
+      font-size: var(--font-size-base);
+      font-weight: normal;
     }
 
     .cancel-button {
@@ -292,7 +299,7 @@
 
   h2 {
     font-family: 'S-Core Dream';
-    font-size: var(--font-size-lg);
+    font-size: 1.5rem;
     font-weight: 900;
   }
 }

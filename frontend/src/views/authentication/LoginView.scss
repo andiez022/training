@@ -14,7 +14,7 @@
     font-family: 'Noto Sans KR';
     text-align: center;
     margin: 1.5rem;
-    font-size: var(--font-size-lg);
+    font-size: 1.5rem;
   }
 
   .form-group {
@@ -71,7 +71,9 @@
     border: none;
     cursor: pointer;
     font-weight: bold;
-    font-size: var(--font-size-sm);
+    font-family: 'Noto Sans KR';
+    font-weight: 700;
+    font-size: var(--font-size-base);
   }
 
   .registration-button {

@@ -17,7 +17,7 @@
       padding-left: 1.25rem;
       padding-right: 1.25rem;
       font-family: 'S-Core Dream';
-      font-size: var(--font-size-base);
+      font-size: 1.25rem;
       font-weight: 700;
     }
   }
@@ -41,7 +41,7 @@
 
       p {
         font-family: 'S-Core Dream';
-        font-size: var(--font-size-sm);
+        font-size: 0.875rem;
         font-weight: 700;
       }
     }
@@ -55,9 +55,9 @@
     p,
     a {
       margin-left: 1.25rem;
-      font-family: 'Noto Sans KR';
-      font-weight: normal;
-      font-size: var(--font-size-sm);
+      font-family: 'S-Core Dream';
+      font-weight: 300;
+      font-size: 0.875rem;
     }
   }
 
@@ -90,7 +90,7 @@
       margin-top: 1.25rem;
       border: 1px solid #c0c0c0;
       font-family: 'S-Core Dream';
-      font-size: var(--font-size-sm);
+      font-size: 0.875rem;
       font-weight: 300;
     }
 
@@ -115,7 +115,7 @@
   .forward-button {
     cursor: pointer;
     font-family: 'S-Core Dream';
-    font-size: var(--font-size-sm);
+    font-size: 0.875rem;
     font-weight: 300;
     height: 2.5rem;
     width: 5.5rem;

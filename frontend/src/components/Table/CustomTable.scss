@@ -11,9 +11,11 @@
     }
 
     tr {
-      padding: 10px 0px;
+      padding: 0.781rem 0px;
 
       .title-column {
+        letter-spacing: -0.42px;
+        padding-left: 1.25rem;
         p {
           display: none;
           color: #989898;
@@ -40,9 +42,9 @@
       width: 100%;
       height: 3.125rem;
       text-align: center;
-      font-family: 'Noto Sans KR';
+      font-family: 'S-Core Dream';
       font-size: 0.875rem;
-      font-weight: 700;
+      font-weight: 800;
     }
 
     td {
@@ -52,8 +54,8 @@
       text-align: center;
       min-height: 3.125rem;
       font-size: 0.875rem;
-      font-family: 'Noto Sans KR';
-      font-weight: normal;
+      font-family: 'S-Core Dream';
+      font-weight: 300;
       cursor: pointer;
 
       input {
@@ -250,7 +252,7 @@
     margin-top: 5.25rem;
     font-family: 'Noto Sans KR';
     font-weight: 700;
-    font-size: var(--font-size-base);
+    font-size: 0.938rem;
   }
 
   &__buttons {
