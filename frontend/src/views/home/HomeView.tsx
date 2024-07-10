@@ -35,8 +35,6 @@ const Home: React.FC = () => {
     { id: 3, imgSrc: banner3 },
   ];
 
-  const [acitve, setActive] = useState(false);
-
   return (
     <div>
       <div className={`home-header ${transparent ? 'transparent' : 'nav-fade-in'}`}>

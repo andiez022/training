@@ -1,7 +1,5 @@
 @import '../../common/sass/font';
-.home-header {
-  z-index: 1000000;
-}
+
 .home-slide {
   // background-image: url('../../common/assets/images/home_1.png');
   // background-repeat: no-repeat;
@@ -139,6 +137,7 @@
   .header {
     box-shadow: none;
     background-color: transparent;
+    z-index: 9999;
     a {
       .card-header {
         color: #fff;

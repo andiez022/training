@@ -4,26 +4,26 @@ import CardHeader from '../../components/Card/components/CardHeader';
 import './Header.scss';
 
 export const Header = () => {
-  const [transparent, setTransparent] = useState(false);
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = document.querySelector('.container')?.scrollTop;
+  // const [transparent, setTransparent] = useState(false);
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     const scrollPosition = document.querySelector('.container')?.scrollTop;
 
-      if (scrollPosition)
-        if (scrollPosition < 200) {
-          setTransparent(true);
-        } else {
-          setTransparent(false);
-        }
-    };
-    document.querySelector('.container')?.addEventListener('scroll', handleScroll);
-    return () => {
-      document.querySelector('.container')?.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+  //     if (scrollPosition)
+  //       if (scrollPosition < 200) {
+  //         setTransparent(true);
+  //       } else {
+  //         setTransparent(false);
+  //       }
+  //   };
+  //   document.querySelector('.container')?.addEventListener('scroll', handleScroll);
+  //   return () => {
+  //     document.querySelector('.container')?.removeEventListener('scroll', handleScroll);
+  //   };
+  // }, []);
 
   return (
-    <div className={`header ${transparent ? '' : 'untransparent'}`}>
+    <div className="header">
       <div className="header-left">
         <svg className="header-logo">
           <image xlinkHref={logoHeader} />

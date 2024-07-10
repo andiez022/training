@@ -4,15 +4,16 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  z-index: 9999999;
+  z-index: 99999;
   width: 100%;
   background-color: $color-white;
   box-shadow: 0 0 20px 0 rgb(206, 205, 205);
   padding: 1.875rem 0;
   position: fixed;
   top: 0;
-  right: 0;
+  left: 0;
   gap: 5rem;
+
 
   .header-left {
     margin-left: 100px;
