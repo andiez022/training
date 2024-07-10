@@ -4,7 +4,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  z-index: 1;
+  z-index: 9999999;
   width: 100%;
   background-color: $color-white;
   box-shadow: 0 0 20px 0 rgb(206, 205, 205);
@@ -30,6 +30,7 @@
       line-height: 100px;
       text-align: center;
       color: $color-black;
+      font-family: 'Noto Sans KR';
     }
   }
 }
@@ -37,4 +38,5 @@
 .header-logo {
   width: 218px;
   height: 36px;
+  z-index: -1;
 }

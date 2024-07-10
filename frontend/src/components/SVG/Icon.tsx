@@ -18,6 +18,7 @@ import { ReactComponent as WarningCircle } from './icons/warning-circle.svg';
 import { ReactComponent as RadioDefault } from './icons/radio-default.svg';
 import { ReactComponent as RadioSelected } from './icons/radio-selected.svg';
 import { ReactComponent as Plus } from './icons/plus.svg';
+import { ReactComponent as ArrowRight } from './icons/arrow.right.svg';
 
 import './Icon.scss';
 
@@ -39,6 +40,7 @@ export const ICONS = {
   RADIO_DEFAULT: RadioDefault,
   RADIO_SELECTED: RadioSelected,
   PLUS: Plus,
+  ARROW_RIGHT: ArrowRight,
 };
 
 export interface IconProps {
