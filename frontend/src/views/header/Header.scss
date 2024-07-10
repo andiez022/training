@@ -1,43 +1,40 @@
+@import '../../common/sass/variables';
+
 .header {
   display: flex;
-  height: 100px;
-  width: 100%;
   align-items: center;
-  z-index: 999;
+  justify-content: space-between;
+  z-index: 1;
+  width: 100%;
+  background-color: $color-white;
+  box-shadow: 0 0 20px 0 rgb(206, 205, 205);
+  padding: 1.875rem 0;
   position: fixed;
   top: 0;
-  justify-content: space-between;
-  
-  // background-color: #fff;
-  // box-shadow: 0 0 20px 0 rgb(206, 205, 205);
+  right: 0;
+  gap: 5rem;
 
+  .header-left {
+    margin-left: 100px;
+  }
   .header-right {
     display: flex;
     justify-content: center;
     align-items: center;
-   
-    
+    gap: 2.875rem;
+    text-align: center;
+    margin-right: 100px;
     a {
-      margin-right: 50px;
-      max-width: 48px;
+      // margin-right: 50px;
+      // max-width: 48px;
       line-height: 100px;
       text-align: center;
-      color: #fff;
-      
+      color: $color-black;
     }
   }
 }
 
 .header-logo {
   width: 218px;
-  height: 100px;
-  transform: translate(120px, 35px);
-}
-
-.header.untransparent {
-  box-shadow: 0 0 20px 0 rgb(206, 205, 205);
-  background-color: #fff;;
-  a {
-    color: black;
-  }
+  height: 36px;
 }

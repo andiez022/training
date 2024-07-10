@@ -17,6 +17,7 @@ import { ReactComponent as Times } from './icons/times.svg';
 import { ReactComponent as WarningCircle } from './icons/warning-circle.svg';
 import { ReactComponent as RadioDefault } from './icons/radio-default.svg';
 import { ReactComponent as RadioSelected } from './icons/radio-selected.svg';
+import { ReactComponent as Plus } from './icons/plus.svg';
 
 import './Icon.scss';
 
@@ -37,6 +38,7 @@ export const ICONS = {
   CHECKBOX_PRESSED: CheckboxPressed,
   RADIO_DEFAULT: RadioDefault,
   RADIO_SELECTED: RadioSelected,
+  PLUS: Plus,
 };
 
 export interface IconProps {

@@ -30,28 +30,28 @@ export const Header = () => {
         </svg>
       </div>
       <div className="header-right">
-        <a href="./">
+        <a href="./" aria-label="home">
           <CardHeader title="홈" />
         </a>
-        <a href="./">
+        <a href="./" aria-label="introduction">
           <CardHeader title="소개" />
         </a>
-        <a href="./">
+        <a href="./" aria-label="announcement">
           <CardHeader title="공지사항" />
         </a>
-        <a href="./">
+        <a href="./" aria-label="facility">
           <CardHeader title="시설현황" />
         </a>
-        <a href="./">
+        <a href="./" aria-label="content">
           <CardHeader title="콘텐츠" />
         </a>
-        <a href="./">
+        <a href="./" aria-label="living-lab ">
           <CardHeader title="콘텐츠" />
         </a>
-        <a href="./">
+        <a href="./" aria-label="campain">
           <CardHeader title="캠페인" />
         </a>
-        <a href="./">
+        <a href="./" aria-label="free-board">
           <CardHeader title="자유게시판" />
         </a>
       </div>
