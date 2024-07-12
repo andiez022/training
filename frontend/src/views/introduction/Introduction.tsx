@@ -32,7 +32,7 @@ const Introduction: React.FC = () => {
         </p>
         <div className="intro-content__img-1">
           <picture>
-            <source media="(min-width: 1921px)" srcSet={introContentImg1x2} />
+            {/* <source media="(min-width: 1921px)" srcSet={introContentImg1x2} /> */}
             <img src={introContentImg1} alt="intro ocean" />
           </picture>
         </div>
@@ -53,7 +53,7 @@ const Introduction: React.FC = () => {
         </p>
         <div className="intro-content__img-1">
           <picture>
-            <source media="(min-width: 1921px)" srcSet={introContentImg2x2} />
+            {/* <source media="(min-width: 1921px)" srcSet={introContentImg2x2} /> */}
             <img src={introContentImg2} alt="intro ocean" />
           </picture>
         </div>

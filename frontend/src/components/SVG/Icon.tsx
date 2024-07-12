@@ -19,6 +19,8 @@ import { ReactComponent as RadioDefault } from './icons/radio-default.svg';
 import { ReactComponent as RadioSelected } from './icons/radio-selected.svg';
 import { ReactComponent as Plus } from './icons/plus.svg';
 import { ReactComponent as ArrowRight } from './icons/arrow.right.svg';
+import { ReactComponent as CarretDown } from './icons/caret-down-solid.svg';
+import { ReactComponent as SearchGlass } from './icons/search-glass.svg';
 
 import './Icon.scss';
 
@@ -41,6 +43,8 @@ export const ICONS = {
   RADIO_SELECTED: RadioSelected,
   PLUS: Plus,
   ARROW_RIGHT: ArrowRight,
+  CARRET_DOWN: CarretDown,
+  SEARCH_GLASS: SearchGlass,
 };
 
 export interface IconProps {

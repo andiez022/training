@@ -4,24 +4,6 @@ import CardHeader from '../../components/Card/components/CardHeader';
 import './Header.scss';
 
 export const Header: React.FC = () => {
-  // const [transparent, setTransparent] = useState(false);
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     const scrollPosition = document.querySelector('.container')?.scrollTop;
-
-  //     if (scrollPosition)
-  //       if (scrollPosition < 200) {
-  //         setTransparent(true);
-  //       } else {
-  //         setTransparent(false);
-  //       }
-  //   };
-  //   document.querySelector('.container')?.addEventListener('scroll', handleScroll);
-  //   return () => {
-  //     document.querySelector('.container')?.removeEventListener('scroll', handleScroll);
-  //   };
-  // }, []);
-
   return (
     <div className="header">
       <div className="header-left">
@@ -36,7 +18,7 @@ export const Header: React.FC = () => {
         <a href="./introduction" aria-label="introduction">
           <CardHeader title="소개" />
         </a>
-        <a href="./" aria-label="announcement">
+        <a href="./announcement" aria-label="announcement">
           <CardHeader title="공지사항" />
         </a>
         <a href="./" aria-label="facility">

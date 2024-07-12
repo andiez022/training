@@ -43,7 +43,7 @@ const Home: React.FC = () => {
       </div>
       <div className="home-slide">
         <picture>
-          <source media="(min-width: 1921px)" srcSet="banner2x2" />
+          <source media="(min-width: 1921px)" srcSet={banner2x2} />
           <img src={banner1} alt="home1" />
         </picture>
         <div className="home-text">
