@@ -4,11 +4,12 @@ import { Header } from '../header/Header';
 import { Footer } from '../footer/Footer';
 import Icon, { ICONS, IconSize } from '../../components/SVG/Icon';
 
-import banner1 from '../../common/assets/images/home_1.png';
-import banner2 from '../../common/assets/images/home_2.png';
-import banner3 from '../../common/assets/images/home_3.png';
-import banner1x2 from '../../common/assets/images/home1@2x.png';
+import banner1 from '../../common/assets/images/home-1.png';
+import banner2 from '../../common/assets/images/home-2.png';
+import banner3 from '../../common/assets/images/home-3.png';
+import banner1x2 from '../../common/assets/images/home-1@2x.png';
 import banner2x2 from '../../common/assets/images/home-2@2x.png';
+import banner3x2 from '../../common/assets/images/home-3@2x.png';
 import Card from '../../components/Card/Card';
 
 const Home: React.FC = () => {
@@ -32,7 +33,7 @@ const Home: React.FC = () => {
   const banners = [
     { id: 1, imgSrc: banner1, imgUWSrc: banner1x2 },
     { id: 2, imgSrc: banner2, imgUWSrc: banner2x2 },
-    { id: 3, imgSrc: banner3 },
+    { id: 3, imgSrc: banner3, imgUWSrc: banner3x2 },
   ];
 
   return (
