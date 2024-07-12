@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './HomeView.scss';
 import { Header } from '../header/Header';
+import { Footer } from '../footer/Footer';
 import Icon, { ICONS, IconSize } from '../../components/SVG/Icon';
 
 import banner1 from '../../common/assets/images/home_1.png';
@@ -9,7 +10,6 @@ import banner3 from '../../common/assets/images/home_3.png';
 import banner1x2 from '../../common/assets/images/home1@2x.png';
 import banner2x2 from '../../common/assets/images/home-2@2x.png';
 import Card from '../../components/Card/Card';
-import { Footer } from '../footer/Footer.jsx';
 
 const Home: React.FC = () => {
   const [transparent, setTransparent] = useState(true);
@@ -42,12 +42,13 @@ const Home: React.FC = () => {
       </div>
       <div className="home-slide">
         <picture>
+          <source media="(min-width: 1921px)" srcSet="banner2x2" />
           <img src={banner2} alt="home1" />
         </picture>
         <div className="home-text">
           <div className="home-title">
-            <p>함께 하자,</p>
-            <p>깨끗한 바다 부산으로!</p>
+            <h4>함께 하자,</h4>
+            <h4>깨끗한 바다 부산으로!</h4>
           </div>
           <p className="home-desc">깨바부는 부산지역 내 테트라포드와 습지 현황에 대한 정보를 제공하고 있습니다.</p>
         </div>

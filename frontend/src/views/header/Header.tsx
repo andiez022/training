@@ -3,7 +3,7 @@ import logoHeader from '../../common/assets/images/logo-header.svg';
 import CardHeader from '../../components/Card/components/CardHeader';
 import './Header.scss';
 
-export const Header = () => {
+export const Header: React.FC = () => {
   // const [transparent, setTransparent] = useState(false);
   // useEffect(() => {
   //   const handleScroll = () => {
@@ -33,7 +33,7 @@ export const Header = () => {
         <a href="./" aria-label="home">
           <CardHeader title="홈" />
         </a>
-        <a href="./" aria-label="introduction">
+        <a href="./introduction" aria-label="introduction">
           <CardHeader title="소개" />
         </a>
         <a href="./" aria-label="announcement">

@@ -38,6 +38,9 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, 90%);
+      font-size: 20px;
+      width: 750px;
+     text-shadow: #00000080 1px 1px 3px; 
     }
   }
 }
@@ -81,6 +84,7 @@
   justify-content: space-between;
 
   .home-highlight__content {
+    margin-top: 50px;
     .content-header {
       display: flex;
       justify-content: space-between;
