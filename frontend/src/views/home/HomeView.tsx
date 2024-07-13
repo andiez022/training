@@ -35,6 +35,13 @@ const Home: React.FC = () => {
     { id: 2, imgSrc: banner2, imgUWSrc: banner2x2 },
     { id: 3, imgSrc: banner3, imgUWSrc: banner3x2 },
   ];
+  const [activeBanner, setActiveBanner] = useState(0);
+  useEffect(() => {
+    const time = setInterval(() => {
+      setActiveBanner((activeBanner + 1) % banners.length);
+    }, 5000);
+    return () => clearInterval(time);
+  }, [activeBanner]);
 
   return (
     <div>
@@ -42,10 +49,18 @@ const Home: React.FC = () => {
         <Header />
       </div>
       <div className="home-slide">
-        <picture>
+        {banners.map((banner, index) => (
+          <div key={banner.id} className={`slide-item ${index === activeBanner ? 'active' : ''}`}>
+            <picture>
+              <source media="(min-width: 1921px)" srcSet={banner.imgUWSrc} />
+              <img src={banner.imgSrc} alt="home" />
+            </picture>
+          </div>
+        ))}
+        {/* <picture>
           <source media="(min-width: 1921px)" srcSet={banner2x2} />
           <img src={banner1} alt="home1" />
-        </picture>
+        </picture> */}
         <div className="home-text">
           <div className="home-title">
             <h4>함께 하자,</h4>
