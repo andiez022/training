@@ -1,3 +1,14 @@
+.announcement-header {
+  .announcement {
+    .card-header {
+      font-size: 16px;
+      font-family: 'Noto Sans KR';
+      font-weight: bold;
+      color: #0066c1;
+    }
+  }
+}
+
 .announcement-content {
   margin-top: 100px;
 
@@ -42,8 +53,8 @@
               border: 1px solid #c0c0c0;
               line-height: 40px;
               font-size: 14px;
-            font-family: 'S-Core Dream';
-            font-weight: 300;
+              font-family: 'S-Core Dream';
+              font-weight: 300;
             }
           }
         }
@@ -64,12 +75,12 @@
           }
         }
         .box3 {
-            cursor: pointer;
-            padding-left: 12px;
-            padding-right: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+          cursor: pointer;
+          padding-left: 12px;
+          padding-right: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
           width: 88px;
           height: 40px;
           border: 1px solid #c0c0c0;
@@ -85,33 +96,47 @@
       }
     }
     &-data {
-        table {
-            width: 100%;
-            font-size: 14px;
-            text-align: center;
-            font-weight: 300;
-            font-family: 'S-Core Dream';
-            .table-header {
-                    width: 100%;
-                    background-color: #D4E9FC;
-                    height: 50px; 
-                    font-size: 14px;
-                    font-family: 'S-Core Dream';
-                    font-weight: 700;
-                
-                // .number,
-                // .title,
-                // .writer,
-                // .date {
-                   
-                // }
-            }
-            .table-data {
-                height: 50px; 
-                border: 1px solid #D9D9D9;
-            }
-            
+      table {
+        width: 100%;
+        font-size: 14px;
+        text-align: center;
+        font-weight: 300;
+        font-family: 'S-Core Dream';
+        border-collapse: collapse;
+        table-layout: fixed;
+
+        thead {
+          width: 100%;
+
+          font-size: 14px;
+          font-family: 'S-Core Dream';
+          font-weight: 700;
+          height: 50px;
+          background-color: #d4e9fc;
+      
+          .number,
+          .title,
+          .writer,
+          .date {
+            border-right: 1px solid #7da7cc;
+           
+            margin-top: 10px;
+            margin-bottom: 10px;
+          }
+          .date {
+            border-right: none;
+          }
         }
+        .table-data {
+          height: 50px;
+          border: 1px solid #d9d9d9;
+          border-left: none;
+          border-right: none;
+        }
+        td {
+          padding: 4px 8px;
+        }
+      }
     }
   }
 }

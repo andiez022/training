@@ -1,33 +1,41 @@
 @import '../../common/sass/font';
 
+.home-header {
+  .home {
+    .card-header {
+      font-size: 16px;
+      font-family: 'Noto Sans KR';
+      font-weight: bold;
+      color: #0066C1;
+    }
+  }
+}
+
 .home-slide {
   top: 0px;
   left: 0px;
   height: 100vh;
   z-index: -100;
   position: fixed;
-  transition: opacity 3s;
   width: 100%;
 
   .slide-item {
     position: absolute;
     width: 100vw;
-    // opacity: 0;
     img {
       height: 100vh;
       object-fit: cover;
       width: 100%;
-      opacity: 1;
-      transition: opacity 4s ;
+      opacity: 0;
+      transition: opacity 4s ease-out;
     }
   }
-  .slide-item.active{
+  .slide-item.active {
     // opacity: 0;
     img {
-      opacity: 0;
+      opacity: 1;
     }
   }
-
 
   .home-text {
     .home-title {

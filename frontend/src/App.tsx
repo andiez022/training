@@ -12,6 +12,9 @@ import store, { persistor } from './store';
 const HomeView = lazy(() => import('./views/home/HomeView'));
 const IntroductionView = lazy(() => import('./views/introduction/Introduction'));
 const AnnouncementView = lazy(() => import('./views/announcement/Announcement'));
+const FacilityView = lazy(() => import('./views/facility/Facility'));
+const ContentView = lazy(() => import('./views/content/Content'));
+const LabView = lazy(() => import('./views/lab/Lab'));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -37,6 +40,9 @@ const App: React.FC = () => {
                   <Route path="/" element={<PrivateRoute guards={[]} element={<HomeView />} />} />
                   <Route path="/introduction" element={<PrivateRoute guards={[]} element={<IntroductionView />} />} />
                   <Route path="/announcement" element={<PrivateRoute guards={[]} element={<AnnouncementView />} />} />
+                  <Route path="/facility" element={<PrivateRoute guards={[]} element={<FacilityView />} />} />
+                  <Route path="/content" element={<PrivateRoute guards={[]} element={<ContentView />} />} />
+                  <Route path="/living-lab" element={<PrivateRoute guards={[]} element={<LabView />} />} />
                 </Routes>
               </div>
             </BrowserRouter>

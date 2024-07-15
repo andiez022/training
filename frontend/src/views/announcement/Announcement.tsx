@@ -41,8 +41,8 @@ const Announcement = () => {
           </div>
           <div className="announcement-content__body-data">
             <table>
-              <tr className="table-header">
-                <th className="number" style={{ width: '10%' }}>
+              <thead>
+                <th className="number" style={{ width: ' 10%' }}>
                   번호
                 </th>
                 <th className="title" style={{ width: '65%' }}>
@@ -50,7 +50,7 @@ const Announcement = () => {
                 </th>
                 <th className="writer">작성자</th>
                 <th className="date">작성일</th>
-              </tr>
+              </thead>
 
               <tr className="table-data">
                 <td>1</td>
