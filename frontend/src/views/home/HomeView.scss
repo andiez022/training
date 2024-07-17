@@ -6,7 +6,7 @@
       font-size: 16px;
       font-family: 'Noto Sans KR';
       font-weight: bold;
-      color: #0066C1;
+      color: #0066c1;
     }
   }
 }
@@ -65,7 +65,6 @@
 }
 
 .home-notice {
-  height: 100vh;
   padding: 140px 120px 160px;
   margin-top: 100vh;
   background-color: #fff;
@@ -81,11 +80,7 @@
       font-family: 'S-Core Dream';
       font-weight: 900;
     }
-    // div {
-
-    // }
   }
-
   .notice-container {
     display: flex;
     justify-content: space-between;
@@ -93,7 +88,7 @@
     gap: 30px;
     flex-wrap: wrap;
     .card {
-      width: 24rem;
+      width: 30rem;
     }
   }
 }
@@ -111,7 +106,7 @@
       display: flex;
       justify-content: space-between;
       min-height: 70px;
-      width: 24rem;
+      width: 30rem;
       h2 {
         color: transparent;
         background-clip: text;
@@ -212,3 +207,20 @@
     color: #fff;
   }
 }
+
+button {
+  width: 40px;
+  height: 40px;
+  border: none;
+  cursor: pointer;
+}
+
+// .icon--md:hover {
+//   animation: rotate 5s infinite;
+// }
+
+// @keyframes rotate {
+//   50% {
+//     transform: rotate(180deg);
+//   }
+// }

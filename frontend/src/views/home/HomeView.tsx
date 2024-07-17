@@ -88,9 +88,9 @@ const Home: React.FC = () => {
         <div className="home-highlight__content">
           <div className="content-header">
             <h2>콘텐츠</h2>
-            <div>
-              <Icon className="icon-plus" component={ICONS.PLUS} size={IconSize.XXL} />
-            </div>
+            <button aria-label="move-to-ann" onClick={() => window.location.assign('announcement')}>
+              <Icon component={ICONS.PLUS} size={IconSize.XXL} />
+            </button>
           </div>
           <div className="content-list">
             <ul>
@@ -139,28 +139,28 @@ const Home: React.FC = () => {
                   <div className="dot-list" />
                   <p>콘텐츠 제목</p>
                 </div>
-                <Icon className="icon-plus" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
+                <Icon className="icon-arrow-right" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
               </li>
               <li>
                 <div>
                   <div className="dot-list" />
                   <p>콘텐츠 제목 콘텐츠 제목 콘텐츠 제목 콘...</p>
                 </div>
-                <Icon className="icon-plus" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
+                <Icon className="icon-arrow-right" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
               </li>
               <li>
                 <div>
                   <div className="dot-list" />
                   <p>콘텐츠 제목</p>
                 </div>
-                <Icon className="icon-plus" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
+                <Icon className="icon-arrow-right" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
               </li>
               <li>
                 <div>
                   <div className="dot-list" />
                   <p>콘텐츠 제목</p>
                 </div>
-                <Icon className="icon-plus" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
+                <Icon className="icon-arrow-right" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
               </li>
             </ul>
           </div>
@@ -179,28 +179,28 @@ const Home: React.FC = () => {
                   <div className="dot-list" />
                   <p>콘텐츠 제목</p>
                 </div>
-                <Icon className="icon-plus" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
+                <Icon className="icon-arrow-rarrow-right" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
               </li>
               <li>
                 <div>
                   <div className="dot-list" />
                   <p>콘텐츠 제목 콘텐츠 제목 콘텐츠 제목 콘...</p>
                 </div>
-                <Icon className="icon-plus" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
+                <Icon className="icon-arrow-rarrow-right" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
               </li>
               <li>
                 <div>
                   <div className="dot-list" />
                   <p>콘텐츠 제목</p>
                 </div>
-                <Icon className="icon-plus" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
+                <Icon className="icon-arrow-rarrow-right" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
               </li>
               <li>
                 <div>
                   <div className="dot-list" />
                   <p>콘텐츠 제목</p>
                 </div>
-                <Icon className="icon-plus" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
+                <Icon className="icon-arrow-rarrow-right" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
               </li>
             </ul>
           </div>
@@ -219,28 +219,28 @@ const Home: React.FC = () => {
                   <div className="dot-list" />
                   <p>콘텐츠 제목</p>
                 </div>
-                <Icon className="icon-plus" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
+                <Icon className="icon-arrow-right" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
               </li>
               <li>
                 <div>
                   <div className="dot-list" />
                   <p>콘텐츠 제목 콘텐츠 제목 콘텐츠 제목 콘...</p>
                 </div>
-                <Icon className="icon-plus" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
+                <Icon className="icon-arrow-right" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
               </li>
               <li>
                 <div>
                   <div className="dot-list" />
                   <p>콘텐츠 제목</p>
                 </div>
-                <Icon className="icon-plus" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
+                <Icon className="icon-arrow-right" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
               </li>
               <li>
                 <div>
                   <div className="dot-list" />
                   <p>콘텐츠 제목</p>
                 </div>
-                <Icon className="icon-plus" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
+                <Icon className="icon-arrow-right" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
               </li>
             </ul>
           </div>
