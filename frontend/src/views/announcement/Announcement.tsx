@@ -23,14 +23,12 @@ const Announcement = () => {
             <p className="text">공지사항</p>
             <div className="announcement-content__body-top-right">
               <div className="box1">
-                {/* <p className="box1-text">제목</p> */}
                 <select className="box1-select" name="filter">
                   <option value="title">제목</option>
                   <option value="writer">작성자</option>
                 </select>
               </div>
               <div className="box2">
-                {/* <p className="box2-text">공지사항 검색</p> */}
                 <input type="text" className="box2-input" placeholder="공지사항 검색" />
               </div>
               <div className="box3">
@@ -42,14 +40,18 @@ const Announcement = () => {
           <div className="announcement-content__body-data">
             <table>
               <thead>
-                <th className="number" style={{ width: ' 10%' }}>
-                  번호
+                <th>
+                  <div className="number">번호</div>
                 </th>
-                <th className="title" style={{ width: '65%' }}>
-                  제목
+                <th style={{ width: '60%' }}>
+                  <div className="title">제목</div>
                 </th>
-                <th className="writer">작성자</th>
-                <th className="date">작성일</th>
+                <th>
+                  <div className="writer">작성자</div>
+                </th>
+                <th>
+                  <div className="date">작성일</div>
+                </th>
               </thead>
 
               <tr className="table-data">
