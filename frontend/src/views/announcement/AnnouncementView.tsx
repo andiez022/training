@@ -1,7 +1,7 @@
 import React from 'react';
 import { Header } from '../header/Header';
 import { Footer } from '../footer/Footer';
-import './Announcement.scss';
+import './AnnouncementView.scss';
 import Icon, { ICONS, IconSize } from '../../components/SVG/Icon';
 
 import ancmImg from '../../common/assets/images/annouc-img.png';

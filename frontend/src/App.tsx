@@ -10,11 +10,11 @@ import PrivateRoute from './components/Route/PrivateRoute';
 import store, { persistor } from './store';
 
 const HomeView = lazy(() => import('./views/home/HomeView'));
-const IntroductionView = lazy(() => import('./views/introduction/Introduction'));
-const AnnouncementView = lazy(() => import('./views/announcement/Announcement'));
-const FacilityView = lazy(() => import('./views/facility/Facility'));
-const ContentView = lazy(() => import('./views/content/Content'));
-const LabView = lazy(() => import('./views/lab/Lab'));
+const IntroductionView = lazy(() => import('./views/introduction/IntroductionView'));
+const AnnouncementView = lazy(() => import('./views/announcement/AnnouncementView'));
+const FacilityView = lazy(() => import('./views/facility/FacilityView'));
+const ContentView = lazy(() => import('./views/content/ContentView'));
+const LabView = lazy(() => import('./views/lab/LabView'));
 
 const queryClient = new QueryClient({
   defaultOptions: {

@@ -1,0 +1,131 @@
+.lab-header {
+  .living-lab {
+    .card-header {
+      font-size: 16px;
+      font-family: 'Noto Sans KR';
+      font-weight: bold;
+      color: #0066c1;
+    }
+  }
+}
+
+.lab-container {
+  margin-top: 100px;
+  overflow: hidden;
+
+  &__img {
+    height: 300px;
+    width: 100%;
+    object-fit: cover;
+  }
+  &__body {
+    margin-top: 70px;
+    padding-left: 14rem;
+    padding-right: 14rem;
+    &-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 42px;
+      .text {
+        color: transparent;
+        background-clip: text;
+        -webkit-background-clip: text;
+        background-image: linear-gradient(to right, #0066c1, #04a1e6);
+        font-family: 'S-Core Dream';
+        font-weight: 900;
+        font-size: 24px;
+      }
+      &-right {
+        display: flex;
+        .box1 {
+          margin-right: 10px;
+          &-select {
+            width: 100px;
+            height: 40px;
+            border: 1px solid #c0c0c0;
+            line-height: 40px;
+            color: #999999;
+            margin-left: 10px;
+            font-size: 14px;
+            font-family: 'S-Core Dream';
+            font-weight: 300;
+            option {
+              border: 1px solid #c0c0c0;
+              line-height: 40px;
+              font-size: 14px;
+              font-family: 'S-Core Dream';
+              font-weight: 300;
+            }
+          }
+        }
+        .box2 {
+          &-input {
+            width: 360px;
+            height: 40px;
+            border: 1px solid #c0c0c0;
+            padding: 10px;
+
+            &::placeholder {
+              color: #999999;
+              font-size: 14px;
+              font-family: 'S-Core Dream';
+              font-weight: 300;
+              line-height: 40px;
+            }
+          }
+        }
+        .box3 {
+          cursor: pointer;
+          padding-left: 12px;
+          padding-right: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          width: 88px;
+          height: 40px;
+          border: 1px solid #c0c0c0;
+          background-image: linear-gradient(to right, #0066c1, #04a1e6);
+          &-text {
+            line-height: 40px;
+            color: #ffffff;
+            font-size: 14px;
+            font-family: 'S-Core Dream';
+            font-weight: 300;
+          }
+        }
+      }
+    }
+    &-data {
+      margin-top: 40px;
+      margin-bottom: 100px;
+      table {
+        width: 100%;
+        table-layout: fixed;
+        border-collapse: collapse;
+        thead {
+          background-color: #D4E9FC;
+          line-height: 30px;
+          height: 50px;
+          font-family: 'Noto Sans KR';
+          font-weight: bold;
+          font-size: 14px;
+          .title,
+          .writer,
+          .date {
+            
+            border-left: 1px solid #7DA7CC;
+          }
+        }
+        td {
+          text-align: center;
+          font-family: 'Noto Sans KR';
+          font-size: 14px;
+          font-weight: 400;
+          height: 50px;
+          border-bottom: 1px solid #D9D9D9;
+        }
+      }
+    }
+  }
+}

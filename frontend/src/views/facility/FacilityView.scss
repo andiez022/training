@@ -4,7 +4,7 @@
       font-size: 16px;
       font-family: 'Noto Sans KR';
       font-weight: bold;
-      color: #0066C1;
+      color: #0066c1;
     }
   }
 }
@@ -16,17 +16,16 @@
     padding-left: 14rem;
     padding-right: 14rem;
     &-title {
-     
+      color: transparent;
+      background-clip: text;
+      -webkit-background-clip: text;
+      background-image: linear-gradient(to right, #0066c1, #04a1e6);
       margin-top: 60px;
       font-size: 24px;
       font-family: 'S-Core Dream';
       font-weight: 900;
-      color: transparent;
-      background-clip: text;
-      -webkit-background-clip: text;
-      background-image: linear-gradient(to right, #0066c1, #04a1e6)
     }
-    &-content {
+    &-content { 
       margin-top: 50px;
       display: flex;
       justify-content: space-evenly;
@@ -37,7 +36,6 @@
           z-index: -1;
           width: 26rem;
           height: 25rem;
-          position: relative;
         }
         .view-text {
           font-size: 14px;
@@ -71,8 +69,8 @@
           }
         }
         .colection-spot-items {
-            margin-top: 16px;
-          border: 1px solid #D9D9D9;
+          margin-top: 16px;
+          border: 1px solid #d9d9d9;
           height: 93%;
           width: 370px;
           overflow-y: auto;
@@ -83,55 +81,51 @@
             margin-bottom: 0;
             height: 130px;
             cursor: pointer;
-        
-           
+
             &__title {
-                font-size: 16px;
-                font-family: 'S-Core Dream';
-                font-weight: 700;
+              font-size: 16px;
+              font-family: 'S-Core Dream';
+              font-weight: 700;
             }
             &__content {
-                display: flex;
-                margin-top: 6px;
-                padding-bottom: 0;
-                &-img {
-                    width: 125px;
-                    height: 70px;
-                    object-fit: cover;
-                    background-color: #D9D9D9;
+              display: flex;
+              margin-top: 6px;
+              padding-bottom: 0;
+              &-img {
+                width: 125px;
+                height: 70px;
+                object-fit: cover;
+                background-color: #d9d9d9;
+              }
+              &-infos {
+                .info {
+                  display: flex;
+                  align-items: center;
+                  margin-left: 12px;
+                  margin-bottom: 4px;
+                  .dot {
+                    width: 6px;
+                    height: 6px;
+                    background-color: #0066c1;
+                    margin-right: 4px;
+                  }
+                  p {
+                    font-size: 13px;
+                    font-family: 'S-Core Dream';
+                    font-weight: 200;
+                  }
                 }
-                &-infos {
-                    .info {
-                        display: flex;
-                        align-items: center;
-                        margin-left: 12px;
-                        margin-bottom: 4px;
-                        .dot {
-                            width: 6px;
-                            height: 6px;
-                            background-color: #0066C1;
-                            margin-right: 4px;
-                        }
-                        p {
-                            font-size: 13px;
-                            font-family: 'S-Core Dream';
-                            font-weight: 200;
-                        }
-                    }
-
-              
-                }
+              }
             }
             .line {
               margin-top: 19px;
               height: 1px;
-              background-color: #CCCCCC;
+              background-color: #cccccc;
             }
           }
           .colection-spot-item:hover {
-            background-color: #E6F3FF;
+            background-color: #e6f3ff;
           }
-        
         }
       }
     }

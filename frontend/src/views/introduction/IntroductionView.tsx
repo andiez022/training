@@ -1,7 +1,7 @@
 import React from 'react';
 import { Header } from '../header/Header';
 import { Footer } from '../footer/Footer';
-import './Introduction.scss';
+import './IntroductionView.scss';
 
 import introOcean from '../../common/assets/images/intro-ocean .png';
 import introOceanx2 from '../../common/assets/images/intro-ocean@2x.png';

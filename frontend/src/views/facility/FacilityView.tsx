@@ -1,5 +1,5 @@
 import React from 'react';
-import './Facility.scss';
+import './FacilityView.scss';
 import { Header } from '../header/Header';
 import { Footer } from '../footer/Footer';
 
