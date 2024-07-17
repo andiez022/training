@@ -30,7 +30,7 @@ export const Header: React.FC = () => {
         <a href="./living-lab" aria-label="living-lab" className="living-lab">
           <CardHeader title="콘텐츠" />
         </a>
-        <a href="./" aria-label="campain" className="campain">
+        <a href="./campain" aria-label="campain" className="campain">
           <CardHeader title="캠페인" />
         </a>
         <a href="./" aria-label="free-board" className="free-board">
