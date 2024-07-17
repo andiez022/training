@@ -7,6 +7,8 @@ import facilityImg from '../../common/assets/images/facility-img.png';
 import facilityImgx2 from '../../common/assets/images/facility-img@2x.png';
 import facilityMap from '../../common/assets/images/facility-map.png';
 import facilityMapx2 from '../../common/assets/images/facility-map@2x.png';
+import facilityIcon from '../../common/assets/images/icon-facility.png';
+import facilityIconx2 from '../../common/assets/images/icon-facility@2x.png';
 
 const Facility = () => {
   return (
@@ -19,6 +21,13 @@ const Facility = () => {
           <picture>
             <source media="(min-width: 1921px)" srcSet={facilityImgx2} />
             <img src={facilityImg} alt="home1" />
+            <div className="facility-container__img__text-overlay">
+              <picture className="facility-container__img__text-overlay-icon">
+                <source media="(min-width: 1921px)" srcSet={facilityIconx2} />
+                <img src={facilityIcon} alt="facility" />
+              </picture>
+              <p>깨끗한 바다 부산을 위해 시민들이 직접 참여 중인 프로젝트를 소개합니다.</p>
+            </div>
           </picture>
         </div>
         <div className="facility-container__body">

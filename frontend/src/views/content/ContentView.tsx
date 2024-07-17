@@ -5,6 +5,8 @@ import { Header } from '../header/Header';
 import { Footer } from '../footer/Footer';
 import contentImg from '../../common/assets/images/content-img.png';
 import contentImgx2 from '../../common/assets/images/content-img@2x.png';
+import contentIcon from '../../common/assets/images/icon-content (1).png';
+import contentIconx2 from '../../common/assets/images/icon-content (2).png';
 
 const Content = () => {
   return (
@@ -16,6 +18,13 @@ const Content = () => {
         <picture className="content-container__img">
           <source media="(min-width: 1921px)" srcSet={contentImgx2} />
           <img src={contentImg} alt="home1" />
+          <div className="content-container__img__text-overlay">
+            <picture className="content-container__img__text-overlay-icon">
+              <source media="(min-width: 1921px)" srcSet={contentIconx2} />
+              <img src={contentIcon} alt="content" />
+            </picture>
+            <p>깨끗한 바다 부산을 위해 시민들이 직접 참여 중인 프로젝트를 소개합니다.</p>
+          </div>
         </picture>
         <div className="content-container__body">
           <h1 className="content-container__body-title">콘텐츠</h1>

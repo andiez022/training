@@ -5,6 +5,8 @@ import './CampainView.scss';
 import Icon, { ICONS, IconSize } from '../../components/SVG/Icon';
 import CampainImg from '../../common/assets/images/campain-img.png';
 import CampainImgx2 from '../../common/assets/images/campain-img@2x.png';
+import CampainIcon from '../../common/assets/images/icon-campain (1).png';
+import CampainIconx2 from '../../common/assets/images/icon-campain (2).png';
 
 const CampainView = () => {
   return (
@@ -16,6 +18,13 @@ const CampainView = () => {
         <picture className="campain-container__img">
           <source media="(min-width: 1921px)" srcSet={CampainImgx2} />
           <img src={CampainImg} alt="home" />
+          <div className="campain-container__img__text-overlay">
+            <picture className="campain-container__img__text-overlay-icon">
+              <source media="(min-width: 1921px)" srcSet={CampainIconx2} />
+              <img src={CampainIcon} alt="campain" />
+            </picture>
+            <p>깨끗한 바다 부산을 위해 진행 중인 캠페인을 알려드립니다.</p>
+          </div>
         </picture>
         <div className="campain-container__body">
           <div className="campain-container__body-top">

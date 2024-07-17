@@ -6,6 +6,8 @@ import Icon, { ICONS, IconSize } from '../../components/SVG/Icon';
 
 import labImg from '../../common/assets/images/lab-img.png';
 import labImgx2 from '../../common/assets/images/lab-img@2x.png';
+import labIcon from '../../common/assets/images/icon-living-lab (1).png';
+import labIconx2 from '../../common/assets/images/icon-living-lab (2).png';
 
 const Lab = () => {
   return (
@@ -17,6 +19,13 @@ const Lab = () => {
         <picture className="lab-container__img">
           <source media="(min-width: 1921px)" srcSet={labImgx2} />
           <img src={labImg} alt="home" />
+          <div className="lab-container__img__text-overlay">
+            <picture className="lab-container__img__text-overlay-icon">
+              <source media="(min-width: 1921px)" srcSet={labIconx2} />
+              <img src={labIcon} alt="lab" />
+            </picture>
+            <p>깨끗한 바다 부산을 위해 시민들이 직접 참여 중인 프로젝트를 소개합니다.</p>
+          </div>
         </picture>
         <div className="lab-container__body">
           <div className="lab-container__body-top">

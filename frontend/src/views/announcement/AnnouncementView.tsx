@@ -6,6 +6,8 @@ import Icon, { ICONS, IconSize } from '../../components/SVG/Icon';
 
 import ancmImg from '../../common/assets/images/annouc-img.png';
 import ancmImgx2 from '../../common/assets/images/annouc-img@2x.png';
+import ancmIcon from '../../common/assets/images/icon-announcement.png';
+import ancmIconx2 from '../../common/assets/images/icon-announcement@2x.png';
 
 const Announcement = () => {
   return (
@@ -17,6 +19,13 @@ const Announcement = () => {
         <picture className="announcement-content__img">
           <source media="(min-width: 1921px)" srcSet={ancmImgx2} />
           <img src={ancmImg} alt="announcement1" />
+          <div className="announcement-content__img__text-overlay">
+            <picture className="announcement-content__img__text-overlay-icon">
+              <source media="(min-width: 1921px)" srcSet={ancmIconx2} />
+              <img src={ancmIcon} alt="announcement" />
+            </picture>
+            <p>깨끗한 바다 부산을 위해 시민들이 직접 참여 중인 프로젝트를 소개합니다.</p>
+          </div>
         </picture>
         <div className="announcement-content__body">
           <div className="announcement-content__body-top">
