@@ -36,10 +36,40 @@ const CampainView = () => {
               </div>
             </div>
           </div>
-          <div className="campain-container__body-content">
+          <div className="campain-container__body-content grid-cols-4 grid-cols-3 grid-cols-2">
             <div className="campain-container__body-content__item">
               <div className="campain-container__body-content__item-img">
                 <img src="https://picsum.photos/200/300?random=1" alt="item-img" />
+              </div>
+              <div className="campain-container__body-content__item-title">캠페인 제목</div>
+            </div>
+            <div className="campain-container__body-content__item">
+              <div className="campain-container__body-content__item-img">
+                <img src="https://picsum.photos/200/300?random=2" alt="item-img" />
+              </div>
+              <div className="campain-container__body-content__item-title">캠페인 제목</div>
+            </div>
+            <div className="campain-container__body-content__item">
+              <div className="campain-container__body-content__item-img">
+                <img src="https://picsum.photos/200/300?random=3" alt="item-img" />
+              </div>
+              <div className="campain-container__body-content__item-title">캠페인 제목</div>
+            </div>
+            <div className="campain-container__body-content__item">
+              <div className="campain-container__body-content__item-img">
+                <img src="https://picsum.photos/200/300?random=4" alt="item-img" />
+              </div>
+              <div className="campain-container__body-content__item-title">캠페인 제목</div>
+            </div>
+            <div className="campain-container__body-content__item">
+              <div className="campain-container__body-content__item-img">
+                <img src="https://picsum.photos/200/300?random=5" alt="item-img" />
+              </div>
+              <div className="campain-container__body-content__item-title">캠페인 제목</div>
+            </div>
+            <div className="campain-container__body-content__item">
+              <div className="campain-container__body-content__item-img">
+                <img src="https://picsum.photos/200/300?random=6" alt="item-img" />
               </div>
               <div className="campain-container__body-content__item-title">캠페인 제목</div>
             </div>

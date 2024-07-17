@@ -15,7 +15,11 @@
   overflow: hidden;
 
   &__img {
-    height: 100px;
+    img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+    }
   }
   &__body {
     padding-left: 14rem;

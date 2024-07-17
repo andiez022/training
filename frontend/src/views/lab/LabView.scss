@@ -14,9 +14,12 @@
   overflow: hidden;
 
   &__img {
-    height: 300px;
+    img {
+       height: 300px;
     width: 100%;
     object-fit: cover;
+    }
+   
   }
   &__body {
     margin-top: 70px;

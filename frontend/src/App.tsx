@@ -16,6 +16,7 @@ const FacilityView = lazy(() => import('./views/facility/FacilityView'));
 const ContentView = lazy(() => import('./views/content/ContentView'));
 const LabView = lazy(() => import('./views/lab/LabView'));
 const CampainView = lazy(() => import('./views/campain/CampainView'));
+const FreeBoardView = lazy(() => import('./views/freeboard/FreeBoardView'));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -45,6 +46,7 @@ const App: React.FC = () => {
                   <Route path="/content" element={<PrivateRoute guards={[]} element={<ContentView />} />} />
                   <Route path="/living-lab" element={<PrivateRoute guards={[]} element={<LabView />} />} />
                   <Route path="/campain" element={<PrivateRoute guards={[]} element={<CampainView />} />} />
+                  <Route path="/free-board" element={<PrivateRoute guards={[]} element={<FreeBoardView />} />} />
                 </Routes>
               </div>
             </BrowserRouter>
