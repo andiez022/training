@@ -107,6 +107,7 @@
       justify-content: space-between;
       min-height: 70px;
       width: 30rem;
+
       h2 {
         color: transparent;
         background-clip: text;
@@ -120,6 +121,7 @@
     .content-list {
       border-top: 2px solid #0066c1;
       border-bottom: 2px solid #0066c1;
+      width: 30rem;
 
       ul {
         li {
@@ -132,18 +134,23 @@
           div {
             display: flex;
             align-items: center;
-            .dot-list {
-              background-color: #3b4650;
-              width: 8px;
-              height: 8px;
-              margin-right: 20px;
-            }
-            p {
-              font-family: 'S-Core Dream 5';
-              font-size: 16px;
-              color: #000000;
-              font-weight: 600;
-            }
+            white-space: nowrap;
+            max-width: 100%;
+            overflow: hidden;
+          }
+          .dot-list {
+            background-color: #3b4650;
+            width: 8px;
+            height: 8px;
+            margin-right: 20px;
+          }
+          p {
+            font-size: 16px;
+            color: #000000;
+            font-family: 'Noto Sans KR';
+            font-weight: 500;
+            max-width: 23rem;
+            text-overflow: ellipsis;
           }
         }
         li:hover {

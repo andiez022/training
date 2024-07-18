@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import React from 'react';
 import './Card.scss';
+import FormatDate from '../FormatDate/FormatDate';
 
 export interface CardProps {
   className?: string;
@@ -21,9 +22,9 @@ const Card = ({ children, className, header, footer, title, content, date, onCli
   return (
     <div onClick={onClick} className={classes}>
       <h3 className="card-title">{title}</h3>
-      <div className="card-content">{content}</div>
+      <div className="card-content" dangerouslySetInnerHTML={{ __html: content }} />
       <div className="card-date">
-        <div>{date}</div>
+        <FormatDate time={date} />
       </div>
       {children}
       {footer}

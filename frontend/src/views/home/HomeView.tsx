@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import './HomeView.scss';
+import { useQuery } from '@tanstack/react-query';
 import { Header } from '../header/Header';
 import { Footer } from '../footer/Footer';
 import Icon, { ICONS, IconSize } from '../../components/SVG/Icon';
@@ -11,8 +13,57 @@ import banner1x2 from '../../common/assets/images/home-1@2x.png';
 import banner2x2 from '../../common/assets/images/home-2@2x.png';
 import banner3x2 from '../../common/assets/images/home-3@2x.png';
 import Card from '../../components/Card/Card';
+import api from '../../services/apiServices';
+import { DataItem } from '../../services/types/common';
 
 const Home: React.FC = () => {
+  const searchBy = 'title';
+  const searchValue = '';
+  const page = 0;
+  const pageSize = 4;
+
+  const { data: annResponse } = useQuery(['annDataShort', searchBy, searchValue, page, pageSize], () =>
+    api.data.fetchDataList('notice', {
+      searchBy,
+      searchValue,
+      page,
+      pageSize,
+    }),
+  );
+  const { data: contentResponse } = useQuery(['contentDataShort', searchBy, searchValue, page, pageSize], () =>
+    api.data.fetchDataList('content', {
+      searchBy,
+      searchValue,
+      page,
+      pageSize,
+    }),
+  );
+  const { data: labResponse } = useQuery(['labDataShort', searchBy, searchValue, page, pageSize], () =>
+    api.data.fetchDataList('living-lab', {
+      searchBy,
+      searchValue,
+      page,
+      pageSize,
+    }),
+  );
+  const { data: campaignResponse } = useQuery(['campainDataShort', searchBy, searchValue, page, pageSize], () =>
+    api.data.fetchDataList('campaign', {
+      searchBy,
+      searchValue,
+      page,
+      pageSize,
+    }),
+  );
+  const { data: boardResponse } = useQuery(['boardDataShort', searchBy, searchValue, page, pageSize], () =>
+    api.data.fetchDataList('free-board', {
+      searchBy,
+      searchValue,
+      page,
+      pageSize,
+    }),
+  );
+  console.log(campaignResponse);
+
   const [transparent, setTransparent] = useState(true);
   useEffect(() => {
     const handleScroll = () => {
@@ -57,10 +108,6 @@ const Home: React.FC = () => {
             </picture>
           </div>
         ))}
-        {/* <picture>
-          <source media="(min-width: 1921px)" srcSet={banner2x2} />
-          <img src={banner1} alt="home1" />
-        </picture> */}
         <div className="home-text">
           <div className="home-title">
             <h4>함께 하자,</h4>
@@ -77,175 +124,90 @@ const Home: React.FC = () => {
           </div>
         </div>
         <div className="notice-container">
-          <Card title="abc" content="asdsdasd" date="11/223" />
-          <Card title="abc" content="asdsdasd" date="11/223" />
-          <Card title="abc" content="asdsdasd" date="11/223" />
-          <Card title="abc" content="asdsdasd" date="11/223" />
+          {annResponse?.list.map((item: DataItem) => (
+            <Card key={item.id} title={item.title} content={item.content} date={item.created_at} />
+          ))}
+        </div>
+      </div>
+      <div className="home-highlight">
+        <div className="home-highlight__content content">
+          <div className="content-header">
+            <h2>콘텐츠</h2>
+            <Icon component={ICONS.PLUS} size={IconSize.XXL} />
+          </div>
+          <div className="content-list">
+            <ul>
+              {contentResponse?.list.map((item: DataItem) => (
+                <li key={item.id}>
+                  <div>
+                    <div className="dot-list" />
+                    <p>{item.title}</p>
+                  </div>
+                  <Icon className="icon-plus" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        <div className="home-highlight__content lab">
+          <div className="content-header">
+            <h2>리빙랩</h2>
+            <Icon component={ICONS.PLUS} size={IconSize.XXL} />
+          </div>
+          <div className="content-list">
+            <ul>
+              {labResponse?.list.map((item: DataItem) => (
+                <li key={item.id}>
+                  <div>
+                    <div className="dot-list" />
+                    <p>{item.title}</p>
+                  </div>
+                  <Icon className="icon-plus" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        <div className="home-highlight__content campaign">
+          <div className="content-header">
+            <h2>캠페인</h2>
+            <Icon component={ICONS.PLUS} size={IconSize.XXL} />
+          </div>
+          <div className="content-list">
+            <ul>
+              {campaignResponse?.list.map((item: DataItem) => (
+                <li key={item.id}>
+                  <div>
+                    <div className="dot-list" />
+                    <p>{item.title}</p>
+                  </div>
+                  <Icon className="icon-plus" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        <div className="home-highlight__content free-board">
+          <div className="content-header">
+            <h2>자유게시판</h2>
+            <Icon component={ICONS.PLUS} size={IconSize.XXL} />
+          </div>
+          <div className="content-list">
+            <ul>
+              {boardResponse?.list.map((item: DataItem) => (
+                <li key={item.id}>
+                  <div>
+                    <div className="dot-list" />
+                    <p>{item.title}</p>
+                  </div>
+                  <Icon className="icon-plus" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
 
-      <div className="home-highlight">
-        <div className="home-highlight__content">
-          <div className="content-header">
-            <h2>콘텐츠</h2>
-            <button aria-label="move-to-ann" onClick={() => window.location.assign('announcement')}>
-              <Icon component={ICONS.PLUS} size={IconSize.XXL} />
-            </button>
-          </div>
-          <div className="content-list">
-            <ul>
-              <li>
-                <div>
-                  <div className="dot-list" />
-                  <p>콘텐츠 제목</p>
-                </div>
-                <Icon className="icon-plus" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
-              </li>
-              <li>
-                <div>
-                  <div className="dot-list" />
-                  <p>콘텐츠 제목 콘텐츠 제목 콘텐츠 제목 콘...</p>
-                </div>
-                <Icon className="icon-plus" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
-              </li>
-              <li>
-                <div>
-                  <div className="dot-list" />
-                  <p>콘텐츠 제목</p>
-                </div>
-                <Icon className="icon-plus" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
-              </li>
-              <li>
-                <div>
-                  <div className="dot-list" />
-                  <p>콘텐츠 제목</p>
-                </div>
-                <Icon className="icon-plus" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div className="home-highlight__content">
-          <div className="content-header">
-            <h2>콘텐츠</h2>
-            <div>
-              <Icon className="icon-plus" component={ICONS.PLUS} size={IconSize.XXL} />
-            </div>
-          </div>
-          <div className="content-list">
-            <ul>
-              <li>
-                <div>
-                  <div className="dot-list" />
-                  <p>콘텐츠 제목</p>
-                </div>
-                <Icon className="icon-arrow-right" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
-              </li>
-              <li>
-                <div>
-                  <div className="dot-list" />
-                  <p>콘텐츠 제목 콘텐츠 제목 콘텐츠 제목 콘...</p>
-                </div>
-                <Icon className="icon-arrow-right" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
-              </li>
-              <li>
-                <div>
-                  <div className="dot-list" />
-                  <p>콘텐츠 제목</p>
-                </div>
-                <Icon className="icon-arrow-right" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
-              </li>
-              <li>
-                <div>
-                  <div className="dot-list" />
-                  <p>콘텐츠 제목</p>
-                </div>
-                <Icon className="icon-arrow-right" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div className="home-highlight__content">
-          <div className="content-header">
-            <h2>콘텐츠</h2>
-            <div>
-              <Icon className="icon-plus" component={ICONS.PLUS} size={IconSize.XXL} />
-            </div>
-          </div>
-          <div className="content-list">
-            <ul>
-              <li>
-                <div>
-                  <div className="dot-list" />
-                  <p>콘텐츠 제목</p>
-                </div>
-                <Icon className="icon-arrow-rarrow-right" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
-              </li>
-              <li>
-                <div>
-                  <div className="dot-list" />
-                  <p>콘텐츠 제목 콘텐츠 제목 콘텐츠 제목 콘...</p>
-                </div>
-                <Icon className="icon-arrow-rarrow-right" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
-              </li>
-              <li>
-                <div>
-                  <div className="dot-list" />
-                  <p>콘텐츠 제목</p>
-                </div>
-                <Icon className="icon-arrow-rarrow-right" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
-              </li>
-              <li>
-                <div>
-                  <div className="dot-list" />
-                  <p>콘텐츠 제목</p>
-                </div>
-                <Icon className="icon-arrow-rarrow-right" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div className="home-highlight__content">
-          <div className="content-header">
-            <h2>콘텐츠</h2>
-            <div>
-              <Icon className="icon-plus" component={ICONS.PLUS} size={IconSize.XXL} />
-            </div>
-          </div>
-          <div className="content-list">
-            <ul>
-              <li>
-                <div>
-                  <div className="dot-list" />
-                  <p>콘텐츠 제목</p>
-                </div>
-                <Icon className="icon-arrow-right" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
-              </li>
-              <li>
-                <div>
-                  <div className="dot-list" />
-                  <p>콘텐츠 제목 콘텐츠 제목 콘텐츠 제목 콘...</p>
-                </div>
-                <Icon className="icon-arrow-right" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
-              </li>
-              <li>
-                <div>
-                  <div className="dot-list" />
-                  <p>콘텐츠 제목</p>
-                </div>
-                <Icon className="icon-arrow-right" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
-              </li>
-              <li>
-                <div>
-                  <div className="dot-list" />
-                  <p>콘텐츠 제목</p>
-                </div>
-                <Icon className="icon-arrow-right" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
       <div className="home-footer">
         <Footer />
       </div>

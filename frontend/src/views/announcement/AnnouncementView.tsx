@@ -1,4 +1,5 @@
 import React from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { Header } from '../header/Header';
 import { Footer } from '../footer/Footer';
 import './AnnouncementView.scss';
@@ -8,8 +9,32 @@ import ancmImg from '../../common/assets/images/annouc-img.png';
 import ancmImgx2 from '../../common/assets/images/annouc-img@2x.png';
 import ancmIcon from '../../common/assets/images/icon-announcement.png';
 import ancmIconx2 from '../../common/assets/images/icon-announcement@2x.png';
+import { DataItem } from '../../services/types/common';
+import api from '../../services/apiServices';
+import { reformatDate } from '../../components/FormatDate/FormatDate';
 
 const Announcement = () => {
+  const searchBy = 'title';
+  const searchValue = '';
+  const page = 0;
+  const pageSize = 10;
+
+  const { data: annResponse } = useQuery(['annDataShort', searchBy, searchValue, page, pageSize], () =>
+    api.data.fetchDataList('notice', {
+      searchBy,
+      searchValue,
+      page,
+      pageSize,
+    }),
+  );
+  // function reformatDate(inputDate: string): string {
+  //   const date = new Date(inputDate);
+  //   const day = String(date.getDate()).padStart(2, '0');
+  //   const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+  //   const year = date.getFullYear();
+
+  //   return `${day}-${month}-${year}`;
+  // }
   return (
     <div>
       <div className="announcement-header">
@@ -63,24 +88,14 @@ const Announcement = () => {
                 </th>
               </thead>
 
-              <tr className="table-data">
-                <td>1</td>
-                <td>
-                  공지사항 입니다. 공지사항 입니다. 공지사항 입니다. 공지사항 입니다. 공지사항 입니다. 공지사항 입니다. 공지사항 입니다.
-                  공지사
-                </td>
-                <td>관리자 1</td>
-                <td>2023-05-05</td>
-              </tr>
-              <tr className="table-data">
-                <td>1</td>
-                <td>
-                  공지사항 입니다. 공지사항 입니다. 공지사항 입니다. 공지사항 입니다. 공지사항 입니다. 공지사항 입니다. 공지사항 입니다.
-                  공지사
-                </td>
-                <td>관리자 1</td>
-                <td>2023-05-05</td>
-              </tr>
+              {annResponse?.list.map((item: DataItem, index: number) => (
+                <tr className="table-data" key={item.id}>
+                  <td>{index + 1}</td>
+                  <td>{item.title}</td>
+                  <td>{item.author}</td>
+                  <td>{reformatDate(item.created_at)}</td>
+                </tr>
+              ))}
             </table>
           </div>
         </div>

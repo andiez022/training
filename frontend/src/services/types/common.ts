@@ -40,3 +40,15 @@ export interface SignUpForm {
   isAgree?: boolean;
   subscribeNewsletter?: boolean;
 }
+
+
+export interface DataItem {
+  id: number;
+  title?: string;
+  content: string;
+  updated_at?: string;
+  created_at: string;
+  author?: string;
+  video?: string;
+  description: string;
+}

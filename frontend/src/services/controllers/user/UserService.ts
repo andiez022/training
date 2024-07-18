@@ -5,7 +5,6 @@ export default class UserService {
 
   getUserDetail = async () => {
     const { data } = await this.axios.get('users/me');
-
     return data;
   };
 }
