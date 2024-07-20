@@ -45,7 +45,6 @@
       }
     }
   }
-  
 
   margin-top: 100px;
   overflow: hidden;
@@ -62,24 +61,29 @@
       font-family: 'S-Core Dream';
       font-weight: 900;
     }
-    &-content { 
+    &-content {
       margin-top: 50px;
       display: flex;
       justify-content: space-evenly;
       margin-bottom: 100px;
       &-left {
-        img {
-          position: relative;
-          z-index: -1;
-          width: 26rem;
-          height: 25rem;
+        width: 26rem;
+        height: 25rem;
+        .map-svg {
+          svg {
+              position: relative;
+          width: 100%;
+          height: 100%;
+          
+          }
+        
         }
         .view-text {
           font-size: 14px;
           font-family: 'S-Core Dream';
-          font-weight: 700;
-          color: #0069c3;
-          background-color: #ffffff;
+          font-weight: 500;
+          color: #fff;
+         background-image: linear-gradient( to right, #0066C1, #009FE5);
           border: 1px solid #006ac3;
           padding: 10px 15px;
           width: 120px;
@@ -91,6 +95,11 @@
           margin-top: 20px;
           position: absolute;
           z-index: 1;
+        }
+        .view-text.active {
+          font-weight: 700;
+          color: #0069c3;
+          background-color: #ffffff;
         }
       }
       &-right {
@@ -167,4 +176,12 @@
       }
     }
   }
+}
+
+.map-animation {
+  cursor: pointer;
+}
+.map-animation:hover path{
+  fill : #b7dcff;
+  transition: fill 0.8s;
 }

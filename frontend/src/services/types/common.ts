@@ -49,6 +49,7 @@ export interface DataItem {
   updated_at?: string;
   created_at: string;
   author?: string;
-  video?: string;
+  video: string;
   description: string;
+  image?: string;
 }

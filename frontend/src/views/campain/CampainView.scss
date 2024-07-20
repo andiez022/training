@@ -139,12 +139,14 @@
         margin-bottom: 40px;
         &-img {
           height: 210px;
+          
           img {
             border: 1px solid #cccccc;
             border-bottom: none;
             width: 100%;
             height: 210px;
-            vertical-align: middle;
+          
+            object-fit: cover;
           }
         }
         &-title {
@@ -156,7 +158,7 @@
           font-weight: 400;
           font-size: 15px;
           text-align: center;
-          line-height: 60px;
+          
         }
       }
     }

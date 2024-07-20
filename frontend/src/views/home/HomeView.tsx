@@ -15,6 +15,7 @@ import banner3x2 from '../../common/assets/images/home-3@2x.png';
 import Card from '../../components/Card/Card';
 import api from '../../services/apiServices';
 import { DataItem } from '../../services/types/common';
+import { reformatDate } from '../../components/FormatDate/FormatDate';
 
 const Home: React.FC = () => {
   const searchBy = 'title';
@@ -120,12 +121,12 @@ const Home: React.FC = () => {
         <div className="notice-top">
           <h2>공지사항</h2>
           <div>
-            <Icon component={ICONS.PLUS} size={IconSize.XXL} />
+            <Icon component={ICONS.PLUS} size={IconSize.XXL} className="animation-icon" />
           </div>
         </div>
         <div className="notice-container">
           {annResponse?.list.map((item: DataItem) => (
-            <Card key={item.id} title={item.title} content={item.content} date={item.created_at} />
+            <Card key={item.id} title={item.title} content={item.content} date={reformatDate(item.created_at)} />
           ))}
         </div>
       </div>

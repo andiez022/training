@@ -1,6 +1,7 @@
 import React from 'react';
 
 import './FreeBoardView.scss';
+import { useQuery } from '@tanstack/react-query';
 import { Header } from '../header/Header';
 import { Footer } from '../footer/Footer';
 
@@ -9,8 +10,24 @@ import freeBoardImgx2 from '../../common/assets/images/free-board@2x.png';
 import freeBoardIcon from '../../common/assets/images/icon-free-board (1).png';
 import freeBoardIconx2 from '../../common/assets/images/icon-free-board (2).png';
 import Icon, { ICONS, IconSize } from '../../components/SVG/Icon';
+import api from '../../services/apiServices';
+import { DataItem } from '../../services/types/common';
+import { reformatDate } from '../../components/FormatDate/FormatDate';
 
 const FreeBoardView = () => {
+  const searchBy = 'title';
+  const searchValue = '';
+  const page = 0;
+  const pageSize = 10;
+
+  const { data: boardResponse } = useQuery(['annDataShort', searchBy, searchValue, page, pageSize], () =>
+    api.data.fetchDataList('content', {
+      searchBy,
+      searchValue,
+      page,
+      pageSize,
+    }),
+  );
   return (
     <>
       <div className="free-board-header">
@@ -65,12 +82,14 @@ const FreeBoardView = () => {
                   </th>
                 </tr>
               </thead>
-              <tr>
-                <td>1</td>
-                <td>리빙랩 입니다.</td>
-                <td>관리자 1</td>
-                <td>2023-05-05</td>
-              </tr>
+              {boardResponse?.list.map((item: DataItem, index: number) => (
+                <tr key={item.id}>
+                  <td>{index + 1}</td>
+                  <td className="title-data">{item.title}</td>
+                  <td>{item.author}</td>
+                  <td>{reformatDate(item.created_at)}</td>
+                </tr>
+              ))}
             </table>
           </div>
         </div>

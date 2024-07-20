@@ -7,9 +7,11 @@ export const Header: React.FC = () => {
   return (
     <div className="header">
       <div className="header-left">
-        <svg className="header-logo">
-          <image xlinkHref={logoHeader} />
-        </svg>
+        <a href="./" aria-label="home">
+          <svg className="header-logo">
+            <image xlinkHref={logoHeader} />
+          </svg>
+        </a>
       </div>
       <div className="header-right">
         <a href="./" aria-label="home" className="home">

@@ -11,6 +11,7 @@ import contentIconx2 from '../../common/assets/images/icon-content (2).png';
 import api from '../../services/apiServices';
 import { DataItem } from '../../services/types/common';
 import { reformatDate } from '../../components/FormatDate/FormatDate';
+import { formatVideoUrl } from './utils';
 
 const Content = () => {
   const searchBy = 'title';
@@ -49,7 +50,7 @@ const Content = () => {
           <div className="content-container__body-items">
             {contentResponse?.list.map((item: DataItem) => (
               <div className="content-container__body-items__item">
-                <div className="content-container__body-items__item-video">{item.video}</div>
+                <iframe src={formatVideoUrl(item.video)} className="content-container__body-items__item-video" title="video" />
                 <div className="content-container__body-items__item-info">
                   <div className="content-container__body-items__item-info__top">
                     <p>{item.title}</p>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { Header } from '../header/Header';
 import { Footer } from '../footer/Footer';
 import './CampainView.scss';
@@ -7,8 +8,23 @@ import CampainImg from '../../common/assets/images/campain-img.png';
 import CampainImgx2 from '../../common/assets/images/campain-img@2x.png';
 import CampainIcon from '../../common/assets/images/icon-campain (1).png';
 import CampainIconx2 from '../../common/assets/images/icon-campain (2).png';
+import api from '../../services/apiServices';
+import { DataItem } from '../../services/types/common';
 
 const CampainView = () => {
+  const searchBy = 'title';
+  const searchValue = '';
+  const page = 0;
+  const pageSize = 12;
+
+  const { data: campaignResponse } = useQuery(['annDataShort', searchBy, searchValue, page, pageSize], () =>
+    api.data.fetchDataList('campaign', {
+      searchBy,
+      searchValue,
+      page,
+      pageSize,
+    }),
+  );
   return (
     <>
       <div className="campain-header">
@@ -46,13 +62,15 @@ const CampainView = () => {
             </div>
           </div>
           <div className="campain-container__body-content grid-cols-4 grid-cols-3 grid-cols-2">
-            <div className="campain-container__body-content__item">
-              <div className="campain-container__body-content__item-img">
-                <img src="https://picsum.photos/200/300?random=1" alt="item-img" />
+            {campaignResponse?.list.map((item: DataItem) => (
+              <div className="campain-container__body-content__item" key={item.id}>
+                <div className="campain-container__body-content__item-img">
+                  <img src={item.image} alt="item-img" />
+                </div>
+                <div className="campain-container__body-content__item-title">{item.title}</div>
               </div>
-              <div className="campain-container__body-content__item-title">캠페인 제목</div>
-            </div>
-            <div className="campain-container__body-content__item">
+            ))}
+            {/* <div className="campain-container__body-content__item">
               <div className="campain-container__body-content__item-img">
                 <img src="https://picsum.photos/200/300?random=2" alt="item-img" />
               </div>
@@ -81,7 +99,7 @@ const CampainView = () => {
                 <img src="https://picsum.photos/200/300?random=6" alt="item-img" />
               </div>
               <div className="campain-container__body-content__item-title">캠페인 제목</div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

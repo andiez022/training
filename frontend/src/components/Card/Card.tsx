@@ -23,9 +23,7 @@ const Card = ({ children, className, header, footer, title, content, date, onCli
     <div onClick={onClick} className={classes}>
       <h3 className="card-title">{title}</h3>
       <div className="card-content" dangerouslySetInnerHTML={{ __html: content }} />
-      <div className="card-date">
-        <FormatDate time={date} />
-      </div>
+      <div className="card-date">{date}</div>
       {children}
       {footer}
     </div>

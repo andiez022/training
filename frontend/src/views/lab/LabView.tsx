@@ -1,5 +1,6 @@
 import React from 'react';
 import './LabView.scss';
+import { useQuery } from '@tanstack/react-query';
 import { Header } from '../header/Header';
 import { Footer } from '../footer/Footer';
 import Icon, { ICONS, IconSize } from '../../components/SVG/Icon';
@@ -8,8 +9,24 @@ import labImg from '../../common/assets/images/lab-img.png';
 import labImgx2 from '../../common/assets/images/lab-img@2x.png';
 import labIcon from '../../common/assets/images/icon-living-lab (1).png';
 import labIconx2 from '../../common/assets/images/icon-living-lab (2).png';
+import api from '../../services/apiServices';
+import { DataItem } from '../../services/types/common';
+import { reformatDate } from '../../components/FormatDate/FormatDate';
 
 const Lab = () => {
+  const searchBy = 'title';
+  const searchValue = '';
+  const page = 0;
+  const pageSize = 10;
+
+  const { data: labResponse } = useQuery(['annDataShort', searchBy, searchValue, page, pageSize], () =>
+    api.data.fetchDataList('content', {
+      searchBy,
+      searchValue,
+      page,
+      pageSize,
+    }),
+  );
   return (
     <>
       <div className="lab-header">
@@ -64,12 +81,14 @@ const Lab = () => {
                   </th>
                 </tr>
               </thead>
-              <tr>
-                <td>1</td>
-                <td>리빙랩 입니다.</td>
-                <td>관리자 1</td>
-                <td>2023-05-05</td>
-              </tr>
+              {labResponse?.list.map((item: DataItem, index: number) => (
+                <tr key={item.id}>
+                  <td>{index + 1}</td>
+                  <td className="title-data">{item.title}</td>
+                  <td>{item.author}</td>
+                  <td>{reformatDate(item.created_at)}</td>
+                </tr>
+              ))}
             </table>
           </div>
         </div>
