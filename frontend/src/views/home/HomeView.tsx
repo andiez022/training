@@ -120,8 +120,8 @@ const Home: React.FC = () => {
       <div className="home-notice">
         <div className="notice-top">
           <h2>공지사항</h2>
-          <div>
-            <Icon component={ICONS.PLUS} size={IconSize.XXL} className="animation-icon" />
+          <div className="home-icon-plus">
+            <Icon component={ICONS.PLUS} size={IconSize.LG} />
           </div>
         </div>
         <div className="notice-container">
@@ -134,7 +134,9 @@ const Home: React.FC = () => {
         <div className="home-highlight__content content">
           <div className="content-header">
             <h2>콘텐츠</h2>
-            <Icon component={ICONS.PLUS} size={IconSize.XXL} />
+            <div className="home-icon-plus">
+              <Icon component={ICONS.PLUS} size={IconSize.LG} />
+            </div>
           </div>
           <div className="content-list">
             <ul>
@@ -153,7 +155,9 @@ const Home: React.FC = () => {
         <div className="home-highlight__content lab">
           <div className="content-header">
             <h2>리빙랩</h2>
-            <Icon component={ICONS.PLUS} size={IconSize.XXL} />
+            <div className="home-icon-plus">
+              <Icon component={ICONS.PLUS} size={IconSize.LG} />
+            </div>
           </div>
           <div className="content-list">
             <ul>
@@ -172,7 +176,9 @@ const Home: React.FC = () => {
         <div className="home-highlight__content campaign">
           <div className="content-header">
             <h2>캠페인</h2>
-            <Icon component={ICONS.PLUS} size={IconSize.XXL} />
+            <div className="home-icon-plus">
+              <Icon component={ICONS.PLUS} size={IconSize.LG} />
+            </div>
           </div>
           <div className="content-list">
             <ul>
@@ -191,7 +197,9 @@ const Home: React.FC = () => {
         <div className="home-highlight__content free-board">
           <div className="content-header">
             <h2>자유게시판</h2>
-            <Icon component={ICONS.PLUS} size={IconSize.XXL} />
+            <div className="home-icon-plus">
+              <Icon component={ICONS.PLUS} size={IconSize.LG} />
+            </div>
           </div>
           <div className="content-list">
             <ul>

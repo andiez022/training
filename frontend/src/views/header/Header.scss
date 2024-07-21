@@ -13,6 +13,7 @@
   left: 0;
   gap: 5rem;
   z-index: 999;
+  max-height: 100px;
 
   .header-left {
     margin-left: 100px;
@@ -40,4 +41,4 @@
   height: 36px;
 }
 
-svg{ transform: none !important;}
+// svg{ transform: none !important;}

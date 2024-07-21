@@ -17,7 +17,7 @@ import { ReactComponent as Times } from './icons/times.svg';
 import { ReactComponent as WarningCircle } from './icons/warning-circle.svg';
 import { ReactComponent as RadioDefault } from './icons/radio-default.svg';
 import { ReactComponent as RadioSelected } from './icons/radio-selected.svg';
-import { ReactComponent as Plus } from './icons/plus_icon.svg';
+import { ReactComponent as Plus } from './icons/103681_plus_icon (1).svg';
 import { ReactComponent as ArrowRight } from './icons/arrow.right.svg';
 import { ReactComponent as CarretDown } from './icons/caret-down-solid.svg';
 import { ReactComponent as SearchGlass } from './icons/search-glass.svg';
