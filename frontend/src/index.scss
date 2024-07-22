@@ -12,7 +12,8 @@
 }
 
 body {
-  height: 100vh;
+  // height: 100vh;
+  overflow-y: scroll;
   margin: 0;
   font-size: 18px;
   font-family: $font-family-2;

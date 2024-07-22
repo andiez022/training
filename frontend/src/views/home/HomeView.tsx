@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import './HomeView.scss';
 import { useQuery } from '@tanstack/react-query';
 import { Header } from '../header/Header';
 import { Footer } from '../footer/Footer';
 import Icon, { ICONS, IconSize } from '../../components/SVG/Icon';
-
 import banner1 from '../../common/assets/images/home-1.png';
 import banner2 from '../../common/assets/images/home-2.png';
 import banner3 from '../../common/assets/images/home-3.png';
@@ -63,12 +61,11 @@ const Home: React.FC = () => {
       pageSize,
     }),
   );
-  console.log(campaignResponse);
 
   const [transparent, setTransparent] = useState(true);
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPosition = document.querySelector('.container')?.scrollTop;
+      const scrollPosition = window.pageYOffset;
 
       if (scrollPosition && scrollPosition > 170) {
         setTransparent(false);
@@ -76,11 +73,11 @@ const Home: React.FC = () => {
         setTransparent(true);
       }
     };
-    document.querySelector('.container')?.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll);
     return () => {
-      document.querySelector('.container')?.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [transparent]);
 
   const banners = [
     { id: 1, imgSrc: banner1, imgUWSrc: banner1x2 },
@@ -110,28 +107,32 @@ const Home: React.FC = () => {
           </div>
         ))}
         <div className="home-text">
-          <div className="home-title">
+          <div className="home-title" data-aos="fade-up">
             <h4>함께 하자,</h4>
             <h4>깨끗한 바다 부산으로!</h4>
           </div>
-          <p className="home-desc">깨바부는 부산지역 내 테트라포드와 습지 현황에 대한 정보를 제공하고 있습니다.</p>
+          <p className="home-desc" data-aos="fade-up">
+            깨바부는 부산지역 내 테트라포드와 습지 현황에 대한 정보를 제공하고 있습니다.
+          </p>
         </div>
       </div>
       <div className="home-notice">
-        <div className="notice-top">
-          <h2>공지사항</h2>
-          <div className="home-icon-plus">
-            <Icon component={ICONS.PLUS} size={IconSize.LG} />
+        <div data-aos="fade-up">
+          <div className="notice-top">
+            <h2>공지사항</h2>
+            <div className="home-icon-plus">
+              <Icon component={ICONS.PLUS} size={IconSize.LG} />
+            </div>
           </div>
-        </div>
-        <div className="notice-container">
-          {annResponse?.list.map((item: DataItem) => (
-            <Card key={item.id} title={item.title} content={item.content} date={reformatDate(item.created_at)} />
-          ))}
+          <div className="notice-container">
+            {annResponse?.list.map((item: DataItem) => (
+              <Card key={item.id} title={item.title} content={item.content} date={reformatDate(item.created_at)} />
+            ))}
+          </div>
         </div>
       </div>
       <div className="home-highlight">
-        <div className="home-highlight__content content">
+        <div className="home-highlight__content content" data-aos="fade-up">
           <div className="content-header">
             <h2>콘텐츠</h2>
             <div className="home-icon-plus">
@@ -152,7 +153,7 @@ const Home: React.FC = () => {
             </ul>
           </div>
         </div>
-        <div className="home-highlight__content lab">
+        <div className="home-highlight__content lab" data-aos="fade-up">
           <div className="content-header">
             <h2>리빙랩</h2>
             <div className="home-icon-plus">
@@ -173,7 +174,7 @@ const Home: React.FC = () => {
             </ul>
           </div>
         </div>
-        <div className="home-highlight__content campaign">
+        <div className="home-highlight__content campaign" data-aos="fade-up">
           <div className="content-header">
             <h2>캠페인</h2>
             <div className="home-icon-plus">
@@ -194,7 +195,7 @@ const Home: React.FC = () => {
             </ul>
           </div>
         </div>
-        <div className="home-highlight__content free-board">
+        <div className="home-highlight__content free-board" data-aos="fade-up">
           <div className="content-header">
             <h2>자유게시판</h2>
             <div className="home-icon-plus">

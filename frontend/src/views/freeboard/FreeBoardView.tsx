@@ -38,11 +38,11 @@ const FreeBoardView = () => {
           <source media="(min-width: 1921px)" srcSet={freeBoardImgx2} />
           <img src={freeBoardImg} alt="free-board" />
           <div className="free-board-container__img__text-overlay">
-            <picture className="free-board-container__img__text-overlay-icon">
+            <picture className="free-board-container__img__text-overlay-icon" data-aos="fade-up">
               <source media="(min-width: 1921px)" srcSet={freeBoardIconx2} />
               <img src={freeBoardIcon} alt="free-board" />
             </picture>
-            <p>깨끗한 바다 부산을 위한 시민들의 다양한 의견과 정보를 공유합니다.</p>
+            <p data-aos="fade-up">깨끗한 바다 부산을 위한 시민들의 다양한 의견과 정보를 공유합니다.</p>
           </div>
         </picture>
         <div className="free-board-container__body">

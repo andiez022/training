@@ -21,6 +21,8 @@ import { ReactComponent as Plus } from './icons/103681_plus_icon (1).svg';
 import { ReactComponent as ArrowRight } from './icons/arrow.right.svg';
 import { ReactComponent as CarretDown } from './icons/caret-down-solid.svg';
 import { ReactComponent as SearchGlass } from './icons/search-glass.svg';
+import { ReactComponent as MetroMenu } from './icons/134216_menu_lines_hamburger_icon.svg';
+import { ReactComponent as CloseIcon } from './icons/211651_close_round_icon.svg';
 
 import './Icon.scss';
 
@@ -45,6 +47,8 @@ export const ICONS = {
   ARROW_RIGHT: ArrowRight,
   CARRET_DOWN: CarretDown,
   SEARCH_GLASS: SearchGlass,
+  METRO_MENU: MetroMenu,
+  CLOSE_ICON: CloseIcon,
 };
 
 export interface IconProps {

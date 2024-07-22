@@ -42,3 +42,63 @@
 }
 
 // svg{ transform: none !important;}
+@media screen and (max-width: 600px) {
+  .header {
+    display: flex;
+    justify-content: space-around;
+    align-self: center;
+    .header-left {
+      height: 25px;
+      margin-left: 0;
+      image {
+        height: 25px;
+        width: 125px;
+      }
+    }
+    .header-right {
+      display: none;
+      .close-icon {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+    .icon-nav-bar {
+      cursor: pointer;
+      display: block;
+      svg {
+        fill: #333;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .icon-nav-bar,
+  .close-icon {
+    display: none;
+  }
+}
+.header-right.show {
+  display: block;
+  background-color: white;
+  color: #333;
+
+  position: fixed;
+  top: 0;
+  right: 0;
+  transform: translate(20%);
+  border-bottom: 1px solid gray;
+  // height: 90%;
+  .card-header {
+    margin: 0;
+    height: 54px;
+    line-height: 54px;
+    width: 100vw;
+    text-align: end;
+    padding-right: 30px;
+  }
+}
+.icon-nav-bar.unshow {
+  display: none;
+}

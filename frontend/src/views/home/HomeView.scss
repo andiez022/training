@@ -10,7 +10,9 @@
     }
   }
 }
-
+body {
+  overflow-x: hidden;
+}
 .home-slide {
   top: 0px;
   left: 0px;
@@ -21,7 +23,7 @@
 
   .slide-item {
     position: absolute;
-    width: 100vw;
+    width: 100%;
     img {
       height: 100vh;
       object-fit: cover;
@@ -31,7 +33,6 @@
     }
   }
   .slide-item.active {
-    // opacity: 0;
     img {
       opacity: 1;
       animation: scaleZ 4s;
@@ -39,25 +40,22 @@
   }
 
   .home-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
     .home-title {
       font-family: 'Noto Sans KR';
       color: #f3f3f3;
       text-align: center;
       font-size: 36px;
       font-weight: 700;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -80%);
     }
     .home-desc {
       color: #c4f7ff;
       margin-top: 40px;
       text-align: center;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, 90%);
       font-size: 20px;
       width: 750px;
       text-shadow: #00000080 1px 1px 3px;
@@ -66,7 +64,7 @@
 }
 
 .home-notice {
-  padding: 140px 120px 160px;
+  padding: 140px 10vw 160px;
   margin-top: 100vh;
   background-color: #fff;
   .notice-top {
@@ -84,7 +82,6 @@
   }
   .notice-container {
     display: grid;
-    justify-content: space-between;
     margin-top: 30px;
     gap: 30px;
     flex-wrap: wrap;
@@ -95,15 +92,13 @@
 }
 .home-highlight {
   background-color: #fff;
-  padding: 10px 120px 160px;
   display: grid;
   gap: 30px;
-  flex-wrap: wrap;
-  justify-content: space-between;
-
+  padding: 20px 10vw 160px;
+  
   .home-highlight__content {
     margin-top: 50px;
-    width: 100%;
+    // width: 100%;
     .content-header {
       display: flex;
       justify-content: space-between;
@@ -170,6 +165,11 @@
     a {
       .card-header {
         color: #fff;
+      }
+    }
+    .icon-nav-bar {
+      svg {
+        fill: white;
       }
     }
   }
@@ -267,9 +267,15 @@
 }
 
 /* Largest devices such as desktops (1280px and up) */
-@media only screen and (min-width: 1280px) {
+@media only screen and (min-width: 1580px) {
   .notice-container,
   .home-highlight {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
+svg {
+  // transform: none !important;
+  z-index: 0;
+}
+
+/* Responsive Styles */

@@ -37,11 +37,11 @@ const Lab = () => {
           <source media="(min-width: 1921px)" srcSet={labImgx2} />
           <img src={labImg} alt="home" />
           <div className="lab-container__img__text-overlay">
-            <picture className="lab-container__img__text-overlay-icon">
+            <picture className="lab-container__img__text-overlay-icon" data-aos="fade-up">
               <source media="(min-width: 1921px)" srcSet={labIconx2} />
               <img src={labIcon} alt="lab" />
             </picture>
-            <p>깨끗한 바다 부산을 위해 시민들이 직접 참여 중인 프로젝트를 소개합니다.</p>
+            <p data-aos="fade-up">깨끗한 바다 부산을 위해 시민들이 직접 참여 중인 프로젝트를 소개합니다.</p>
           </div>
         </picture>
         <div className="lab-container__body">

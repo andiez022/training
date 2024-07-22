@@ -1,6 +1,8 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import React, { lazy } from 'react';
+import React, { lazy, useEffect } from 'react';
 import { Provider } from 'react-redux';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -27,6 +29,10 @@ const queryClient = new QueryClient({
 });
 
 const App: React.FC = () => {
+  useEffect(() => {
+    AOS.init({ duration: 1000, easing: 'ease-out-cubic' });
+    AOS.refresh();
+  }, []);
   console.log('start');
   return (
     <QueryClientProvider client={queryClient}>
