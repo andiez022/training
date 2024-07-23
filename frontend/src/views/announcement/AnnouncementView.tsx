@@ -62,12 +62,14 @@ const Announcement = () => {
                   <option value="writer">작성자</option>
                 </select>
               </div>
-              <div className="box2">
-                <input type="text" className="box2-input" placeholder="공지사항 검색" />
-              </div>
-              <div className="box3">
-                <Icon className="icon-search-glass" component={ICONS.SEARCH_GLASS} size={IconSize.XL} />
-                <p className="box3-text">검색</p>
+              <div className="box23">
+                <div className="box2">
+                  <input type="text" className="box2-input" placeholder="공지사항 검색" />
+                </div>
+                <div className="box3">
+                  <Icon className="icon-search-glass" component={ICONS.SEARCH_GLASS} size={IconSize.XL} />
+                  <p className="box3-text">검색</p>
+                </div>
               </div>
             </div>
           </div>
@@ -77,7 +79,7 @@ const Announcement = () => {
                 <th>
                   <div className="number">번호</div>
                 </th>
-                <th style={{ width: '60%' }}>
+                <th>
                   <div className="title">제목</div>
                 </th>
                 <th>

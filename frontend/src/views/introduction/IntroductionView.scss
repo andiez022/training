@@ -29,12 +29,15 @@
   }
 
   &__title {
+    width: 70%;
+    text-align: center;
     font-size: 1.5rem;
     font-family: 'S-Core Dream';
     font-weight: 700;
     margin-top: 10px;
   }
   &__paragraph-1 {
+    width: 70%;
     margin: 5rem 9rem;
     text-align: center;
     font-family: 'S-Core Dream';
@@ -46,7 +49,7 @@
     }
   }
   &__img-1 {
-    width: 1240px;
+    width: 96%;
     height: 200px;
     border: 1px solid #cccccc;
     img {
@@ -99,5 +102,20 @@
     text-align: center;
     background-color: #F9F9F9;
     margin-bottom: 75px ;
+  }
+}
+@media screen and (max-width: 600px) {
+  .intro-content {
+    &__img-1 {
+      img {
+        margin: 0 auto;
+        width: 90%;
+        padding-top: 15%;
+        padding-left: 10%;
+      }
+    }
+    &__paragraph-5 {
+      width: 96%;
+    }
   }
 }
