@@ -1,6 +1,5 @@
 @import '../../common/sass/variables';
 
-
 .header {
   display: flex;
   align-items: center;
@@ -15,7 +14,16 @@
   gap: 5rem;
   z-index: 999;
   min-height: 100px;
-
+  .header-right__card {
+    .active {
+      .card-header {
+        font-size: 16px;
+        font-family: 'Noto Sans KR';
+        font-weight: bold;
+        color: #0066c1;
+      }
+    }
+  }
 
   .header-left {
     .header-logo {
@@ -31,7 +39,7 @@
     text-align: center;
     .card-header {
       text-align: center;
-      color: $color-black;
+      color: black;
       font-family: 'Noto Sans KR';
     }
   }
@@ -47,7 +55,6 @@
     align-items: flex-start;
 
     .header-left {
-      
       padding-left: 25px;
       .header-logo {
         image {
@@ -61,7 +68,7 @@
       .card-header {
         // width: 100px;
         height: 50px;
-        color: black ;
+        color: black;
       }
     }
     .icon-nav-bar {
@@ -81,12 +88,18 @@
   .header.show {
     background-color: $color-white !important;
     box-shadow: 0 0 20px 0 rgb(206, 205, 205) !important;
-    .card-header{
-
+    .card-header {
       color: $color-black !important;
     }
+    .active {
+      .card-header {
+        font-size: 16px;
+        font-family: 'Noto Sans KR';
+        font-weight: bold;
+        color: #0066c1 !important;
+      }
+    }
   }
-
 }
 .close-icon {
   svg {
