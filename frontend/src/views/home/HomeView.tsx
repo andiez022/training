@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import './HomeView.scss';
 import { useQuery } from '@tanstack/react-query';
-import { Header } from '../header/Header';
-import { Footer } from '../footer/Footer';
-import Icon, { ICONS, IconSize } from '../../components/SVG/Icon';
+import React, { useEffect, useState } from 'react';
 import banner1 from '../../common/assets/images/home-1.png';
-import banner2 from '../../common/assets/images/home-2.png';
-import banner3 from '../../common/assets/images/home-3.png';
 import banner1x2 from '../../common/assets/images/home-1@2x.png';
+import banner2 from '../../common/assets/images/home-2.png';
 import banner2x2 from '../../common/assets/images/home-2@2x.png';
+import banner3 from '../../common/assets/images/home-3.png';
 import banner3x2 from '../../common/assets/images/home-3@2x.png';
 import Card from '../../components/Card/Card';
+import { reformatDate } from '../../components/FormatDate/FormatDate';
+import Icon, { ICONS, IconSize } from '../../components/SVG/Icon';
 import api from '../../services/apiServices';
 import { DataItem } from '../../services/types/common';
-import { reformatDate } from '../../components/FormatDate/FormatDate';
+import { Footer } from '../footer/Footer';
+import { Header } from '../header/Header';
+import './HomeView.scss';
 
 const Home: React.FC = () => {
   const searchBy = 'title';
@@ -93,7 +93,7 @@ const Home: React.FC = () => {
   }, [activeBanner]);
 
   return (
-    <div>
+    <div className="home-container">
       <div className={`home-header ${transparent ? 'transparent' : 'nav-fade-in'}`}>
         <Header />
       </div>
