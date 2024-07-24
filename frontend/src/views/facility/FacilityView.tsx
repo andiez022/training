@@ -5,8 +5,6 @@ import { Footer } from '../footer/Footer';
 
 import facilityImg from '../../common/assets/images/facility-img.png';
 import facilityImgx2 from '../../common/assets/images/facility-img@2x.png';
-// import facilityMap from '../../common/assets/images/facility-map.png';
-// import facilityMapx2 from '../../common/assets/images/facility-map@2x.png';
 import facilityIcon from '../../common/assets/images/icon-facility.png';
 import facilityIconx2 from '../../common/assets/images/icon-facility@2x.png';
 import { ReactComponent as FacilityMap } from '../../components/SVG/map/map.svg';
@@ -36,10 +34,6 @@ const Facility = () => {
           <div className="facility-container__body-content">
             <div className="facility-container__body-content-left">
               <p className="view-text">부산 전체보기</p>
-              {/* <picture>
-                <source media="(min-width: 1921px)" srcSet={facilityMapx2} />
-                <img src={facilityMap} alt="home1" />
-              </picture> */}
               <div className="map-svg">
                 <FacilityMap />
               </div>

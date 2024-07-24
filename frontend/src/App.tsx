@@ -19,6 +19,7 @@ const ContentView = lazy(() => import('./views/content/ContentView'));
 const LabView = lazy(() => import('./views/lab/LabView'));
 const CampainView = lazy(() => import('./views/campain/CampainView'));
 const FreeBoardView = lazy(() => import('./views/freeboard/FreeBoardView'));
+const BoardCreate = lazy(() => import('./views/freeboard/BoardCreate'));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -45,7 +46,7 @@ const App: React.FC = () => {
               <div className="container">
                 <Routes>
                   <Route path="/login" element={<PrivateRoute guards={[unAuthGuard]} element={<div>login</div>} />} />
-                  <Route path="/" element={<PrivateRoute guards={[]} element={<HomeView />} />} />
+                  <Route path="/home" element={<PrivateRoute guards={[]} element={<HomeView />} />} />
                   <Route path="/introduction" element={<PrivateRoute guards={[]} element={<IntroductionView />} />} />
                   <Route path="/announcement" element={<PrivateRoute guards={[]} element={<AnnouncementView />} />} />
                   <Route path="/facility" element={<PrivateRoute guards={[]} element={<FacilityView />} />} />
@@ -53,6 +54,7 @@ const App: React.FC = () => {
                   <Route path="/living-lab" element={<PrivateRoute guards={[]} element={<LabView />} />} />
                   <Route path="/campain" element={<PrivateRoute guards={[]} element={<CampainView />} />} />
                   <Route path="/free-board" element={<PrivateRoute guards={[]} element={<FreeBoardView />} />} />
+                  <Route path="/free-board/create" element={<PrivateRoute guards={[]} element={<BoardCreate />} />} />
                 </Routes>
               </div>
             </BrowserRouter>

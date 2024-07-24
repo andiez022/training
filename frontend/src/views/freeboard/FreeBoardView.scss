@@ -171,6 +171,26 @@
   }
 }
 
+.pagination-add {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  .add-new-button {
+    width: 105px;
+    height: 40px;
+    background: transparent linear-gradient(90deg, #0066c1 0%, #009fe5 100%) 0% 0% no-repeat padding-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+     p{
+      color: #fff;
+      font-size: 14px;
+      font-family: 'Noto Sans KR';
+      font-weight: 500;
+     }
+  }
+}
+
 @media screen and (max-width: 600px) {
   .board-header {
     .board {
@@ -229,4 +249,15 @@
       }
     }
   }
+  .pagination-add {
+    display: block;
+  }
 }
+
+// .pagination {
+//   position: relative;
+// }
+// .add-new-button {
+//   position: absolute;
+//   top: 60;
+// }

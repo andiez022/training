@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './LabView.scss';
 import { useQuery } from '@tanstack/react-query';
 import { Header } from '../header/Header';
@@ -12,21 +12,38 @@ import labIconx2 from '../../common/assets/images/icon-living-lab (2).png';
 import api from '../../services/apiServices';
 import { DataItem } from '../../services/types/common';
 import { reformatDate } from '../../components/FormatDate/FormatDate';
+import Pagination from '../../components/Pagination/Pagination';
 
 const Lab = () => {
-  const searchBy = 'title';
-  const searchValue = '';
-  const page = 0;
-  const pageSize = 10;
+  const [currentPage, setCurrentPage] = useState(0);
+  const [postsPerPage] = useState(10);
+  const [searchByData, setSearchByData] = useState('title');
+  const [searchValueData, setSearchValueData] = useState('');
 
-  const { data: labResponse } = useQuery(['annDataShort', searchBy, searchValue, page, pageSize], () =>
-    api.data.fetchDataList('content', {
+  const searchBy = searchByData;
+  const searchValue = searchValueData;
+  const page = currentPage;
+  const pageSize = postsPerPage;
+
+  const { data: labResponse } = useQuery(['labDataShort', searchBy, searchValue, page, pageSize], () =>
+    api.data.fetchDataList('living-lab', {
       searchBy,
       searchValue,
       page,
       pageSize,
     }),
   );
+  const [inputValue, setInputValue] = useState('');
+
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSearchByData(e.target.value);
+  };
+  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
+  const handleSearch = () => {
+    setSearchValueData(inputValue);
+  };
   return (
     <>
       <div className="lab-header">
@@ -49,16 +66,16 @@ const Lab = () => {
             <p className="text">리빙랩</p>
             <div className="lab-container__body-top-right">
               <div className="box1">
-                <select className="box1-select" name="filter">
+                <select className="box1-select" name="filter" onChange={handleChange}>
                   <option value="title">제목</option>
-                  <option value="writer">작성자</option>
+                  <option value="author">작성자</option>
                 </select>
               </div>
               <div className="box23">
                 <div className="box2">
-                  <input type="text" className="box2-input" placeholder="리빙랩 검색" />
+                  <input type="text" className="box2-input" placeholder="리빙랩 검색" onChange={handleChangeInput} />
                 </div>
-                <div className="box3">
+                <div className="box3" onClick={handleSearch}>
                   <Icon className="icon-search-glass" component={ICONS.SEARCH_GLASS} size={IconSize.XL} />
                   <p className="box3-text">검색</p>
                 </div>
@@ -83,15 +100,25 @@ const Lab = () => {
                   </th>
                 </tr>
               </thead>
-              {labResponse?.list.map((item: DataItem, index: number) => (
-                <tr key={item.id}>
-                  <td>{index + 1}</td>
-                  <td className="title-data">{item.title}</td>
-                  <td>{item.author}</td>
-                  <td>{reformatDate(item.created_at)}</td>
-                </tr>
-              ))}
+              {labResponse?.total !== 0 ? (
+                labResponse?.list.map((item: DataItem, index: number) => (
+                  <tr key={item.id}>
+                    <td>{index + 1}</td>
+                    <td className="title-data">{item.title}</td>
+                    <td>{item.author}</td>
+                    <td>{reformatDate(item.created_at)}</td>
+                  </tr>
+                ))
+              ) : (
+                <div style={{ width: '70vw', textAlign: 'center', marginTop: '50px' }}>현재 사용 가능한 데이터가 없습니다.</div>
+              )}
             </table>
+            <Pagination
+              totalPosts={labResponse?.total ?? 0}
+              postsPerPage={postsPerPage}
+              setCurrentPage={setCurrentPage}
+              currentPage={currentPage}
+            />
           </div>
         </div>
       </div>

@@ -15,6 +15,7 @@ export default class DataService {
   ) {
     const apiSearchParam = {
       search_by: searchOptions.searchBy,
+      search_value: searchOptions.searchValue,
       page: searchOptions.page,
       page_size: searchOptions.pageSize,
       user_id: searchOptions.userID,

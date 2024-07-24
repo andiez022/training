@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Header } from '../header/Header';
 import { Footer } from '../footer/Footer';
@@ -10,14 +10,20 @@ import CampainIcon from '../../common/assets/images/icon-campain (1).png';
 import CampainIconx2 from '../../common/assets/images/icon-campain (2).png';
 import api from '../../services/apiServices';
 import { DataItem } from '../../services/types/common';
+import Pagination from '../../components/Pagination/Pagination';
 
 const CampainView = () => {
-  const searchBy = 'title';
-  const searchValue = '';
-  const page = 0;
-  const pageSize = 12;
+  const [currentPage, setCurrentPage] = useState(0);
+  const [postsPerPage] = useState(12);
+  const [searchByData, setSearchByData] = useState('title');
+  const [searchValueData, setSearchValueData] = useState('');
 
-  const { data: campaignResponse } = useQuery(['annDataShort', searchBy, searchValue, page, pageSize], () =>
+  const searchBy = searchByData;
+  const searchValue = searchValueData;
+  const page = currentPage;
+  const pageSize = postsPerPage;
+
+  const { data: campaignResponse } = useQuery(['campaignDataShort', searchBy, searchValue, page, pageSize], () =>
     api.data.fetchDataList('campaign', {
       searchBy,
       searchValue,
@@ -25,6 +31,18 @@ const CampainView = () => {
       pageSize,
     }),
   );
+
+  const [inputValue, setInputValue] = useState('');
+
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSearchByData(e.target.value);
+  };
+  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
+  const handleSearch = () => {
+    setSearchValueData(inputValue);
+  };
   return (
     <>
       <div className="campain-header">
@@ -47,16 +65,15 @@ const CampainView = () => {
             <p className="text">캠페인</p>
             <div className="campain-container__body-top-right">
               <div className="box1">
-                <select className="box1-select" name="filter">
+                <select className="box1-select" name="filter" onChange={handleChange}>
                   <option value="title">제목</option>
-                  {/* <option value="writer">작성자</option> */}
                 </select>
               </div>
               <div className="box23">
                 <div className="box2">
-                  <input type="text" className="box2-input" placeholder="리빙랩 검색" />
+                  <input type="text" className="box2-input" placeholder="리빙랩 검색" onChange={handleChangeInput} />
                 </div>
-                <div className="box3">
+                <div className="box3" onClick={handleSearch}>
                   <Icon className="icon-search-glass" component={ICONS.SEARCH_GLASS} size={IconSize.XL} />
                   <p className="box3-text">검색</p>
                 </div>
@@ -64,15 +81,25 @@ const CampainView = () => {
             </div>
           </div>
           <div className="campain-container__body-content grid-cols-4 grid-cols-3 grid-cols-2">
-            {campaignResponse?.list.map((item: DataItem) => (
-              <div className="campain-container__body-content__item" key={item.id}>
-                <div className="campain-container__body-content__item-img">
-                  <img src={item.image} alt="item-img" />
+            {campaignResponse?.total !== 0 ? (
+              campaignResponse?.list.map((item: DataItem) => (
+                <div className="campain-container__body-content__item" key={item.id}>
+                  <div className="campain-container__body-content__item-img">
+                    <img src={item.image} alt="item-img" />
+                  </div>
+                  <div className="campain-container__body-content__item-title">{item.title}</div>
                 </div>
-                <div className="campain-container__body-content__item-title">{item.title}</div>
-              </div>
-            ))}
+              ))
+            ) : (
+              <div style={{ width: '70vw', textAlign: 'center', marginTop: '50px' }}>현재 캠페인이 없습니다.</div>
+            )}
           </div>
+          <Pagination
+            totalPosts={campaignResponse?.total ?? 0}
+            postsPerPage={postsPerPage}
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+          />
         </div>
       </div>
       <div className="campain-footer">

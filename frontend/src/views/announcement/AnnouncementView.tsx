@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Header } from '../header/Header';
 import { Footer } from '../footer/Footer';
@@ -12,12 +12,18 @@ import ancmIconx2 from '../../common/assets/images/icon-announcement@2x.png';
 import { DataItem } from '../../services/types/common';
 import api from '../../services/apiServices';
 import { reformatDate } from '../../components/FormatDate/FormatDate';
+import Pagination from '../../components/Pagination/Pagination';
 
 const Announcement = () => {
-  const searchBy = 'title';
-  const searchValue = '';
-  const page = 0;
-  const pageSize = 10;
+  const [currentPage, setCurrentPage] = useState(0);
+  const [postsPerPage, setPostsPerPage] = useState(10);
+  const [searchByData, setSearchByData] = useState('title');
+  const [searchValueData, setSearchValueData] = useState('');
+
+  const searchBy = searchByData;
+  const searchValue = searchValueData;
+  const page = currentPage;
+  const pageSize = postsPerPage;
 
   const { data: annResponse } = useQuery(['annDataShort', searchBy, searchValue, page, pageSize], () =>
     api.data.fetchDataList('notice', {
@@ -27,14 +33,17 @@ const Announcement = () => {
       pageSize,
     }),
   );
-  // function reformatDate(inputDate: string): string {
-  //   const date = new Date(inputDate);
-  //   const day = String(date.getDate()).padStart(2, '0');
-  //   const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-  //   const year = date.getFullYear();
+  const [inputValue, setInputValue] = useState('');
 
-  //   return `${day}-${month}-${year}`;
-  // }
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSearchByData(e.target.value);
+  };
+  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
+  const handleSearch = () => {
+    setSearchValueData(inputValue);
+  };
   return (
     <div>
       <div className="announcement-header">
@@ -57,16 +66,16 @@ const Announcement = () => {
             <p className="text">공지사항</p>
             <div className="announcement-content__body-top-right">
               <div className="box1">
-                <select className="box1-select" name="filter">
+                <select className="box1-select" name="filter" onChange={handleChange}>
                   <option value="title">제목</option>
-                  <option value="writer">작성자</option>
+                  <option value="author">작성자</option>
                 </select>
               </div>
               <div className="box23">
                 <div className="box2">
-                  <input type="text" className="box2-input" placeholder="공지사항 검색" />
+                  <input type="text" className="box2-input" placeholder="공지사항 검색" onChange={handleChangeInput} />
                 </div>
-                <div className="box3">
+                <div className="box3" onClick={handleSearch}>
                   <Icon className="icon-search-glass" component={ICONS.SEARCH_GLASS} size={IconSize.XL} />
                   <p className="box3-text">검색</p>
                 </div>
@@ -89,16 +98,25 @@ const Announcement = () => {
                   <div className="date">작성일</div>
                 </th>
               </thead>
-
-              {annResponse?.list.map((item: DataItem, index: number) => (
-                <tr className="table-data" key={item.id}>
-                  <td>{index + 1}</td>
-                  <td>{item.title}</td>
-                  <td>{item.author}</td>
-                  <td>{reformatDate(item.created_at)}</td>
-                </tr>
-              ))}
+              {annResponse?.total !== 0 ? (
+                annResponse?.list.map((item: DataItem, index: number) => (
+                  <tr className="table-data" key={item.id}>
+                    <td>{index + 1}</td>
+                    <td>{item.title}</td>
+                    <td>{item.author}</td>
+                    <td>{reformatDate(item.created_at)}</td>
+                  </tr>
+                ))
+              ) : (
+                <div style={{ width: '70vw', textAlign: 'center', marginTop: '50px' }}>현재 사용 가능한 데이터가 없습니다.</div>
+              )}
             </table>
+            <Pagination
+              totalPosts={annResponse?.total ?? 0}
+              postsPerPage={postsPerPage}
+              setCurrentPage={setCurrentPage}
+              currentPage={currentPage}
+            />
           </div>
         </div>
       </div>

@@ -147,7 +147,7 @@ const Home: React.FC = () => {
                     <div className="dot-list" />
                     <p>{item.title}</p>
                   </div>
-                  <Icon className="icon-plus" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
+                  <Icon className="icon-plus" component={ICONS.ARROW_RIGHT2} size={IconSize.SM} />
                 </li>
               ))}
             </ul>
@@ -168,7 +168,7 @@ const Home: React.FC = () => {
                     <div className="dot-list" />
                     <p>{item.title}</p>
                   </div>
-                  <Icon className="icon-plus" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
+                  <Icon className="icon-plus" component={ICONS.ARROW_RIGHT2} size={IconSize.SM} />
                 </li>
               ))}
             </ul>
@@ -189,7 +189,7 @@ const Home: React.FC = () => {
                     <div className="dot-list" />
                     <p>{item.title}</p>
                   </div>
-                  <Icon className="icon-plus" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
+                  <Icon className="icon-plus" component={ICONS.ARROW_RIGHT2} size={IconSize.SM} />
                 </li>
               ))}
             </ul>
@@ -210,7 +210,7 @@ const Home: React.FC = () => {
                     <div className="dot-list" />
                     <p>{item.title}</p>
                   </div>
-                  <Icon className="icon-plus" component={ICONS.ARROW_RIGHT} size={IconSize.SM} />
+                  <Icon className="icon-plus" component={ICONS.ARROW_RIGHT2} size={IconSize.SM} />
                 </li>
               ))}
             </ul>

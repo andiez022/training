@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './ContentView.scss';
 import { useQuery } from '@tanstack/react-query';
 
@@ -12,14 +12,18 @@ import api from '../../services/apiServices';
 import { DataItem } from '../../services/types/common';
 import { reformatDate } from '../../components/FormatDate/FormatDate';
 import { formatVideoUrl } from './utils';
+import Pagination from '../../components/Pagination/Pagination';
 
 const Content = () => {
+  const [currentPage, setCurrentPage] = useState(0);
+  const [postsPerPage, setPostsPerPage] = useState(10);
+
   const searchBy = 'title';
   const searchValue = '';
-  const page = 0;
-  const pageSize = 10;
+  const page = currentPage;
+  const pageSize = postsPerPage;
 
-  const { data: contentResponse } = useQuery(['annDataShort', searchBy, searchValue, page, pageSize], () =>
+  const { data: contentResponse } = useQuery(['contentDataShort', searchBy, searchValue, page, pageSize], () =>
     api.data.fetchDataList('content', {
       searchBy,
       searchValue,
@@ -60,6 +64,12 @@ const Content = () => {
                 </div>
               </div>
             ))}
+            <Pagination
+              totalPosts={contentResponse?.total ?? 0}
+              postsPerPage={postsPerPage}
+              setCurrentPage={setCurrentPage}
+              currentPage={currentPage}
+            />
           </div>
         </div>
       </div>
