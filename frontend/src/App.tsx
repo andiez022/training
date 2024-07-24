@@ -46,7 +46,7 @@ const App: React.FC = () => {
               <div className="container">
                 <Routes>
                   <Route path="/login" element={<PrivateRoute guards={[unAuthGuard]} element={<div>login</div>} />} />
-                  <Route path="/home" element={<PrivateRoute guards={[]} element={<HomeView />} />} />
+                  <Route path="/" element={<PrivateRoute guards={[]} element={<HomeView />} />} />
                   <Route path="/introduction" element={<PrivateRoute guards={[]} element={<IntroductionView />} />} />
                   <Route path="/announcement" element={<PrivateRoute guards={[]} element={<AnnouncementView />} />} />
                   <Route path="/facility" element={<PrivateRoute guards={[]} element={<FacilityView />} />} />

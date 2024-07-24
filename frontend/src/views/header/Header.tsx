@@ -10,7 +10,6 @@ export const Header: React.FC = () => {
   const handleOpenNav = () => {
     setShowNavRes(!showNavRes);
   };
-  // console.log(showNavRes);
 
   return (
     <div className={`header ${showNavRes ? 'show' : ''}`}>
@@ -30,7 +29,7 @@ export const Header: React.FC = () => {
           )}
         </div>
         <div className={`header-right__card ${showNavRes ? 'show' : ''}`}>
-          <NavLink to="/home" className="home">
+          <NavLink to="/" className="home">
             <CardHeader title="홈" />
           </NavLink>
 
