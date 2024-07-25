@@ -53,6 +53,7 @@
   &__body {
     padding-left: 15vw;
     padding-right: 15vw;
+
     &-title {
       color: transparent;
       background-clip: text;
@@ -64,14 +65,17 @@
       font-weight: 900;
     }
     &-content {
+      width: 70vw;
       margin-top: 50px;
       display: flex;
       justify-content: space-between;
       margin-bottom: 100px;
+      gap: 10%;
       &-left {
-        width: 26rem;
-        height: 25rem;
+        width: 50%;
+        // height: 25rem;
         .map-svg {
+          // width: 80%;
           svg {
             position: relative;
             width: 100%;
@@ -104,21 +108,24 @@
       }
       &-right {
         // margin-left: 70px;
-        height: 24rem;
+        width: 50%;
+        // height: 24rem;
         .colection-spot-text {
           font-size: 18px;
           font-family: 'S-Core Dream';
           font-weight: 700;
           color: #202020;
+        
           span {
             color: #0066c1;
           }
         }
         .colection-spot-items {
+          // width: 80%;
           margin-top: 16px;
           border: 1px solid #d9d9d9;
-          height: 93%;
-          width: 370px;
+          min-height: 50%;
+          // width: 370px;
           overflow-y: auto;
           scrollbar-width: thin;
 

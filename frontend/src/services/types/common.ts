@@ -52,4 +52,5 @@ export interface DataItem {
   video: string;
   description: string;
   image?: string;
+  password: string;
 }

@@ -103,7 +103,7 @@ const Lab = () => {
               {labResponse?.total !== 0 ? (
                 labResponse?.list.map((item: DataItem, index: number) => (
                   <tr key={item.id}>
-                    <td>{index + 1}</td>
+                    <td>{page * pageSize + index + 1}</td>
                     <td className="title-data">{item.title}</td>
                     <td>{item.author}</td>
                     <td>{reformatDate(item.created_at)}</td>

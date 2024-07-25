@@ -101,7 +101,7 @@ const Announcement = () => {
               {annResponse?.total !== 0 ? (
                 annResponse?.list.map((item: DataItem, index: number) => (
                   <tr className="table-data" key={item.id}>
-                    <td>{index + 1}</td>
+                    <td>{page * pageSize + index + 1}</td>
                     <td>{item.title}</td>
                     <td>{item.author}</td>
                     <td>{reformatDate(item.created_at)}</td>
