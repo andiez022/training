@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import './FreeBoardView.scss';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { Header } from '../header/Header';
 import { Footer } from '../footer/Footer';
 
@@ -27,13 +28,30 @@ const FreeBoardView = () => {
   const page = currentPage;
   const pageSize = postsPerPage;
 
-  const { data: boardResponse } = useQuery(['boardDataShort', searchBy, searchValue, page, pageSize], () =>
-    api.data.fetchDataList('free-board', {
-      searchBy,
-      searchValue,
-      page,
-      pageSize,
-    }),
+  const { data: boardResponse } = useQuery(
+    ['boardDataShort', searchBy, searchValue, page, pageSize],
+    () =>
+      api.data.fetchDataList('free-board', {
+        searchBy,
+        searchValue,
+        page,
+        pageSize,
+      }),
+    {
+      onSettled: () => {
+        toast.dismiss();
+      },
+      onError: () => {
+        toast.error('An error occurred while fetching data.', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+      },
+    },
   );
 
   const [inputValue, setInputValue] = useState('');

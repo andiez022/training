@@ -38,7 +38,6 @@ export default class DataService {
       any: [];
     },
   ) {
-    const apiUrl = `${process.env.REACT_APP_API_ENDPOINT}/${pageType}`;
     try {
       // const axiosConfig = {
       //   headers: {
@@ -47,22 +46,23 @@ export default class DataService {
       //   },
       // };
 
+      const apiUrl = `${process.env.REACT_APP_API_ENDPOINT}/${pageType}`;
       const request = await this.axios.post(apiUrl, data);
+
       const response = await request.data;
       console.log(response);
       return {
         data: response,
-        // successMsg: 'Task is successfully added',
-        // error: null,
+        successMsg: '성공적으로 생성했습니다.',
+        error: null,
       };
     } catch (error) {
       console.error('Error fetching data:', error);
-
-      // return {
-      //   data: null,
-      //   successMsg: null,
-      //   error: 'Cannot add',
-      // };
+      return {
+        data: null,
+        successMsg: null,
+        error: 'Cannot add',
+      };
     }
   }
 }

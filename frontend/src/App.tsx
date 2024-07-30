@@ -31,7 +31,7 @@ const queryClient = new QueryClient({
 
 const App: React.FC = () => {
   useEffect(() => {
-    AOS.init({ duration: 1000, easing: 'ease-out-cubic' });
+    AOS.init({ duration: 1000, easing: 'ease-out' });
     AOS.refresh();
   }, []);
   console.log('start');

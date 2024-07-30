@@ -1,6 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Editor } from '@tinymce/tinymce-react';
@@ -17,14 +19,47 @@ interface FormValues {
   content: string;
 }
 
+// backshadow variants
+const backVariants = {
+  hiden: {
+    opacity: 0,
+  },
+  visible: {
+    opacity: 1,
+    transition: {
+      duration: 0.5,
+    },
+  },
+};
+// modal variant
+const modalVariants = {
+  hiden: {
+    scale: 0,
+  },
+  visible: {
+    scale: 1,
+    transition: {
+      duration: 0.5,
+    },
+  },
+};
 const BoardCreate = () => {
   const [loading, setLoading] = useState(true);
-
+  const navigate = useNavigate();
   // ? add data
   const createUserData = useMutation((values: any) => api.data.addData('free-board', values), {
-    onSuccess: () => {
-      window.location.assign('/board');
+    onSuccess: (res) => {
+      toast.success(`${res?.successMsg}`, {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      navigate('/free-board');
     },
+    // onSettled: (res) => {},
   });
   // const handleEditorChange = (content: string, editor: any) => {
   //   console.log('Content was updated:', content);
@@ -56,7 +91,7 @@ const BoardCreate = () => {
       content: Yup.string().required('입력하세요'),
     }),
     onSubmit: (values) => {
-      createUserData(values);
+      createUserData.mutate(values);
     },
   });
 
@@ -144,7 +179,11 @@ const BoardCreate = () => {
                 }}
                 onEditorChange={handleEditorChange}
               />
-              {formik.errors.content && formik.touched.content && <p className="warning">{formik.errors.content}</p>}
+              {formik.errors.content && formik.touched.content && (
+                <p style={{ marginTop: '10px' }} className="warning">
+                  {formik.errors.content}
+                </p>
+              )}
             </div>
           </div>
           <div className="board-create-container__input__button">

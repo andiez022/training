@@ -110,12 +110,14 @@
             height: 40px;
             border: 1px solid #c0c0c0;
             background-image: linear-gradient(to right, #0066c1, #04a1e6);
+
             &-text {
-              line-height: 40px;
               color: #ffffff;
               font-size: 14px;
               font-family: 'S-Core Dream';
               font-weight: 300;
+              width: 70%;
+              display: inline;
             }
           }
         }
