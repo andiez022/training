@@ -32,6 +32,18 @@ export default class DataService {
     }
   }
 
+  async fetchDataById(pageType: string, itemId: string) {
+    const apiUrl = `${process.env.REACT_APP_API_ENDPOINT}/${pageType}/${itemId}`;
+    try {
+      const request = await this.axios.get(apiUrl);
+      const response = await request.data;
+      return response;
+    } catch (error) {
+      console.error('Error fetching data by ID:', error);
+      throw error;
+    }
+  }
+
   async addData(
     pageType: string,
     data: {

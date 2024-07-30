@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 import { Header } from '../header/Header';
 import { Footer } from '../footer/Footer';
 import './CampainView.scss';
@@ -43,6 +44,10 @@ const CampainView = () => {
   const handleSearch = () => {
     setSearchValueData(inputValue);
   };
+  const navigate = useNavigate();
+  const goToItem = (pageType: string, itemId: string) => {
+    navigate(`/${pageType}/${itemId}`);
+  };
   return (
     <>
       <div className="campain-header">
@@ -83,7 +88,7 @@ const CampainView = () => {
           <div className="campain-container__body-content grid-cols-4 grid-cols-3 grid-cols-2">
             {campaignResponse?.total !== 0 ? (
               campaignResponse?.list.map((item: DataItem) => (
-                <div className="campain-container__body-content__item" key={item.id}>
+                <div className="campain-container__body-content__item" key={item.id} onClick={() => goToItem('campain', item.id)}>
                   <div className="campain-container__body-content__item-img">
                     <img src={item.image} alt="item-img" />
                   </div>

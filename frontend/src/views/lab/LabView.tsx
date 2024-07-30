@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './LabView.scss';
 import { useQuery } from '@tanstack/react-query';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Header } from '../header/Header';
 import { Footer } from '../footer/Footer';
 import Icon, { ICONS, IconSize } from '../../components/SVG/Icon';
@@ -43,6 +44,11 @@ const Lab = () => {
   };
   const handleSearch = () => {
     setSearchValueData(inputValue);
+  };
+
+  const navigate = useNavigate();
+  const goToItem = (pageType: string, itemId: string) => {
+    navigate(`/${pageType}/${itemId}`);
   };
   return (
     <>
@@ -102,7 +108,7 @@ const Lab = () => {
               </thead>
               {labResponse?.total !== 0 ? (
                 labResponse?.list.map((item: DataItem, index: number) => (
-                  <tr key={item.id}>
+                  <tr key={item.id} onClick={() => goToItem('living-lab', item.id)}>
                     <td>{page * pageSize + index + 1}</td>
                     <td className="title-data">{item.title}</td>
                     <td>{item.author}</td>

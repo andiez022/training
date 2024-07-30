@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 import { Header } from '../header/Header';
 import { Footer } from '../footer/Footer';
 import './AnnouncementView.scss';
@@ -43,6 +44,11 @@ const Announcement = () => {
   };
   const handleSearch = () => {
     setSearchValueData(inputValue);
+  };
+
+  const navigate = useNavigate();
+  const goToItem = (pageType: string, itemId: string) => {
+    navigate(`/${pageType}/${itemId}`);
   };
   return (
     <div>
@@ -100,7 +106,7 @@ const Announcement = () => {
               </thead>
               {annResponse?.total !== 0 ? (
                 annResponse?.list.map((item: DataItem, index: number) => (
-                  <tr className="table-data" key={item.id}>
+                  <tr className="table-data" key={item.id} onClick={() => goToItem('announcement', item.id)}>
                     <td>{page * pageSize + index + 1}</td>
                     <td>{item.title}</td>
                     <td>{item.author}</td>

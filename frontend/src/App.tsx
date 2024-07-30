@@ -14,11 +14,15 @@ import store, { persistor } from './store';
 const HomeView = lazy(() => import('./views/home/HomeView'));
 const IntroductionView = lazy(() => import('./views/introduction/IntroductionView'));
 const AnnouncementView = lazy(() => import('./views/announcement/AnnouncementView'));
+const AnnouncementItem = lazy(() => import('./views/announcement/AnnouncementItem'));
 const FacilityView = lazy(() => import('./views/facility/FacilityView'));
 const ContentView = lazy(() => import('./views/content/ContentView'));
 const LabView = lazy(() => import('./views/lab/LabView'));
+const LabItem = lazy(() => import('./views/lab/LabItem'));
 const CampainView = lazy(() => import('./views/campain/CampainView'));
+const CampainItem = lazy(() => import('./views/campain/CampainItem'));
 const FreeBoardView = lazy(() => import('./views/freeboard/FreeBoardView'));
+const BoardItem = lazy(() => import('./views/freeboard/BoardItem'));
 const BoardCreate = lazy(() => import('./views/freeboard/BoardCreate'));
 
 const queryClient = new QueryClient({
@@ -49,11 +53,15 @@ const App: React.FC = () => {
                   <Route path="/" element={<PrivateRoute guards={[]} element={<HomeView />} />} />
                   <Route path="/introduction" element={<PrivateRoute guards={[]} element={<IntroductionView />} />} />
                   <Route path="/announcement" element={<PrivateRoute guards={[]} element={<AnnouncementView />} />} />
+                  <Route path="/announcement/:id" element={<PrivateRoute guards={[]} element={<AnnouncementItem />} />} />
                   <Route path="/facility" element={<PrivateRoute guards={[]} element={<FacilityView />} />} />
                   <Route path="/content" element={<PrivateRoute guards={[]} element={<ContentView />} />} />
                   <Route path="/living-lab" element={<PrivateRoute guards={[]} element={<LabView />} />} />
+                  <Route path="/living-lab/:id" element={<PrivateRoute guards={[]} element={<LabItem />} />} />
                   <Route path="/campain" element={<PrivateRoute guards={[]} element={<CampainView />} />} />
+                  <Route path="/campain/:id" element={<PrivateRoute guards={[]} element={<CampainItem />} />} />
                   <Route path="/free-board" element={<PrivateRoute guards={[]} element={<FreeBoardView />} />} />
+                  <Route path="/free-board/:id" element={<PrivateRoute guards={[]} element={<BoardItem />} />} />
                   <Route path="/free-board/create" element={<PrivateRoute guards={[]} element={<BoardCreate />} />} />
                 </Routes>
               </div>

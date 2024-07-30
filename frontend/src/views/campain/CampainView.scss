@@ -197,8 +197,102 @@
   }
 }
 
+.campain-item__container {
+  margin-top: 170px;
+  margin-left: 15vw;
+  margin-right: 15vw;
+  &-content {
+    display: flex;
+    &__img {
+      width: 75%;
+      img {
+        width: 100%;
+        object-fit: cover;
+      }
+    }
+    &__info {
+      margin-left: 10px;
+      width: 25%;
+      font-family: 'Noto Sans KR';
+      &-title {
+        background-color: rgb(212 233 252);
+        min-height: 50px;
+        font-size: 20px;
+        font-weight: bold;
+        line-height: 50px;
+        padding-left: 16px;
+        margin-bottom: 10px;
+        
+      }
+      &-author {
+        display: flex;
+        border-bottom: 1px solid #d3d3d3;
+        padding: 10px;
+        
+        h4 {
+          font-size: 15px;
+          width: 30%;
+          border-right: 1px solid #d3d3d3;
+        }
+        p {
+          padding-left: 8px;
+          font-size: 14px;
+          width: 70%;
+          min-height: 50px;
+        }
+      }
+      &-link {
+        padding: 10px;
+        display: flex;
+        border-bottom: 1px solid #d3d3d3;
+        h4 {
+          font-size: 15px;
+          width: 30%;
+          border-right: 1px solid #d3d3d3;
+        }
+        
+        a {
+          word-break: break-word;
+          min-height: 50px; 
+          padding-left: 8px;
+          font-size: 14px;
+          width: 70%;
+        }
+      }
+      &-content {
+        font-size: 18px;
+        font-weight: 400;
+        margin-top: 15px;
+        margin-left: 10px;
+        border-bottom: 1px solid #d3d3d3;
+        min-height: 100px;
+        word-break: break-word;
+
+      }
+    }
+  }
+  &-button {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 50px;
+    margin-bottom: 100px;
+    button {
+      width: 90px;
+      height: 44px;
+      color: #fff;
+      background-image: linear-gradient(90deg, #0066c1 , #009fe5 );
+      border: none;
+      font-size: 14px;
+    font-family: 'S-Core Dream';
+    font-weight: 300;
+    }
+  }
+}
+
 @media screen and (max-width: 600px) {
   .campain-container {
+    margin-left: 5vw;
+    margin-right: 5vw;
     &__img {
       &__text-overlay {
         p {
@@ -229,6 +323,19 @@
           margin-top: 10px;
         }
       }
+    }
+  }
+
+}
+@media screen and (max-width: 1200px) {
+  .campain-item__container-content {
+    display: block;
+    &__img {
+      width: 100%;
+    }
+    &__info {
+      width: 100%;
+      margin-left: 0;
     }
   }
 }

@@ -52,8 +52,8 @@
     }
   }
   &__body {
-    padding-left: 15vw;
-    padding-right: 15vw;
+    margin-left: 15vw;
+    margin-right: 15vw;
     h1 {
       color: transparent;
       background-clip: text;
@@ -71,8 +71,9 @@
         justify-content: space-between;
         align-items: center;
         margin-bottom: 20px;
+        width: 70vw;
         &-video {
-          width: 340px;
+          width: 35%;
           height: 200px;
           background-color: #eeeeee;
           border: none;
@@ -113,7 +114,9 @@
       display: block;
       &-info {
         margin-left: 0;
-        
+      }
+      &-video {
+        width: 100%;
       }
     }
   }

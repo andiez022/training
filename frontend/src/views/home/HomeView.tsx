@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import banner1 from '../../common/assets/images/home-1.png';
 import banner1x2 from '../../common/assets/images/home-1@2x.png';
 import banner2 from '../../common/assets/images/home-2.png';
@@ -92,6 +93,10 @@ const Home: React.FC = () => {
     return () => clearInterval(time);
   }, [activeBanner]);
 
+  const navigate = useNavigate();
+  const goToItem = (pageType: string, itemId: string) => {
+    navigate(`${pageType}/${itemId}`);
+  };
   return (
     <div className="home-container">
       <div className={`home-header ${transparent ? 'transparent' : 'nav-fade-in'}`}>
@@ -120,13 +125,21 @@ const Home: React.FC = () => {
         <div data-aos="fade-up">
           <div className="notice-top">
             <h2>공지사항</h2>
-            <div className="home-icon-plus">
-              <Icon component={ICONS.PLUS} size={IconSize.LG} />
-            </div>
+            <Link to="/announcement">
+              <div className="home-icon-plus announcement">
+                <Icon component={ICONS.PLUS} size={IconSize.LG} />
+              </div>
+            </Link>
           </div>
           <div className="notice-container">
             {annResponse?.list.map((item: DataItem) => (
-              <Card key={item.id} title={item.title} content={item.content} date={reformatDate(item.created_at)} />
+              <Card
+                key={item.id}
+                title={item.title}
+                content={item.content}
+                date={reformatDate(item.created_at)}
+                onClick={() => goToItem('announcement', item.id)}
+              />
             ))}
           </div>
         </div>
@@ -135,14 +148,16 @@ const Home: React.FC = () => {
         <div className="home-highlight__content content" data-aos="fade-up">
           <div className="content-header">
             <h2>콘텐츠</h2>
-            <div className="home-icon-plus">
-              <Icon component={ICONS.PLUS} size={IconSize.LG} />
-            </div>
+            <Link to="/content">
+              <div className="home-icon-plus">
+                <Icon component={ICONS.PLUS} size={IconSize.LG} />
+              </div>
+            </Link>
           </div>
           <div className="content-list">
             <ul>
               {contentResponse?.list.map((item: DataItem) => (
-                <li key={item.id}>
+                <li key={item.id} onClick={() => navigate('content')}>
                   <div>
                     <div className="dot-list" />
                     <p>{item.title}</p>
@@ -156,14 +171,16 @@ const Home: React.FC = () => {
         <div className="home-highlight__content lab" data-aos="fade-up">
           <div className="content-header">
             <h2>리빙랩</h2>
-            <div className="home-icon-plus">
-              <Icon component={ICONS.PLUS} size={IconSize.LG} />
-            </div>
+            <Link to="/living-lab">
+              <div className="home-icon-plus">
+                <Icon component={ICONS.PLUS} size={IconSize.LG} />
+              </div>
+            </Link>
           </div>
           <div className="content-list">
             <ul>
               {labResponse?.list.map((item: DataItem) => (
-                <li key={item.id}>
+                <li key={item.id} onClick={() => goToItem('living-lab', item.id)}>
                   <div>
                     <div className="dot-list" />
                     <p>{item.title}</p>
@@ -177,14 +194,16 @@ const Home: React.FC = () => {
         <div className="home-highlight__content campaign" data-aos="fade-up">
           <div className="content-header">
             <h2>캠페인</h2>
-            <div className="home-icon-plus">
-              <Icon component={ICONS.PLUS} size={IconSize.LG} />
-            </div>
+            <Link to="campaign">
+              <div className="home-icon-plus">
+                <Icon component={ICONS.PLUS} size={IconSize.LG} />
+              </div>
+            </Link>
           </div>
           <div className="content-list">
             <ul>
               {campaignResponse?.list.map((item: DataItem) => (
-                <li key={item.id}>
+                <li key={item.id} onClick={() => goToItem('campain', item.id)}>
                   <div>
                     <div className="dot-list" />
                     <p>{item.title}</p>
@@ -198,14 +217,16 @@ const Home: React.FC = () => {
         <div className="home-highlight__content free-board" data-aos="fade-up">
           <div className="content-header">
             <h2>자유게시판</h2>
-            <div className="home-icon-plus">
-              <Icon component={ICONS.PLUS} size={IconSize.LG} />
-            </div>
+            <Link to="free-board">
+              <div className="home-icon-plus">
+                <Icon component={ICONS.PLUS} size={IconSize.LG} />
+              </div>
+            </Link>
           </div>
           <div className="content-list">
             <ul>
               {boardResponse?.list.map((item: DataItem) => (
-                <li key={item.id}>
+                <li key={item.id} onClick={() => goToItem('free-board', item.id)}>
                   <div>
                     <div className="dot-list" />
                     <p>{item.title}</p>

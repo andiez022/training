@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './FacilityView.scss';
 import { Header } from '../header/Header';
 import { Footer } from '../footer/Footer';
@@ -10,6 +10,8 @@ import facilityIconx2 from '../../common/assets/images/icon-facility@2x.png';
 import { ReactComponent as FacilityMap } from '../../components/SVG/map/map.svg';
 
 const Facility = () => {
+  const [area, setArea] = useState(false);
+
   return (
     <>
       <div className="facility-header">

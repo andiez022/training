@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { toast } from 'react-toastify';
+import { Bounce, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
@@ -49,6 +49,7 @@ const BoardCreate = () => {
   // ? add data
   const createUserData = useMutation((values: any) => api.data.addData('free-board', values), {
     onSuccess: (res) => {
+      navigate('/free-board');
       toast.success(`${res?.successMsg}`, {
         position: 'top-right',
         autoClose: 5000,
@@ -56,8 +57,10 @@ const BoardCreate = () => {
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
+        progress: undefined,
+        theme: 'light',
+        transition: Bounce,
       });
-      navigate('/free-board');
     },
     // onSettled: (res) => {},
   });

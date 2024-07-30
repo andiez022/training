@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import './FreeBoardView.scss';
 import { useQuery } from '@tanstack/react-query';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Header } from '../header/Header';
 import { Footer } from '../footer/Footer';
@@ -66,6 +66,10 @@ const FreeBoardView = () => {
     setSearchValueData(inputValue);
   };
 
+  const navigate = useNavigate();
+  const goToItem = (pageType: string, itemId: string) => {
+    navigate(`/${pageType}/${itemId}`);
+  };
   return (
     <>
       <div className="free-board-header">
@@ -124,7 +128,7 @@ const FreeBoardView = () => {
               </thead>
               {boardResponse?.total !== 0 ? (
                 boardResponse?.list.map((item: DataItem, index: number) => (
-                  <tr key={item.id}>
+                  <tr key={item.id} onClick={() => goToItem('free-board', item.id)}>
                     <td>{page * pageSize + index + 1}</td>
                     <td className="title-data">{item.title}</td>
                     <td>{item.author}</td>

@@ -1,6 +1,5 @@
-
-
-.free-board-container {
+.free-board-container,
+.board-item__container {
   margin-top: 100px;
 
   &__img {
@@ -131,6 +130,9 @@
         width: 60%;
       }
       table {
+        tr {
+          cursor: pointer;
+        }
         width: 100%;
         table-layout: fixed;
         border-collapse: collapse;
@@ -175,12 +177,109 @@
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-     p{
+    p {
       color: #fff;
       font-size: 14px;
       font-family: 'Noto Sans KR';
       font-weight: 500;
-     }
+    }
+  }
+}
+
+.board-item__container {
+  &__body {
+    // margin-top: 170px;
+    margin-bottom: 100px;
+    &__info {
+      font-family: 'S-Core Dream';
+      font-weight: 700;
+      &-title {
+        width: 100%;
+        height: 50px;
+        background-color: rgb(212 233 252);
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 50px;
+        padding-left: 20px;
+      }
+      &-authordate {
+        display: flex;
+        // justify-content: space-between;
+        width: 100%;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #d3d3d3;
+
+        &-author {
+          width: 40%;
+          display: flex;
+          justify-content: space-evenly;
+          h3 {
+            // width: 50%;
+            font-weight: 700;
+            font-size: 14px;
+            // padding: 0 20px;
+          }
+          p {
+            font-weight: 300;
+            font-size: 14px;
+            padding: 0 20px;
+            border-left: 1px solid #999999;
+          }
+        }
+        &-date {
+          width: 40%;
+          display: flex;
+          justify-content: space-evenly;
+          h3 {
+            // width: 50%;
+            font-weight: 700;
+            font-size: 14px;
+            padding: 0 20px;
+          }
+          p {
+            font-weight: 300;
+            font-size: 14px;
+            padding: 0 20px;
+            border-left: 1px solid #999999;
+          }
+        }
+      }
+      &-content {
+        font-size: 15px;
+        border-bottom: 1px solid #d3d3d3;
+        font-weight: 300;
+        padding: 4px 20px;
+      }
+    }
+  }
+  &__button {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 24px;
+    &-back {
+      cursor: pointer;
+      width: 90px;
+      font-size: 14px;
+      font-family: 'S-Core Dream';
+      font-weight: 300;
+      height: 44px;
+      color: #fff;
+      border: none;
+      background-image: linear-gradient(90deg, #0066c1, #009fe5);
+      margin-left: 10px;
+    }
+    &-next,
+    &-previous {
+      cursor: pointer;
+      font-size: 14px;
+      font-family: 'S-Core Dream';
+      font-weight: 300;
+      width: 90px;
+      height: 44px;
+      border: 1px solid rgb(217, 217, 217);
+      margin-left: 10px;
+    }
   }
 }
 
@@ -195,7 +294,7 @@
       }
     }
   }
-  
+
   .free-board-container {
     &__body {
       &-top {
