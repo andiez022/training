@@ -194,7 +194,7 @@ const Home: React.FC = () => {
         <div className="home-highlight__content campaign" data-aos="fade-up">
           <div className="content-header">
             <h2>캠페인</h2>
-            <Link to="campaign">
+            <Link to="campain">
               <div className="home-icon-plus">
                 <Icon component={ICONS.PLUS} size={IconSize.LG} />
               </div>
