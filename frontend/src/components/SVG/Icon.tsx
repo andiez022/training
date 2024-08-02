@@ -28,6 +28,9 @@ import { ReactComponent as SearchGlass } from './icons/search-glass.svg';
 import { ReactComponent as MetroMenu } from './icons/134216_menu_lines_hamburger_icon.svg';
 import { ReactComponent as CloseIcon } from './icons/211651_close_round_icon.svg';
 import { ReactComponent as PenIcon } from './icons/8665767_pen_icon.svg';
+import { ReactComponent as EyeIcon } from './icons/eye-icon.svg';
+import { ReactComponent as EyeOffIcon } from './icons/eye-off-icon.svg';
+import { ReactComponent as CheckRemember } from './icons/check-remember.svg';
 
 import './Icon.scss';
 
@@ -59,6 +62,9 @@ export const ICONS = {
   METRO_MENU: MetroMenu,
   CLOSE_ICON: CloseIcon,
   PEN_ICON: PenIcon,
+  EYE_ICON: EyeIcon,
+  EYE_OFF_ICON: EyeOffIcon,
+  CHECK_REMEMBER: CheckRemember,
 };
 
 export interface IconProps {

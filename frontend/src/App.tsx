@@ -24,6 +24,8 @@ const CampainItem = lazy(() => import('./views/campain/CampainItem'));
 const FreeBoardView = lazy(() => import('./views/freeboard/FreeBoardView'));
 const BoardItem = lazy(() => import('./views/freeboard/BoardItem'));
 const BoardCreate = lazy(() => import('./views/freeboard/BoardCreate'));
+const LoginView = lazy(() => import('./views/login/LoginView'));
+const RegisterView = lazy(() => import('./views/register/RegisterView'));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -49,7 +51,8 @@ const App: React.FC = () => {
               <LoadingView />
               <div className="container">
                 <Routes>
-                  <Route path="/login" element={<PrivateRoute guards={[unAuthGuard]} element={<div>login</div>} />} />
+                  <Route path="/login" element={<PrivateRoute guards={[unAuthGuard]} element={<LoginView />} />} />
+                  <Route path="/register" element={<PrivateRoute guards={[unAuthGuard]} element={<RegisterView />} />} />
                   <Route path="/" element={<PrivateRoute guards={[]} element={<HomeView />} />} />
                   <Route path="/introduction" element={<PrivateRoute guards={[]} element={<IntroductionView />} />} />
                   <Route path="/announcement" element={<PrivateRoute guards={[]} element={<AnnouncementView />} />} />

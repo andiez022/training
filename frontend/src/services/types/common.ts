@@ -29,18 +29,28 @@ export interface VerificationForm {
 }
 
 export interface SignUpForm {
-  firstName: string;
-  lastName: string;
-  email: string;
+  // firstName: string;
+  // lastName: string;
+  // email: string;
+  id: string,
   password: string;
-  confirmationPassword: string;
-  countryCode: string;
-  phone: string;
-  phoneCode?: string;
-  isAgree?: boolean;
-  subscribeNewsletter?: boolean;
+
+  // confirmationPassword: string;
+  // countryCode: string;
+  // phone: string;
+  // phoneCode?: string;
+  // isAgree?: boolean;
+  // subscribeNewsletter?: boolean;
 }
 
+export interface RegisterForm {
+  id: string,
+  password: string;
+  passwordVerify: string
+  name: string;
+  email: string;
+  phone: string;
+}
 
 export interface DataItem {
   id: string;

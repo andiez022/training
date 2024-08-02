@@ -1,0 +1,191 @@
+.register-header {
+  .header {
+    justify-content: flex-start;
+    background-image: linear-gradient(180deg, #0066c1, #0088e3);
+    .header-left {
+      margin-left: 120px;
+    }
+    .home-back {
+      display: block;
+    }
+    .header-right {
+      display: none;
+    }
+  }
+  .home-back {
+    color: #fff;
+    font-size: 14px;
+    position: relative;
+    right: 40px;
+  }
+}
+
+.register-container {
+  margin-top: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &__form {
+    margin-top: 100px;
+    margin-bottom: 50px;
+    border: 1px solid #dedddd;
+    width: 68vw;
+    h1 {
+      font-family: 'Noto Sans KR';
+      text-align: center;
+      font-size: 26px;
+      margin-top: 20px;
+      margin-bottom: 40px;
+    }
+    &-input {
+      display: flex;
+
+      &-id,
+      &-name,
+      &-email,
+      &-phone {
+        margin: 20px;
+        p {
+          font-weight: 600;
+
+          font-family: 'Noto Sans KR';
+          font-size: 16px;
+          margin-bottom: 10px;
+        }
+        input {
+          width: 100%;
+          border: 1px solid #dedddd;
+          height: 50px;
+          font-family: 'Noto Sans KR';
+          padding-left: 20px;
+          font-size: 16px;
+        }
+        ::placeholder {
+          color: #acacac;
+          font-size: 16px;
+        }
+      }
+      &-password,
+      &-password-verify {
+        margin: 20px;
+        p {
+          font-family: 'Noto Sans KR';
+          font-size: 16px;
+          margin-bottom: 10px;
+          font-weight: 600;
+        }
+        &__input {
+          position: relative;
+          input {
+            padding-block: 1px;
+            padding-inline: 2px;
+            padding-left: 20px;
+            width: 100%;
+            border: 1px solid #dedddd;
+            height: 50px;
+            font-family: 'Noto Sans KR';
+            padding-left: 20px;
+            font-size: 16px;
+          }
+          ::placeholder {
+            color: #acacac;
+            font-size: 16px;
+            letter-spacing: normal;
+          }
+        }
+        &__icon {
+          position: absolute;
+          top: 15px;
+          right: 10px;
+          .icon {
+            fill: black;
+          }
+        }
+      }
+    }
+    &-remember {
+      display: flex;
+      margin-left: 20px;
+      padding-bottom: 30px;
+      &__icon {
+        width: 30px;
+        height: 30px;
+        border: 1px solid #363636;
+        position: relative;
+        cursor: pointer;
+        .icon {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
+      }
+      p {
+        font-size: 15px;
+        font-family: 'Noto Sans KR';
+        font-weight: 600;
+        line-height: 30px;
+        padding-left: 10px;
+      }
+    }
+    &-button {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 30px;
+      &-submit {
+        height: 60px;
+        margin: 20px 20px 0;
+        background-image: linear-gradient(90deg, #0066c1, #009fe5);
+        border: none;
+        color: #fff;
+        font-family: 'Noto Sans KR';
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      &-register {
+        cursor: pointer;
+        margin: 8px 20px;
+        border: 1px solid #acacac;
+        height: 50px;
+        background-color: #f6f6f6;
+        font-family: 'Noto Sans KR';
+        font-size: 15px;
+        font-weight: 600;
+      }
+    }
+  }
+}
+input[type='password'] {
+  letter-spacing: 10px;
+}
+
+.warning {
+  color: rgb(248 113 113);
+  font-weight: 300 !important;
+  font-size: 14px !important;
+}
+
+.left,
+.right {
+  width: 50%;
+}
+
+@media screen and (max-width: 600px) {
+  .register-header {
+    .header {
+      .header-left {
+        margin-left: 20px;
+      }
+    }
+  }
+  .register-container__form {
+    &-input {
+      display: block;
+      .left,
+      .right {
+        width: 100%;
+      }
+    }
+  }
+}

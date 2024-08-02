@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import logoHeader from '../../common/assets/images/logo-header.svg';
 import CardHeader from '../../components/Card/components/CardHeader';
 import './Header.scss';
@@ -11,6 +11,7 @@ export const Header: React.FC = () => {
     setShowNavRes(!showNavRes);
   };
 
+  const navigate = useNavigate();
   return (
     <div className={`header ${showNavRes ? 'show' : ''}`}>
       <div className="header-left">
@@ -19,6 +20,9 @@ export const Header: React.FC = () => {
             <image xlinkHref={logoHeader} />
           </svg>
         </Link>
+      </div>
+      <div className="home-back" onClick={() => navigate('/')}>
+        [ 관리자 ]
       </div>
       <div className="header-right">
         <div className="close-icon icon-nav-bar" onClick={handleOpenNav}>
