@@ -1,5 +1,4 @@
 import { AxiosInstance } from 'axios';
-import { DataItem } from '../../types/common';
 
 export default class DataService {
   constructor(private axios: AxiosInstance) {}

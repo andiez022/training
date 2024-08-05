@@ -15,6 +15,7 @@ const HomeView = lazy(() => import('./views/home/HomeView'));
 const IntroductionView = lazy(() => import('./views/introduction/IntroductionView'));
 const AnnouncementView = lazy(() => import('./views/announcement/AnnouncementView'));
 const AnnouncementItem = lazy(() => import('./views/announcement/AnnouncementItem'));
+const AnnouncementCreate = lazy(() => import('./views/announcement/AnnCreate'));
 const FacilityView = lazy(() => import('./views/facility/FacilityView'));
 const ContentView = lazy(() => import('./views/content/ContentView'));
 const LabView = lazy(() => import('./views/lab/LabView'));
@@ -56,6 +57,7 @@ const App: React.FC = () => {
                   <Route path="/" element={<PrivateRoute guards={[]} element={<HomeView />} />} />
                   <Route path="/introduction" element={<PrivateRoute guards={[]} element={<IntroductionView />} />} />
                   <Route path="/announcement" element={<PrivateRoute guards={[]} element={<AnnouncementView />} />} />
+                  <Route path="/announcement/create" element={<PrivateRoute guards={[]} element={<AnnouncementCreate />} />} />
                   <Route path="/announcement/:id" element={<PrivateRoute guards={[]} element={<AnnouncementItem />} />} />
                   <Route path="/facility" element={<PrivateRoute guards={[]} element={<FacilityView />} />} />
                   <Route path="/content" element={<PrivateRoute guards={[]} element={<ContentView />} />} />

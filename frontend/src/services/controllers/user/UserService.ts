@@ -7,4 +7,13 @@ export default class UserService {
     const { data } = await this.axios.get('users/me');
     return data;
   };
+
+  login = async (username: string, password: string) => {
+    const request = await this.axios.post('user/login', {
+      username,
+      password,
+    });
+    const response = await request.data.user;
+    return response;
+  };
 }

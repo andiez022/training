@@ -7,8 +7,6 @@
 .home-header {
   position: relative;
   z-index: 9999;
-
-
 }
 
 .home-slide {
@@ -159,6 +157,24 @@
   .header {
     box-shadow: none;
     background-color: transparent;
+    background-image: none;
+    z-index: 9999;
+    .header-right__card {
+      .card-header {
+        color: #fff;
+      }
+    }
+    .icon-nav-bar,
+    .close-icon {
+      svg {
+        fill: #fff;
+      }
+    }
+  }
+  .header.admin {
+    box-shadow: none;
+    background-color: transparent;
+    background-image: none;
     z-index: 9999;
     .header-right__card {
       .card-header {
@@ -173,6 +189,8 @@
     }
   }
 }
+
+
 
 @keyframes navFadeIn {
   0% {

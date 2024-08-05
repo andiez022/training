@@ -2,15 +2,22 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
 import { Header } from '../header/Header';
 import { Footer } from '../footer/Footer';
 import './LoginView.scss';
 import Icon, { ICONS, IconSize } from '../../components/SVG/Icon';
 import hideShowPass from '../../common/utils/hideShowPass';
 import { SignUpForm } from '../../services/types/common';
+import api from '../../services/apiServices';
+import { storage } from '../../common/utils/storage';
+import { routes } from '../../common/utils/routes';
+import { loginSuccess } from '../../services/controllers/common/UserSlice';
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [show, setShow] = useState(false);
   const [remember, setRemember] = useState(true);
@@ -18,15 +25,36 @@ const Login = () => {
   // ? Formik
   const formik = useFormik<SignUpForm>({
     initialValues: {
-      id: '',
+      username: '',
       password: '',
     },
     validationSchema: Yup.object({
-      id: Yup.string().required('입력하세요'),
+      username: Yup.string().required('입력하세요'),
       password: Yup.string().required('입력하세요'),
     }),
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values: any) => {
+      // console.log(values);
+      const userService = api.user;
+
+      try {
+        const response = await userService.login(values.username, values.password);
+        storage.setToken(response.token);
+
+        dispatch(loginSuccess({ id: response.id, role: response.role, token: response.token }));
+        console.log(loginSuccess);
+
+        if (response.role === 'Normal') navigate('/lab');
+        else navigate(routes.DEFAULT);
+      } catch (error) {
+        toast.error('사용자를 찾을 수 없음', {
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: 'colored',
+        });
+      }
     },
   });
   return (
@@ -38,10 +66,16 @@ const Login = () => {
       <div className="login-container">
         <form onSubmit={formik.handleSubmit} className="login-container__form">
           <h1>로그인</h1>
-          <div className="login-container__form-id">
+          <div className="login-container__form-username">
             <p>아이디</p>
-            <input type="text" name="id" value={formik.values.id} onChange={formik.handleChange} placeholder="아이디를 입력하세요." />
-            {formik.errors.id && formik.touched.id && <p className="warning">{formik.errors.id}</p>}
+            <input
+              type="text"
+              name="username"
+              value={formik.values.username}
+              onChange={formik.handleChange}
+              placeholder="아이디를 입력하세요."
+            />
+            {formik.errors.username && formik.touched.username && <p className="warning">{formik.errors.username}</p>}
           </div>
           <div className="login-container__form-password">
             <p>비밀번호</p>
@@ -56,11 +90,11 @@ const Login = () => {
               />
               <div className="login-container__form-password__icon" onClick={() => hideShowPass({ password: 'password' })}>
                 {show ? (
-                  <div onClick={() => setShow(!show)}>
+                  <div onClick={() => setShow((preShow) => !preShow)}>
                     <Icon component={ICONS.EYE_ICON} size={IconSize.LG} />
                   </div>
                 ) : (
-                  <div onClick={() => setShow(!show)}>
+                  <div onClick={() => setShow((preShow) => !preShow)}>
                     <Icon component={ICONS.EYE_OFF_ICON} size={IconSize.LG} />
                   </div>
                 )}

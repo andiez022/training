@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectToken } from '../../services/controllers/common/UserSelector';
 import { Header } from '../header/Header';
 import { Footer } from '../footer/Footer';
 import './AnnouncementView.scss';
@@ -50,6 +52,8 @@ const Announcement = () => {
   const goToItem = (pageType: string, itemId: string) => {
     navigate(`/${pageType}/${itemId}`);
   };
+
+  const isLoggedIn = useSelector(selectToken) !== null;
   return (
     <div>
       <div className="announcement-header">
@@ -106,9 +110,12 @@ const Announcement = () => {
               </thead>
               {annResponse?.total !== 0 ? (
                 annResponse?.list.map((item: DataItem, index: number) => (
-                  <tr className="table-data" key={item.id} onClick={() => goToItem('announcement', item.id)}>
-                    <td>{page * pageSize + index + 1}</td>
-                    <td>{item.title}</td>
+                  <tr className="table-data" key={item.id}>
+                    <td>
+                      {isLoggedIn ? <input style={{ width: '20px', height: '20px', marginRight: '30px' }} type="checkbox" /> : ''}
+                      {page * pageSize + index + 1}
+                    </td>
+                    <td onClick={() => goToItem('announcement', item.id)}>{item.title}</td>
                     <td>{item.author}</td>
                     <td>{reformatDate(item.created_at)}</td>
                   </tr>
@@ -117,12 +124,26 @@ const Announcement = () => {
                 <div style={{ width: '70vw', textAlign: 'center', marginTop: '50px' }}>현재 사용 가능한 데이터가 없습니다.</div>
               )}
             </table>
-            <Pagination
-              totalPosts={annResponse?.total ?? 0}
-              postsPerPage={postsPerPage}
-              setCurrentPage={setCurrentPage}
-              currentPage={currentPage}
-            />
+            <div className="pagination-button">
+              <Pagination
+                totalPosts={annResponse?.total ?? 0}
+                postsPerPage={postsPerPage}
+                setCurrentPage={setCurrentPage}
+                currentPage={currentPage}
+              />
+              <div className="edit-button">
+                <p>수정</p>
+              </div>
+              <div className="delete-button">
+                <p>삭제</p>
+              </div>
+              <Link to="./create">
+                <div className="add-new-button">
+                  <Icon component={ICONS.PEN_ICON} size={IconSize.LG} />
+                  <p>글쓰기</p>
+                </div>
+              </Link>
+            </div>
           </div>
         </div>
       </div>

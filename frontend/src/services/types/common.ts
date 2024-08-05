@@ -32,7 +32,7 @@ export interface SignUpForm {
   // firstName: string;
   // lastName: string;
   // email: string;
-  id: string,
+  username: string,
   password: string;
 
   // confirmationPassword: string;
@@ -44,7 +44,7 @@ export interface SignUpForm {
 }
 
 export interface RegisterForm {
-  id: string,
+  username: string,
   password: string;
   passwordVerify: string
   name: string;

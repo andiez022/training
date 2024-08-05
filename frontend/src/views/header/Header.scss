@@ -48,6 +48,12 @@
     display: none;
   }
 }
+.header.admin {
+  background-image: linear-gradient(180deg, #0066c1, #0088e3);
+  .card-header {
+    color: #fff !important;
+  }
+}
 
 // svg{ transform: none !important;}
 @media screen and (max-width: 600px) {
@@ -108,6 +114,15 @@
 }
 
 .home-back {
-  display: none;
   cursor: pointer;
+  font-size: 14px;
+  font-family: 'Noto Sans KR';
+  font-weight: 500;
+  color: white;
+
+}
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px
 }

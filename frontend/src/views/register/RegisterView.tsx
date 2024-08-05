@@ -21,7 +21,7 @@ const Register = () => {
   const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
   const formik = useFormik<RegisterForm>({
     initialValues: {
-      id: '',
+      username: '',
       name: '',
       password: '',
       passwordVerify: '',
@@ -29,7 +29,7 @@ const Register = () => {
       phone: '',
     },
     validationSchema: Yup.object({
-      id: Yup.string().required('입력하세요'),
+      username: Yup.string().required('입력하세요'),
       password: Yup.string().min(8, '전화가 올바른 형식이 아닙니다.').max(23).required('입력하세요'),
       name: Yup.string().required('입력하세요'),
       passwordVerify: Yup.string().required('입력하세요'),
@@ -54,10 +54,16 @@ const Register = () => {
           <h1>리빙랩 회원가입</h1>
           <div className="register-container__form-input">
             <div className="left">
-              <div className="register-container__form-input-id">
+              <div className="register-container__form-input-username">
                 <p>아이디</p>
-                <input type="text" name="id" value={formik.values.id} onChange={formik.handleChange} placeholder="아이디를 입력하세요." />
-                {formik.errors.id && formik.touched.id && <p className="warning">{formik.errors.id}</p>}
+                <input
+                  type="text"
+                  name="username"
+                  value={formik.values.username}
+                  onChange={formik.handleChange}
+                  placeholder="아이디를 입력하세요."
+                />
+                {formik.errors.username && formik.touched.username && <p className="warning">{formik.errors.username}</p>}
               </div>
 
               <div className="register-container__form-input-password">
@@ -73,11 +79,11 @@ const Register = () => {
                   />
                   <div className="register-container__form-input-password__icon" onClick={() => hideShowPass({ password: 'password' })}>
                     {show ? (
-                      <div onClick={() => setShow(!show)}>
+                      <div onClick={() => setShow((preShow) => !preShow)}>
                         <Icon component={ICONS.EYE_ICON} size={IconSize.LG} />
                       </div>
                     ) : (
-                      <div onClick={() => setShow(!show)}>
+                      <div onClick={() => setShow((preShow) => !preShow)}>
                         <Icon component={ICONS.EYE_OFF_ICON} size={IconSize.LG} />
                       </div>
                     )}
@@ -102,11 +108,11 @@ const Register = () => {
                     onClick={() => hideShowPass({ password: 'password-verify' })}
                   >
                     {showVerify ? (
-                      <div onClick={() => setShowVerify(!showVerify)}>
+                      <div onClick={() => setShowVerify((preShowVerify) => !preShowVerify)}>
                         <Icon component={ICONS.EYE_ICON} size={IconSize.LG} />
                       </div>
                     ) : (
-                      <div onClick={() => setShowVerify(!showVerify)}>
+                      <div onClick={() => setShowVerify((preShowVerify) => !preShowVerify)}>
                         <Icon component={ICONS.EYE_OFF_ICON} size={IconSize.LG} />
                       </div>
                     )}

@@ -59,7 +59,6 @@ const BoardCreate = () => {
         draggable: true,
         progress: undefined,
         theme: 'light',
-        transition: Bounce,
       });
     },
     // onSettled: (res) => {},

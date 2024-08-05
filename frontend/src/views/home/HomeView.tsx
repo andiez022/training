@@ -1,6 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { selectToken, selectUserRole } from '../../services/controllers/common/UserSelector';
 import banner1 from '../../common/assets/images/home-1.png';
 import banner1x2 from '../../common/assets/images/home-1@2x.png';
 import banner2 from '../../common/assets/images/home-2.png';
@@ -97,9 +99,12 @@ const Home: React.FC = () => {
   const goToItem = (pageType: string, itemId: string) => {
     navigate(`${pageType}/${itemId}`);
   };
+
+  const isLoggedIn = useSelector(selectToken) !== null;
+  const isAdmin = useSelector(selectUserRole) === 'Admin';
   return (
     <div className="home-container">
-      <div className={`home-header ${transparent ? 'transparent' : 'nav-fade-in'}`}>
+      <div className={`home-header ${transparent ? 'transparent' : 'nav-fade-in'} ${isLoggedIn ? (isAdmin ? 'admin' : 'user') : ''}`}>
         <Header />
       </div>
       <div className="home-slide">
