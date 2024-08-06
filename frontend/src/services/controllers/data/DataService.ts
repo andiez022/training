@@ -76,4 +76,64 @@ export default class DataService {
       };
     }
   }
+
+  async deleteData(pageType: string, ids: string[]) {
+    const apiUrl = `${process.env.REACT_APP_API_ENDPOINT}/${pageType}`;
+    try {
+      const request = await this.axios.delete(apiUrl, { data: { ids } });
+      const response = request.data;
+      return response;
+    } catch (error) {
+      console.error('Error delete data:', error);
+      throw error;
+    }
+  }
+
+  async deleteDataById(pageType: string, id: string) {
+    const apiUrl = `${process.env.REACT_APP_API_ENDPOINT}/${pageType}`;
+    try {
+      const request = await this.axios.delete(apiUrl);
+      const response = request.data;
+      return response;
+    } catch (error) {
+      console.error('Error delete data: ', error);
+      throw error;
+    }
+  }
+
+  async editData(
+    pageType: string,
+    updatedData: {
+      any: [];
+    },
+  ) {
+    const apiUrl = `${process.env.REACT_APP_API_ENDPOINT}/${pageType}`;
+    try {
+      const request = await this.axios.put(apiUrl, updatedData);
+      const response = request.data;
+      return response;
+    } catch (error) {
+      console.error('Error edit data:', error);
+      throw error;
+    }
+  }
+
+  async editdataById(
+    pageType: string,
+    id: string,
+    updatedData: {
+      content: string;
+      title: string;
+      password?: string;
+    },
+  ) {
+    const apiUrl = `${pageType}/${id}`;
+    try {
+      const response = await this.axios.put(apiUrl, updatedData);
+      return response.data;
+    } catch (error) {
+      console.error('Error editing data: ', error);
+      throw error;
+    }
+  }
 }

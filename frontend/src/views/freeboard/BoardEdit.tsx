@@ -1,22 +1,25 @@
-import React, { useCallback, useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
+import React, { useEffect } from 'react';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import './AnnCreate.scss';
-import { Link, useNavigate } from 'react-router-dom';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
+import { useDispatch, useSelector } from 'react-redux';
+import '../announcement/AnnCreate.scss';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { EditorConfig } from '@ckeditor/ckeditor5-core/src/editor/editorconfig';
 
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 import { Header } from '../header/Header';
 import { Footer } from '../footer/Footer';
 import api from '../../services/apiServices';
+import { selectToken } from '../../services/controllers/common/UserSelector';
 
 interface FormValues {
   title: string;
   content: string;
+  id: string;
 }
 
 // ? editor
@@ -41,39 +44,18 @@ const editorConfig: EditorConfig = {
   ],
 };
 
-// backshadow variants
-const backVariants = {
-  hiden: {
-    opacity: 0,
-  },
-  visible: {
-    opacity: 1,
-    transition: {
-      duration: 0.5,
-    },
-  },
-};
-// modal variant
-const modalVariants = {
-  hiden: {
-    scale: 0,
-  },
-  visible: {
-    scale: 1,
-    transition: {
-      duration: 0.5,
-    },
-  },
-};
-const BoardCreate = () => {
-  const [loading, setLoading] = useState(true);
+const BoardEdit = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { id } = useParams();
+  const { data: dataItem } = useQuery(['boardItem', id], () => api.data.fetchDataById('free-board', id || ''));
+  const isLoggedIn = useSelector(selectToken) !== null;
 
-  // ? add data
-  const createUserData = useMutation((values: any) => api.data.addData('notice', values), {
+  // ? edit data
+  const editData = useMutation((values: any) => api.data.editdataById('free-board/admin', id || '', values), {
     onSuccess: () => {
-      navigate('/announcement');
-      toast.success('성공적으로 생성했습니다.', {
+      navigate('/living-lab');
+      toast.success('성공적으로 업데이트되었습니다.', {
         position: 'top-right',
         autoClose: 5000,
         hideProgressBar: false,
@@ -84,41 +66,40 @@ const BoardCreate = () => {
         theme: 'light',
       });
     },
-    // onSettled: (res) => {},
   });
-  // const handleEditorChange = (content: string, editor: any) => {
-  //   console.log('Content was updated:', content);
-  // };
-  // const removeStatusbarRightContainer = (editor: any) => {
-  //   editor.on('init', () => {
-  //     const statusbarRightContainer = editor.getContainer().querySelector('.tox-statusbar__right-container');
-  //     if (statusbarRightContainer) {
-  //       statusbarRightContainer.remove();
-  //     }
-  //   });
-  // };
-  const handleEditorInit = useCallback(() => {
-    setLoading(false);
-  }, []);
 
   // ? Formik
   const formik = useFormik<FormValues>({
     initialValues: {
+      id: '',
       title: '',
       content: '',
     },
+    enableReinitialize: true,
     validationSchema: Yup.object({
       title: Yup.string().required('입력하세요'),
       content: Yup.string().required('입력하세요'),
     }),
     onSubmit: (values) => {
-      createUserData.mutate(values);
+      editData.mutate(values);
     },
   });
+
+  useEffect(() => {
+    if (dataItem) {
+      formik.setValues({
+        id: dataItem.id,
+        title: dataItem.title,
+        content: dataItem.content,
+      });
+    }
+  }, [dataItem]);
+  console.log(dataItem);
 
   const handleEditorChange = (content: string) => {
     formik.setFieldValue('content', content);
   };
+
   return (
     <div>
       <div className="ann-header">
@@ -129,18 +110,10 @@ const BoardCreate = () => {
         <form onSubmit={formik.handleSubmit}>
           <div className="ann-create-container__input-title">
             <label htmlFor="title">제목</label>
-            <input
-              type="text"
-              id="title"
-              placeholder="제목을 입력해주세요."
-              name="title"
-              value={formik.values.title}
-              onChange={formik.handleChange}
-            />
+            <input type="text" placeholder="제목을 입력해주세요." name="title" value={formik.values.title} onChange={formik.handleChange} />
             {formik.errors.title && formik.touched.title && <p className="warning">{formik.errors.title}</p>}
           </div>
           <div className="ann-create-container__input-text-editor">
-            {/* <TextEditor /> */}
             <div style={{ position: 'relative', height: '300px' }}>
               <CKEditor
                 editor={ClassicEditor}
@@ -162,11 +135,9 @@ const BoardCreate = () => {
             <button type="submit" className="ann-create-container__input__button-submit">
               등록
             </button>
-            <Link to="/announcement">
-              <button type="button" className="ann-create-container__input__button-cancel">
-                취소
-              </button>
-            </Link>
+            <button type="button" className="ann-create-container__input__button-cancel" onClick={() => navigate('/living-lab')}>
+              취소
+            </button>
           </div>
         </form>
       </div>
@@ -177,4 +148,4 @@ const BoardCreate = () => {
   );
 };
 
-export default BoardCreate;
+export default BoardEdit;

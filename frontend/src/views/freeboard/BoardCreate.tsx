@@ -2,15 +2,23 @@ import React, { useCallback, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { Bounce, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { EditorConfig } from '@ckeditor/ckeditor5-core/src/editor/editorconfig';
+// import 'ckeditor5/ckeditor5.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Editor } from '@tinymce/tinymce-react';
-import Loading from '../../components/Loading/LoadingEditor';
+
 import './BoardCreate.scss';
 import { Header } from '../header/Header';
 import { Footer } from '../footer/Footer';
 import api from '../../services/apiServices';
+
+interface TextEditorProps {
+  initialData: string;
+  onChange?: (event: any, editor: any) => void;
+}
 
 interface FormValues {
   author: string;
@@ -46,6 +54,32 @@ const modalVariants = {
 const BoardCreate = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+
+  // ? editor
+  const handleEditorChange = (content: string) => {
+    formik.setFieldValue('content', content);
+  };
+  const editorConfig: EditorConfig = {
+    toolbar: [
+      'undo',
+      'redo',
+      '|',
+      'heading',
+      '|',
+      'bold',
+      'italic',
+      '|',
+      'link',
+      'insertTable',
+      'mediaEmbed',
+      '|',
+      'bulletedList',
+      'numberedList',
+      'indent',
+      'outdent',
+    ],
+    placeholder: '내용을 입력하세요.',
+  };
   // ? add data
   const createUserData = useMutation((values: any) => api.data.addData('free-board', values), {
     onSuccess: (res) => {
@@ -63,20 +97,6 @@ const BoardCreate = () => {
     },
     // onSettled: (res) => {},
   });
-  // const handleEditorChange = (content: string, editor: any) => {
-  //   console.log('Content was updated:', content);
-  // };
-  // const removeStatusbarRightContainer = (editor: any) => {
-  //   editor.on('init', () => {
-  //     const statusbarRightContainer = editor.getContainer().querySelector('.tox-statusbar__right-container');
-  //     if (statusbarRightContainer) {
-  //       statusbarRightContainer.remove();
-  //     }
-  //   });
-  // };
-  const handleEditorInit = useCallback(() => {
-    setLoading(false);
-  }, []);
 
   // ? Formik
   const formik = useFormik<FormValues>({
@@ -97,9 +117,6 @@ const BoardCreate = () => {
     },
   });
 
-  const handleEditorChange = (content: string) => {
-    formik.setFieldValue('content', content);
-  };
   return (
     <div>
       <div className="board-header">
@@ -150,36 +167,17 @@ const BoardCreate = () => {
           <div className="board-create-container__input-text-editor">
             {/* <TextEditor /> */}
             <div style={{ position: 'relative', height: '300px' }}>
-              {loading && <Loading />}
-              <Editor
-                apiKey="cf8cf0sakk2mnhfgylt1z857krdhcb09jbc0y90i3ephnu03"
-                initialValue="<p></p>"
-                init={{
-                  // name: 'content',
-                  // value: formik.values.content,
-                  // onChange: formik.handleChange,
-                  height: 300,
-                  menubar: false,
-                  plugins: [
-                    'advlist autolink lists link image charmap print preview anchor',
-                    'searchreplace visualblocks code fullscreen',
-                    'insertdatetime media table paste code help wordcount',
-                    'placeholder',
-                  ],
-                  toolbar:
-                    'undo redo | formatselect | bold italic backcolor | ' +
-                    'alignleft aligncenter alignright alignjustify | ' +
-                    'bullist numlist outdent indent | removeformat | ',
-                  placeholder: '내용을 입력하세요.',
-                  // setup: removeStatusbarRightContainer,
-                  setup: (editor) => {
-                    editor.on('init', handleEditorInit);
-                    editor.on('Change', () => {
-                      handleEditorChange(editor.getContent());
-                    });
-                  },
+              <CKEditor
+                editor={ClassicEditor}
+                config={editorConfig}
+                data={formik.values.content}
+                onChange={(event, editor) => {
+                  const data = editor.getData();
+                  if (handleEditorChange) {
+                    handleEditorChange(data);
+                  }
+                  console.log({ event, editor, data });
                 }}
-                onEditorChange={handleEditorChange}
               />
               {formik.errors.content && formik.touched.content && (
                 <p style={{ marginTop: '10px' }} className="warning">

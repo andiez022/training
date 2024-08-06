@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import './AnnCreate.scss';
+import '../announcement/AnnCreate.scss';
 import { Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -41,38 +41,14 @@ const editorConfig: EditorConfig = {
   ],
 };
 
-// backshadow variants
-const backVariants = {
-  hiden: {
-    opacity: 0,
-  },
-  visible: {
-    opacity: 1,
-    transition: {
-      duration: 0.5,
-    },
-  },
-};
-// modal variant
-const modalVariants = {
-  hiden: {
-    scale: 0,
-  },
-  visible: {
-    scale: 1,
-    transition: {
-      duration: 0.5,
-    },
-  },
-};
 const BoardCreate = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   // ? add data
-  const createUserData = useMutation((values: any) => api.data.addData('notice', values), {
+  const createUserData = useMutation((values: any) => api.data.addData('living-lab', values), {
     onSuccess: () => {
-      navigate('/announcement');
+      navigate('/living-lab');
       toast.success('성공적으로 생성했습니다.', {
         position: 'top-right',
         autoClose: 5000,
@@ -162,7 +138,7 @@ const BoardCreate = () => {
             <button type="submit" className="ann-create-container__input__button-submit">
               등록
             </button>
-            <Link to="/announcement">
+            <Link to="/living-lab">
               <button type="button" className="ann-create-container__input__button-cancel">
                 취소
               </button>

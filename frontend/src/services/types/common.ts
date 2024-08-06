@@ -32,7 +32,7 @@ export interface SignUpForm {
   // firstName: string;
   // lastName: string;
   // email: string;
-  username: string,
+  username: string;
   password: string;
 
   // confirmationPassword: string;
@@ -44,9 +44,9 @@ export interface SignUpForm {
 }
 
 export interface RegisterForm {
-  username: string,
+  username: string;
   password: string;
-  passwordVerify: string
+  passwordVerify: string;
   name: string;
   email: string;
   phone: string;
@@ -63,4 +63,11 @@ export interface DataItem {
   description: string;
   image?: string;
   password: string;
+}
+
+export type CheckedItem = Record<string, boolean>;
+
+export interface TextEditorProps {
+  initialData: string;
+  onChange?: (event: any, editor: any) => void;
 }

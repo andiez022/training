@@ -15,7 +15,6 @@ const Pagination: React.FC<PaginationProps> = ({ totalPosts, postsPerPage, setCu
   for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i += 1) {
     pages.push(i - 1);
   }
-  console.log(currentPage);
 
   return (
     <div className={`pagination ${totalPosts === 0 ? 'unmount' : ''}`}>

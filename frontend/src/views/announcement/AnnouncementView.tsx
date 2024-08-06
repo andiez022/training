@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import { selectToken } from '../../services/controllers/common/UserSelector';
 import { Header } from '../header/Header';
 import { Footer } from '../footer/Footer';
@@ -12,10 +13,11 @@ import ancmImg from '../../common/assets/images/annouc-img.png';
 import ancmImgx2 from '../../common/assets/images/annouc-img@2x.png';
 import ancmIcon from '../../common/assets/images/icon-announcement.png';
 import ancmIconx2 from '../../common/assets/images/icon-announcement@2x.png';
-import { DataItem } from '../../services/types/common';
+import { CheckedItem, DataItem } from '../../services/types/common';
 import api from '../../services/apiServices';
 import { reformatDate } from '../../components/FormatDate/FormatDate';
 import Pagination from '../../components/Pagination/Pagination';
+import Modal from '../../components/Modal/Modal';
 
 const Announcement = () => {
   const [currentPage, setCurrentPage] = useState(0);
@@ -54,6 +56,66 @@ const Announcement = () => {
   };
 
   const isLoggedIn = useSelector(selectToken) !== null;
+
+  const [checkedItem, setCheckedItem] = useState<CheckedItem>({});
+  const handleCheckedItemChange = (itemID: string) => {
+    setCheckedItem((preCheckedItem) => ({
+      ...preCheckedItem,
+      [itemID]: !preCheckedItem[itemID],
+    }));
+  };
+
+  // ? delete data
+  const deleteDataMutation = useMutation((itemsToDelete: string[]) => api.data.deleteData('notice', itemsToDelete), {
+    onSuccess: () => {
+      navigate(0);
+      toast.success('성공적으로 삭제되었습니다.', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
+    },
+  });
+  const itemsToDelete = Object.keys(checkedItem).filter((key) => checkedItem[key] === true);
+  console.log(itemsToDelete);
+  const editId = Object.keys(checkedItem).find((key) => checkedItem[key] === true);
+  console.log(editId);
+
+  const handleDelete = () => {
+    try {
+      deleteDataMutation.mutate(itemsToDelete);
+    } catch (error) {
+      console.error('Error delete data:', error);
+    }
+  };
+
+  const [showModal, setShowModal] = useState(false);
+
+  // ? Edit
+  const [editModal, setEditModal] = useState(false);
+  const checkedItemEdit = Object.values(checkedItem).filter((value) => value === true).length;
+  const handleEdit = (itemId: string | undefined) => {
+    navigate(`edit/${itemId}`);
+  };
+
+  const handleEditAction = () => {
+    if (checkedItemEdit >= 2) {
+      setEditModal(true);
+    }
+
+    const editId = Object.keys(checkedItem).find((key) => checkedItem[key] === true);
+    if (checkedItemEdit === 1 && editId) {
+      if (handleEdit) {
+        handleEdit(editId);
+      }
+    }
+  };
+
   return (
     <div>
       <div className="announcement-header">
@@ -112,7 +174,18 @@ const Announcement = () => {
                 annResponse?.list.map((item: DataItem, index: number) => (
                   <tr className="table-data" key={item.id}>
                     <td>
-                      {isLoggedIn ? <input style={{ width: '20px', height: '20px', marginRight: '30px' }} type="checkbox" /> : ''}
+                      {isLoggedIn ? (
+                        <input
+                          style={{ width: '20px', height: '20px', marginRight: '30px' }}
+                          type="checkbox"
+                          checked={checkedItem[item.id]}
+                          onChange={() => {
+                            handleCheckedItemChange(item.id);
+                          }}
+                        />
+                      ) : (
+                        ''
+                      )}
                       {page * pageSize + index + 1}
                     </td>
                     <td onClick={() => goToItem('announcement', item.id)}>{item.title}</td>
@@ -131,18 +204,77 @@ const Announcement = () => {
                 setCurrentPage={setCurrentPage}
                 currentPage={currentPage}
               />
-              <div className="edit-button">
-                <p>수정</p>
-              </div>
-              <div className="delete-button">
-                <p>삭제</p>
-              </div>
-              <Link to="./create">
-                <div className="add-new-button">
-                  <Icon component={ICONS.PEN_ICON} size={IconSize.LG} />
-                  <p>글쓰기</p>
+              {isLoggedIn && (
+                <div className="edit-button" onClick={() => handleEditAction()}>
+                  <p>수정</p>
                 </div>
-              </Link>
+              )}
+              <Modal isShowing={editModal}>
+                <div className="modal">
+                  <div className="modal__close" onClick={() => setEditModal(false)}>
+                    <Icon className="icon-close" component={ICONS.CLOSE} size={IconSize.SM} />
+                  </div>
+                  <p style={{ padding: '10px', textAlign: 'center' }} className="modal__confirm">
+                    한 번에 하나의 게시글만 수정가능합니다. 하나의 게시글만 선택해주세요.
+                  </p>
+                  <div className="modal__button">
+                    <button
+                      className="modal__button-cancel"
+                      style={{
+                        width: '100%',
+                        color: '#fff',
+                        background: 'transparent linear-gradient(90deg, #0066c1 0%, #009fe5 100%) 0% 0% no-repeat padding-box',
+                      }}
+                      onClick={() => setEditModal(false)}
+                    >
+                      취소
+                    </button>
+                  </div>
+                </div>
+              </Modal>
+
+              {isLoggedIn && (
+                <button
+                  className="delete-button"
+                  onClick={() => {
+                    if (itemsToDelete) {
+                      if (itemsToDelete.length > 0) setShowModal(true);
+                    }
+                  }}
+                >
+                  <p>삭제</p>
+                </button>
+              )}
+              <Modal isShowing={showModal}>
+                <div className="modal">
+                  <div className="modal__close" onClick={() => setShowModal(false)}>
+                    <Icon className="icon-close" component={ICONS.CLOSE} size={IconSize.SM} />
+                  </div>
+                  <p className="modal__confirm">1건의 게시글을 삭제 하시겠습니까?</p>
+                  <div className="modal__button">
+                    <button className="modal__button-cancel" onClick={() => setShowModal(false)}>
+                      취소
+                    </button>
+                    <button
+                      className="modal__button-delete"
+                      onClick={() => {
+                        handleDelete();
+                      }}
+                    >
+                      확인
+                    </button>
+                  </div>
+                </div>
+              </Modal>
+
+              {isLoggedIn && (
+                <Link to="./create">
+                  <div className="add-new-button">
+                    <Icon component={ICONS.PEN_ICON} size={IconSize.LG} />
+                    <p>글쓰기</p>
+                  </div>
+                </Link>
+              )}
             </div>
           </div>
         </div>

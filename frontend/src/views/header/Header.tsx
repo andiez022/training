@@ -23,8 +23,6 @@ export const Header: React.FC = () => {
   const isLoggedIn = useSelector(selectToken) !== null;
   const isAdmin = useSelector(selectUserRole) === 'Admin';
 
-  console.log(isAdmin);
-
   return (
     <div className={`header ${showNavRes ? 'show' : ''} ${isLoggedIn ? (isAdmin ? 'admin' : 'user') : ''}`}>
       <div className="header-left">
