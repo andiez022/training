@@ -136,4 +136,73 @@ export default class DataService {
       throw error;
     }
   }
+
+  async addCampaignData(
+    pageType: string,
+    data: {
+      title: string;
+      content: string;
+      link: string;
+      image: File;
+      image_name: string;
+    },
+  ) {
+    const formData = new FormData();
+    formData.append('file', data.image, data.image.name);
+    const apiUrl = `${process.env.REACT_APP_API_ENDPOINT}/${pageType}`;
+    try {
+      const assetResponse = await this.axios.post('assets', formData);
+
+      const mainData = {
+        title: data.title,
+        content: data.content,
+        link: data.link,
+        image: assetResponse.data.filename,
+        image_name: assetResponse.data.original_name,
+      };
+
+      const response = await this.axios.post(apiUrl, mainData);
+
+      return { assetResponse: assetResponse.data, mainResponse: response.data };
+    } catch (error) {
+      console.error('Error posting data: ', error);
+      throw error;
+    }
+  }
+
+  async editCampaignData(
+    pageType: string,
+    data: {
+      id: string;
+      title: string;
+      content: string;
+      link: string;
+      image: File;
+      image_name: string;
+    },
+  ) {
+    const apiUrl = `${pageType}`;
+    const formData = new FormData();
+    formData.append('file', data.image, data.image.name);
+
+    try {
+      const assetResponse = await this.axios.post('assets', formData);
+
+      const mainData = {
+        id: data.id,
+        title: data.title,
+        content: data.content,
+        link: data.link,
+        image: assetResponse.data.filename,
+        image_name: assetResponse.data.original_name,
+      };
+
+      const response = await this.axios.put(apiUrl, mainData);
+
+      return { assetResponse: assetResponse.data, mainResponse: response.data };
+    } catch (error) {
+      console.error('Error putting data: ', error);
+      throw error;
+    }
+  }
 }

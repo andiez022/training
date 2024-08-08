@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useDispatch, useSelector } from 'react-redux';
 import '../announcement/AnnCreate.scss';
+import './CampainCreate.scss';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { EditorConfig } from '@ckeditor/ckeditor5-core/src/editor/editorconfig';
@@ -14,11 +14,15 @@ import * as Yup from 'yup';
 import { Header } from '../header/Header';
 import { Footer } from '../footer/Footer';
 import api from '../../services/apiServices';
-import { selectToken } from '../../services/controllers/common/UserSelector';
+import Icon, { ICONS, IconSize } from '../../components/SVG/Icon';
 
 interface FormValues {
+  id: string;
   title: string;
   content: string;
+  link: string;
+  image: File | null;
+  image_name: string;
 }
 
 // ? editor
@@ -43,18 +47,17 @@ const editorConfig: EditorConfig = {
   ],
 };
 
-const BoardEdit = () => {
+const LabEdit = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const { id } = useParams();
 
-  const { data: dataItem } = useQuery(['boardItem', id], () => api.data.fetchDataById('free-board', id || ''));
-  const isLoggedIn = useSelector(selectToken) !== null;
+  const { data: dataItem } = useQuery(['campaignItem', id], () => api.data.fetchDataById('campaign', id || ''));
+  const [imageName, setImageName] = useState<string>(dataItem?.image_name);
 
   // ? edit data
-  const editData = useMutation((values: any) => api.data.editdataById('free-board/admin', id || '', values), {
+  const editData = useMutation((values: any) => api.data.editCampaignData('campaign', values), {
     onSuccess: () => {
-      navigate('/free-board');
+      navigate('/campain');
       toast.success('성공적으로 업데이트되었습니다.', {
         position: 'top-right',
         autoClose: 5000,
@@ -71,13 +74,20 @@ const BoardEdit = () => {
   // ? Formik
   const formik = useFormik<FormValues>({
     initialValues: {
+      id: '',
       title: '',
       content: '',
+      link: '',
+      image: null,
+      image_name: '',
     },
     enableReinitialize: true,
     validationSchema: Yup.object({
       title: Yup.string().required('입력하세요'),
+      id: Yup.string().required('입력하세요'),
       content: Yup.string().required('입력하세요'),
+      link: Yup.string().required('입력하세요'),
+      image: Yup.mixed().required('파일을 선택하세요'),
     }),
     onSubmit: (values) => {
       editData.mutate(values);
@@ -86,9 +96,14 @@ const BoardEdit = () => {
 
   useEffect(() => {
     if (dataItem) {
+      setImageName(dataItem.image_name || '');
       formik.setValues({
+        id: dataItem.id,
         title: dataItem.title,
         content: dataItem.content,
+        link: dataItem.link,
+        image: dataItem.image,
+        image_name: imageName,
       });
     }
   }, [dataItem]);
@@ -96,7 +111,22 @@ const BoardEdit = () => {
   const handleEditorChange = (content: string) => {
     formik.setFieldValue('content', content);
   };
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const image = event.target.files?.[0];
+    if (image) {
+      setImageName(image.name);
+      formik.setFieldValue('image', image);
+    }
+  };
 
+  const handleDeleteFileUpload = () => {
+    setImageName('');
+    formik.setFieldValue('image', null);
+    const fileInput = document.getElementById('upload-img') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = '';
+    }
+  };
   return (
     <div>
       <div className="ann-header">
@@ -104,7 +134,7 @@ const BoardEdit = () => {
       </div>
       <div className="ann-create-container">
         <p className="ann-create-container__title">자유게시판 작성</p>
-        <form>
+        <form onSubmit={formik.handleSubmit}>
           <div className="ann-create-container__input-title">
             <label htmlFor="title">제목</label>
             <input type="text" placeholder="제목을 입력해주세요." name="title" value={formik.values.title} onChange={formik.handleChange} />
@@ -128,8 +158,41 @@ const BoardEdit = () => {
               )}
             </div>
           </div>
+          <div className="board-create-container__input-link">
+            <label htmlFor="link">링크</label>
+            <input
+              type="text"
+              id="link"
+              placeholder="링크를 입력해주세요."
+              name="link"
+              value={formik.values.link}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+            />
+            {formik.errors.link && formik.touched.link && <p className="warning">{formik.errors.link}</p>}
+          </div>
+          <div className="upload">
+            <div className="upload-img">
+              <input type="file" id="upload-img" name="image" hidden onChange={handleFileChange} />
+              <label htmlFor="upload-img">
+                <p> 대표이미지 첨부</p>
+                <Icon component={ICONS.UPLOAD_ICON} size={IconSize.LG} />
+              </label>
+            </div>
+
+            <span id="file-chosen">
+              {imageName}
+              {imageName && (
+                <div className="icon-delete-upload" onClick={handleDeleteFileUpload}>
+                  <Icon component={ICONS.DELETE_UPLOAD} size={IconSize.LG} />
+                </div>
+              )}
+            </span>
+          </div>
+          {formik.errors.image && formik.touched.image && <p className="warning">{formik.errors.image}</p>}
+
           <div className="ann-create-container__input__button">
-            <button className="ann-create-container__input__button-submit" onClick={(e: any) => formik.handleSubmit(e)}>
+            <button type="submit" className="ann-create-container__input__button-submit">
               등록
             </button>
             <button type="button" className="ann-create-container__input__button-cancel" onClick={() => navigate('/living-lab')}>
@@ -145,4 +208,4 @@ const BoardEdit = () => {
   );
 };
 
-export default BoardEdit;
+export default LabEdit;

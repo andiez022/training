@@ -31,6 +31,8 @@ import { ReactComponent as PenIcon } from './icons/8665767_pen_icon.svg';
 import { ReactComponent as EyeIcon } from './icons/eye-icon.svg';
 import { ReactComponent as EyeOffIcon } from './icons/eye-off-icon.svg';
 import { ReactComponent as CheckRemember } from './icons/check-remember.svg';
+import { ReactComponent as UploadIcon } from './icons/upload-icon.svg';
+import { ReactComponent as DeleteUpload } from './icons/delete-upload.svg';
 
 import './Icon.scss';
 
@@ -65,6 +67,8 @@ export const ICONS = {
   EYE_ICON: EyeIcon,
   EYE_OFF_ICON: EyeOffIcon,
   CHECK_REMEMBER: CheckRemember,
+  UPLOAD_ICON: UploadIcon,
+  DELETE_UPLOAD: DeleteUpload,
 };
 
 export interface IconProps {

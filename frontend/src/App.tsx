@@ -19,12 +19,16 @@ const AnnouncementCreate = lazy(() => import('./views/announcement/AnnCreate'));
 const AnnouncementEdit = lazy(() => import('./views/announcement/AnnEdit'));
 const FacilityView = lazy(() => import('./views/facility/FacilityView'));
 const ContentView = lazy(() => import('./views/content/ContentView'));
+const ContentEdit = lazy(() => import('./views/content/ContentEdit'));
+const ContentCreate = lazy(() => import('./views/content/ContentCreate'));
 const LabView = lazy(() => import('./views/lab/LabView'));
 const LabItem = lazy(() => import('./views/lab/LabItem'));
 const LabCreate = lazy(() => import('./views/lab/LabCreate'));
 const LabEdit = lazy(() => import('./views/lab/LabEdit'));
 const CampainView = lazy(() => import('./views/campain/CampainView'));
+const CampainCreate = lazy(() => import('./views/campain/CampainCreate'));
 const CampainItem = lazy(() => import('./views/campain/CampainItem'));
+const CampainEdit = lazy(() => import('./views/campain/CampainEdit'));
 const FreeBoardView = lazy(() => import('./views/freeboard/FreeBoardView'));
 const BoardItem = lazy(() => import('./views/freeboard/BoardItem'));
 const BoardCreate = lazy(() => import('./views/freeboard/BoardCreate'));
@@ -66,12 +70,16 @@ const App: React.FC = () => {
                   <Route path="/announcement/:id" element={<PrivateRoute guards={[]} element={<AnnouncementItem />} />} />
                   <Route path="/facility" element={<PrivateRoute guards={[]} element={<FacilityView />} />} />
                   <Route path="/content" element={<PrivateRoute guards={[]} element={<ContentView />} />} />
+                  <Route path="/content/create" element={<PrivateRoute guards={[]} element={<ContentCreate />} />} />
+                  <Route path="/content/edit/:id" element={<PrivateRoute guards={[]} element={<ContentEdit />} />} />
                   <Route path="/living-lab" element={<PrivateRoute guards={[]} element={<LabView />} />} />
                   <Route path="/living-lab/create" element={<PrivateRoute guards={[]} element={<LabCreate />} />} />
                   <Route path="/living-lab/:id" element={<PrivateRoute guards={[]} element={<LabItem />} />} />
                   <Route path="/living-lab/edit/:id" element={<PrivateRoute guards={[]} element={<LabEdit />} />} />
                   <Route path="/campain" element={<PrivateRoute guards={[]} element={<CampainView />} />} />
+                  <Route path="/campain/create" element={<PrivateRoute guards={[]} element={<CampainCreate />} />} />
                   <Route path="/campain/:id" element={<PrivateRoute guards={[]} element={<CampainItem />} />} />
+                  <Route path="/campain/edit/:id" element={<PrivateRoute guards={[]} element={<CampainEdit />} />} />
                   <Route path="/free-board" element={<PrivateRoute guards={[]} element={<FreeBoardView />} />} />
                   <Route path="/free-board/:id" element={<PrivateRoute guards={[]} element={<BoardItem />} />} />
                   <Route path="/free-board/edit/:id" element={<PrivateRoute guards={[]} element={<BoardEdit />} />} />
