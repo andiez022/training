@@ -86,8 +86,10 @@
           font-size: 14px;
           font-family: 'S-Core Dream';
           font-weight: 500;
-          color: #fff;
-          background-image: linear-gradient(to right, #0066c1, #009fe5);
+          // color: #fff;
+          // background-image: linear-gradient(to right, #0066c1, #009fe5);
+          background-color: #fff;
+          color: #0069c3;
           border: 1px solid #006ac3;
           padding: 10px 15px;
           width: 120px;
@@ -115,7 +117,7 @@
           font-family: 'S-Core Dream';
           font-weight: 700;
           color: #202020;
-        
+
           span {
             color: #0066c1;
           }
@@ -124,7 +126,7 @@
           // width: 80%;
           margin-top: 16px;
           border: 1px solid #d9d9d9;
-          min-height: 50%;
+          height: 88%;
           // width: 370px;
           overflow-y: auto;
           scrollbar-width: thin;
@@ -211,4 +213,28 @@
       width: 100%;
     }
   }
+}
+
+.map-animation.selected {
+  transition: fill 0s;
+  path {
+    fill: #0069c3;
+  }
+  tspan {
+    fill: #fff;
+  }
+}
+
+.view-text.area-chosen {
+  font-weight: 700;
+  color: #fff;
+  background-image: linear-gradient(to right, #0066c1, #009fe5);
+}
+
+.text-no-data {
+  text-align: center;
+  padding: 20px;
+  font-family: 'Noto Sans KR';
+  font-weight: 500;
+
 }

@@ -20,7 +20,7 @@
       &__author,
       &__password {
         width: 50%;
-        height: 50px;
+        height: 60px;
         display: flex;
         text-align: center;
         font-size: 16px;
@@ -28,24 +28,25 @@
         label {
           display: block;
           width: 50%;
-          height: 50px;
-          line-height: 50px;
+          height: 60px;
+          line-height: 60px;
           background-color: #d4e9fc;
-          border: 1px solid #c0c0c0;
-          font-weight: bold;
+          border: 1px solid #d4e9fc;
+          font-weight: 400;
+          font-size: 18px;
         }
         input {
           width: 50%;
-          height: 50px;
+          height: 60px;
           border: 1px solid #c0c0c0;
           padding-left: 1.25rem;
           padding-right: 1.25rem;
-          font-size: 16px;
+          font-size: 18px;
           font-family: 'Noto Sans KR';
           font-weight: 400;
         }
         input::placeholder {
-          font-size: 16px;
+          font-size: 18px;
           font-family: 'Noto Sans KR';
           font-weight: 400;
           color: #b2b2b2;
@@ -63,15 +64,15 @@
       label {
         display: block;
         width: 25%;
-        height: 50px;
-        line-height: 50px;
+        height: 60px;
+        line-height: 60px;
         background-color: #d4e9fc;
-        border: 1px solid #c0c0c0;
+        border: 1px solid #d4e9fc;
         font-weight: bold;
       }
       input {
         width: 75%;
-        height: 50px;
+        height: 60px;
         border: 1px solid #c0c0c0;
         padding-left: 1.25rem;
         padding-right: 1.25rem;
@@ -123,5 +124,5 @@
   color: rgb(248, 113, 113);
   font-size: 14px;
   position: absolute;
-  margin-top: 50px;
+  margin-top: 60px;
 }
