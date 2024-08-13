@@ -1,9 +1,11 @@
 @import '../../common/sass/variables';
 
 .header {
+  padding-left: 10vw !important;
+  padding-right: 10vw !important;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   width: 100%;
   background-color: $color-white;
   box-shadow: 0 0 20px 0 rgb(206, 205, 205);
@@ -15,9 +17,13 @@
   z-index: 999;
   min-height: 100px;
   .header-right__card {
+    .card-header{
+      font-size: 19px;
+      font-weight: 400;
+    }
     .active {
       .card-header {
-        font-size: 16px;
+        font-size: 19px;
         font-family: 'Noto Sans KR';
         font-weight: bold;
         color: #0066c1;
@@ -59,9 +65,8 @@
 @media screen and (max-width: 600px) {
   .header {
     align-items: flex-start;
-
     .header-left {
-      padding-left: 25px;
+      transform: translate(5%, 25%);
       .header-logo {
         image {
           width: 125px;
@@ -81,6 +86,8 @@
       display: block;
       padding-bottom: 15px;
       width: 74px;
+      transform: translate(-5%, 25%);
+
       svg {
         fill: black;
       }
@@ -119,10 +126,17 @@
   font-family: 'Noto Sans KR';
   font-weight: 500;
   color: white;
-
 }
 .header-left {
   display: flex;
   align-items: center;
-  gap: 10px
+  gap: 10px;
+
+h3.card-tile {
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
 }
+
+}
+

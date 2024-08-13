@@ -10,7 +10,7 @@ import facilityIconx2 from '../../common/assets/images/icon-facility@2x.png';
 import { ReactComponent as FacilityMap } from '../../components/SVG/map/map.svg';
 
 const Facility = () => {
-  const [area, setArea] = useState(false);
+  // const [selectArea, setSelectArea] = useState();
 
   return (
     <>

@@ -55,7 +55,7 @@ const Introduction: React.FC = () => {
           <br /> 또한, 수거 사각지대의 쓰레기 문제의 해결방안에 대해 주민들과 자유롭게 논의하고 공감하기 위하여 <br />
           <span>시민의 의견을 상시 수집할 수 있는 자유게시판을 운영</span>하여 시민의 소리에 귀 기울이겠습니다.
         </p>
-        <div className="intro-content__img-1" data-aos="fade-up" data-aos-once="true">
+        <div className="intro-content__img-2" data-aos="fade-up" data-aos-once="true">
           <picture>
             <source media="(min-width: 1921px)" srcSet={introContentImg2x2} />
             <img src={introContentImg2} alt="intro ocean" />
