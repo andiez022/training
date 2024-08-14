@@ -188,8 +188,8 @@ const Lab = () => {
                       )}
                       {page * pageSize + index + 1}
                     </td>
-                    <td className="title-data" onClick={() => goToItem('living-lab', item.id)}>
-                      {item.title}
+                    <td onClick={() => goToItem('announcement', item.id)}>
+                      {item.title} <br /> <span className="date-responsive">{reformatDate(item.created_at)}</span>
                     </td>
                     <td onClick={() => goToItem('living-lab', item.id)}>{item.author}</td>
                     <td onClick={() => goToItem('living-lab', item.id)}>{reformatDate(item.created_at)}</td>

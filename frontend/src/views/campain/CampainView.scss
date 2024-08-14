@@ -219,6 +219,7 @@
       font-weight: 400;
       height: 50px;
       border-bottom: 1px solid #d9d9d9;
+      padding: 10px;
     }
   }
 }
@@ -430,6 +431,59 @@
 }
 
 @media screen and (max-width: 600px) {
+  .campain-container__body {
+    &-top {
+      display: block;
+    }
+    &-top-right {
+      display: block;
+    }
+    .box1-select {
+      margin-left: 0;
+      margin-top: 30px;
+    }
+    .box23 {
+      .box2 {
+        margin-top: 10px;
+        input {
+          width: 200px;
+        }
+      }
+      .box3 {
+        margin-top: 10px;
+      }
+    }
+    &-data {
+      td:nth-child(3),
+      td:nth-child(4),
+      .writer,
+      .date {
+        display: none;
+      }
+      table thead {
+        .title {
+          border-right: none;
+        }
+      }
+      table th:nth-child(1),
+      td:nth-child(1) {
+        width: 20%;
+      }
+      table th:nth-child(2),
+      td:nth-child(2) {
+        width: 80%;
+      }
+    }
+  }
+  .pagination-button {
+    flex-direction: column;
+    align-items: flex-end;
+    .edit-button,
+    .delete-button, .add-new-button {
+      margin-bottom: 10px;
+      padding: 0;
+    }
+  }
   .campain-container {
     margin-left: 5vw;
     margin-right: 5vw;
@@ -477,5 +531,20 @@
       width: 100%;
       margin-left: 0;
     }
+  }
+  .pagination-button {
+    flex-direction: column;
+    align-items: flex-end;
+    .edit-button,
+    .delete-button, .add-new-button {
+      margin-bottom: 10px;
+      padding: 0;
+    }
+  }
+  .modal__confirm {
+    width: 80vw;
+  }
+  .modal__button {
+    width: 80vw;
   }
 }

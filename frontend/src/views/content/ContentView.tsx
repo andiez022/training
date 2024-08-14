@@ -204,7 +204,9 @@ const Content = () => {
                           )}
                           {page * pageSize + index + 1}
                         </td>
-                        <td className="title-data">{item.title}</td>
+                        <td onClick={() => goToItem('announcement', item.id)}>
+                          {item.title} <br /> <span className="date-responsive">{reformatDate(item.created_at)}</span>
+                        </td>
                         <td>{item.author}</td>
                         <td>{reformatDate(item.created_at)}</td>
                       </tr>

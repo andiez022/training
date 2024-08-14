@@ -5,7 +5,6 @@
 @import 'swiper/css';
 @import 'swiper/css/navigation';
 
-
 .ck {
   height: 250px;
   z-index: 1;
@@ -50,4 +49,15 @@ a {
 
 ul {
   list-style-type: none;
+}
+
+.date-responsive {
+  margin-top: 20px;
+  display: none;
+  color: rgb(152 152 152);
+}
+@media screen and (max-width: 600px) {
+  .date-responsive {
+    display: block;
+  }
 }

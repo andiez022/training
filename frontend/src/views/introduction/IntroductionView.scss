@@ -108,7 +108,7 @@
 }
 @media screen and (max-width: 600px) {
   .intro-content {
-    &__img-1 {
+    &__img-1, &__img-2 {
       img {
         margin: 0 auto;
         width: 90%;

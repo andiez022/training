@@ -153,12 +153,13 @@
           padding-left: 20px;
         }
         td {
-          text-align: center;
+          text-align: start;
           font-family: 'Noto Sans KR';
           font-size: 14px;
           font-weight: 400;
           height: 50px;
           border-bottom: 1px solid #d9d9d9;
+          padding: 10px;
         }
       }
     }
@@ -284,6 +285,10 @@
 .pagination-button {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+  .pagination {
+    flex-wrap: wrap;
+  }
   .add-new-button {
     cursor: pointer;
     width: 105px;
@@ -380,7 +385,6 @@
   }
 }
 
-
 @media screen and (max-width: 600px) {
   .board-header {
     .board {
@@ -442,12 +446,46 @@
   .pagination-add {
     display: block;
   }
-}
 
-// .pagination {
-//   position: relative;
-// }
-// .add-new-button {
-//   position: absolute;
-//   top: 60;
-// }
+  .board-item__container__body {
+    min-height: calc(100vh - 425px);
+  }
+  .board-item__container__body__info-authordate {
+    display: block;
+    &-author {
+      width: 100%;
+      justify-content: flex-start;
+      h3 {
+        width: 30%;
+        text-align: center;
+      }
+    }
+    &-date {
+      width: 100%;
+      justify-content: flex-start;
+      margin-top: 10px;
+      h3 {
+        padding: 0;
+        width: 30%;
+        text-align: center;
+      }
+    }
+  }
+  .pagination-button {
+    flex-direction: column;
+    align-items: flex-end;
+    .edit-button,
+    .delete-button,
+    .add-new-button {
+      margin-bottom: 10px;
+      padding: 0;
+    }
+  }
+
+  .modal__confirm {
+    width: 80vw;
+  }
+  .modal__button {
+    width: 80vw;
+  }
+}

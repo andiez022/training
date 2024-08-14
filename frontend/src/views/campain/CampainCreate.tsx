@@ -197,7 +197,7 @@ const BoardCreate = () => {
             <button type="submit" className="board-create-container__input__button-submit">
               등록
             </button>
-            <button type="button" className="board-create-container__input__button-cancel" onClick={() => navigate('./campain')}>
+            <button type="button" className="board-create-container__input__button-cancel" onClick={() => navigate('/campain')}>
               취소
             </button>
           </div>
