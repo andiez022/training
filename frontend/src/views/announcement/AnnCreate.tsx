@@ -27,7 +27,6 @@ const editorConfig: EditorConfig = {
     '|',
     'bold',
     'italic',
-    
     'underline',
     'blockQuote',
     '|',
