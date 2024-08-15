@@ -153,13 +153,16 @@
           padding-left: 20px;
         }
         td {
-          text-align: start;
+          text-align: center;
           font-family: 'Noto Sans KR';
           font-size: 14px;
           font-weight: 400;
           height: 50px;
           border-bottom: 1px solid #d9d9d9;
           padding: 10px;
+        }
+        td:nth-child(2) {
+          text-align: start;
         }
       }
     }

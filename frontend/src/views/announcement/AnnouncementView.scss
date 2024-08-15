@@ -182,8 +182,11 @@
         }
         td {
           padding: 4px 8px;
-          text-align: start;
+          text-align: center;
           padding: 10px;
+        }
+        td:nth-child(2) {
+          text-align: start;
         }
       }
     }

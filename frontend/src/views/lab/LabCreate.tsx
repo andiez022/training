@@ -22,22 +22,21 @@ interface FormValues {
 // ? editor
 const editorConfig: EditorConfig = {
   toolbar: [
-    'undo',
-    'redo',
     '|',
     'heading',
     '|',
     'bold',
     'italic',
-    '|',
-    'link',
-    'insertTable',
-    'mediaEmbed',
+    'underline',
+    'blockQuote',
     '|',
     'bulletedList',
     'numberedList',
-    'indent',
     'outdent',
+    'indent',
+    '|',
+    'link',
+    'uploadImage',
   ],
 };
 

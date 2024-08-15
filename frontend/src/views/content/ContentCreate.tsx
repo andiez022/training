@@ -32,22 +32,21 @@ const BoardCreate = () => {
 
   const editorConfig: EditorConfig = {
     toolbar: [
-      'undo',
-      'redo',
       '|',
       'heading',
       '|',
       'bold',
       'italic',
-      '|',
-      'link',
-      'insertTable',
-      'mediaEmbed',
+      'underline',
+      'blockQuote',
       '|',
       'bulletedList',
       'numberedList',
-      'indent',
       'outdent',
+      'indent',
+      '|',
+      'link',
+      'uploadImage',
     ],
     placeholder: '내용을 입력하세요.',
   };
