@@ -33,6 +33,8 @@ import { ReactComponent as EyeOffIcon } from './icons/eye-off-icon.svg';
 import { ReactComponent as CheckRemember } from './icons/check-remember.svg';
 import { ReactComponent as UploadIcon } from './icons/upload-icon.svg';
 import { ReactComponent as DeleteUpload } from './icons/delete-upload.svg';
+import { ReactComponent as ArrowDown } from './icons/arrow-down.svg';
+import { ReactComponent as ArrowUp } from './icons/arrow-up-icon.svg';
 
 import './Icon.scss';
 
@@ -69,6 +71,8 @@ export const ICONS = {
   CHECK_REMEMBER: CheckRemember,
   UPLOAD_ICON: UploadIcon,
   DELETE_UPLOAD: DeleteUpload,
+  ARROW_DOWN: ArrowDown,
+  ARROW_UP: ArrowUp,
 };
 
 export interface IconProps {

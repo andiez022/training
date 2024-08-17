@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './ContentView.scss';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
@@ -25,6 +25,11 @@ const Content = () => {
   const [postsPerPage, setPostsPerPage] = useState(10);
   const [searchByData, setSearchByData] = useState('title');
   const [searchValueData, setSearchValueData] = useState('');
+
+  const handleExpand = () => {
+    setClickToExpand((preState) => !preState);
+    setRotate((preState) => !preState);
+  };
 
   const searchBy = 'title';
   const searchValue = '';
@@ -110,6 +115,39 @@ const Content = () => {
       }
     }
   };
+
+  // Inside your Content component
+  // useEffect(() => {
+  //   const lengthExpand = document.querySelectorAll<HTMLElement>('.content-container__body-items__item-info');
+  //   lengthExpand.forEach((element) => {
+  //     if (element.offsetHeight > 200) {
+  //       set
+  //     }
+  //   });
+  // }, [contentResponse]); // Adjust the dependency array as needed
+
+  // const lengthExpand = document.querySelector<HTMLElement>('.content-container__body-items__item-info');
+  // console.log(lengthExpand);
+
+  const [expandContent, setExpandContent] = useState<{ [key: string]: boolean }>({});
+  const [clickToExpand, setClickToExpand] = useState(false);
+  const [rotate, setRotate] = useState(false);
+
+  useEffect(() => {
+    if (contentResponse) {
+      const expandState: { [key: string]: boolean } = {};
+      contentResponse.list.forEach((item: any) => {
+        const element = document.getElementById(`text-expand ${item.id}`);
+        console.log(element?.offsetHeight);
+
+        if (element && element.offsetHeight > 140) {
+          expandState[item.id] = true;
+        }
+      });
+      setExpandContent(expandState);
+    }
+  }, [contentResponse]);
+
   return (
     <>
       <div className="content-header">
@@ -130,7 +168,7 @@ const Content = () => {
 
         <div className="content-container__body">
           <div className="content-container__body-top">
-            <p className="content-container__body-top-left">캠페인</p>
+            <p className="content-container__body-top-left">콘텐츠</p>
             {isLoggedIn && (
               <div className="content-container__body-top-right">
                 <div className="box1">
@@ -158,13 +196,19 @@ const Content = () => {
                   <div className="content-container__body-items__item-info">
                     <div className="content-container__body-items__item-info__top">
                       <p>{item.title}</p>
-                      <p>{reformatDate(item.created_at)}</p>
+                      <p className="date">{reformatDate(item.created_at)}</p>
                     </div>
                     <div
-                      className="content-container__body-items__item-info__body"
+                      className={`content-container__body-items__item-info__body ${clickToExpand ? 'expand' : ''}`}
                       dangerouslySetInnerHTML={{ __html: item.description }}
+                      id={`text-expand ${item.id}`}
                     />
                   </div>
+                  {expandContent[item.id] && (
+                    <div className="icon-expand" onClick={() => handleExpand()}>
+                      <Icon className={`icon-expand-icon--- ${rotate ? 'rotate' : ''}`} component={ICONS.ARROW_UP} size={IconSize.XXL} />
+                    </div>
+                  )}
                 </div>
               ))
             ) : (
