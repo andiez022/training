@@ -150,7 +150,6 @@ const BoardCreate = () => {
               )}
             </div>
           </div>
-
           <div className="board-create-container__input__button">
             <button type="submit" className="board-create-container__input__button-submit">
               등록
