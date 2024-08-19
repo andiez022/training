@@ -52,7 +52,7 @@
     height: 200px;
     border: 1px solid #cccccc;
     img {
-      margin: 25px 130px;
+      margin: 25px 200px;
     }
   }
   &__paragraph-2 {
@@ -121,11 +121,17 @@
     }
   }
 }
-@media screen and (min-width: 2400px) {
+@media screen and (min-width: 2100px) {
   .intro-content__img-1 {
     height: 350px;
+    img {
+      margin: 30px;
+    }
   }
   .intro-content__img-2 {
     height: 310px;
+    img {
+      margin: 15px;
+    }
   }
 }

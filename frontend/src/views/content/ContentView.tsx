@@ -26,11 +26,6 @@ const Content = () => {
   const [searchByData, setSearchByData] = useState('title');
   const [searchValueData, setSearchValueData] = useState('');
 
-  const handleExpand = () => {
-    setClickToExpand((preState) => !preState);
-    setRotate((preState) => !preState);
-  };
-
   const searchBy = 'title';
   const searchValue = '';
   const page = currentPage;
@@ -85,7 +80,6 @@ const Content = () => {
     },
   });
   const itemsToDelete = Object.keys(checkedItem).filter((key) => checkedItem[key] === true);
-  const editId = Object.keys(checkedItem).find((key) => checkedItem[key] === true);
 
   const handleDelete = () => {
     try {
@@ -133,14 +127,18 @@ const Content = () => {
   const [clickToExpand, setClickToExpand] = useState(false);
   const [rotate, setRotate] = useState(false);
 
+  const handleExpand = () => {
+    setClickToExpand((preState) => !preState);
+    setRotate((preState) => !preState);
+  };
   useEffect(() => {
     if (contentResponse) {
       const expandState: { [key: string]: boolean } = {};
       contentResponse.list.forEach((item: any) => {
         const element = document.getElementById(`text-expand ${item.id}`);
-        console.log(element?.offsetHeight);
+        console.log(element?.scrollHeight);
 
-        if (element && element.offsetHeight > 140) {
+        if (element && element.scrollHeight > 140) {
           expandState[item.id] = true;
         }
       });
@@ -199,14 +197,14 @@ const Content = () => {
                       <p className="date">{reformatDate(item.created_at)}</p>
                     </div>
                     <div
-                      className={`content-container__body-items__item-info__body ${clickToExpand ? 'expand' : ''}`}
+                      className={`content-container__body-items__item-info__body ${clickToExpand ? '' : 'expand'}`}
                       dangerouslySetInnerHTML={{ __html: item.description }}
                       id={`text-expand ${item.id}`}
                     />
                   </div>
                   {expandContent[item.id] && (
                     <div className="icon-expand" onClick={() => handleExpand()}>
-                      <Icon className={`icon-expand-icon--- ${rotate ? 'rotate' : ''}`} component={ICONS.ARROW_UP} size={IconSize.XXL} />
+                      <Icon className={`icon-expand-icon--- ${rotate ? 'rotate' : ''}`} component={ICONS.ARROW_DOWN} size={IconSize.XXL} />
                     </div>
                   )}
                 </div>
