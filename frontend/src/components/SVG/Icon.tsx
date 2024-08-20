@@ -17,6 +17,24 @@ import { ReactComponent as Times } from './icons/times.svg';
 import { ReactComponent as WarningCircle } from './icons/warning-circle.svg';
 import { ReactComponent as RadioDefault } from './icons/radio-default.svg';
 import { ReactComponent as RadioSelected } from './icons/radio-selected.svg';
+import { ReactComponent as Plus } from './icons/103681_plus_icon (1).svg';
+import { ReactComponent as ArrowRight } from './icons/arrow.right.svg';
+import { ReactComponent as ArrowRight2 } from './icons/arrow-right(2).svg';
+import { ReactComponent as ArrowLeft } from './icons/arrow-left.svg';
+import { ReactComponent as ArrowRightDouble } from './icons/arrow-right-double.svg';
+import { ReactComponent as ArrowLeftDouble } from './icons/arrow-left-double.svg';
+import { ReactComponent as CarretDown } from './icons/caret-down-solid.svg';
+import { ReactComponent as SearchGlass } from './icons/search-glass.svg';
+import { ReactComponent as MetroMenu } from './icons/134216_menu_lines_hamburger_icon.svg';
+import { ReactComponent as CloseIcon } from './icons/211651_close_round_icon.svg';
+import { ReactComponent as PenIcon } from './icons/8665767_pen_icon.svg';
+import { ReactComponent as EyeIcon } from './icons/eye-icon.svg';
+import { ReactComponent as EyeOffIcon } from './icons/eye-off-icon.svg';
+import { ReactComponent as CheckRemember } from './icons/check-remember.svg';
+import { ReactComponent as UploadIcon } from './icons/upload-icon.svg';
+import { ReactComponent as DeleteUpload } from './icons/delete-upload.svg';
+import { ReactComponent as ArrowDown } from './icons/arrow-down.svg';
+import { ReactComponent as ArrowUp } from './icons/arrow-up-icon.svg';
 
 import './Icon.scss';
 
@@ -37,6 +55,24 @@ export const ICONS = {
   CHECKBOX_PRESSED: CheckboxPressed,
   RADIO_DEFAULT: RadioDefault,
   RADIO_SELECTED: RadioSelected,
+  PLUS: Plus,
+  ARROW_RIGHT2: ArrowRight2,
+  ARROW_RIGHT: ArrowRight,
+  ARROW_LEFT: ArrowLeft,
+  ARROW_RIGHT_DOUBLE: ArrowRightDouble,
+  ARROW_LEFT_DOUBLE: ArrowLeftDouble,
+  CARRET_DOWN: CarretDown,
+  SEARCH_GLASS: SearchGlass,
+  METRO_MENU: MetroMenu,
+  CLOSE_ICON: CloseIcon,
+  PEN_ICON: PenIcon,
+  EYE_ICON: EyeIcon,
+  EYE_OFF_ICON: EyeOffIcon,
+  CHECK_REMEMBER: CheckRemember,
+  UPLOAD_ICON: UploadIcon,
+  DELETE_UPLOAD: DeleteUpload,
+  ARROW_DOWN: ArrowDown,
+  ARROW_UP: ArrowUp,
 };
 
 export interface IconProps {

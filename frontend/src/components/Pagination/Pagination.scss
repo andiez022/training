@@ -1,0 +1,25 @@
+.pagination {
+  margin: 50px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  button {
+    width: 32px;
+    height: 32px;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    margin: 5px;
+    svg {
+        fill: black;
+        width: 32px;
+        height: 32px;
+    }
+  }
+  .current-page {
+    background: transparent linear-gradient(90deg, #0066c1 0%, #009fe5 100%) 0% 0% no-repeat padding-box !important;
+    color: white;
+  }
+}
+.unmount {
+  display: none;
+}

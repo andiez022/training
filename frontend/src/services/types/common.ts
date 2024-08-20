@@ -29,14 +29,45 @@ export interface VerificationForm {
 }
 
 export interface SignUpForm {
-  firstName: string;
-  lastName: string;
-  email: string;
+  // firstName: string;
+  // lastName: string;
+  // email: string;
+  username: string;
   password: string;
-  confirmationPassword: string;
-  countryCode: string;
+
+  // confirmationPassword: string;
+  // countryCode: string;
+  // phone: string;
+  // phoneCode?: string;
+  // isAgree?: boolean;
+  // subscribeNewsletter?: boolean;
+}
+
+export interface RegisterForm {
+  username: string;
+  password: string;
+  passwordVerify: string;
+  name: string;
+  email: string;
   phone: string;
-  phoneCode?: string;
-  isAgree?: boolean;
-  subscribeNewsletter?: boolean;
+}
+
+export interface DataItem {
+  id: string;
+  title?: string;
+  content: string;
+  updated_at?: string;
+  created_at: string;
+  author?: string;
+  video: string;
+  description: string;
+  image?: string;
+  password: string;
+}
+
+export type CheckedItem = Record<string, boolean>;
+
+export interface TextEditorProps {
+  initialData: string;
+  onChange?: (event: any, editor: any) => void;
 }

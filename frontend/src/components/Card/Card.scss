@@ -2,8 +2,12 @@
 
 .card {
   background: $color-white;
-  border-radius: 5px;
-  box-shadow: 0px 6px 18px rgb(0 0 0 / 16%);
+  border-radius: 16px;
+  min-height: 70px;
+  width: 25rem;
+  border: 1px solid #CCCCCC;
+  padding: 20px;
+  font-family: 'Noto Sans KR';
 }
 
 .card-list {
@@ -32,3 +36,5 @@
     align-items: center;
   }
 }
+
+
